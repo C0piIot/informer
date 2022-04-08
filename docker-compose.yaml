@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  informer_app:
+    container_name: informer_app
+    ports:
+      - "80:80"
+    environment:
+      - "DJANGO_DEBUG=True"
+      - "EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend"
+      - "ROLLBAR_TOKEN=40ec2edf6d464fff8f776094438a809e"
+      - "CACHE_URL=locmemcache://"
+    build: 
+      context: .      
+    volumes:
+      - .:/usr/src/app
