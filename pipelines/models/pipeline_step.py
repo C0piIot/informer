@@ -1,0 +1,16 @@
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+from .pipeline import Pipeline
+
+class PipelineStep(models.Model):
+	pipeline = models.ForeignKey(
+        Pipeline,
+        on_delete=models.CASCADE,
+        verbose_name=_('pipeline')
+    )
+	order = models.PositiveSmallIntegerField(_('order'))
+	
+	class Meta:
+		verbose_name = _('pipeline step')
+		verbose_name_plural = _('pipeline steps')
+		ordering = ('pipeline', 'order')

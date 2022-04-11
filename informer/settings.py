@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'configuration.apps.ConfigurationConfig',
+    'pipelines.apps.PipelinesConfig',
+    'email_channel.apps.EmailChannelConfig',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +57,7 @@ ROOT_URLCONF = 'informer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [ 'informer/templates' ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
