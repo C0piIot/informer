@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block body-content %}
+{{ block.super }}
+<div class="container">
+	<p class="mt-4 text-right">
+		<a class="btn btn-primary" href="{% url 'pipelines:new' %}">
+			{% translate "New pipeline" %}
+		</a>
+	</p>
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<thead>
+		      <tr>
+		        <th>Lol</th>
+		      </tr>
+		    </thead>
+    		<tbody>
+
+    		</tbody>
+		</table>
+	</div>
+</div>
+{% endblock body-content %}
