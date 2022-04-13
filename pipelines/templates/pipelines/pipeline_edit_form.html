@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load i18n django_bootstrap5 %}
+
+{% block body-content %}
+{{ block.super }}
+<div class="container">
+	<h1>{% trans "Pipeline edit" %}</h1>
+	<form class="card" action="{% url 'pipelines:edit' pipeline.pk %}" method="post">
+		{% csrf_token %}
+		<div class="card-body">
+			{% bootstrap_form form %}
+			<button class="btn btn-primary" type="submit">{% trans "Update" %}</button>	
+		</div>
+	</form>
+</div>
+{% endblock body-content %}

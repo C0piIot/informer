@@ -8,7 +8,10 @@ class Pipeline(models.Model):
 	enabled = models.BooleanField(_('enabled'), default=True)
 	trigger = models.CharField(_('trigger'), max_length=150, db_index=True)
 
+	def __str__(self):
+		return self.name
+
 	class Meta:
 		verbose_name = _('pipeline')
 		verbose_name_plural = _('pipelines')
-		ordering = ('name',);
+		ordering = ('name',)

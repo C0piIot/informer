@@ -1,4 +1,4 @@
-{% load i18n %}<!doctype html>
+{% load i18n django_bootstrap5 %}<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -44,6 +44,7 @@
         </div>
       </nav>
     {% endblock head-content %}</head>
+    <div class="container mt-4">{% bootstrap_messages %}</div>
     {% endblock body-content %}
   </body>
 </html>
