@@ -5,7 +5,7 @@
 {{ block.super }}
 <div class="container">
 	<h1>{% trans "Pipeline edit" %}</h1>
-	<form class="card" action="{% url 'pipelines:edit' pipeline.pk %}" method="post">
+	<form class="card" action="{% url 'pipelines:edit' current_environment.slug pipeline.pk %}" method="post">
 		{% csrf_token %}
 		<div class="card-body">
 			{% bootstrap_form form %}

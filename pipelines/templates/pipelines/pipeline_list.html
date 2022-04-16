@@ -5,7 +5,7 @@
 {{ block.super }}
 <div class="container">
 	<p class="mt-4 text-right">
-		<a class="btn btn-primary" href="{% url 'pipelines:new' %}">
+		<a class="btn btn-primary" href="{% url 'pipelines:new' current_environment.slug %}">
 			{% translate "New pipeline" %}
 		</a>
 	</p>
@@ -15,17 +15,17 @@
     			{% for pipeline in object_list %}
     			<tr>
     				<td class="w-100">
-    					<a href="{% url 'pipelines:edit' pipeline.pk %}" title="{% translate 'View' %}" class="text-decoration-none">
+    					<a href="{% url 'pipelines:edit' current_environment.slug pipeline.pk %}" title="{% translate 'View' %}" class="text-decoration-none">
     						{{ pipeline }}	
     					</a>
     				</td>
     				<td class="text-nowrap">
-    					<a href="{% url 'pipelines:edit' pipeline.pk %}" title="{% translate 'Edit' %}" class="btn btn-sm btn-primary">
+    					<a href="{% url 'pipelines:edit' current_environment.slug pipeline.pk %}" title="{% translate 'Edit' %}" class="btn btn-sm btn-primary">
     						✏️
     					</a>
-    					<form class="d-inline" method="post" href="{% url 'pipelines:edit' pipeline.pk %}" action="{% url 'pipelines:edit' pipeline.pk %}">
+    					<form class="d-inline" method="post" action="{% url 'pipelines:remove' current_environment.slug pipeline.pk %}">
     						{% csrf_token %}
-    						<button title="{% translate 'Delete' %}" class="btn btn-sm btn-danger">🗑️</button>
+    						<button title="{% translate 'Remove' %}" class="btn btn-sm btn-danger">🗑️</button>
     					</form>
     				</td>
     			</tr>

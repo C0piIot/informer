@@ -20,19 +20,20 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link{% if 'pipelines' == request.resolver_match.app_name %} active{% endif %}" aria-current="page" href="{% url 'pipelines:home' %}">
+                <a class="nav-link{% if 'pipelines' == request.resolver_match.app_name %} active{% endif %}" aria-current="page" href="{% url 'pipelines:home' current_environment.slug %}">
                   {% translate "Pipelines" %}
                 </a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  {% translate "Configuration" %}
+                  {{ current_environment|default:_("Environments") }}
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" href="#">{% translate "Eve" %}</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  {% for environment in environments %}
+                    <li><a class="dropdown-item" href="#">{{ environment }}</a></li>
+                  {% endfor %}
                   <li><hr class="dropdown-divider"></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  <li><a class="dropdown-item" href="#">{% trans "Manage…" %}</a></li>
                 </ul>
               </li>
             </ul>
