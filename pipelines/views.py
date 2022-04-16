@@ -16,6 +16,14 @@ class PipelineFilteredMixin(CurrentEnvironmentMixin):
     def get_queryset(self):
         return super().get_queryset().filter(environments=self.current_environment)
 
+    def get_object(self, queryset=None):
+
+        if not queryset:
+            queryset = self.get_queryset()
+
+        return queryset.get(id=self.kwargs['id'])
+
+
 
 class PipelineList(PipelineFilteredMixin, ListView):
     pass
@@ -33,7 +41,7 @@ class PipelineCreate(CurrentEnvironmentMixin, SuccessMessageMixin, CreateView):
         return response
 
     def get_success_url(self):
-        return reverse('pipelines:edit', kwargs={'pk': self.object.pk, 'environment': self.current_environment.slug })
+        return reverse('pipelines:edit', kwargs={'id': self.object.id, 'environment': self.current_environment.slug })
 
 
 class PipelineEdit(PipelineFilteredMixin, SuccessMessageMixin, UpdateView):
@@ -49,7 +57,7 @@ class PipelineEdit(PipelineFilteredMixin, SuccessMessageMixin, UpdateView):
         return response
 
     def get_success_url(self):
-        return reverse('pipelines:edit', kwargs={'pk': self.object.pk, 'environment': self.current_environment.slug })
+        return reverse('pipelines:edit', kwargs={'id': self.object.id, 'environment': self.current_environment.slug })
 
 
 class PipelineRemove(PipelineFilteredMixin, DeleteView):
@@ -62,3 +70,9 @@ class PipelineRemove(PipelineFilteredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse('pipelines:home', kwargs={'environment': self.current_environment.slug })
+
+class PipelineHistory(CurrentEnvironmentMixin, ListView):
+    template_name_suffix = '_history'
+    model = Pipeline
+    def get_queryset(self):
+        return super().get_queryset().filter(id=self.kwargs['id'])

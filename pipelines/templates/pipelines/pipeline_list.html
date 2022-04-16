@@ -15,15 +15,18 @@
     			{% for pipeline in object_list %}
     			<tr>
     				<td class="w-100">
-    					<a href="{% url 'pipelines:edit' current_environment.slug pipeline.pk %}" title="{% translate 'View' %}" class="text-decoration-none">
+    					<a href="{% url 'pipelines:edit' current_environment.slug pipeline.id %}" title="{% translate 'View' %}" class="text-decoration-none">
     						{{ pipeline }}	
     					</a>
     				</td>
     				<td class="text-nowrap">
-    					<a href="{% url 'pipelines:edit' current_environment.slug pipeline.pk %}" title="{% translate 'Edit' %}" class="btn btn-sm btn-primary">
+    					<a href="{% url 'pipelines:edit' current_environment.slug pipeline.id %}" title="{% translate 'Edit' %}" class="btn btn-sm btn-primary">
     						✏️
     					</a>
-    					<form class="d-inline" method="post" action="{% url 'pipelines:remove' current_environment.slug pipeline.pk %}">
+    					<a href="{% url 'pipelines:history' current_environment.slug pipeline.id %}" title="{% translate 'History' %}" class="btn btn-sm btn-outline-primary">
+    						📜
+    					</a>
+    					<form class="d-inline" method="post" action="{% url 'pipelines:remove' current_environment.slug pipeline.id %}">
     						{% csrf_token %}
     						<button title="{% translate 'Remove' %}" class="btn btn-sm btn-danger">🗑️</button>
     					</form>

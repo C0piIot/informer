@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block body-content %}
+{{ block.super }}
+<div class="container">
+	<div class="accordion" id="pipeline-history">
+	{% for revision in object_list %}
+	  <div class="accordion-item">
+	    <h2 class="accordion-header" id="h-{{ revision.pk }}">
+	      <button class="accordion-button{% if not current_environment in revision.environments.all %} collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#b-{{ revision.pk }}" aria-expanded="true" aria-controls="b-{{ revision.pk }}">
+	      	<div class="d-flex w-100 justify-content-between pe-2">
+	       		<span>	       			
+	       			{% for environment in revision.environments.all %}
+	       				<b class="small">[{{ environment }}]</b>
+	       			{% endfor %}
+	       			{{ revision.name }}
+	       		</span>
+	       		<small>{{ revision.date }}</small>
+	       	</div>
+	      </button>
+	    </h2>
+	    <div id="b-{{ revision.pk }}" class="accordion-collapse collapse{% if current_environment in revision.environments.all %} show{% endif %}" aria-labelledby="h-{{ revision.pk }}" data-bs-parent="#pipeline-history">
+	      <div class="accordion-body">
+	        <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+	      </div>
+	    </div>
+	  </div>
+	{% endfor %}
+	</div>
+</div>
+{% endblock body-content %}
