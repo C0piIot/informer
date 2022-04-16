@@ -12,7 +12,7 @@
 	      	<div class="d-flex w-100 justify-content-between pe-2">
 	       		<span>	       			
 	       			{% for environment in revision.environments.all %}
-	       				<b class="small">[{{ environment }}]</b>
+	       				<code class="small">[{{ environment }}]</code>
 	       			{% endfor %}
 	       			{{ revision.name }}
 	       		</span>
