@@ -1,5 +1,5 @@
 from .delay import Delay
-from .group_event import GroupEvent
+from .group import Group
 from .pipeline import Pipeline
 from .pipeline_step import PipelineStep
-from .send_to_channel import SendToChannel
+from .send import Send
