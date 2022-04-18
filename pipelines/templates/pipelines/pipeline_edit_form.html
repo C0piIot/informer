@@ -28,29 +28,7 @@
 		</ul>
 	</div>
 </div>
-
-{% for type, name in step_types %}
-<div class="modal" id="modal-add-{{ type }}" tabindex="-1" aria-labelledby="modal-add-{{ type }}-title" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="modal-add-{{ type }}-title">
-            {% blocktranslate %}Add {{ type }} step{% endblocktranslate %}
-        </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
-      </div>
-      <div class="modal-body">
-        {% include 'pipelines/steps/delay_form.html' %}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+{% for type, form in new_step_forms.items %}
+{% include 'pipelines/steps/'|add:type|add:'_modal.html' with form=form %}
 {% endfor %}
-
-
-
 {% endblock body-content %}

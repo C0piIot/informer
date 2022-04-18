@@ -6,7 +6,11 @@ from django.db import transaction
 from .pipeline_filtered_mixin import PipelineFilteredMixin
 from pipelines.forms import *
 
-class PipelineEdit(PipelineFilteredMixin, SuccessMessageMixin, UpdateView):
+class PipelineEdit(
+    PipelineFilteredMixin,
+    SuccessMessageMixin,
+    UpdateView
+):
     fields = ('name', 'trigger', 'enabled')
     template_name_suffix = '_edit_form'
     success_message = "%(name)s was updated successfully"
@@ -21,10 +25,9 @@ class PipelineEdit(PipelineFilteredMixin, SuccessMessageMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['step_types'] = PipelineStep.TYPE_CHOICES
-
-        for t, name in PipelineStep.TYPE_CHOICES:
-            c = globals()["%sForm" % t.capitalize()]
-            context_data['%s_form' % t] = c()
+        context_data['new_step_forms'] = {
+            PipelineStep.DELAY: DelayForm(),
+        }
         return context_data
 
     def get_success_url(self):
