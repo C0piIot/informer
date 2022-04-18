@@ -5,14 +5,18 @@
 {{ block.super }}
 <div class="container">
 	<h1>{% trans "Pipeline edit" %}</h1>
-	<form class="card" action="{% url 'pipelines:edit' current_environment.slug pipeline.id %}" method="post">
-		{% csrf_token %}
-		<div class="card-body">
-			{% bootstrap_form form %}
-			<button class="btn btn-primary" type="submit">{% trans "Update" %}</button>	
-		</div>
-	</form>
-
+    <div class="card">
+        <div class="card-body">
+            <ul>
+                <li>{% translate "Name:" %} {{ pipeline.name }}</li>
+                <li>{% translate "Trigger:" %} {{ pipeline.trigger }}</li>
+                <li>{% translate "Updated:" %} {{ pipeline.date }}</li>
+            </ul>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-pipeline">
+                {% translate "Change" %}
+            </button>
+        </div>
+    </div>
 	<div class="dropdown">
 		<button class="btn btn-secondary dropdown-toggle" type="button" id="newStep" data-bs-toggle="dropdown" aria-expanded="false">
 		{% translate "New step" %}
@@ -28,7 +32,50 @@
 		</ul>
 	</div>
 </div>
+<form 
+    action="{% url 'pipelines:edit' current_environment.slug pipeline.id %}" method="post"
+    id="modal-edit-pipeline" 
+    aria-labelledby="modal-edit-pipeline-title"
+    class="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-edit-pipeline-title">
+                {% blocktranslate %}Change pipeline details{% endblocktranslate %}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
+          </div>
+          <div class="modal-body">{% bootstrap_form form %}</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+            <button type="button" class="btn btn-primary">{% translate "Update" %}</button>
+          </div>
+        </div>
+    </div>
+    {% csrf_token %}
+</form>
 {% for type, form in new_step_forms.items %}
-{% include 'pipelines/steps/'|add:type|add:'_modal.html' with form=form %}
+<form method="post" 
+	action="{% url 'pipelines:'|add:type|add:'_new' current_environment.slug pipeline.id %}"
+    id="modal-add-{{ type }}" 
+  	aria-labelledby="modal-add-{{ type }}-title"
+  	class="modal" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="modal-add-{{ type }}-title">
+	            {% blocktranslate %}Add {{ type }} step{% endblocktranslate %}
+	        </h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
+	      </div>
+	      <div class="modal-body">{% bootstrap_form form %}</div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+	        <button type="submit" class="btn btn-primary">{% translate "Add step" %}</button>
+	      </div>
+	    </div>
+  	</div>
+    {% csrf_token %}
+</form>
 {% endfor %}
 {% endblock body-content %}

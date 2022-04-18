@@ -1,4 +1,5 @@
 from .views import *
+from .views.steps import *
 from django.urls import path, include
 
 app_name = 'pipelines'
@@ -10,5 +11,6 @@ urlpatterns = [
         path('<uuid:id>/history/', PipelineHistory.as_view(), name='history'),
         path('<uuid:id>/edit/', PipelineEdit.as_view(), name='edit'),
         path('<uuid:id>/remove/', PipelineRemove.as_view(), name='remove'),
+        path('<uuid:id>/delay/new', DelayCreate.as_view(), name='delay_new'),
     ]))
 ]

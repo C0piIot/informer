@@ -28,6 +28,7 @@ class PipelineEdit(
         context_data['new_step_forms'] = {
             PipelineStep.DELAY: DelayForm(),
         }
+        context_data['step_forms'] = []
         return context_data
 
     def get_success_url(self):

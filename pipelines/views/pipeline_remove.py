@@ -2,7 +2,6 @@ from django.urls import reverse
 from django.views.generic.edit import DeleteView
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from configuration.views import CurrentEnvironmentMixin
 from .pipeline_filtered_mixin import PipelineFilteredMixin
 
 class PipelineRemove(PipelineFilteredMixin, DeleteView):

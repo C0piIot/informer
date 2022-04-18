@@ -16,7 +16,8 @@ class PipelineStep(models.Model):
 	pipeline = models.ForeignKey(
         Pipeline,
         on_delete=models.CASCADE,
-        verbose_name=_('pipeline')
+        verbose_name=_('pipeline'),
+        related_name='steps'
     )
 	order = models.PositiveSmallIntegerField(_('order'))
 	type = models.CharField(_('type'), choices=TYPE_CHOICES, max_length=50)

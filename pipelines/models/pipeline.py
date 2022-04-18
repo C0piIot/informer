@@ -13,8 +13,11 @@ class Pipeline(models.Model):
 
 	
 	def save(self, *args, **kwargs):
+		steps = self.steps.all()
 		self.pk = uuid4()
+		self._state.adding = True
 		super().save(**kwargs)
+
 
 	def __str__(self):
 		return self.name
