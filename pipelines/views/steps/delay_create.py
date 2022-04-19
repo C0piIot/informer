@@ -5,6 +5,8 @@ from .step_mixin import StepMixin
 class DelayCreate(StepMixin, CreateView):
     model = Delay
     fields = ('time',)
+
+
     
     
     

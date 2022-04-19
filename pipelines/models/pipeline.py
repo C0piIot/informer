@@ -10,14 +10,15 @@ class Pipeline(models.Model):
 	name = models.CharField(_('name'), max_length=150)
 	enabled = models.BooleanField(_('enabled'), default=True)
 	trigger = models.CharField(_('trigger'), max_length=150, db_index=True)
-
 	
 	def save(self, *args, **kwargs):
 		steps = self.steps.all()
 		self.pk = uuid4()
 		self._state.adding = True
 		super().save(**kwargs)
-
+		for step in steps:
+			step.pipeline = self
+			step.save(*args, **kwargs)
 
 	def __str__(self):
 		return self.name

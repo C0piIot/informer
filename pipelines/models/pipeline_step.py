@@ -12,7 +12,6 @@ class PipelineStep(models.Model):
 
 	TYPE_CHOICES = (
 		(DELAY, _('delay')),
-		
 	)
 
 	pipeline = models.ForeignKey(
@@ -24,15 +23,21 @@ class PipelineStep(models.Model):
 	order = models.PositiveSmallIntegerField(_('order'))
 	type = models.CharField(_('type'), choices=TYPE_CHOICES, max_length=50)
 
+	def __str__(self):
+		return getattr(self, self.type).__str__()
 
 	def save(self, *args, **kwargs):
-		print(self.__class__ == PipelineStep)hay q arreglar esto
 		if self.TYPE:
 			self.type = self.TYPE
+
+		# We need to ensure we're calling save() from the child class
+		if not hasattr(self, 'pipelinestep_ptr_id'):
+			return getattr(self, self.type).save(*args, **kwargs)
+
 		self.id = None
 		self.pk = None
 		self._state.adding = True
-		super().save(**kwargs)
+		super().save(*args, **kwargs)
 
 	
 	class Meta:

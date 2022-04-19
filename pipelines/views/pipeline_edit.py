@@ -14,6 +14,9 @@ class PipelineEdit(
     fields = ('name', 'trigger', 'enabled')
     template_name_suffix = '_edit_form'
     success_message = "%(name)s was updated successfully"
+    form_classes = {
+        PipelineStep.DELAY: DelayForm
+    }
 
     def form_valid(self, form):
         with transaction.atomic():
@@ -24,11 +27,11 @@ class PipelineEdit(
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data['step_types'] = PipelineStep.TYPE_CHOICES
-        context_data['new_step_forms'] = {
-            PipelineStep.DELAY: DelayForm(),
-        }
-        context_data['step_forms'] = []
+        context_data.update({
+            'step_types': PipelineStep.TYPE_CHOICES,
+            'new_step_forms': { t: form_class() for t, form_class in self.form_classes.items() },
+            'step_forms': [ self.form_classes[step.type](instance=step) for step in self.object.steps.all()]
+        })
         return context_data
 
     def get_success_url(self):

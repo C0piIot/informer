@@ -3,5 +3,8 @@ from django.utils.translation import gettext_lazy as _
 from .pipeline_step import PipelineStep
 
 class Delay(PipelineStep):
-	TYPE = PipelineStep.DELAY
-	time = models.DurationField(_('time'))
+    TYPE = PipelineStep.DELAY
+    time = models.DurationField(_('time'))
+
+    def __str__(self):
+        return "Delay %s" % self.time

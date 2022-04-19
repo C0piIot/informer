@@ -21,11 +21,12 @@ class StepMixin(CurrentEnvironmentMixin, SuccessMessageMixin):
 
     def form_valid(self, form):
         with transaction.atomic():
+            self.pipeline.environments.remove(self.current_environment)
             self.pipeline.save()
+            self.pipeline.environments.add(self.current_environment)
             form.instance.order = self.pipeline.steps.count()
             form.instance.pipeline = self.pipeline
             return super().form_valid(form)
-
 
     def form_invalid(self, form, **kwargs):
         messages.error(self.request, "Error creating step")
