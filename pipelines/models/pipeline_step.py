@@ -30,13 +30,10 @@ class PipelineStep(models.Model):
 		if self.TYPE:
 			self.type = self.TYPE
 
-		# We need to ensure we're calling save() from the child class
-		if not hasattr(self, 'pipelinestep_ptr_id'):
-			return getattr(self, self.type).save(*args, **kwargs)
-
 		self.id = None
 		self.pk = None
 		self._state.adding = True
+		print(self.pipeline.pk)
 		super().save(*args, **kwargs)
 
 	

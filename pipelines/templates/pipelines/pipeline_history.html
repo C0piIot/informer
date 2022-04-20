@@ -16,7 +16,7 @@
 	       			{% endfor %}
 	       			{{ revision.name }}
 	       		</span>
-	       		<small>{{ revision.date }}</small>
+	       		<small title="{% blocktranslate with pk=revision.pk %}Revision {{ pk }}{% endblocktranslate %}">{{ revision.date }}</small>
 	       	</div>
 	      </button>
 	    </h2>

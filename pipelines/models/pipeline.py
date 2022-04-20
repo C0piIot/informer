@@ -12,11 +12,13 @@ class Pipeline(models.Model):
 	trigger = models.CharField(_('trigger'), max_length=150, db_index=True)
 	
 	def save(self, *args, **kwargs):
-		steps = self.steps.all()
+		steps = list(self.steps.all())
 		self.pk = uuid4()
 		self._state.adding = True
 		super().save(**kwargs)
 		for step in steps:
+			# We need to call save() from the child class
+			step = getattr(step, step.type)
 			step.pipeline = self
 			step.save(*args, **kwargs)
 

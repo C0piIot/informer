@@ -31,7 +31,21 @@
 		    {% endfor %}
 		</ul>
 	</div>
+
+    {% for form in step_forms %}
+        <div class="card mt-4">
+            <div class="card-header">
+                {{ form.instance.get_type_display|title }}
+            </div>
+            <div class="card-body">
+                {{ form.instance }}
+            </div>
+        </div>
+    {% endfor %}
 </div>
+
+
+
 <form 
     action="{% url 'pipelines:edit' current_environment.slug pipeline.id %}" method="post"
     id="modal-edit-pipeline" 
@@ -54,10 +68,6 @@
     </div>
     {% csrf_token %}
 </form>
-{% for form in step_forms.items %}
-{{ form.instance }}<br>
-{% endfor %}
-
 {% for type, form in new_step_forms.items %}
 <form method="post" 
 	action="{% url 'pipelines:'|add:type|add:'_new' current_environment.slug pipeline.id %}"

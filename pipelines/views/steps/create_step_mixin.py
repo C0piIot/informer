@@ -8,7 +8,7 @@ from django.db import transaction
 from django.http import HttpResponseRedirect
 
 
-class StepMixin(CurrentEnvironmentMixin, SuccessMessageMixin):
+class CreateStepMixin(CurrentEnvironmentMixin, SuccessMessageMixin):
     pipeline = None
     success_message = "Step was edited successfully"
 

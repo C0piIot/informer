@@ -1,12 +1,7 @@
 from django.views.generic.edit import CreateView
 from pipelines.models import Delay
-from .step_mixin import StepMixin
+from .create_step_mixin import CreateStepMixin
 
-class DelayCreate(StepMixin, CreateView):
+class DelayCreate(CreateStepMixin, CreateView):
     model = Delay
     fields = ('time',)
-
-
-    
-    
-    
