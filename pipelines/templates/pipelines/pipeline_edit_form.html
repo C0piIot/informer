@@ -4,47 +4,51 @@
 {% block body-content %}
 {{ block.super }}
 <div class="container">
-	<h1>{% trans "Pipeline edit" %}</h1>
-    <div class="card">
-        <div class="card-body">
-            <ul>
-                <li>{% translate "Name:" %} {{ pipeline.name }}</li>
-                <li>{% translate "Trigger:" %} {{ pipeline.trigger }}</li>
-                <li>{% translate "Updated:" %} {{ pipeline.date }}</li>
-            </ul>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-pipeline">
-                {% translate "Change" %}
-            </button>
+	<h1>{% trans "Edit pipeline" %}</h1>
+    <div class="row">
+        <div class="col-md-4 order-md-last offset-md-2">
+            <div class="card mt-4">
+                <div class="card-body">
+                    <ul>
+                        <li>{% translate "Name:" %} {{ pipeline.name }}</li>
+                        <li>{% translate "Trigger:" %} {{ pipeline.trigger }}</li>
+                        <li>{% translate "Updated:" %} {{ pipeline.date }}</li>
+                    </ul>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-pipeline">
+                        {% translate "Change" %}
+                    </button>
+                </div>
+            </div>
+        	<div class="dropdown mt-4">
+        		<button class="btn btn-secondary dropdown-toggle" type="button" id="newStep" data-bs-toggle="dropdown" aria-expanded="false">
+        		{% translate "New step" %}
+        		</button>
+          		<ul class="dropdown-menu" aria-labelledby="addStep">
+        		    {% for type, name in step_types %}
+                        <li>
+                            <a class="dropdown-item" data-bs-toggle="modal" href="#modal-add-{{ type }}">
+                                {{ name|title }}
+                            </a>
+                        </li>
+        		    {% endfor %}
+        		</ul>
+        	</div>
+        </div>
+        <div class="col-md-4 offset-md-2">
+            {% for form in step_forms %}
+                <a class="card mt-4 text-decoration-none text-dark" data-bs-toggle="modal" href="#modal-edit-{{ form.instance.pk }}">
+                    <div class="card-header">
+                        {{ form.instance.get_type_display|title }}
+                    </div>
+                    <div class="card-body">
+                        {{ form.instance }}
+                    </div>
+                </a>
+                {% if not forloop.last %}<div class="mt-4 text-center">⬇️</div>{% endif %}
+            {% endfor %}
         </div>
     </div>
-	<div class="dropdown">
-		<button class="btn btn-secondary dropdown-toggle" type="button" id="newStep" data-bs-toggle="dropdown" aria-expanded="false">
-		{% translate "New step" %}
-		</button>
-  		<ul class="dropdown-menu" aria-labelledby="addStep">
-		    {% for type, name in step_types %}
-                <li>
-                    <a class="dropdown-item" data-bs-toggle="modal" href="#modal-add-{{ type }}">
-                        {{ name|title }}
-                    </a>
-                </li>
-		    {% endfor %}
-		</ul>
-	</div>
-
-    {% for form in step_forms %}
-        <div class="card mt-4">
-            <div class="card-header">
-                {{ form.instance.get_type_display|title }}
-            </div>
-            <div class="card-body">
-                {{ form.instance }}
-            </div>
-        </div>
-    {% endfor %}
 </div>
-
-
 
 <form 
     action="{% url 'pipelines:edit' current_environment.slug pipeline.id %}" method="post"
@@ -89,6 +93,30 @@
 	      </div>
 	    </div>
   	</div>
+    {% csrf_token %}
+</form>
+{% endfor %}
+{% for form in step_forms %}
+<form method="post" 
+    action=""
+    id="modal-edit-{{ form.instance.pk }}" 
+    aria-labelledby="modal-edit-{{ form.instance.pk }}-title"
+    class="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-edit-{{ form.instance.pk }}-title">
+                {% blocktranslate %}Edit {{ form.instance.type }} step{% endblocktranslate %}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
+          </div>
+          <div class="modal-body">{% bootstrap_form form %}</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+            <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
+          </div>
+        </div>
+    </div>
     {% csrf_token %}
 </form>
 {% endfor %}

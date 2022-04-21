@@ -32,7 +32,6 @@ class PipelineEdit(
             'new_step_forms': { t: form_class() for t, form_class in self.form_classes.items() },
             'step_forms': [ self.form_classes[step.type](instance=step) for step in self.object.steps.all()]
         })
-        print(context_data['step_forms'])
         return context_data
 
     def get_success_url(self):
