@@ -15,7 +15,8 @@ class PipelineEdit(
     template_name_suffix = '_edit_form'
     success_message = "%(name)s was updated successfully"
     form_classes = {
-        PipelineStep.DELAY: DelayForm
+        PipelineStep.DELAY: DelayForm,
+        PipelineStep.GROUP: GroupForm
     }
 
     def form_valid(self, form):
@@ -30,7 +31,7 @@ class PipelineEdit(
         context_data.update({
             'step_types': PipelineStep.TYPE_CHOICES,
             'new_step_forms': { t: form_class() for t, form_class in self.form_classes.items() },
-            'step_forms': [ self.form_classes[step.type](instance=step) for step in self.object.steps.all()]
+            'step_forms': [ self.form_classes[step.type](instance=step.get_typed_instance()) for step in self.object.steps.all()]
         })
         return context_data
 

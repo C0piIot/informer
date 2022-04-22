@@ -12,6 +12,7 @@ class PipelineStep(models.Model):
 
 	TYPE_CHOICES = (
 		(DELAY, _('delay')),
+		(GROUP, _('group')),
 	)
 
 	pipeline = models.ForeignKey(
@@ -23,8 +24,11 @@ class PipelineStep(models.Model):
 	order = models.PositiveSmallIntegerField(_('order'))
 	type = models.CharField(_('type'), choices=TYPE_CHOICES, max_length=50)
 
+	def get_typed_instance(self):
+		return getattr(self, self.type)
+
 	def __str__(self):
-		return getattr(self, self.type).__str__()
+		return get_typed_instance().__str__()
 
 	def save(self, *args, **kwargs):
 		if self.TYPE:
@@ -33,7 +37,6 @@ class PipelineStep(models.Model):
 		self.id = None
 		self.pk = None
 		self._state.adding = True
-		print(self.pipeline.pk)
 		super().save(*args, **kwargs)
 
 	
