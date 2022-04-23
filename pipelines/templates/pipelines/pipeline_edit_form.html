@@ -126,7 +126,7 @@
     {% csrf_token %}
 </form>
 <form method="post" 
-    action=""
+    action="{% url 'pipelines:step_remove' current_environment.slug pipeline.id form.instance.pk %}"
     id="modal-delete-{{ form.instance.pk }}" 
     aria-labelledby="modal-delete-{{ form.instance.pk }}-title"
     class="modal" tabindex="-1" aria-hidden="true">

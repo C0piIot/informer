@@ -28,7 +28,7 @@ class PipelineStep(models.Model):
 		return getattr(self, self.type)
 
 	def __str__(self):
-		return get_typed_instance().__str__()
+		return self.get_typed_instance().__str__()
 
 	def save(self, *args, **kwargs):
 		if self.TYPE:
