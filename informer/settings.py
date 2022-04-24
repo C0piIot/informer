@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'configuration.apps.ConfigurationConfig',
     'pipelines.apps.PipelinesConfig',
-    'email_channel.apps.EmailChannelConfig',
 ]
 
 MIDDLEWARE = [
