@@ -6,8 +6,8 @@
 <div class="container">
 	<h1>{% trans "Edit pipeline" %}</h1>
     <div class="row">
-        <div class="col-md-4 order-md-last offset-md-2">
-            <div class="card mt-4">
+        <div class="col-md-4 order-md-last offset-md-2 mt-4">
+            <div class="card">
                 <div class="card-body">
                     <ul>
                         <li>{% translate "Name:" %} {{ pipeline.name }}</li>
@@ -34,9 +34,9 @@
         		</ul>
         	</div>
         </div>
-        <div class="col-md-4 offset-md-2">
+        <div class="col-md-4 offset-md-2 mt-4">
             {% for form in step_forms %}
-                <div class="card mt-4">
+                <div class="card mb-1">
                     <div class="card-header d-flex align-items-center">
                         <a class="text-decoration-none text-dark me-2 w-100" data-bs-toggle="modal" href="#modal-edit-{{ form.instance.pk }}">
                             {{ form.instance.get_type_display|title }}
@@ -50,7 +50,7 @@
                         {{ form.instance }}
                     </a>
                 </div>
-                {% if not forloop.last %}<div class="mt-4 text-center">⬇️</div>{% endif %}
+                {% if not forloop.last %}<div class="mb-1 text-center">⬇️</div>{% endif %}
             {% endfor %}
         </div>
     </div>
