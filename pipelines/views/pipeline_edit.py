@@ -16,7 +16,8 @@ class PipelineEdit(
     success_message = "%(name)s was updated successfully"
     form_classes = {
         PipelineStep.DELAY: DelayForm,
-        PipelineStep.GROUP: GroupForm
+        PipelineStep.GROUP: GroupForm,
+        PipelineStep.EMAIL: EmailForm
     }
 
     def form_valid(self, form):

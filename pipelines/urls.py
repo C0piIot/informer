@@ -1,5 +1,7 @@
 from .views import *
 from .views.steps import *
+from .models import *
+from .forms import *
 from django.urls import path, include
 
 app_name = 'pipelines'
@@ -12,7 +14,8 @@ urlpatterns = [
         path('<uuid:id>/edit/', PipelineEdit.as_view(), name='edit'),
         path('<uuid:id>/remove/', PipelineRemove.as_view(), name='remove'),
         path('<uuid:id>/<int:pk>/remove', StepRemove.as_view(), name='step_remove'),
-        path('<uuid:id>/delay/new', DelayCreate.as_view(), name='delay_new'),
-        path('<uuid:id>/group/new', GroupCreate.as_view(), name='group_new'),
+        path('<uuid:id>/delay/new', StepCreate.as_view(model=Delay, fields=('time',)), name='delay_new'),
+        path('<uuid:id>/group/new', StepCreate.as_view(model=Group, form_class=GroupForm), name='group_new'),
+        path('<uuid:id>/email/new', StepCreate.as_view(model=Email, form_class=EmailForm), name='email_new'),
     ]))
 ]
