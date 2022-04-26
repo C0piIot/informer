@@ -8,11 +8,12 @@ class PipelineStep(models.Model):
 
 	DELAY = 'delay'
 	GROUP = 'group'
-	SEND = 'send'
+	EMAIL = 'email'
 
 	TYPE_CHOICES = (
 		(DELAY, _('delay')),
 		(GROUP, _('group')),
+		(EMAIL, _('email'))
 	)
 
 	pipeline = models.ForeignKey(

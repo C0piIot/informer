@@ -36,4 +36,3 @@ class EmailChannel(Channel):
 	class Meta:
 		verbose_name = _('email channel')
 		verbose_name_plural = _('email channels')
-		app_label = 'configuration'
