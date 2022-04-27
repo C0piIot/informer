@@ -1,18 +1,18 @@
 {% load i18n django_bootstrap5 %}
 {% bootstrap_field form.subject %}
-<ul class="nav nav-tabs" id="myTab" role="tablist">
+<ul class="nav nav-tabs" id="tabs-{{ form.instance.pk|default:'new' }}" role="tablist">
   <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">{% translate "HTML" %}</button>
+    <button class="nav-link active" id="tab-html-{{ form.instance.pk|default:'new' }}" data-bs-toggle="tab" data-bs-target="#html-{{ form.instance.pk|default:'new' }}" type="button" role="tab" aria-controls="html-{{ form.instance.pk|default:'new' }}" aria-selected="true">{% translate "HTML" %}</button>
   </li>
   <li class="nav-item" role="presentation">
-    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">{% translate "Text" %}</button>
+    <button class="nav-link" id="tab-text-{{ form.instance.pk|default:'new' }}" data-bs-toggle="tab" data-bs-target="#text-{{ form.instance.pk|default:'new' }}" type="button" role="tab" aria-controls="text-{{ form.instance.pk|default:'new' }}" aria-selected="false">{% translate "Text" %}</button>
   </li>
 </ul>
-<div class="tab-content" id="myTabContent">
-  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+<div class="tab-content" id="tabs-content-{{ form.instance.pk|default:'new' }}">
+  <div class="tab-pane fade show active" id="html-{{ form.instance.pk|default:'new' }}" role="tabpanel" aria-labelledby="tab-html-{{ form.instance.pk|default:'new' }}">
   	{% bootstrap_field form.html_body %}
   </div>
-  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+  <div class="tab-pane fade" id="text-{{ form.instance.pk|default:'new' }}" role="tabpanel" aria-labelledby="tab-text-{{ form.instance.pk|default:'new' }}">
   	{% bootstrap_field form.text_body %}
   	{% bootstrap_field form.autogenerate_text %}
   </div>

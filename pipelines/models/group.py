@@ -8,4 +8,4 @@ class Group(PipelineStep):
     key = models.CharField(_('grouping key'), max_length=150)
 
     def __str__(self):
-        return "Group by %s" % self.key
+        return "⏬ Group by %s" % self.key

@@ -7,4 +7,4 @@ class Delay(PipelineStep):
     time = models.DurationField(_('time'))
 
     def __str__(self):
-        return "Delay %s" % self.time
+        return "⏲️ Delay %s" % self.time

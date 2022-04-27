@@ -28,7 +28,7 @@
     					</a>
     					<form class="d-inline" method="post" action="{% url 'pipelines:remove' current_environment.slug pipeline.id %}">
     						{% csrf_token %}
-    						<button title="{% translate 'Remove' %}" class="btn btn-sm btn-danger">🗑️</button>
+    						<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger">❌</button>
     					</form>
     				</td>
     			</tr>
