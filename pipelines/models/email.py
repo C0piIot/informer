@@ -7,6 +7,7 @@ class Email(SendChannel):
 	subject = models.CharField(_('subject'), max_length=200)
 	html_body = models.TextField(_('html body'))
 	text_body = models.TextField(_('text_body'))
+	autogenerate_text = models.BooleanField(_('autogenerate text'), default=True)
 
 	class Meta:
 		verbose_name = _('email template')

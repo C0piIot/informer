@@ -4,7 +4,7 @@ from django.utils.text import slugify
 
 class Environment(models.Model):
 	name = models.CharField(_('name'), max_length=50, unique=True)
-	slug = models.SlugField(_('slug'))
+	slug = models.SlugField(_('slug'), editable=False)
 
 	def __str__(self):
 		return self.name
