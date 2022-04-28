@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
-{% load i18n django_bootstrap5 %}
+{% load i18n django_bootstrap5 static %}
+
+{% block head-content %}
+{{ block.super }}
+<script type="module" src="{% static 'pipelines/email.js' %}"></script>
+{% endblock head-content %}
 
 {% block body-content %}
 {{ block.super }}
@@ -83,7 +88,7 @@
 	action="{% url 'pipelines:'|add:type|add:'_new' current_environment.slug pipeline.id %}"
     id="modal-add-{{ type }}" 
   	aria-labelledby="modal-add-{{ type }}-title"
-  	class="modal" tabindex="-1" aria-hidden="true">
+  	class="modal {{ type }}" tabindex="-1" aria-hidden="true">
 	<div class="modal-dialog modal-xl">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -107,12 +112,12 @@
     action=""
     id="modal-edit-{{ form.instance.pk }}" 
     aria-labelledby="modal-edit-{{ form.instance.pk }}-title"
-    class="modal" tabindex="-1" aria-hidden="true">
+    class="modal {{ form.instance.type }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="modal-edit-{{ form.instance.pk }}-title">
-                {% blocktranslate %}Edit {{ form.instance.type }} step{% endblocktranslate %}
+                {% blocktranslate with type=form.instance.get_type_display %}Edit {{ type }} step{% endblocktranslate %}
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
           </div>

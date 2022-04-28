@@ -32,7 +32,10 @@ class PipelineEdit(
         context_data.update({
             'step_types': PipelineStep.TYPE_CHOICES,
             'new_step_forms': { t: form_class() for t, form_class in self.form_classes.items() },
-            'step_forms': [ self.form_classes[step.type](instance=step.get_typed_instance()) for step in self.object.steps.all()]
+            'step_forms': [ 
+                self.form_classes[step.type](instance=step.get_typed_instance(), auto_id='id_%%s_%d' % step.pk) 
+                for step in self.object.steps.all()
+            ]
         })
         return context_data
 
