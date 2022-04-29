@@ -8,9 +8,19 @@
     <button class="nav-link" id="tab-text-{{ form.instance.pk|default:'new' }}" data-bs-toggle="tab" data-bs-target="#text-{{ form.instance.pk|default:'new' }}" type="button" role="tab" aria-controls="text-{{ form.instance.pk|default:'new' }}" aria-selected="false">{% translate "Text" %}</button>
   </li>
 </ul>
-<div class="tab-content" id="tabs-content-{{ form.instance.pk|default:'new' }}">
+<div class="tab-content pt-1" id="tabs-content-{{ form.instance.pk|default:'new' }}">
   <div class="tab-pane fade show active" id="html-{{ form.instance.pk|default:'new' }}" role="tabpanel" aria-labelledby="tab-html-{{ form.instance.pk|default:'new' }}">
-  	{% bootstrap_field form.html_body %}
+  	<div class="row">
+      <div class="col-lg-6">
+        {% bootstrap_field form.html_body %}
+      </div>
+      <div class="col-lg-6 d-flex flex-column">
+        <p class="mb-2">{% translate "Message preview" %}</p>
+        <output class="w-100 border rounded mb-3 flex-grow-1 d-flex align-items-stretch" for="{{ form.html_body.id_for_label }}">
+          <iframe class="w-100" srcdoc="{{ form.html_body.value|default:'' }}"></iframe>  
+        </output>
+      </div>
+    </div>
   </div>
   <div class="tab-pane fade" id="text-{{ form.instance.pk|default:'new' }}" role="tabpanel" aria-labelledby="tab-text-{{ form.instance.pk|default:'new' }}">
   	{% bootstrap_field form.text_body %}

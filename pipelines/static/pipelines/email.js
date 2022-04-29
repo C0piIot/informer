@@ -1,22 +1,37 @@
-let timers = {};
-
-const generateText = (htmlForm, textForm) => {
-	console.log('oju');
-};
+/* Strips html leaving only text */
+const stripHtml = (html) => (new DOMParser().parseFromString(html, 'text/html')).body.textContent || "";
 
 document.querySelectorAll('form.email').forEach((form) => {
 
-	timers[form.id] = null;
+	let timer = null;
+	const iframePreview = form.querySelector('iframe'), 
+		htmlBodyControl = form.elements['html_body'],
+		textBodyControl = form.elements['text_body'],
+		autoGenerateTextControl = form.elements['autogenerate_text'];
 
-	form.elements['html_body'].addEventListener("keyup", e => {
-		if(timers[form.id]) {
-			clearTimeout(timers[form.id]);
+	htmlBodyControl.addEventListener("keyup", () => {
+		
+		/* Use a timer to update preview and text only once in a while */
+		if(timer) {
+			clearTimeout(timer);
 		}
-		timers[form.id] = setTimeout(() => {
-			if(form.elements['autogenerate_text'].checked) {
-				generateText(form.elements['html_body'], form.elements['text_body']);
+		timer = setTimeout(() => {
+			/* Keep preview updated */
+			iframePreview.srcdoc = htmlBodyControl.value;
+
+			/* Keep text updated if enabled */
+			if(autoGenerateTextControl.checked) {
+				textBodyControl.value = stripHtml(htmlBodyControl.value);
 			}
-			timers[form.id] = null;
-		}, 500);		
+			timer = null;
+		}, 500);
 	});
+
+	/* Update text on enable control */
+	autoGenerateTextControl.addEventListener("change", () => {
+		if(autoGenerateTextControl.checked) {
+			textBodyControl.value = stripHtml(htmlBodyControl.value);
+		}
+	});
+
 });
