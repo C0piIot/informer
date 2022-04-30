@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+ {% block breadcrumbds %}
+ <li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
+ <li class="breadcrumb-item"><a href="{% url 'pipelines:home' current_environment %}">{{ current_environment }}</a></li>
+ <li class="breadcrumb-item"><a href="{% url 'pipelines:edit' current_environment.slug object_list.first.id %}">{{ object_list.first }}</a></li>
+ <li class="breadcrumb-item active" aria-current="page">{% translate "History" %}</li>
+ {% endblock breadcrumbds %}
+
+
+
 {% block body-content %}
 {{ block.super }}
 <div class="container">

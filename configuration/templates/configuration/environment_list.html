@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+
+{% block breadcrumbds %}
+<li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{% translate "Environments" %}</li>
+{% endblock breadcrumbds %}
+
+{% block body-content %}
+{{ block.super }}
+<div class="container">
+	<p class="mt-4 text-right">
+		<a class="btn btn-primary" href="">
+			{% translate "New environment" %}
+		</a>
+	</p>
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<tbody>
+    			{% for environment in object_list %}
+    			<tr>
+    				<td class="w-100">
+    					<a href="#" title="{% translate 'View' %}" class="text-decoration-none">
+    						{{ environment }}	
+    					</a>
+    				</td>
+    				<td class="text-nowrap">
+    					<a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-primary">
+    						✏️
+    					</a>
+    					<form class="d-inline" method="post" action="">
+    						{% csrf_token %}
+    						<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger">❌</button>
+    					</form>
+    				</td>
+    			</tr>
+    			{% endfor %}
+    		</tbody>
+		</table>
+	</div>
+</div>
+{% endblock body-content %}

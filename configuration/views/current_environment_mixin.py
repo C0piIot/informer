@@ -1,4 +1,4 @@
-from .models import Environment
+from configuration.models import Environment
 from django.shortcuts import get_object_or_404
 
 

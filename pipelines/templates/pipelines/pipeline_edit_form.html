@@ -6,6 +6,14 @@
 <script type="module" src="{% static 'pipelines/email.js' %}"></script>
 {% endblock head-content %}
 
+ {% block breadcrumbds %}
+ <li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
+ <li class="breadcrumb-item"><a href="{% url 'pipelines:home' current_environment %}">{{ current_environment }}</a></li>
+ <li class="breadcrumb-item active" aria-current="page">{{ pipeline }}</li>
+ {% endblock breadcrumbds %}
+
+
+
 {% block body-content %}
 {{ block.super }}
 <div class="container">
@@ -15,7 +23,7 @@
             <div class="card">
                 <div class="card-body">
                     <ul>
-                        <li>{% translate "Name:" %} {{ pipeline.name }}</li>
+                        <li>{% translate "Name:" %} {{ pipeline }}</li>
                         <li>{% translate "Trigger:" %} {{ pipeline.trigger }}</li>
                         <li>{% translate "Updated:" %} {{ pipeline.date }}</li>
                     </ul>

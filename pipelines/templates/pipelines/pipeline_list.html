@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+ {% block breadcrumbds %}
+ <li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
+ <li class="breadcrumb-item active" aria-current="page">{{ current_environment }}</li>
+ {% endblock breadcrumbds %}
+
 {% block body-content %}
 {{ block.super }}
 <div class="container">
