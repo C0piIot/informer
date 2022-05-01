@@ -1,12 +1,11 @@
 from django.views.generic.edit import CreateView
 from django.contrib.messages.views import SuccessMessageMixin
-from configuration.models import Environment
+from configuration.models import Environment, Account
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from configuration.forms import NewEnvironmentForm
 from django.utils.translation import gettext_lazy as _
-from django.db import transaction
 
 
 class EnvironmentCreate(SuccessMessageMixin, CreateView):
@@ -21,9 +20,8 @@ class EnvironmentCreate(SuccessMessageMixin, CreateView):
         messages.error(self.request, _("Error creating environment"))
         return HttpResponseRedirect(self.success_url)
 
-    def form_valid(self, form, **kwargs):
-        with transaction.atomic():
-            response = super().form_valid(form, **kwargs)
-            if form.cleaned_data['source_environment']:
-                self.object.pipelines.add(*form.cleaned_data['source_environment'].pipelines.all())
-            return response
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update(account=Account.objects.first())
+        return kwargs
+

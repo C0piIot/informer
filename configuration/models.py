@@ -2,7 +2,15 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 
+class Account(models.Model):
+	name = models.CharField(_('name'), max_length=50)
+
+	def __str__(self):
+		return self.name
+
+
 class Environment(models.Model):
+	account = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
 	name = models.CharField(_('name'), max_length=50, unique=True)
 	slug = models.SlugField(_('slug'), editable=False)
 
@@ -15,17 +23,20 @@ class Environment(models.Model):
 
 
 class Channel(models.Model):
-	name = models.CharField(_('name'), max_length=100, unique=True)
+	account = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
+	name = models.CharField(_('name'), max_length=100)
 	enabled = models.BooleanField(_('enabled'), default=True)
 
 	class Meta:
 		abstract = True
-		ordering = ('name',)
+		ordering = ('account', 'name',)
 		verbose_name = _('channel')
 		verbose_name_plural = _('channels')
+		unique_together = ('account', 'name')
 
 	def __str__(self):
 		return self.name
+
 
 class EmailChannel(Channel):
 	host = models.CharField(_('host'), max_length=100)

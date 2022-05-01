@@ -4,4 +4,7 @@ from configuration.models import Environment
 
 class HomeRedirect(RedirectView):
 	 def get_redirect_url(self, *args, **kwargs):
-	 	return reverse('pipelines:home', kwargs={'environment' : Environment.objects.first().slug })
+	 	if environment := Environment.objects.first():
+	 		return reverse('pipelines:home', kwargs={'environment' : environment.slug })
+	 	else:
+	 		return reverse('configuration:environment_list')
