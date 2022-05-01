@@ -7,11 +7,12 @@ from django.urls import reverse
 from django.contrib import messages
 from django.db import transaction
 from django.http import HttpResponseRedirect
+from django.utils.translation import gettext_lazy as _
 
 
 class StepCreate(CurrentEnvironmentMixin, SuccessMessageMixin, CreateView):
     pipeline = None
-    success_message = "Step was edited successfully"
+    success_message = _("Step was edited successfully")
 
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(self.get_success_url())
@@ -20,14 +21,14 @@ class StepCreate(CurrentEnvironmentMixin, SuccessMessageMixin, CreateView):
         super().setup(request, *args, **kwargs)
         self.pipeline = get_object_or_404(Pipeline, environments=self.current_environment, id=self.kwargs['id'])
 
-    def form_valid(self, form):
+    def form_valid(self, form, **kwargs):
         with transaction.atomic():
             self.pipeline.environments.remove(self.current_environment)
             self.pipeline.save()
             self.pipeline.environments.add(self.current_environment)
             form.instance.order = self.pipeline.steps.count()
             form.instance.pipeline = self.pipeline
-            return super().form_valid(form)
+            return super().form_valid(form, **kwargs)
 
     def form_invalid(self, form, **kwargs):
         messages.error(self.request, "Error creating step")

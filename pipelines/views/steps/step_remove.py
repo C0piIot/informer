@@ -6,11 +6,12 @@ from pipelines.models import Pipeline, PipelineStep
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.db import transaction
+from django.utils.translation import gettext_lazy as _
 
 
 class StepRemove(CurrentEnvironmentMixin, DeleteView):
     pipeline = None
-    success_message = "Step was removed successfully"
+    success_message = _("Step was removed successfully")
     model = PipelineStep
 
     def get_queryset(self):
@@ -25,7 +26,7 @@ class StepRemove(CurrentEnvironmentMixin, DeleteView):
 
     def form_valid(self, form):
         with transaction.atomic():
-            success_message =  "Step %s was removed successfully" % self.object
+            success_message =  _("Step %s was removed successfully") % self.object
             self.pipeline.environments.remove(self.current_environment)
             self.pipeline.save()
             self.pipeline.environments.add(self.current_environment)
@@ -34,7 +35,7 @@ class StepRemove(CurrentEnvironmentMixin, DeleteView):
             return super().form_valid(form)
 
     def form_invalid(self, form, **kwargs):
-        messages.error(self.request, "Error deleting step")
+        messages.error(self.request, _("Error deleting step"))
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):

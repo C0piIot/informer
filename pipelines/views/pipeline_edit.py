@@ -5,6 +5,7 @@ from pipelines.models import PipelineStep
 from django.db import transaction
 from .pipeline_filtered_mixin import PipelineFilteredMixin
 from pipelines.forms import *
+from django.utils.translation import gettext_lazy as _
 
 class PipelineEdit(
     PipelineFilteredMixin,
@@ -13,17 +14,17 @@ class PipelineEdit(
 ):
     fields = ('name', 'trigger', 'enabled')
     template_name_suffix = '_edit_form'
-    success_message = "%(name)s was updated successfully"
+    success_message = _("%(name)s was updated successfully")
     form_classes = {
         PipelineStep.DELAY: DelayForm,
         PipelineStep.GROUP: GroupForm,
         PipelineStep.EMAIL: EmailForm
     }
 
-    def form_valid(self, form):
+    def form_valid(self, form, **kwargs):
         with transaction.atomic():
             self.object.environments.remove(self.current_environment)
-            response = super().form_valid(form)
+            response = super().form_valid(form, **kwargs)
             self.object.environments.add(self.current_environment)
         return response
 

@@ -3,12 +3,13 @@ from django.views.generic.edit import CreateView
 from django.contrib.messages.views import SuccessMessageMixin
 from configuration.views import CurrentEnvironmentMixin
 from pipelines.models import Pipeline
+from django.utils.translation import gettext_lazy as _
 
 class PipelineCreate(CurrentEnvironmentMixin, SuccessMessageMixin, CreateView):
     model = Pipeline
     fields = ('name', 'trigger',)
     template_name_suffix = '_create_form'
-    success_message = "%(name)s was created successfully"
+    success_message = _("%(name)s was created successfully")
 
     def form_valid(self, form):
         response = super().form_valid(form)
