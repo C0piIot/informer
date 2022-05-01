@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 class Pipeline(models.Model):
 	id = models.UUIDField(_('id'), default=uuid4, editable=False)
 	revision = models.UUIDField(_('revision'), primary_key=True, default=uuid4, editable=False)
+	account = models.ForeignKey('configuration.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
 	date = models.DateTimeField(_('date'), auto_now_add=True)
 	environments = models.ManyToManyField('configuration.Environment', related_name='pipelines')
 	name = models.CharField(_('name'), max_length=150)
