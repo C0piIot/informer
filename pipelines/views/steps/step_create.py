@@ -18,7 +18,7 @@ class StepCreate(CurrentEnvironmentMixin, SuccessMessageMixin, CreateView):
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.pipeline = Pipeline.objects.get(environments=self.current_environment, id=self.kwargs['id'])
+        self.pipeline = get_object_or_404(Pipeline, environments=self.current_environment, id=self.kwargs['id'])
 
     def form_valid(self, form):
         with transaction.atomic():

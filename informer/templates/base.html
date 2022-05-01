@@ -27,7 +27,11 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="environmentSelector">
                   {% for environment in environments %}
-                    <li><a class="dropdown-item" href="#">{{ environment }}</a></li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 'pipelines:home' environment.slug %}">
+                        {{ environment }}
+                      </a>
+                    </li>
                   {% endfor %}
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" href="{% url 'configuration:environment_list' %}">{% trans "Manage…" %}</a></li>

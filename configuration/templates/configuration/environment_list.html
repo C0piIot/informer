@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n django_bootstrap5 %}
 
 
 {% block breadcrumbds %}
@@ -11,9 +11,9 @@
 {{ block.super }}
 <div class="container">
 	<p class="mt-4 text-right">
-		<a class="btn btn-primary" href="">
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-create">
 			{% translate "New environment" %}
-		</a>
+		</button>
 	</p>
 	<div class="table-responsive">
 		<table class="table table-hover">
@@ -29,10 +29,9 @@
     					<a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-primary">
     						✏️
     					</a>
-    					<form class="d-inline" method="post" action="">
-    						{% csrf_token %}
-    						<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger">❌</button>
-    					</form>
+    					<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ environment.pk }}">
+    						❌
+    					</button>
     				</td>
     			</tr>
     			{% endfor %}
@@ -40,4 +39,52 @@
 		</table>
 	</div>
 </div>
+{% for environment in object_list %}
+<form method="post" 
+    action="{% url 'configuration:environment_remove' environment.slug %}"
+    id="modal-delete-{{ environment.pk }}" 
+    aria-labelledby="modal-delete-{{ environment.pk }}-title"
+    class="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-delete-{{ environment.pk }}-title">
+                {% blocktranslate %}Remove {{ environment }}{% endblocktranslate %}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
+          </div>
+          <div class="modal-body">
+              {% translate "Are you sure you want to remove this environment?" %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+            <button type="submit" class="btn btn-danger">{% translate "Remove" %}</button>
+          </div>
+        </div>
+    </div>
+    {% csrf_token %}
+</form>
+{% endfor %}
+<form 
+    action="{% url 'configuration:environment_new' %}" method="post"
+    id="modal-create" 
+    aria-labelledby="modal-create-title"
+    class="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-create-title">
+                {% blocktranslate %}New environment{% endblocktranslate %}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
+          </div>
+          <div class="modal-body">{% bootstrap_form new_environment_form %}</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+            <button type="submit" class="btn btn-primary">{% translate "Create" %}</button>
+          </div>
+        </div>
+    </div>
+    {% csrf_token %}
+</form>
 {% endblock body-content %}
