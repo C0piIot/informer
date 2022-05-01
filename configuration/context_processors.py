@@ -1,5 +1,4 @@
-from .models import Environment
+from .models import Account
 
-
-def environments(request):
-    return {'environments': Environment.objects.all() }
+def account(request):
+    return {'account': Account.objects.first() }

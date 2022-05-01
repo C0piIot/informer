@@ -1,14 +1,15 @@
-from configuration.models import Environment, Account
+from configuration.models import Environment
+from .current_account_mixin import CurrentAccountMixin
 from django.shortcuts import get_object_or_404
 
 
-class CurrentEnvironmentMixin(object):
+class CurrentEnvironmentMixin(CurrentAccountMixin):
 	current_environment = None
 
 	def setup(self, request, *args, **kwargs):
 		super().setup(request, *args, **kwargs)
 		if 'environment' in kwargs:
-			self.current_environment = get_object_or_404(Environment, slug=kwargs['environment'], account=Account.objects.first())
+			self.current_environment = get_object_or_404(Environment, slug=kwargs['environment'], account=self.current_account)
 		
 
 	def get_context_data(self, **kwargs):

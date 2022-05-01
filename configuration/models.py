@@ -10,7 +10,7 @@ class Account(models.Model):
 
 
 class Environment(models.Model):
-	account = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
+	account = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name=_('account'), editable=False, related_name='environments')
 	name = models.CharField(_('name'), max_length=50, unique=True)
 	slug = models.SlugField(_('slug'), editable=False)
 
