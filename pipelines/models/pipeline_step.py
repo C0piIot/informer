@@ -19,17 +19,19 @@ class PipelineStep(models.Model):
     pipeline = models.ForeignKey(Pipeline, on_delete=models.CASCADE, verbose_name=_('pipeline'), related_name='steps', editable=False)
     account = models.ForeignKey('configuration.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
     order = models.PositiveSmallIntegerField(_('order'))
-    type = models.CharField(_('type'), choices=TYPE_CHOICES, max_length=50, editable=False)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, editable=False)
 
     def get_typed_instance(self):
-        return getattr(self, self.type)
+        return getattr(self, self.content_type.model)
 
     def __str__(self):
         return self.get_typed_instance().__str__()
 
     def save(self, *args, **kwargs):
-        if self.TYPE:
-        	self.type = self.TYPE
+        if not self.content_type_id:
+            content_type = ContentType.objects.get_for_model(self, for_concrete_model=True)
+            if content_type.model_class() != Channel:
+                self.content_type = content_type
         self.account = self.pipeline.account
         self.id = None
         self.pk = None

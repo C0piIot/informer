@@ -6,7 +6,7 @@ class ChannelList(CurrentAccountMixin, ListView):
     model = Channel
 
     def get_queryset(self, **kwargs):
-        return super().get_queryset(**kwargs).filter(account=self.current_account)
+        return super().get_queryset(**kwargs)#.filter(account=self.current_account)
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
