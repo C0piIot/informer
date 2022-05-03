@@ -6,6 +6,7 @@ from django.db import transaction
 from .pipeline_filtered_mixin import PipelineFilteredMixin
 from pipelines.forms import *
 from django.utils.translation import gettext_lazy as _
+from django.contrib.contenttypes.models import ContentType
 
 class PipelineEdit(
     PipelineFilteredMixin,
@@ -15,10 +16,12 @@ class PipelineEdit(
     fields = ('name', 'trigger', 'enabled')
     template_name_suffix = '_edit_form'
     success_message = _("%(name)s was updated successfully")
-    form_classes = {
-        PipelineStep.DELAY: DelayForm,
-        PipelineStep.GROUP: GroupForm,
-        PipelineStep.EMAIL: EmailForm
+    form_classes = { 
+        form_class.Meta.model : form_class for form_class in [
+            DelayForm, 
+            GroupForm, 
+            EmailForm 
+        ]
     }
 
     def form_valid(self, form, **kwargs):
@@ -30,11 +33,14 @@ class PipelineEdit(
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
+
+        content_types = ContentType.objects.get_for_models(*self.form_classes.keys())
+
         context_data.update({
-            'step_types': PipelineStep.TYPE_CHOICES,
-            'new_step_forms': { t: form_class() for t, form_class in self.form_classes.items() },
+            'step_types': content_types.values(),
+            'new_step_forms': { content_types[model].model : form_class() for model ,form_class in self.form_classes.items() },
             'step_forms': [ 
-                self.form_classes[step.type](instance=step.get_typed_instance(), auto_id='id_%%s_%d' % step.pk) 
+                self.form_classes[type(step.get_typed_instance())](instance=step.get_typed_instance(), auto_id='id_%%s_%d' % step.pk) 
                 for step in self.object.steps.all()
             ]
         })

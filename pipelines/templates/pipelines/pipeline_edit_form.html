@@ -37,10 +37,10 @@
         		{% translate "New step" %}
         		</button>
           		<ul class="dropdown-menu" aria-labelledby="addStep">
-        		    {% for type, name in step_types %}
+        		    {% for content_type in step_types %}
                         <li>
-                            <a class="dropdown-item" data-bs-toggle="modal" href="#modal-add-{{ type }}">
-                                {{ name|title }}
+                            <a class="dropdown-item" data-bs-toggle="modal" href="#modal-add-{{ content_type.model }}">
+                                {{ content_type.name|title }}
                             </a>
                         </li>
         		    {% endfor %}
@@ -120,16 +120,16 @@
     action=""
     id="modal-edit-{{ form.instance.pk }}" 
     aria-labelledby="modal-edit-{{ form.instance.pk }}-title"
-    class="modal {{ form.instance.type }}" tabindex="-1" aria-hidden="true">
+    class="modal {{ form.instance.content_type.model }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="modal-edit-{{ form.instance.pk }}-title">
-                {% blocktranslate with type=form.instance.get_type_display %}Edit {{ type }} step{% endblocktranslate %}
+                {% blocktranslate with type=form.instance.content_type.name %}Edit {{ type }} step{% endblocktranslate %}
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
           </div>
-          <div class="modal-body">{% include "pipelines/steps/"|add:form.instance.type|add:".html" %}</div>
+          <div class="modal-body">{% include "pipelines/steps/"|add:form.instance.content_type.model|add:".html" %}</div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
             <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
@@ -147,7 +147,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="modal-delete-{{ form.instance.pk }}-title">
-                {% blocktranslate %}Delete {{ form.instance.type }} step{% endblocktranslate %}
+                {% blocktranslate %}Delete {{ form.instance.content_type.name }} step{% endblocktranslate %}
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
           </div>

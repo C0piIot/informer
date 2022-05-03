@@ -19,7 +19,7 @@ class Pipeline(models.Model):
 		super().save(**kwargs)
 		for step in steps:
 			# We need to call save() from the child class
-			step = getattr(step, step.type)
+			step = step.get_typed_instance()
 			step.pipeline = self
 			step.save(*args, **kwargs)
 

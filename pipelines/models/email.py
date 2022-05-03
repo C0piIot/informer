@@ -5,7 +5,6 @@ from .pipeline_step import PipelineStep
 
 
 class Email(SendChannel):
-    TYPE = PipelineStep.EMAIL
     email_channel = models.ForeignKey('configuration.EmailChannel', on_delete=models.CASCADE, verbose_name=_('email channel'))
     subject = models.CharField(_('subject'), max_length=200)
     html_body = models.TextField(_('html body message'))

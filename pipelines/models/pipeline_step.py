@@ -1,21 +1,10 @@
 from django.db import models
 from uuid import uuid4 
 from django.utils.translation import gettext_lazy as _
+from django.contrib.contenttypes.models import ContentType
 from .pipeline import Pipeline
 
 class PipelineStep(models.Model):
-    TYPE = None
-
-    DELAY = 'delay'
-    GROUP = 'group'
-    EMAIL = 'email'
-
-    TYPE_CHOICES = (
-        (DELAY, _('delay')),
-        (GROUP, _('group')),
-        (EMAIL, _('email'))
-    )
-
     pipeline = models.ForeignKey(Pipeline, on_delete=models.CASCADE, verbose_name=_('pipeline'), related_name='steps', editable=False)
     account = models.ForeignKey('configuration.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
     order = models.PositiveSmallIntegerField(_('order'))
@@ -30,7 +19,7 @@ class PipelineStep(models.Model):
     def save(self, *args, **kwargs):
         if not self.content_type_id:
             content_type = ContentType.objects.get_for_model(self, for_concrete_model=True)
-            if content_type.model_class() != Channel:
+            if content_type.model_class() != PipelineStep:
                 self.content_type = content_type
         self.account = self.pipeline.account
         self.id = None
