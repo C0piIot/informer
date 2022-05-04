@@ -28,5 +28,9 @@
   </div>
 </div>
 <hr>
-{% bootstrap_field form.email_channel %}
+<div class="row">
+  <div class="col">{% bootstrap_field form.email_channel %}</div>
+  <div class="col d-flex align-items-center">
+    <a href="{% url 'configuration:channel_list' %}" target="_blank">{% translate "Manage channels…" %}⧉</a>
+  </div>
 {% bootstrap_field form.only_unread %}

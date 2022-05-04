@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load i18n django_bootstrap5 %}
+
+
+{% block breadcrumbds %}
+<li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{% translate "Channels" %}</li>
+{% endblock breadcrumbds %}
+
+{% block body-content %}
+{{ block.super }}
+<div class="container">
+	<div class="dropdown mt-4">
+		<button class="btn btn-secondary dropdown-toggle" type="button" id="newChannel" data-bs-toggle="dropdown" aria-expanded="false">
+		{% translate "New channel" %}
+		</button>
+  		<ul class="dropdown-menu" aria-labelledby="newChannel">
+		    {% for content_type in new_channel_forms.keys %}
+                <li>
+                    <a class="dropdown-item" data-bs-toggle="modal" href="#modal-add-{{ content_type.model }}">
+                        {{ content_type.name|title }}
+                    </a>
+                </li>
+		    {% endfor %}
+		</ul>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<tbody>
+    			{% for channel in object_list %}
+    			<tr>
+    				<td class="w-100">
+    					<a href="#" title="{% translate 'View' %}" class="text-decoration-none">
+    						{{ channel }}	
+    					</a>
+    				</td>
+    				<td class="text-nowrap">
+    					<a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-primary">
+    						✏️
+    					</a>
+    					<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ environment.pk }}">
+    						❌
+    					</button>
+    				</td>
+    			</tr>
+    			{% endfor %}
+    		</tbody>
+		</table>
+	</div>
+</div>
+{% for content_type, form in new_channel_forms.items %}
+<form method="post" 
+	action=""
+    id="modal-add-{{ content_type.model }}" 
+  	aria-labelledby="modal-new-{{ content_type.model }}-title"
+  	class="modal {{ content_type.model }}" tabindex="-1" aria-hidden="true">
+	<div class="modal-dialog modal-xl">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="modal-new-{{ content_type.model }}-title">
+	            {% blocktranslate %}Add {{ content_type.name }}{% endblocktranslate %}
+	        </h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
+	      </div>
+          <div class="modal-body">{% include "configuration/channels/"|add:content_type.model|add:".html" %}</div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+	        <button type="submit" class="btn btn-primary">{% translate "Save" %}</button>
+	      </div>
+	    </div>
+  	</div>
+    {% csrf_token %}
+</form>
+{% endfor %}
+{% endblock body-content %}
