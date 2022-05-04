@@ -4,4 +4,4 @@ from pipelines.models import Group
 class GroupForm(ModelForm):
     class Meta:
         model = Group
-        fields = ['key', 'window']
+        fields = ('key', 'window',)

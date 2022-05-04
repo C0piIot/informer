@@ -4,3 +4,4 @@ from .environment_list import EnvironmentList
 from .environment_create import EnvironmentCreate
 from .environment_remove import EnvironmentRemove
 from .channel_list import ChannelList
+from .channel_create import ChannelCreate

@@ -9,10 +9,14 @@ class Account(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = _('account')
+        verbose_name_plural = _('accounts')
+
 
 class Environment(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name=_('account'), editable=False, related_name='environments')
-    name = models.CharField(_('name'), max_length=50, unique=True)
+    name = models.CharField(_('name'), max_length=50)
     slug = models.SlugField(_('slug'), editable=False)
 
     def __str__(self):
@@ -21,6 +25,11 @@ class Environment(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(**kwargs)
+
+    class Meta:
+        unique_together = ('account', 'name')
+        verbose_name = _('environment')
+        verbose_name_plural = _('environments')
 
 
 class Channel(models.Model):

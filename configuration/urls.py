@@ -6,12 +6,12 @@ app_name = 'configuration'
 urlpatterns = [
     path('environments/', include([
         path('', EnvironmentList.as_view(), name='environment_list'),
-        path('new/', EnvironmentCreate.as_view(), name='environment_new'),
+        path('create/', EnvironmentCreate.as_view(), name='environment_create'),
         path('<slug:slug>/remove/', EnvironmentRemove.as_view(), name='environment_remove'),
     ])),
     path('channels/', include([
         path('', ChannelList.as_view(), name='channel_list'),
-        #path('new/', EnvironmentCreate.as_view(), name='environment_new'),
+        path('create/', ChannelCreate.as_view(), name='channel_create'),
         #path('<slug:slug>/remove/', EnvironmentRemove.as_view(), name='environment_remove'),
     ])),
 ]

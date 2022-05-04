@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n django_bootstrap5 %}
 
  {% block breadcrumbds %}
  <li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
@@ -10,7 +10,7 @@
 {{ block.super }}
 <div class="container">
 	<p class="mt-4 text-right">
-		<a class="btn btn-primary" href="{% url 'pipelines:new' current_environment.slug %}">
+		<a class="btn btn-primary" data-bs-toggle="modal" href="#modal-create-pipeline">
 			{% translate "New pipeline" %}
 		</a>
 	</p>
@@ -42,4 +42,26 @@
 		</table>
 	</div>
 </div>
+<form
+    action="{% url 'pipelines:create' current_environment.slug %}" method="post"
+    id="modal-create-pipeline" 
+    aria-labelledby="modal-create-pipeline-title"
+    class="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-create-pipeline-title">
+                {% blocktranslate %}Create new pipeline{% endblocktranslate %}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
+          </div>
+          <div class="modal-body">{% bootstrap_form pipeline_form %}</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+            <button type="submit" class="btn btn-primary">{% translate "Save" %}</button>
+          </div>
+        </div>
+    </div>
+    {% csrf_token %}
+</form>
 {% endblock body-content %}

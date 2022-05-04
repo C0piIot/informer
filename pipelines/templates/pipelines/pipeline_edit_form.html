@@ -68,7 +68,6 @@
         </div>
     </div>
 </div>
-
 <form 
     action="{% url 'pipelines:edit' current_environment.slug pipeline.id %}" method="post"
     id="modal-edit-pipeline" 
@@ -93,7 +92,7 @@
 </form>
 {% for type, form in new_step_forms.items %}
 <form method="post" 
-	action="{% url 'pipelines:'|add:type|add:'_new' current_environment.slug pipeline.id %}"
+	action="{% url 'pipelines:'|add:type|add:'_create' current_environment.slug pipeline.id %}"
     id="modal-add-{{ type }}" 
   	aria-labelledby="modal-add-{{ type }}-title"
   	class="modal {{ type }}" tabindex="-1" aria-hidden="true">
