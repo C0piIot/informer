@@ -11,7 +11,7 @@ urlpatterns = [
     ])),
     path('channels/', include([
         path('', ChannelList.as_view(), name='channel_list'),
-        path('create/', ChannelCreate.as_view(), name='channel_create'),
+        path('<slug:type>/create/', ChannelCreate.as_view(), name='channel_create'),
         #path('<slug:slug>/remove/', EnvironmentRemove.as_view(), name='environment_remove'),
     ])),
 ]

@@ -50,7 +50,7 @@
 </div>
 {% for content_type, form in new_channel_forms.items %}
 <form method="post" 
-	action=""
+	action="{% url 'configuration:channel_create' content_type.model %}"
     id="modal-add-{{ content_type.model }}" 
   	aria-labelledby="modal-new-{{ content_type.model }}-title"
   	class="modal {{ content_type.model }}" tabindex="-1" aria-hidden="true">
@@ -58,7 +58,7 @@
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h5 class="modal-title" id="modal-new-{{ content_type.model }}-title">
-	            {% blocktranslate %}Add {{ content_type.name }}{% endblocktranslate %}
+	            {% blocktranslate with name=content_type.name %}Add {{ name }}{% endblocktranslate %}
 	        </h5>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
 	      </div>
