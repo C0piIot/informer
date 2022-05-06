@@ -14,8 +14,8 @@ class ChannelList(CurrentAccountMixin, ListView):
         ]
     }
 
-    def get_queryset(self, **kwargs):
-        return super().get_queryset(**kwargs)#.filter(account=self.current_account)
+    def get_queryset(self):
+        return super().get_queryset()#.filter(account=self.current_account)
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -25,6 +25,11 @@ class ChannelList(CurrentAccountMixin, ListView):
                 content_type : self.form_classes[model_class](account=self.current_account) 
                     for model_class , content_type in ContentType.objects.get_for_models(*self.form_classes.keys()).items() 
             },
+            'channel_forms': [self.form_classes[type(channel.get_typed_instance())](
+                    instance=channel.get_typed_instance(), 
+                    auto_id='id_%%s_%d' % channel.pk,
+                    account=self.current_account
+                ) for channel in self.get_queryset()]
         })
 
         return context_data
