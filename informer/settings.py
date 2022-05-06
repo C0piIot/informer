@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_bootstrap5',
     'configuration.apps.ConfigurationConfig',
     'pipelines.apps.PipelinesConfig',
+    'contacts.apps.ContactsConfig',
 ]
 
 MIDDLEWARE = [
