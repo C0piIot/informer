@@ -7,4 +7,5 @@ urlpatterns = [
     path('pipelines/', include('pipelines.urls')),
     path('config/', include('configuration.urls')),
     path('admin/', admin.site.urls),
+    path('contacts/', include('contacts.urls')),
 ]
