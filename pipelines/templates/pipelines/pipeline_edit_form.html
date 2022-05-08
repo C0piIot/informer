@@ -92,7 +92,7 @@
 </form>
 {% for type, form in new_step_forms.items %}
 <form method="post" 
-	action="{% url 'pipelines:'|add:type|add:'_create' current_environment.slug pipeline.id %}"
+	action="{% url 'pipelines:step_create' current_environment.slug pipeline.id type %}"
     id="modal-add-{{ type }}" 
   	aria-labelledby="modal-add-{{ type }}-title"
   	class="modal {{ type }}" tabindex="-1" aria-hidden="true">
