@@ -4,12 +4,12 @@ class ContactStorage(ABC):
     
     @classmethod
     @abstractmethod
-    def get_contacts(cls, environment, start_id, amount=50, **filters):
+    def get_contacts(cls, environment, start_key, amount=50, **filters):
         pass
 
     @classmethod
     @abstractmethod
-    def get_contact(cls, environment, id):
+    def get_contact(cls, environment, key):
         pass
 
     @classmethod
@@ -19,5 +19,5 @@ class ContactStorage(ABC):
 
     @classmethod
     @abstractmethod
-    def delete_contact(cls, environment, id):
+    def delete_contact(cls, environment, key):
         pass
