@@ -4,5 +4,7 @@ from django.urls import path, include
 app_name = 'contacts'
 
 urlpatterns = [
-    path('', ContactList.as_view(), name='contact_list'),
+    path('<slug:environment>/', include([
+        path('', ContactList.as_view(), name='contact_list'),
+    ]))
 ]
