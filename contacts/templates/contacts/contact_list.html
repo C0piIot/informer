@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n django_bootstrap5 %}
+{% load i18n %}
 
 
 {% block breadcrumbds %}
@@ -11,7 +11,7 @@
 {{ block.super }}
 <div class="container">
 	
-	<button class="btn btn-secondary" type="button">
+	<button class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#modal-new">
 		{% translate "New contact" %}
 	</button>
   	<div class="table-responsive">
@@ -39,6 +39,28 @@
 	</div>
 </div>
 
+<form method="post" 
+    action=""
+    id="modal-new" 
+    aria-labelledby="modal-new-title"
+    class="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-new-title">
+                {% trans "New contact" %}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
+          </div>
+          <div class="modal-body">{% include "contacts/contact_form.html" %}</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+            <button type="submit" class="btn btn-primary">{% translate "Create" %}</button>
+          </div>
+        </div>
+    </div>
+    {% csrf_token %}
+</form>
 {% for form in contact_forms %}
 <form method="post" 
     action="{% url 'configuration:channel_update' form.instance.pk %}"
@@ -53,7 +75,7 @@
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
           </div>
-          <div class="modal-body">{% include "configuration/channels/"|add:form.instance.content_type.model|add:".html" %}</div>
+          <div class="modal-body">{% include "contacts/contact_form.html" %}</div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
             <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
