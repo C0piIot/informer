@@ -5,8 +5,10 @@ from django.contrib.messages.views import SuccessMessageMixin
 from .current_account_mixin import CurrentAccountMixin
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
-from configuration.forms import channel_form_classes
 from django.contrib.contenttypes.models import ContentType
+from django.utils.module_loading import import_string
+from django.http import Http404
+from django.conf import settings
 
 class ChannelCreate(CurrentAccountMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('configuration:channel_list')
@@ -14,8 +16,14 @@ class ChannelCreate(CurrentAccountMixin, SuccessMessageMixin, CreateView):
 
     def get_form_class(self):
         try:
-            content_type = ContentType.objects.get_by_natural_key('configuration', self.kwargs['type'])
-            return channel_form_classes[content_type.model_class()]
+            return import_string(
+                settings.CHANNEL_CONFIG_FORMS[
+                    ContentType.objects.get_by_natural_key(
+                        'configuration',
+                        self.kwargs['type']
+                    ).model
+                ]
+            )
         except (ContentType.DoesNotExist, KeyError):
             raise Http404
 
