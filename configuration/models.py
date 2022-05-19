@@ -33,7 +33,7 @@ class Environment(models.Model):
 
 
 class Channel(models.Model):
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name=_('account'), editable=False, related_name='channels')
     name = models.CharField(_('name'), max_length=100)
     enabled = models.BooleanField(_('enabled'), default=True)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, editable=False)

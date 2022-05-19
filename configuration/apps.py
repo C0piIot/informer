@@ -6,7 +6,7 @@ class ConfigurationConfig(AppConfig):
     name = 'configuration'
     DEFAULT_SETTINGS = {
         'CHANNEL_CONTACT_FORMS' : {
-            'emailchannel': 'contacts.forms.EmailContactForm',
+            'emailchannel': 'configuration.forms.EmailContactForm',
         },
         'CHANNEL_CONFIG_FORMS' : {
             'emailchannel': 'configuration.forms.EmailChannelForm',
