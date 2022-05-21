@@ -6,5 +6,6 @@ app_name = 'contacts'
 urlpatterns = [
     path('<slug:environment>/', include([
         path('', ContactList.as_view(), name='list'),
+        path('create/', ContactCreate.as_view(), name='contact_create'),
     ]))
 ]
