@@ -10,7 +10,7 @@ class ContactForm(forms.ModelForm):
     channel_forms = None
     channels = forms.ModelMultipleChoiceField(
         required=False, 
-        label=_('channels'), 
+        label=_('Channels'), 
         widget=forms.CheckboxSelectMultiple,
         queryset=Channel.objects.none()
     )
@@ -32,8 +32,6 @@ class ContactForm(forms.ModelForm):
             contact.save()
         return contact
 
-
     class Meta:
         model = Contact
-        fields = ('name', 'contact_data', 'index1', 'index2', 'index3', 'index4', 'index5', 'index6')
-        widgets = { 'contact_data' : forms.HiddenInput }
+        fields = ('name', 'index1', 'index2', 'index3', 'index4', 'index5', 'index6')

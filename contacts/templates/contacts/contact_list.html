@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
+
+{% block head-content %}
+{{ block.super }}
+<script type="module" src="{% static 'contacts/contact.js' %}"></script>
+{% endblock head-content %}
 
 
 {% block breadcrumbds %}
@@ -43,7 +48,7 @@
     action=""
     id="modal-new" 
     aria-labelledby="modal-new-title"
-    class="modal" tabindex="-1" aria-hidden="true">
+    class="modal contact" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">

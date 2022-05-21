@@ -1,16 +1,32 @@
-{% load django_bootstrap5 %}
-
-{% bootstrap_field form.name %}
-<div class="row">
-	<div class="col-6">{% bootstrap_field form.index1 %}</div>
-	<div class="col-6">{% bootstrap_field form.index2 %}</div>
-	<div class="col-6">{% bootstrap_field form.index3 %}</div>
-	<div class="col-6">{% bootstrap_field form.index4 %}</div>
-	<div class="col-6">{% bootstrap_field form.index5 %}</div>
-	<div class="col-6">{% bootstrap_field form.index6 %}</div>
+{% load i18n django_bootstrap5 %}
+<nav>
+  <div class="nav nav-tabs" role="tablist">
+    <button class="nav-link active" id="tab-contact-data-new" data-bs-toggle="tab" data-bs-target="#contact-data-new" type="button" role="tab" aria-controls="contact-data-new" aria-selected="true">
+    	{% translate "Contact data" %}
+    </button>
+    {% for channel in form.channel_forms %}
+    <button class="nav-link  channel-{{ channel.pk }}" id="tab-channel-new-{{ channel.pk }}" data-bs-toggle="tab" data-bs-target="#channel-new-{{ channel.pk }}" type="button" role="tab" aria-controls="channel-new-{{ channel.pk }}" aria-selected="false"{% if  2 > 1 %} hidden{% endif %}>
+    	{{ channel }}
+    </button>
+    {% endfor %}
+  </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+  <div class="tab-pane fade show active" id="contact-data-new" role="tabpanel" aria-labelledby="tab-contact-data-new">
+	{% bootstrap_field form.name %}  	
+	<div class="row">
+		<div class="col-6">{% bootstrap_field form.index1 %}</div>
+		<div class="col-6">{% bootstrap_field form.index2 %}</div>
+		<div class="col-6">{% bootstrap_field form.index3 %}</div>
+		<div class="col-6">{% bootstrap_field form.index4 %}</div>
+		<div class="col-6">{% bootstrap_field form.index5 %}</div>
+		<div class="col-6">{% bootstrap_field form.index6 %}</div>
+	</div>
+	{% bootstrap_field form.channels %}
+  </div>
+  {% for channel, channel_form in form.channel_forms.items %}
+  <div class="tab-pane fade channel-{{ channel.pk }}" id="channel-new-{{ channel.pk }}" role="tabpanel" aria-labelledby="tab-channel-new-{{ channel.pk }}">
+  	{% bootstrap_form channel_form %}
+  </div>
+  {% endfor %}
 </div>
-{% bootstrap_field form.contact_data %}
-{% bootstrap_field form.channels %}
-{% for channel, channel_form in form.channel_forms.items %}
-{% bootstrap_form channel_form %}
-{% endfor %}

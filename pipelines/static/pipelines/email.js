@@ -1,7 +1,7 @@
 /* Strips html leaving only text */
 const stripHtml = (html) => (new DOMParser().parseFromString(html, 'text/html')).body.textContent || "";
 
-document.querySelectorAll('form.email').forEach((form) => {
+document.querySelectorAll('form.email').forEach(form => {
 
 	let timer = null;
 	const iframePreview = form.querySelector('iframe'), 
