@@ -8,13 +8,21 @@ class ContactForm(forms.ModelForm):
 
     environment = None
     channel_forms = None
+    channels = forms.ModelMultipleChoiceField(
+        required=False, 
+        label=_('channels'), 
+        widget=forms.CheckboxSelectMultiple,
+        queryset=Channel.objects.none()
+    )
 
     def __init__(self, **kwargs):
         self.environment = kwargs.pop('environment')
         super().__init__(**kwargs)
+        channels = self.environment.account.channels.all()
+        self.fields['channels'].queryset = channels
         self.channel_forms = {
-            channel : get_contact_form(channel)()
-            for channel in self.environment.account.channels.all()
+            channel : get_contact_form(channel)(prefix='channel-%d' % channel.pk)
+            for channel in channels
         }
         
     def save(self, commit=True):
