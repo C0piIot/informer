@@ -45,7 +45,7 @@
 </div>
 
 <form method="post" 
-    action=""
+    action="{% url 'contacts:contact_create' current_environment.slug %}"
     id="modal-new" 
     aria-labelledby="modal-new-title"
     class="modal contact" tabindex="-1" aria-hidden="true">

@@ -13,18 +13,35 @@
 </nav>
 <div class="tab-content" id="nav-tabContent">
   <div class="tab-pane fade show active" id="contact-data-new" role="tabpanel" aria-labelledby="tab-contact-data-new">
-	{% bootstrap_field form.name %}  	
-	<div class="row">
-		<div class="col-6">{% bootstrap_field form.index1 %}</div>
-		<div class="col-6">{% bootstrap_field form.index2 %}</div>
-		<div class="col-6">{% bootstrap_field form.index3 %}</div>
-		<div class="col-6">{% bootstrap_field form.index4 %}</div>
-		<div class="col-6">{% bootstrap_field form.index5 %}</div>
-		<div class="col-6">{% bootstrap_field form.index6 %}</div>
-	</div>
-	{% bootstrap_field form.channels %}
+  	<div class="row">
+      <div class="col-6">{% bootstrap_field form.name %}</div>
+      <div class="col-6">{% bootstrap_field form.key %}</div>
+      <div class="col-12">
+        <hr><h2 class="h5">{% translate "Indexed data" %}</h2>
+        <p>
+          {% translate "Indexed data can be queried for creating segments." %}
+          {% translate "You cand add up to 6 values." %}
+        </p>
+      </div>
+  		<div class="col-4">{% bootstrap_field form.index1 %}</div>
+  		<div class="col-4">{% bootstrap_field form.index2 %}</div>
+  		<div class="col-4">{% bootstrap_field form.index3 %}</div>
+  		<div class="col-4">{% bootstrap_field form.index4 %}</div>
+  		<div class="col-4">{% bootstrap_field form.index5 %}</div>
+  		<div class="col-4">{% bootstrap_field form.index6 %}</div>
+      <div class="col-12">
+        <hr><h2 class="h5">{% translate "Contact channels" %}</h2>
+        <p>
+          {% translate "Enable channels for communicating with your contact." %}
+          {% translate "Channel data must be configured in its own tab." %}
+        </p>
+      </div>
+      {% for checkbox in form.channels %}
+      <div class="col-4">{{ checkbox }}</div>
+      {% endfor %}
+  	</div>
   </div>
-  {% for channel, channel_form in form.channel_forms.items %}
+	{% for channel, channel_form in form.channel_forms.items %}
   <div class="tab-pane fade channel-{{ channel.pk }}" id="channel-new-{{ channel.pk }}" role="tabpanel" aria-labelledby="tab-channel-new-{{ channel.pk }}">
   	{% bootstrap_form channel_form %}
   </div>

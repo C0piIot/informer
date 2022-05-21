@@ -4,16 +4,16 @@ from .contact_storage import ContactStorage
 from uuid import uuid4 
 
 class Contact(models.Model):
-    key = models.CharField(_('key'), max_length=100)
-    name = models.CharField(_('name'), max_length=200)
+    key = models.CharField(_('key'), max_length=100, help_text=_('Key must be unique to all your contacts'))
+    name = models.CharField(_('name'), max_length=200, help_text=_('This name will be used across informer app'))
     account = models.ForeignKey('configuration.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
     environment = models.ForeignKey('configuration.Environment', on_delete=models.CASCADE, verbose_name=_('environment'), editable=False)
-    index1 = models.CharField(_('index 1'), max_length=100,)
-    index2 = models.CharField(_('index 2'), max_length=100,)
-    index3 = models.CharField(_('index 3'), max_length=100,)
-    index4 = models.CharField(_('index 4'), max_length=100,)
-    index5 = models.CharField(_('index 5'), max_length=100,)
-    index6 = models.CharField(_('index 6'), max_length=100,)
+    index1 = models.CharField(_('index 1'), max_length=100, blank=True)
+    index2 = models.CharField(_('index 2'), max_length=100, blank=True)
+    index3 = models.CharField(_('index 3'), max_length=100, blank=True)
+    index4 = models.CharField(_('index 4'), max_length=100, blank=True)
+    index5 = models.CharField(_('index 5'), max_length=100, blank=True)
+    index6 = models.CharField(_('index 6'), max_length=100, blank=True)
     contact_data = models.JSONField(_('contact data'), default=dict)
     channel_data = models.JSONField(_('channel data'), default=dict)
 

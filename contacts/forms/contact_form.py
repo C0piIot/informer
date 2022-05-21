@@ -34,4 +34,4 @@ class ContactForm(forms.ModelForm):
 
     class Meta:
         model = Contact
-        fields = ('name', 'index1', 'index2', 'index3', 'index4', 'index5', 'index6')
+        fields = ('name', 'key', 'index1', 'index2', 'index3', 'index4', 'index5', 'index6')
