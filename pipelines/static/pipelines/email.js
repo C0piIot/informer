@@ -1,7 +1,7 @@
 /* Strips html leaving only text */
 const stripHtml = (html) => (new DOMParser().parseFromString(html, 'text/html')).body.textContent || "";
 
-document.querySelectorAll('form.email').forEach(form => {
+for (const form of document.querySelectorAll('form.email')) {
 
 	let timer = null;
 	const iframePreview = form.querySelector('iframe'), 
@@ -33,5 +33,4 @@ document.querySelectorAll('form.email').forEach(form => {
 			textBodyControl.value = stripHtml(htmlBodyControl.value);
 		}
 	});
-
-});
+}
