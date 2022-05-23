@@ -32,3 +32,4 @@ class PipelineStep(models.Model):
         verbose_name = _('pipeline step')
         verbose_name_plural = _('pipeline steps')
         ordering = ('pipeline', 'order')
+        unique_together = ('pipeline', 'order')

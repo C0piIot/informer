@@ -16,4 +16,4 @@ class PipelineRemove(PipelineFilteredMixin, DeleteView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse('pipelines:home', kwargs={'environment': self.current_environment.slug })
+        return reverse('pipelines:list', kwargs={'environment': self.current_environment.slug })

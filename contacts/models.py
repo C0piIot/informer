@@ -38,8 +38,11 @@ class Contact(models.Model):
         )
 
     @classmethod
-    def get_contacts(cls, environment, start_key, amount=50, **filters):
-        return cls.objects.filter(environment=environment, key__gt=start_key)[:amount]
+    def get_contacts(cls, environment, start_key=None, amount=50, **filters):
+        queryset = cls.objects.filter(environment=environment)
+        if start_key is not None:
+            queryset = queryset.filter(key__gt=start_key)
+        return queryset[:amount]
         
     @classmethod
     def get_contact(cls, environment, key):

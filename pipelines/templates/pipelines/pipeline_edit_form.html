@@ -116,7 +116,7 @@
 {% endfor %}
 {% for form in step_forms %}
 <form method="post" 
-    action=""
+    action="{% url 'pipelines:step_edit' current_environment.slug pipeline.id form.instance.pk %}"
     id="modal-edit-{{ form.instance.pk }}" 
     aria-labelledby="modal-edit-{{ form.instance.pk }}-title"
     class="modal {{ form.instance.content_type.model }}" tabindex="-1" aria-hidden="true">
