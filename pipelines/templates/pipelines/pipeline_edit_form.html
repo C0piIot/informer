@@ -52,7 +52,7 @@
                 <div class="card mb-1">
                     <div class="card-header d-flex align-items-center">
                         <a class="text-decoration-none text-dark me-2 w-100" data-bs-toggle="modal" href="#modal-edit-{{ form.instance.pk }}">
-                            {{ form.instance.get_type_display|title }}
+                            {{ form.instance.content_type.name|title }}
                         </a>
                         <a data-bs-toggle="modal" href="#modal-delete-{{ form.instance.pk }}" title="{% translate 'Delete' %}" class="btn btn-outline-danger btn-sm">
                             ❌
