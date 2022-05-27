@@ -30,10 +30,10 @@
     					</a>
     				</td>
     				<td class="text-nowrap">
-    					<a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-{{ contact.pk }}">
+    					<a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-{{ contact.key }}">
     						✏️
     					</a>
-    					<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ contact.pk }}">
+    					<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ contact.key }}">
     						❌
     					</button>
     				</td>
@@ -68,15 +68,15 @@
 </form>
 {% for form in contact_forms %}
 <form method="post" 
-    action="{% url 'configuration:channel_update' form.instance.pk %}"
-    id="modal-edit-{{ form.instance.pk }}" 
-    aria-labelledby="modal-edit-{{ form.instance.pk }}-title"
-    class="modal {{ form.instance.content_type.model }}" tabindex="-1" aria-hidden="true">
+    action="{% url 'contacts:contact_update' current_environment.slug form.instance.key %}"
+    id="modal-edit-{{ form.instance.key }}" 
+    aria-labelledby="modal-edit-{{ form.instance.key }}-title"
+    class="modal contact" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modal-edit-{{ form.instance.pk }}-title">
-                {% blocktranslate with type=form.instance.content_type.name %}Edit channel {{ form.instance.name }}{% endblocktranslate %}
+            <h5 class="modal-title" id="modal-edit-{{ form.instance.key }}-title">
+                {% blocktranslate with contact=form.instance %}Edit contact {{ contact }}{% endblocktranslate %}
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
           </div>
@@ -91,14 +91,14 @@
 </form>
 <form method="post" 
     action=""
-    id="modal-delete-{{ form.instance.pk }}" 
-    aria-labelledby="modal-delete-{{ form.instance.pk }}-title"
+    id="modal-delete-{{ form.instance.key }}" 
+    aria-labelledby="modal-delete-{{ form.instance.key }}-title"
     class="modal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="modal-delete-{{ form.instance.pk }}-title">
-                {% blocktranslate %}Delete contact {{ form.instance.name }}{% endblocktranslate %}
+            <h5 class="modal-title" id="modal-delete-{{ form.instance.key }}-title">
+                {% blocktranslate with contact=form.instance %}Delete contact {{ contact }}{% endblocktranslate %}
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
           </div>

@@ -6,6 +6,7 @@ from configuration.forms import get_contact_form
 
 class ContactForm(forms.ModelForm):
 
+    CHANNEL_PREFIX = 'channel-'
     environment = None
     channel_forms = None
     channels = forms.ModelMultipleChoiceField(
@@ -20,11 +21,15 @@ class ContactForm(forms.ModelForm):
         super().__init__(**kwargs)
         channels = self.environment.account.channels.all()
         self.fields['channels'].queryset = channels
+        if self.instance:
+            self.fields['channels'].initial = (k.replace(self.CHANNEL_PREFIX, '') for k in self.instance.channel_data)
         self.channel_forms = {
             channel : get_contact_form(channel)(
-                prefix='channel-%d' % channel.pk,
+                prefix='%s%d' % (self.CHANNEL_PREFIX, channel.pk),
                 data=kwargs.get('data'),
-                files=kwargs.get('files')
+                files=kwargs.get('files'),
+                initial=self.instance.channel_data.get('%s%d' % (self.CHANNEL_PREFIX, channel.pk), {})
+                    if self.instance else {}
             )
             for channel in channels
         }

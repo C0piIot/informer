@@ -1,18 +1,19 @@
 {% load i18n django_bootstrap5 %}
+{% with instance_pk=form.instance.pk|default:'new' %}
 <nav>
   <div class="nav nav-tabs" role="tablist">
-    <button class="nav-link active" id="tab-contact-data-new" data-bs-toggle="tab" data-bs-target="#contact-data-new" type="button" role="tab" aria-controls="contact-data-new" aria-selected="true">
+    <button class="nav-link active" id="tab-contact-data-{{ instance_pk }}" data-bs-toggle="tab" data-bs-target="#contact-data-{{ instance_pk }}" type="button" role="tab" aria-controls="contact-data-{{ instance_pk }}" aria-selected="true">
     	{% translate "Contact data" %}
     </button>
     {% for channel in form.channel_forms %}
-    <button class="nav-link  channel-{{ channel.pk }}" id="tab-channel-new-{{ channel.pk }}" data-bs-toggle="tab" data-bs-target="#channel-new-{{ channel.pk }}" type="button" role="tab" aria-controls="channel-new-{{ channel.pk }}" aria-selected="false"{% if  2 > 1 %} hidden{% endif %}>
+    <button class="nav-link  channel-{{ channel.pk }}" id="tab-channel-{{ instance_pk }}-{{ channel.pk }}" data-bs-toggle="tab" data-bs-target="#channel-{{ instance_pk }}-{{ channel.pk }}" type="button" role="tab" aria-controls="channel-{{ instance_pk }}-{{ channel.pk }}" aria-selected="false"{% if  2 > 1 %} hidden{% endif %}>
     	{{ channel }}
     </button>
     {% endfor %}
   </div>
 </nav>
 <div class="tab-content" id="nav-tabContent">
-  <div class="tab-pane active" id="contact-data-new" role="tabpanel" aria-labelledby="tab-contact-data-new">
+  <div class="tab-pane active" id="contact-data-{{ instance_pk }}" role="tabpanel" aria-labelledby="tab-contact-data-{{ instance_pk }}">
   	<div class="row">
       <div class="col-6">{% bootstrap_field form.name %}</div>
       <div class="col-6">{% bootstrap_field form.key %}</div>
@@ -42,8 +43,9 @@
   	</div>
   </div>
 	{% for channel, channel_form in form.channel_forms.items %}
-  <div class="tab-pane channel-{{ channel.pk }}" id="channel-new-{{ channel.pk }}" role="tabpanel" aria-labelledby="tab-channel-new-{{ channel.pk }}">
+  <div class="tab-pane channel-{{ channel.pk }}" id="channel-{{ instance_pk }}-{{ channel.pk }}" role="tabpanel" aria-labelledby="tab-channel-{{ instance_pk }}-{{ channel.pk }}">
   	{% bootstrap_form channel_form %}
   </div>
   {% endfor %}
 </div>
+{% endwith %}
