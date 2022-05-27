@@ -4,6 +4,7 @@ from configuration.views import CurrentEnvironmentMixin
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
+from django.contrib import messages
 
 class ContactCreate(CurrentEnvironmentMixin, CreateView):
     form_class = ContactForm
@@ -22,5 +23,5 @@ class ContactCreate(CurrentEnvironmentMixin, CreateView):
         return kwargs
 
     def form_invalid(self, form, **kwargs):
-        messages.error(self.request, _("Error creating channel"))
+        messages.error(self.request, _("Error creating contact"))
         return HttpResponseRedirect(self.get_success_url())

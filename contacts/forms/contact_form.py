@@ -21,13 +21,27 @@ class ContactForm(forms.ModelForm):
         channels = self.environment.account.channels.all()
         self.fields['channels'].queryset = channels
         self.channel_forms = {
-            channel : get_contact_form(channel)(prefix='channel-%d' % channel.pk)
+            channel : get_contact_form(channel)(
+                prefix='channel-%d' % channel.pk,
+                data=kwargs.get('data'),
+                files=kwargs.get('files')
+            )
             for channel in channels
         }
-        
+
+    def is_valid(self):
+        if is_valid := super().is_valid():
+            for channel in self.cleaned_data['channels']:
+                is_valid = is_valid and self.channel_forms[channel].is_valid()
+        return is_valid
+           
     def save(self, commit=True):
         contact = super().save(commit=False)
         contact.environment = self.environment
+        for channel in self.cleaned_data['channels']:
+            form = self.channel_forms[channel]
+            contact.channel_data[form.prefix] = form.cleaned_data
+
         if commit:
             contact.save()
         return contact
