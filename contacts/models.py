@@ -46,11 +46,12 @@ class Contact(models.Model):
         
     @classmethod
     def get_contact(cls, environment, key):
-        pass
+        return cls.objects.get(environment=environment, key=key)
 
     @classmethod
     def save_contact(cls, environment, contact):
-        pass
+        contact.environment = environment
+        contact.save()
 
     @classmethod
     def delete_contact(cls, environment, key):

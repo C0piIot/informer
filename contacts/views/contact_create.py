@@ -5,9 +5,12 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 
-class ContactCreate(CurrentEnvironmentMixin, CreateView):
+
+class ContactCreate(CurrentEnvironmentMixin, SuccessMessageMixin, CreateView):
     form_class = ContactForm
+    success_message = _("%(name)s was created successfully")
 
     def get_success_url(self):
         return reverse('contacts:list', kwargs={'environment': self.current_environment.slug})
