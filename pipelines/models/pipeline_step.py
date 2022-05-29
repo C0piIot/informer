@@ -27,6 +27,9 @@ class PipelineStep(models.Model):
         self._state.adding = True
         super().save(*args, **kwargs)
 
+    def run(self, pipelineRun):
+        pass
+
 
     class Meta:
         verbose_name = _('pipeline step')

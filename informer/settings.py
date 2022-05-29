@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_bootstrap5',
+    'rest_framework',
     'configuration.apps.ConfigurationConfig',
     'pipelines.apps.PipelinesConfig',
     'contacts.apps.ContactsConfig',

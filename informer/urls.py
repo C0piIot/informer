@@ -8,4 +8,5 @@ urlpatterns = [
     path('config/', include('configuration.urls')),
     path('admin/', admin.site.urls),
     path('contacts/', include('contacts.urls')),
+    path('api-auth/', include('rest_framework.urls'))
 ]

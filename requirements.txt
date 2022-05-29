@@ -3,3 +3,5 @@ django-bootstrap5
 django-debug-toolbar
 django-environ
 rollbar
+djangorestframework
+markdown
