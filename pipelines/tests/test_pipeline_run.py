@@ -8,10 +8,10 @@ class PipelineRunTestCase(TestCase):
 
     def setUp(self):
         account = Account.objects.create(name='testacount')
-        environments = Environment.objects.create(account=account, name='testenviornment')
+        environment = Environment.objects.create(account=account, name='testenviornment')
         self.pipeline = PipelineRun(
-                event='testevent',
-                user_key='testuserkey',
+                trigger='testevent',
+                contact_key='testuserkey',
             )
         PipelineRun.save_model(
             environment,
