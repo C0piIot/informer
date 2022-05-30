@@ -50,7 +50,7 @@ class ContactForm(forms.ModelForm):
             contact.channel_data[form.prefix] = form.cleaned_data
 
         if commit:
-            import_string(settings.CONTACT_STORAGE).save_contact(self.environment, contact)
+            import_string(settings.CONTACT_STORAGE).save_model(self.environment, contact)
         return contact
 
     class Meta:

@@ -10,3 +10,20 @@ class PipelineRun(models.Model):
 
     def next_step(current_step):
         pass
+
+
+    @classmethod
+    def get_contacts(cls, environment, start_key=None, amount=50, **filters):
+        pass
+
+    @classmethod
+    def get_contact(cls, environment, key):
+        pass
+
+    @classmethod
+    def save_contact(cls, environment, contact):
+        pass
+
+    @classmethod
+    def delete_contact(cls, environment, key):
+        pass
