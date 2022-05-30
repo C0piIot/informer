@@ -14,11 +14,13 @@ class PipelineRun(models.Model):
     event_payload = models.JSONField(_('event payload'), default=dict, editable=False)
     pipeline_data = models.JSONField(_('pipeline data'), default=dict)
 
+    def save(self, *args, **kwargs):
+        self.account = self.environment.account
+        super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = _('pipeline run')
         verbose_name_plural = _('pipeline runs')
-
 
     def __str__(self):
         return self.name

@@ -7,7 +7,7 @@ from .pipeline import Pipeline
 class PipelineStep(models.Model):
     pipeline = models.ForeignKey(Pipeline, on_delete=models.CASCADE, verbose_name=_('pipeline'), related_name='steps', editable=False)
     account = models.ForeignKey('configuration.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
-    order = models.PositiveSmallIntegerField(_('order'))
+    order = models.PositiveSmallIntegerField(_('order'), editable=False)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, editable=False)
 
     def get_typed_instance(self):
