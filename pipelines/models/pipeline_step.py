@@ -27,7 +27,7 @@ class PipelineStep(models.Model):
         self._state.adding = True
         super().save(*args, **kwargs)
 
-    def run(self, pipelineRun):
+    def run(self, pipeline_run):
         pass
 
 

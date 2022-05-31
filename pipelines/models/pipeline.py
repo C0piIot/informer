@@ -24,7 +24,7 @@ class Pipeline(models.Model):
             step.save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
+        return self.name        
 
     class Meta:
         verbose_name = _('pipeline')

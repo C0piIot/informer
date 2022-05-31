@@ -5,3 +5,4 @@ from .pipeline_step import PipelineStep
 from .email import Email
 from .send_channel import SendChannel
 from .pipeline_run import PipelineRun
+from .pipeline_log import PipelineLog
