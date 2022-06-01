@@ -28,7 +28,7 @@ class PipelineStep(models.Model):
         super().save(*args, **kwargs)
 
     def run(self, pipeline_run):
-        pass
+        return self.get_typed_instance().run()
 
 
     class Meta:

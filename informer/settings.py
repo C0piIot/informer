@@ -9,8 +9,10 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import environ
 from pathlib import Path
+
+env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -126,3 +128,37 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+from django.http import Http404
+from django.core.exceptions import PermissionDenied
+
+ROLLBAR = {
+    'access_token': env('ROLLBAR_TOKEN', default=''),
+    'environment': 'development' if DEBUG else 'production',
+    'root': BASE_DIR,
+    'exception_level_filters': [
+        (Http404, 'ignored'),
+        (PermissionDenied, 'ignored'),
+    ],
+}
+
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+        'rollbar': {
+            'access_token': env('ROLLBAR_TOKEN', default=''),
+            'environment': 'development' if DEBUG else 'production',
+            'class': 'rollbar.logger.RollbarHandler'
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['rollbar', 'console'],
+            'level': env('DJANGO_LOG_LEVEL', default='INFO'),
+        },
+    },
+}

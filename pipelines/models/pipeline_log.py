@@ -3,16 +3,16 @@ from django.utils.translation import gettext_lazy as _
 from uuid import uuid4 
 
 class PipelineLog(models.Model):
-    LEVEL_DEBUG = 'debug'
-    LEVEL_INFO = 'info'
-    LEVEL_WARNING ='warning'
-    LEVEL_ERROR = 'error'
+    DEBUG = 'DEBUG'
+    INFO = 'INFO'
+    WARNING ='WARNING'
+    ERROR = 'ERROR'
 
     LEVEL_CHOICES = (
-        (LEVEL_DEBUG, _('debug')),
-        (LEVEL_INFO, _('info')),
-        (LEVEL_WARNING, _('warning')),
-        (LEVEL_ERROR, _('error')),
+        (DEBUG, _('debug')),
+        (INFO, _('info')),
+        (WARNING, _('warning')),
+        (ERROR, _('error')),
     )
 
     id = models.UUIDField(_('id'), default=uuid4, primary_key=True, editable=False)
@@ -20,7 +20,7 @@ class PipelineLog(models.Model):
     environment = models.ForeignKey('configuration.Environment', on_delete=models.CASCADE, verbose_name=_('environment'), editable=False)
     pipeline_run_id = models.UUIDField(_('pipeline_run_id'))
     date = models.DateTimeField(_('date'), auto_now_add=True)
-    level = models.CharField(_('level'), max_length=10, default=LEVEL_INFO, choices=LEVEL_CHOICES)
+    level = models.CharField(_('level'), max_length=10, default=INFO, choices=LEVEL_CHOICES)
     message = models.CharField(_('message'), max_length=400)
     context = models.JSONField(_('context'), default=dict)
 

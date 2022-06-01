@@ -5,7 +5,9 @@ from .pipeline import Pipeline
 from .pipeline_log import PipelineLog
 from django.utils.module_loading import import_string
 from django.conf import settings
+import logging
 
+logger = logging.getLogger()
 
 class PipelineRun(models.Model):
     id = models.UUIDField(_('id'), primary_key=True, default=uuid4, editable=False)
@@ -29,9 +31,10 @@ class PipelineRun(models.Model):
         return self.name
 
 
-    def log(self, level, message, context=dict):
-        import_string(settings.PIPELINE_LOG_STORAGE).save_log(PipelineLog(
-            self.environment,
+    def log(self, level, message, context={}):
+        logger.log(getattr(logging, level), message)
+        import_string(settings.PIPELINE_LOG_STORAGE).save_model(PipelineLog(
+            environment=self.environment,
             pipeline_run_id=self.id,
             level=level,
             message=message,
@@ -70,8 +73,6 @@ class PipelineRun(models.Model):
             )
 
             import_string(settings.PIPELINE_STORAGE).save_model(environment, pipeline_run)
-
-
 
             if step := pipeline.steps.first():
                 import_string(settings.PIPELINE_EXECUTOR).execute_step(step, pipeline_run)

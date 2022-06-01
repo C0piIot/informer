@@ -8,6 +8,7 @@ class PipelineRunTestCase(TestCase):
     account = None
     pipeline = None
     environment = None
+    event = 'test_event'
 
     def setUp(self):
         self.account = Account.objects.create(name='testacount')
@@ -16,10 +17,11 @@ class PipelineRunTestCase(TestCase):
         self.pipeline = Pipeline.objects.create(
                 account=self.account,
                 name='testpipeline',
+                trigger=self.event
             )
         self.pipeline.environments.add(self.environment)
 
     def test_something(self):
-        PipelineRun.dispatch_event(self.environment, self.contact, 'test', event_payload={})
+        PipelineRun.dispatch_event(self.environment, self.contact, self.event, event_payload={})
 
         
