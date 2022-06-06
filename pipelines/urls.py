@@ -3,11 +3,24 @@ from .views.steps import *
 from .models import *
 from .forms import *
 from django.urls import path, include
+from rest_framework import routers
+from rest_framework.schemas import get_schema_view
+
 
 app_name = 'pipelines'
 
+router = routers.SimpleRouter()
+router.register(r'', EventListener, basename='event')
+
 urlpatterns = [
+    
+    path('openapi', get_schema_view(
+        title="Your Project",
+        description="API for all things …",
+        version="1.0.0"
+    ), name='openapi-schema'), 
     path('<slug:environment>/', include([
+        path('', include(router.urls)),
         path('', PipelineList.as_view(), name='list'),
         path('create/', PipelineCreate.as_view(), name='create'),
         path('<uuid:id>/history/', PipelineHistory.as_view(), name='history'),

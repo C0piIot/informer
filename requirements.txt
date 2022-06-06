@@ -5,3 +5,5 @@ django-environ
 rollbar
 djangorestframework
 markdown
+uritemplate
+pyyaml
