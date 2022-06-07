@@ -3,10 +3,11 @@ from rest_framework.decorators import action
 from configuration.views import CurrentEnvironmentMixin
 from rest_framework import serializers, status
 from rest_framework.response import Response
-
+from pipelines.models import PipelineRun, Pipeline
 
 class EventSerializer(serializers.Serializer):
     event = serializers.CharField()
+    payload = serializers.JSONField(default=dict, required=False)
 
 class EventListener(GenericViewSet, CurrentEnvironmentMixin):
     serializer_class = EventSerializer
@@ -21,6 +22,12 @@ class EventListener(GenericViewSet, CurrentEnvironmentMixin):
 
     @action(methods=['post'], detail=False)
     def event(self, request):
+
+        serializer = EventSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        print(serializer.validated_data)
+        
+        #PipelineRun.dispatch_event(self.environment, self.contact, self.event, event_payload={})
         return Response(None, status=status.HTTP_204_NO_CONTENT)
         
 
