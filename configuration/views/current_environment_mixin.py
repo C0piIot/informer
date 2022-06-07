@@ -8,8 +8,7 @@ class CurrentEnvironmentMixin(CurrentAccountMixin):
 
 	def setup(self, request, *args, **kwargs):
 		super().setup(request, *args, **kwargs)
-		if 'environment' in kwargs:
-			self.current_environment = get_object_or_404(Environment, slug=kwargs['environment'], account=self.current_account)
+		self.current_environment = get_object_or_404(Environment, slug=kwargs.pop('environment'), account=self.current_account)
 		
 
 	def get_context_data(self, **kwargs):
