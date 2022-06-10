@@ -9,11 +9,11 @@ from pipelines.models import PipelineRun, Pipeline
 class EventSerializer(serializers.Serializer):
 
     event = serializers.CharField()
-    contact_key = ContactKeyField()
+    contact = ContactKeyField()
     payload = serializers.JSONField(default=dict, required=False)
 
 
-class EventListener(GenericViewSet, CurrentEnvironmentMixin):
+class EventListener(CurrentEnvironmentMixin, GenericViewSet):
     serializer_class = EventSerializer
 
     def dispatch(self, request, *args, **kwargs):
@@ -31,13 +31,13 @@ class EventListener(GenericViewSet, CurrentEnvironmentMixin):
 
     @action(methods=['post'], detail=False)
     def event(self, request):
-
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        
-        print(serializer.cleaned_data)
-        
-        #PipelineRun.dispatch_event(self.environment, self.contact, self.event, event_payload={})
+        PipelineRun.dispatch_event(
+            self.environment, 
+            serializer.validated_data['contact'], 
+            serializer.validated_data['event'], 
+            event_payload=erializer.validated_data['payload'] or {})
         return Response(None, status=status.HTTP_204_NO_CONTENT)
         
 
