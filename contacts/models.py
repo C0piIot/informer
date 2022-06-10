@@ -46,7 +46,7 @@ class Contact(ModelStorage, models.Model):
         
     @classmethod
     def get_model(cls, environment, key):
-        return cls.objects.get(environment=environment, key=key)
+        return cls.objects.filter(environment=environment, key=key).first()
 
     @classmethod
     def save_model(cls, environment, contact):

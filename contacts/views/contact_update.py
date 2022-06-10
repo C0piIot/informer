@@ -15,7 +15,7 @@ class ContactUpdate(CurrentEnvironmentMixin, SuccessMessageMixin, UpdateView):
 
 
     def get_object(self):
-        return import_string(settings.CONTACT_STORAGE).get_contact(self.current_environment, self.kwargs['key'])
+        return import_string(settings.CONTACT_STORAGE).get_model(self.current_environment, self.kwargs['key'])
 
     def get_success_url(self):
         return reverse('contacts:list', kwargs={'environment': self.current_environment.slug})
