@@ -24,13 +24,13 @@ class ContactForm(forms.ModelForm):
         channels = self.environment.account.channels.all()
         self.fields['channels'].queryset = channels
         if self.instance:
-            self.fields['channels'].initial = (k.replace(self.CHANNEL_PREFIX, '') for k in self.instance.channel_data)
+            self.fields['channels'].initial = self.instance.channel_data.keys()
         self.channel_forms = {
             channel : get_contact_form(channel)(
                 prefix='%s%d' % (self.CHANNEL_PREFIX, channel.pk),
                 data=kwargs.get('data'),
                 files=kwargs.get('files'),
-                initial=self.instance.channel_data.get('%s%d' % (self.CHANNEL_PREFIX, channel.pk), {})
+                initial=self.instance.channel_data.get(str(channel.pk), {})
                     if self.instance else {}
             )
             for channel in channels
@@ -47,8 +47,7 @@ class ContactForm(forms.ModelForm):
         contact.channel_data = {}
         for channel in self.cleaned_data['channels']:
             form = self.channel_forms[channel]
-            contact.channel_data[form.prefix] = form.cleaned_data
-
+            contact.channel_data[str(channel.pk)] = form.cleaned_data
         if commit:
             import_string(settings.CONTACT_STORAGE).save_model(self.environment, contact)
         return contact

@@ -10,6 +10,8 @@ import logging
 logger = logging.getLogger()
 
 class PipelineRun(models.Model):
+    contact = None
+
     id = models.UUIDField(_('id'), primary_key=True, default=uuid4, editable=False)
     account = models.ForeignKey('configuration.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
     environment = models.ForeignKey('configuration.Environment', on_delete=models.CASCADE, verbose_name=_('environment'), editable=False)
@@ -42,6 +44,11 @@ class PipelineRun(models.Model):
         ))
 
 
+    def get_contact(self):
+        if self.contact is None:
+            self.contact = import_string(settings.CONTACT_STORAGE).get_model(self.environment, self.contact_key)
+        return self.contact
+
     @classmethod
     def get_models(cls, environment, start_key=None, amount=50, **filters):
         queryset = cls.objects.filter(environment=environment)
@@ -54,9 +61,9 @@ class PipelineRun(models.Model):
         return cls.objects.get(environment=environment, key=key)
 
     @classmethod
-    def save_model(cls, environment, contact):
-        contact.environment = environment
-        contact.save()
+    def save_model(cls, environment, model):
+        model.environment = environment
+        model.save()
 
     @classmethod
     def delete_model(cls, environment, key):
@@ -71,7 +78,7 @@ class PipelineRun(models.Model):
                 contact_key=contact.key,
                 event_payload=event_payload,
             )
-
+            pipeline_run.contact = contact
             import_string(settings.PIPELINE_STORAGE).save_model(environment, pipeline_run)
 
             if step := pipeline.steps.first():

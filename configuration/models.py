@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 from django.contrib.contenttypes.models import ContentType
-from django.core.mail import get_connection
+from django.core.mail import get_connection, send_mail
 
 class Account(models.Model):
     name = models.CharField(_('name'), max_length=50)
@@ -78,7 +78,11 @@ class EmailChannel(Channel):
     username = models.CharField(_('username'), max_length=150)
     password = models.CharField(_('password'), max_length=150)
     security = models.CharField(_('security'),max_length=20, choices=SECURITY_CHOICES, default=SECURITY_TSL_SSL)
+    from_email = models.EmailField(_('from email'), max_length=200, help_text=_('Default from address for this channel'))
 
+
+    def send_mail(self, subject, message, html_message, from_email, recipient):
+        send_mail(subject, message, from_email, [recipient], connection=self.get_connection(), html_message=html_message)
 
 
     def get_connection(self):
