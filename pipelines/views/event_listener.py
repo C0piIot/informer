@@ -34,10 +34,10 @@ class EventListener(CurrentEnvironmentMixin, GenericViewSet):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         PipelineRun.dispatch_event(
-            self.environment, 
+            self.current_environment, 
             serializer.validated_data['contact'], 
             serializer.validated_data['event'], 
-            event_payload=erializer.validated_data['payload'] or {})
+            event_payload=serializer.validated_data['payload'] or {})
         return Response(None, status=status.HTTP_204_NO_CONTENT)
         
 

@@ -28,8 +28,7 @@ class PipelineStep(models.Model):
         super().save(*args, **kwargs)
 
     def run(self, pipeline_run):
-        return self.get_typed_instance().run()
-
+        return self.get_typed_instance().run(pipeline_run)
 
     class Meta:
         verbose_name = _('pipeline step')

@@ -14,6 +14,11 @@ class Email(SendChannel):
     def __str__(self):
         return "✉️ Email %s" % self.subject
 
+
+    def run(self, pipeline_run):
+        print("LOLLL")
+
+
     class Meta:
         verbose_name = _('email template')
         verbose_name_plural = _('email templates')
