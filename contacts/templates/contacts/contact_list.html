@@ -90,7 +90,7 @@
     {% csrf_token %}
 </form>
 <form method="post" 
-    action=""
+    action="{% url 'contacts:contact_remove' current_environment.slug form.instance.key %}"
     id="modal-delete-{{ form.instance.key }}" 
     aria-labelledby="modal-delete-{{ form.instance.key }}-title"
     class="modal" tabindex="-1" aria-hidden="true">

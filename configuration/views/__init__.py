@@ -6,3 +6,4 @@ from .environment_remove import EnvironmentRemove
 from .channel_list import ChannelList
 from .channel_create import ChannelCreate
 from .channel_update import ChannelUpdate
+from .channel_remove import ChannelRemove

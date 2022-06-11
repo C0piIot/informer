@@ -7,6 +7,7 @@ urlpatterns = [
     path('<slug:environment>/', include([
         path('', ContactList.as_view(), name='list'),
         path('create/', ContactCreate.as_view(), name='contact_create'),
-        path('<slug:key>/update/', ContactUpdate.as_view(), name='contact_update')
+        path('<slug:key>/update/', ContactUpdate.as_view(), name='contact_update'),
+        path('<slug:key>/remove/', ContactRemove.as_view(), name='contact_remove')
     ]))
 ]

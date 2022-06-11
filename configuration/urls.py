@@ -13,6 +13,6 @@ urlpatterns = [
         path('', ChannelList.as_view(), name='channel_list'),
         path('<slug:type>/create/', ChannelCreate.as_view(), name='channel_create'),
         path('<int:pk>/update/', ChannelUpdate.as_view(), name='channel_update'),
-        #path('<slug:slug>/remove/', EnvironmentRemove.as_view(), name='environment_remove'),
+        path('<int:pk>/remove/', ChannelRemove.as_view(), name='channel_remove'),
     ])),
 ]
