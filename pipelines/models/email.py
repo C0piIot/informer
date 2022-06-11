@@ -4,6 +4,7 @@ from .send_channel import SendChannel
 from .pipeline_step import PipelineStep
 
 
+
 class Email(SendChannel):
     email_channel = models.ForeignKey('configuration.EmailChannel', on_delete=models.CASCADE, verbose_name=_('email channel'))
     subject = models.CharField(_('subject'), max_length=200)
@@ -16,7 +17,10 @@ class Email(SendChannel):
 
 
     def run(self, pipeline_run):
+        print(self.email_channel.get_connection())
         print("LOLLL")
+
+
 
 
     class Meta:

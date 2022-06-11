@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 from django.contrib.contenttypes.models import ContentType
+from django.core.mail import get_connection
 
 class Account(models.Model):
     name = models.CharField(_('name'), max_length=50)
@@ -63,10 +64,34 @@ class Channel(models.Model):
 
 
 class EmailChannel(Channel):
+    SECURITY_NONE = 'none'
+    SECURITY_TSL_SSL = 'ssl'
+    SECURITY_STARTTLS = 'starttls'
+    SECURITY_CHOICES = (
+        (SECURITY_NONE, _('None')),
+        (SECURITY_TSL_SSL, _('TSL/SSL')),
+        (SECURITY_STARTTLS, _('STARTTLS')),
+    )
+
     host = models.CharField(_('host'), max_length=100)
     port = models.PositiveSmallIntegerField(_('port'))
     username = models.CharField(_('username'), max_length=150)
     password = models.CharField(_('password'), max_length=150)
+    security = models.CharField(_('security'),max_length=20, choices=SECURITY_CHOICES, default=SECURITY_TSL_SSL)
+
+
+
+    def get_connection(self):
+        return get_connection(
+            'django.core.mail.backends.smtp.EmailBackend',
+            fail_silently=False,
+            host=self.host, 
+            port=self.port, 
+            username=self.username, 
+            password=self.password, 
+            use_tls=self.security == self.SECURITY_STARTTLS, 
+            use_ssl=self.security == self.SECURITY_TSL_SSL
+        )
 
     class Meta:
         verbose_name = _('email channel')

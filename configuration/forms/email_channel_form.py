@@ -19,5 +19,5 @@ class EmailChannelForm(forms.ModelForm):
 
     class Meta:
         model = EmailChannel
-        fields = ('name', 'enabled', 'host', 'port', 'username', 'password')
+        fields = ('name', 'enabled', 'host', 'port', 'security', 'username', 'password')
         widgets = { 'password' : forms.PasswordInput(render_value=True) }
