@@ -1,1 +1,1 @@
-from .basic_executor import BasicExecutor
+from .dramatiq_executor import DramatiqExecutor

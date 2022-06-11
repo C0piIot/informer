@@ -6,7 +6,7 @@ class PipelinesConfig(AppConfig):
     name = 'pipelines'
     DEFAULT_SETTINGS = {
         'PIPELINE_STORAGE': 'pipelines.models.PipelineRun',
-        'PIPELINE_EXECUTOR': 'pipelines.executors.BasicExecutor',
+        'PIPELINE_EXECUTOR': 'pipelines.executors.DramatiqExecutor',
         'PIPELINE_LOG_STORAGE': 'pipelines.models.PipelineLog'
     }
 

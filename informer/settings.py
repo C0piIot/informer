@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_bootstrap5',
     'rest_framework',
+    'django_dramatiq',
     'configuration.apps.ConfigurationConfig',
     'pipelines.apps.PipelinesConfig',
     'contacts.apps.ContactsConfig',
@@ -162,3 +163,21 @@ LOGGING = {
         },
     },
 }
+
+
+DRAMATIQ_BROKER = {
+    "BROKER": "dramatiq.brokers.redis.RedisBroker",
+    "OPTIONS": {
+        "url": "redis://informer_redis",
+    },
+    "MIDDLEWARE": [
+        "dramatiq.middleware.Prometheus",
+        "dramatiq.middleware.AgeLimit",
+        "dramatiq.middleware.TimeLimit",
+        "dramatiq.middleware.Callbacks",
+        "dramatiq.middleware.Retries",
+        "django_dramatiq.middleware.DbConnectionsMiddleware",
+    ]
+}
+
+DRAMATIQ_AUTODISCOVER_MODULES = ["dramatiq_executor"]

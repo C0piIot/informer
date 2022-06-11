@@ -1,19 +1,30 @@
-version: '3'
+version: '3.7'
+
+x-informer-django: &informer-django
+  environment:
+    - "DJANGO_DEBUG=True"
+    - "EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend"
+    - "ROLLBAR_TOKEN=40ec2edf6d464fff8f776094438a809e"
+    - "CACHE_URL=locmemcache://"
+  build: 
+    context: .      
+  volumes:
+    - .:/usr/src/app
+  depends_on:
+    - informer_redis
 
 services:
   informer_app:
+    <<: *informer-django
     container_name: informer_app
     ports:
       - "80:80"
-    environment:
-      - "DJANGO_DEBUG=True"
-      - "EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend"
-      - "ROLLBAR_TOKEN=40ec2edf6d464fff8f776094438a809e"
-      - "CACHE_URL=locmemcache://"
-    build: 
-      context: .      
-    volumes:
-      - .:/usr/src/app
+
+  informer_worker:
+    <<: *informer-django
+    container_name: informer_worker
+    entrypoint: "python manage.py rundramatiq"   
+  
   informer_redis:
     image: redis:alpine
     container_name: informer_redis
