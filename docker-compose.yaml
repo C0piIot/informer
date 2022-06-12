@@ -23,7 +23,7 @@ services:
   informer_worker:
     <<: *informer-django
     container_name: informer_worker
-    entrypoint: "python manage.py rundramatiq"   
+    entrypoint: "python manage.py rundramatiq --watch ."   
   
   informer_redis:
     image: redis:alpine

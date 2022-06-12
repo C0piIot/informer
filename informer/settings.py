@@ -180,4 +180,4 @@ DRAMATIQ_BROKER = {
     ]
 }
 
-DRAMATIQ_AUTODISCOVER_MODULES = ["dramatiq_executor"]
+DRAMATIQ_AUTODISCOVER_MODULES = ["executors.dramatiq_executor"]
