@@ -1,15 +1,25 @@
-import dramatiq
+import dramatiq, uuid
 from django.core import serializers
+from django.conf import settings
+from configuration.models import Environment
+from django.utils.module_loading import import_string
 
 
 class DramatiqExecutor:
 
-	@classmethod
-	def execute_step(cls, pipeline_step, pipeline_run):
-		data = serializers.serialize("json", [pipeline_step,pipeline_run])
-		dramatiq_execute_step.send(data)
+    @classmethod
+    def run(cls, pipeline_run):
+        dramatiq_run.send(pipeline_run.environment.pk, pipeline_run.pk.hex)
+
 
 @dramatiq.actor
-def dramatiq_execute_step(data):
-	deserialized_pipeline_step, deserialized_pipeline_run = serializers.deserialize("json", data)
-	deserialized_pipeline_step.object.run(deserialized_pipeline_run.object)
+def dramatiq_run(environment_pk, pipeline_run_pk):
+    pipeline_run = import_string(settings.PIPELINE_STORAGE).get_model(
+        Environment.objects.get(pk=environment_pk), 
+        uuid.UUID(pipeline_run_pk)
+    )
+
+    if pipeline_step := pipeline_run.pipeline.steps.first():    
+        pipeline_step.run(pipeline_run)
+    else:
+        pipeline_run.log(PipelineLog.WARNING, 'No steps in current pipeline')

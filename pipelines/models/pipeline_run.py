@@ -58,7 +58,7 @@ class PipelineRun(models.Model):
         
     @classmethod
     def get_model(cls, environment, key):
-        return cls.objects.get(environment=environment, key=key)
+        return cls.objects.get(environment=environment, pk=key)
 
     @classmethod
     def save_model(cls, environment, model):
@@ -80,8 +80,4 @@ class PipelineRun(models.Model):
             )
             pipeline_run.contact = contact
             import_string(settings.PIPELINE_STORAGE).save_model(environment, pipeline_run)
-
-            if step := pipeline.steps.first():
-                import_string(settings.PIPELINE_EXECUTOR).execute_step(step, pipeline_run)
-            else:
-                pipeline_run.log(PipelineLog.WARNING, 'No steps in current pipeline')
+            import_string(settings.PIPELINE_EXECUTOR).run(pipeline_run)
