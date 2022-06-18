@@ -5,7 +5,7 @@ class PipelinesConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'pipelines'
     DEFAULT_SETTINGS = {
-        'PIPELINE_STORAGE': 'pipelines.models.PipelineRun',
+        'PIPELINE_RUN_STORAGE': 'pipelines.models.PipelineRun',
         'PIPELINE_EXECUTOR': 'pipelines.executors.DramatiqExecutor',
         'PIPELINE_LOG_STORAGE': 'pipelines.models.PipelineLog'
     }

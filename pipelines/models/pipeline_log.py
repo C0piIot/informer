@@ -38,6 +38,6 @@ class PipelineLog(models.Model):
 
 
     @classmethod
-    def save_model(cls, log):
+    def save_pipeline_log(cls, log):
         log.account = log.environment.account
         log.save()

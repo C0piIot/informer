@@ -13,7 +13,7 @@ class ContactKeyField(serializers.Field):
         return value.key
 
     def to_internal_value(self, data):
-        if contact := import_string(settings.CONTACT_STORAGE).get_model(self.context['environment'], data):
+        if contact := import_string(settings.CONTACT_STORAGE).get_contact(self.context['environment'], data):
             return contact
 
         self.fail('incorrect_key')

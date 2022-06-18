@@ -20,12 +20,12 @@
     			{% for pipeline in object_list %}
     			<tr>
     				<td class="w-100">
-    					<a href="{% url 'pipelines:edit' current_environment.slug pipeline.id %}" title="{% translate 'View' %}" class="text-decoration-none">
+    					<a href="{% url 'pipelines:runs' current_environment.slug pipeline.id %}" title="{% translate 'View' %}" class="text-decoration-none">
     						{{ pipeline }}	
     					</a>
     				</td>
     				<td class="text-nowrap">
-    					<a href="{% url 'pipelines:edit' current_environment.slug pipeline.id %}" title="{% translate 'Edit' %}" class="btn btn-sm btn-primary">
+              <a href="{% url 'pipelines:edit' current_environment.slug pipeline.id %}" title="{% translate 'Edit' %}" class="btn btn-sm btn-primary">
     						✏️
     					</a>
     					<a href="{% url 'pipelines:history' current_environment.slug pipeline.id %}" title="{% translate 'History' %}" class="btn btn-sm btn-outline-primary">

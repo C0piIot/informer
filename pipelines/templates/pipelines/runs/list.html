@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load i18n django_bootstrap5 %}
+
+ {% block breadcrumbds %}
+ <li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
+ <li class="breadcrumb-item">{{ current_environment }}</li>
+ <li class="breadcrumb-item active" aria-current="page">{{ pipeline }}</li>
+ {% endblock breadcrumbds %}
+
+{% block body-content %}
+{{ block.super }}
+<div class="container">
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<tbody>
+    			{% for pipeline_run in object_list %}
+    			<tr>
+    				<td class="w-100">
+    					<a href="{% url 'pipelines:run' current_environment.slug pipeline.id pipeline_run.pk %}" title="{% translate 'View' %}" class="text-decoration-none">
+    						{{ pipeline }}	
+    					</a>
+    				</td>
+    			</tr>
+    			{% endfor %}
+    		</tbody>
+		</table>
+	</div>
+</div>
+{% endblock body-content %}
