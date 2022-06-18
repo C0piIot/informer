@@ -10,7 +10,7 @@ import logging
 logger = logging.getLogger()
 
 class PipelineRun(models.Model):
-    contact = None
+    _contact = None
 
     id = models.UUIDField(_('id'), primary_key=True, default=uuid4, editable=False)
     account = models.ForeignKey('configuration.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
@@ -45,11 +45,14 @@ class PipelineRun(models.Model):
             context=context
         ))
 
+    def get_logs(self):
+        return import_string(settings.PIPELINE_LOG_STORAGE).get_pipeline_logs(self.account, self.pk)
 
-    def get_contact(self):
-        if self.contact is None:
-            self.contact = import_string(settings.CONTACT_STORAGE).get_contact(self.environment, self.contact_key)
-        return self.contact
+
+    def contact(self):
+        if self._contact is None:
+            self._contact = import_string(settings.CONTACT_STORAGE).get_contact(self.environment, self.contact_key)
+        return self._contact
 
     @classmethod
     def get_pipeline_runs(cls, environment, pipeline, start_key=None, amount=50, **filters):

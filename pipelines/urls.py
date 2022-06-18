@@ -30,6 +30,6 @@ urlpatterns = [
         path('<uuid:id>/<int:pk>/remove/', StepRemove.as_view(), name='step_remove'),
         path('<uuid:id>/<slug:type>/create/', StepCreate.as_view(), name='step_create'),
         path('<uuid:id>/runs/', PipelineRunList.as_view(), name='runs'),
-        path('<uuid:id>/runs/<uuid:run_id>/', PipelineRunDetail.as_view(), name='run'),
+        path('<uuid:id>/runs/<uuid:pipeline_run_id>/', PipelineRunDetail.as_view(), name='run'),
     ]))
 ]

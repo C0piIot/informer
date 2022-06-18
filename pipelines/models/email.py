@@ -19,7 +19,7 @@ class Email(SendChannel):
 
 
     def run(self, pipeline_run):
-        contact = pipeline_run.get_contact()
+        contact = pipeline_run.contact()
         key = str(self.email_channel.pk)
 
         if key in contact.channel_data:

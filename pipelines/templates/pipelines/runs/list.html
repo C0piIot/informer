@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n django_bootstrap5 %}
+{% load i18n %}
 
  {% block breadcrumbds %}
  <li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
@@ -12,12 +12,20 @@
 <div class="container">
 	<div class="table-responsive">
 		<table class="table table-hover">
+			<thead>
+				<tr>
+					<td>{% translate "Date" %}</td>
+					<td>{% translate "Contact" %}</td>
+					<td>{% translate "Identifier" %}</td>
+			</thead>
 			<tbody>
     			{% for pipeline_run in object_list %}
     			<tr>
+    				<td>{{ pipeline_run.start|date:"SHORT_DATETIME_FORMAT"}}</td>
+    				<td>{{ pipeline_run.contact }}</td>
     				<td class="w-100">
     					<a href="{% url 'pipelines:run' current_environment.slug pipeline.id pipeline_run.pk %}" title="{% translate 'View' %}" class="text-decoration-none">
-    						{{ pipeline }}	
+    						{{ pipeline_run.pk }}	
     					</a>
     				</td>
     			</tr>

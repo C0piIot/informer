@@ -12,9 +12,9 @@ class PipelineRunDetail(PipelineFilteredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         pipeline = get_object_or_404(Pipeline, account=self.current_account, environments=self.current_environment, id=self.kwargs['id'])
-        pipeline_run_list = import_string(settings.PIPELINE_RUN_STORAGE).get_pipeline_runs(self.current_environment, pipeline=pipeline)
+        pipeline_run = import_string(settings.PIPELINE_RUN_STORAGE).get_pipeline_run(self.current_environment, self.kwargs['pipeline_run_id'])
 
         context_data.update({
-            'object_list': pipeline_run_list
+            'pipeline_run': pipeline_run
         })
         return context_data

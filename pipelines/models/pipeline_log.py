@@ -41,3 +41,9 @@ class PipelineLog(models.Model):
     def save_pipeline_log(cls, log):
         log.account = log.environment.account
         log.save()
+
+
+    @classmethod
+    def get_pipeline_logs(cls, account, pipeline_run_id):
+        return cls.objects.filter(account=account, pipeline_run_id=pipeline_run_id)
+
