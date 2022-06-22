@@ -18,7 +18,7 @@ class Email(SendChannel):
         return "✉️ Email %s" % self.subject
 
 
-    def run(self, pipeline_run):
+    def step_run(self, pipeline_run):
         contact = pipeline_run.contact()
         key = str(self.email_channel.pk)
 

@@ -19,7 +19,7 @@ def dramatiq_run(environment_pk, pipeline_run_pk):
         uuid.UUID(pipeline_run_pk)
     )
 
-    if pipeline_step := pipeline_run.pipeline_revision.steps.first():    
+    if pipeline_step := pipeline_run.pipeline_revision.steps.first():
         pipeline_step.run(pipeline_run)
     else:
         pipeline_run.log(PipelineLog.WARNING, 'No steps in current pipeline')

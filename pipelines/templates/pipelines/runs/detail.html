@@ -25,10 +25,12 @@
       </div>
     </div>
 </div>
-<ul>
-    {% for log in pipeline_run.get_logs %}
-    <li>{{ log }}</li>
-    {% endfor %}
+<div class="container">
+  <ul>
+      {% for log in pipeline_run.get_logs %}
+      <li>{{ log }}</li>
+      {% endfor %}
 
-</ul>
+  </ul>
+</div>
 {% endblock body-content %}

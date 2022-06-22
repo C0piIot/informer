@@ -3,6 +3,7 @@ from uuid import uuid4
 from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from .pipeline import Pipeline
+from .pipeline_log import PipelineLog
 
 class PipelineStep(models.Model):
     pipeline = models.ForeignKey(Pipeline, on_delete=models.CASCADE, verbose_name=_('pipeline'), related_name='steps', editable=False)
@@ -28,7 +29,9 @@ class PipelineStep(models.Model):
         super().save(*args, **kwargs)
 
     def run(self, pipeline_run):
-        return self.get_typed_instance().run(pipeline_run)
+        typed_instance = self.get_typed_instance()
+        pipeline_run.log(PipelineLog.INFO, 'Running pipeline step %s' % typed_instance)
+        return typed_instance.step_run(pipeline_run)
 
     class Meta:
         verbose_name = _('pipeline step')
