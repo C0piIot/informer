@@ -33,6 +33,12 @@ class PipelineStep(models.Model):
         pipeline_run.log(PipelineLog.INFO, 'Running pipeline step %s' % typed_instance)
         return typed_instance.step_run(pipeline_run)
 
+    def wake_up(self, pipeline_run):
+        typed_instance = self.get_typed_instance()
+        pipeline_run.log(PipelineLog.INFO, 'Waking up pipeline step %s' % typed_instance)
+        return typed_instance.step_wake_up(pipeline_run)        
+
+
     class Meta:
         verbose_name = _('pipeline step')
         verbose_name_plural = _('pipeline steps')

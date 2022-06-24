@@ -75,6 +75,10 @@ class PipelineRun(models.Model):
         cls.objects.filter(environment=environment, key=key).delete()
 
 
+    def schedule_wake_up(self, pipeline_step, time_delta):
+        import_string(settings.PIPELINE_EXECUTOR).schedule_wake_up(self, pipeline_step, time_delta)
+
+
     @classmethod
     def dispatch_event(cls, environment, contact, event, event_payload={}):
         for pipeline in Pipeline.objects.filter(environments=environment, trigger=event, enabled=True):
