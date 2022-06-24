@@ -16,28 +16,48 @@
 {% block body-content %}
 {{ block.super }}
 <div class="container">
-	<button class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#modal-new">
-		{% translate "New contact" %}
-	</button>
+    <p class="mt-4 text-right">
+    	<button class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#modal-new">
+    		{% translate "New contact" %}
+    	</button>
+    </p>
   	<div class="table-responsive">
 		<table class="table table-hover">
+            <colgroup>
+                <col class="col-2">
+                <col class="col-8">
+                <col class="col-2">
+            </colgroup>
+            <thead>
+                <tr>
+                    <td>{% translate "Key" %}</td>
+                    <td>{% translate "Name" %}</td>
+                    <td></td>
+            </thead>
 			<tbody>
     			{% for contact in contact_list %}
     			<tr>
-    				<td class="w-100">
+                    <td>{{ contact.key }}</td>
+    				<td>
     					<a href="#" title="{% translate 'View' %}" class="text-decoration-none">
     						{{ contact }}	
     					</a>
     				</td>
-    				<td class="text-nowrap">
-    					<a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-{{ contact.key }}">
-    						✏️
-    					</a>
-    					<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ contact.key }}" type="button">
-    						❌
-    					</button>
+    				<td>
+                        <div class="btn-group" role="group" aria-label="{% translate 'Actions' %}">
+        					<a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-{{ contact.key }}">
+        						{% translate "Edit" %}
+        					</a>
+        					<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ contact.key }}" type="button">
+        						{% translate "Delete" %}
+        					</button>
+                        </div>
     				</td>
     			</tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3" class="text-center fst-italic">{% translate "No contacts found" %}</td>
+                </tr>
     			{% endfor %}
     		</tbody>
 		</table>
