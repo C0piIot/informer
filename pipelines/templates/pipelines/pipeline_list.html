@@ -16,27 +16,45 @@
 	</p>
 	<div class="table-responsive">
 		<table class="table table-hover">
+      <colgroup>
+        <col class="col-2">
+        <col class="col-8">
+        <col class="col-2">
+      </colgroup>
+      <thead>
+        <tr>
+          <th>{% translate "Trigger" %}</th>
+          <th>{% translate "Name" %}</th>
+          <th></th>
+        </tr>
+      </thead>
 			<tbody>
     			{% for pipeline in object_list %}
     			<tr>
-    				<td class="w-100">
+            <td>{{ pipeline.trigger }}</td>
+    				<td>
     					<a href="{% url 'pipelines:runs' current_environment.slug pipeline.id %}" title="{% translate 'View' %}" class="text-decoration-none">
     						{{ pipeline }}	
     					</a>
     				</td>
-    				<td class="text-nowrap">
-              <a href="{% url 'pipelines:edit' current_environment.slug pipeline.id %}" title="{% translate 'Edit' %}" class="btn btn-sm btn-primary">
-    						✏️
-    					</a>
-    					<a href="{% url 'pipelines:history' current_environment.slug pipeline.id %}" title="{% translate 'History' %}" class="btn btn-sm btn-outline-primary">
-    						📜
-    					</a>
-    					<form class="d-inline" method="post" action="{% url 'pipelines:remove' current_environment.slug pipeline.id %}">
-    						{% csrf_token %}
-    						<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger">❌</button>
-    					</form>
+    				<td>
+              <div class="btn-group" role="group" aria-label="{% translate 'Actions' %}">
+                <a href="{% url 'pipelines:edit' current_environment.slug pipeline.id %}" class="btn btn-sm btn-outline-primary">
+      						{% translate 'Edit' %}
+      					</a>
+      					<a href="{% url 'pipelines:history' current_environment.slug pipeline.id %}"  class="btn btn-sm btn-outline-info">
+      						{% translate 'History' %}
+      					</a>
+                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ pipeline.id }}">
+                  {% translate 'Remove' %}
+                </button>
+    					</div>
     				</td>
     			</tr>
+          {% empty %}
+          <tr>
+            <td colspan="3" class="text-center fst-italic">{% translate "No pipelines found" %}</td>
+          </tr>
     			{% endfor %}
     		</tbody>
 		</table>
@@ -64,4 +82,29 @@
     </div>
     {% csrf_token %}
 </form>
+{% for pipeline in object_list %}
+<form method="post" action="{% url 'pipelines:remove' current_environment.slug pipeline.id %}"
+    id="modal-delete-{{ pipeline.id }}" 
+    aria-labelledby="modal-delete-{{ pipeline.id }}-title"
+    class="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-delete-{{ pipeline.id }}-title">
+                {% blocktranslate %}Delete pipeline {{ pipeline }}{% endblocktranslate %}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
+          </div>
+          <div class="modal-body">
+              {% translate "Are you sure?" %}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+            <button type="submit" class="btn btn-danger">{% translate "Delete" %}</button>
+          </div>
+        </div>
+    </div>
+    {% csrf_token %}
+</form>
+{% endfor %}
 {% endblock body-content %}

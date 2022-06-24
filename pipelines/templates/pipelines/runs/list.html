@@ -12,11 +12,18 @@
 <div class="container">
 	<div class="table-responsive">
 		<table class="table table-hover">
+			<colgroup>
+		        <col class="col-2">
+		        <col class="col-2">
+		        <col class="col-7">
+		        <col class="col-1">
+		    </colgroup>
 			<thead>
 				<tr>
 					<td>{% translate "Date" %}</td>
 					<td>{% translate "Contact" %}</td>
 					<td>{% translate "Identifier" %}</td>
+					<td></td>
 			</thead>
 			<tbody>
     			{% for pipeline_run in object_list %}
@@ -28,6 +35,13 @@
     						{{ pipeline_run.pk }}	
     					</a>
     				</td>
+    				<td>
+    					<a href="{% url 'pipelines:run' current_environment.slug pipeline.id pipeline_run.pk %}" class="btn btn-outline-primary btn-sm">{% translate "View" %}</a>
+    				</td>
+    			</tr>
+    			{% empty %}
+    			<tr>
+    				<td colspan="4" class="text-center fst-italic">{% translate "No pipeline runs found" %}</td>
     			</tr>
     			{% endfor %}
     		</tbody>
