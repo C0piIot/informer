@@ -8,8 +8,9 @@
 
  {% block breadcrumbds %}
  <li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
- <li class="breadcrumb-item"><a href="{% url 'pipelines:list' current_environment.slug %}">{{ current_environment }}</a></li>
- <li class="breadcrumb-item active" aria-current="page">{{ pipeline }}</li>
+ <li class="breadcrumb-item"><a href="{{ current_environment.get_absolute_url }}">{{ current_environment }}</a></li>
+ <li class="breadcrumb-item"><a href="{% url 'pipelines:runs' current_environment.slug pipeline.id %}">{{ pipeline }}</a></li>
+ <li class="breadcrumb-item active" aria-current="page">{% translate  "Edit" %}</li>
  {% endblock breadcrumbds %}
 
 

@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 from django.contrib.contenttypes.models import ContentType
 from django.core.mail import get_connection, send_mail
+from django.urls import reverse
 
 class Account(models.Model):
     name = models.CharField(_('name'), max_length=50)
@@ -19,6 +20,9 @@ class Environment(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name=_('account'), editable=False, related_name='environments')
     name = models.CharField(_('name'), max_length=50)
     slug = models.SlugField(_('slug'), editable=False)
+
+    def get_absolute_url(self):
+        return reverse('pipelines:list', kwargs={ 'environment': self.slug })
 
     def __str__(self):
         return self.name

@@ -1,6 +1,7 @@
 from uuid import uuid4 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 
 class Pipeline(models.Model):
     id = models.UUIDField(_('id'), default=uuid4, editable=False)

@@ -9,13 +9,13 @@
 
 {% block breadcrumbds %}
 <li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
+<li class="breadcrumb-item"><a href="{{ current_environment.get_absolute_url }}">{{ current_environment }}</a></li>
 <li class="breadcrumb-item active" aria-current="page">{% translate "Contacts" %}</li>
 {% endblock breadcrumbds %}
 
 {% block body-content %}
 {{ block.super }}
 <div class="container">
-	
 	<button class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#modal-new">
 		{% translate "New contact" %}
 	</button>
