@@ -43,6 +43,7 @@ class Email(SendChannel):
                 self.from_email or self.email_channel.from_email,
                 contact.channel_data[key]['email']
             )
+        self.run_next(pipeline_run)
 
     class Meta:
         verbose_name = _('email template')

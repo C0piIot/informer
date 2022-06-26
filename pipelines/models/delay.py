@@ -10,7 +10,7 @@ class Delay(PipelineStep):
 
 
     def step_wake_up(self, pipeline_run):
-        print("HOLA")
+        self.run_next(pipeline_run)
 
     def __str__(self):
         return "⏲️ Delay %s" % self.time

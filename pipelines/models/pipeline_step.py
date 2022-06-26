@@ -28,6 +28,13 @@ class PipelineStep(models.Model):
         self._state.adding = True
         super().save(*args, **kwargs)
 
+    def run_next(self, pipeline_run):
+        try:
+            self.get_next_in_order().run(pipeline_run)
+        except PipelineStep.DoesNotExist:
+            pipeline_run.log(PipelineLog.INFO, 'Last step reached')
+
+
     def run(self, pipeline_run):
         typed_instance = self.get_typed_instance()
         pipeline_run.log(PipelineLog.INFO, 'Running pipeline step %s' % typed_instance)
@@ -42,5 +49,5 @@ class PipelineStep(models.Model):
     class Meta:
         verbose_name = _('pipeline step')
         verbose_name_plural = _('pipeline steps')
-        ordering = ('pipeline', 'order')
+        order_with_respect_to = 'pipeline'
         unique_together = ('pipeline', 'order')
