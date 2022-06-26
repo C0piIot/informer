@@ -29,9 +29,9 @@ class PipelineStep(models.Model):
         super().save(*args, **kwargs)
 
     def run_next(self, pipeline_run):
-        try:
-            self.get_next_in_order().run(pipeline_run)
-        except PipelineStep.DoesNotExist:
+        if next_step := PipelineStep.objects.filter(pipeline=self.pipeline, order__gt=self.order).first():
+            next_step.run(pipeline_run)
+        else:
             pipeline_run.log(PipelineLog.INFO, 'Last step reached')
 
 
@@ -49,5 +49,5 @@ class PipelineStep(models.Model):
     class Meta:
         verbose_name = _('pipeline step')
         verbose_name_plural = _('pipeline steps')
-        order_with_respect_to = 'pipeline'
+        ordering = ('pipeline', 'order')
         unique_together = ('pipeline', 'order')
