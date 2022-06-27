@@ -17,7 +17,7 @@
 	{% for revision in object_list %}
 	  <div class="accordion-item">
 	    <h2 class="accordion-header" id="h-{{ revision.pk }}">
-	      <button class="accordion-button{% if not current_environment in revision.environments.all %} collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#b-{{ revision.pk }}" aria-expanded="true" aria-controls="b-{{ revision.pk }}">
+	      <button class="accordion-button{% if revision.pk != highlight %} collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#b-{{ revision.pk }}"{% if revision.pk == highlight %} aria-expanded="true"{% endif %} aria-controls="b-{{ revision.pk }}">
 	      	<div class="d-flex w-100 justify-content-between pe-2">
 	       		<span>	       			
 	       			{% for environment in revision.environments.all %}
@@ -29,7 +29,7 @@
 	       	</div>
 	      </button>
 	    </h2>
-	    <div id="b-{{ revision.pk }}" class="accordion-collapse collapse{% if current_environment in revision.environments.all %} show{% endif %}" aria-labelledby="h-{{ revision.pk }}" data-bs-parent="#pipeline-history">
+	    <div id="b-{{ revision.pk }}" class="accordion-collapse collapse{% if revision.pk == highlight %} show{% endif %}" aria-labelledby="h-{{ revision.pk }}" data-bs-parent="#pipeline-history">
 	      <div class="accordion-body">
 	        <ul>
 	        	{% for step in revision.steps.all %}

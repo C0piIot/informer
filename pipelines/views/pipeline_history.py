@@ -7,3 +7,10 @@ class PipelineHistory(CurrentEnvironmentMixin, ListView):
     model = Pipeline
     def get_queryset(self):
         return super().get_queryset().filter(id=self.kwargs['id'])
+
+    def get_context_data(self):
+        context_data = super().get_context_data()
+        context_data.update({
+            'highlight': self.kwargs.get('revision', self.object_list.filter(environments=self.current_environment).first().pk)
+        })
+        return context_data

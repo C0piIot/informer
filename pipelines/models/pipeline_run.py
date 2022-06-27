@@ -30,6 +30,7 @@ class PipelineRun(models.Model):
     class Meta:
         verbose_name = _('pipeline run')
         verbose_name_plural = _('pipeline runs')
+        ordering = ('-start',)
 
     def __str__(self):
         return _("Pipeline run %s") % self.id

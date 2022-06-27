@@ -23,6 +23,7 @@ urlpatterns = [
     path('', PipelineList.as_view(), name='list'),
     path('create/', PipelineCreate.as_view(), name='create'),
     path('<uuid:id>/', PipelineHistory.as_view(), name='history'),
+    path('<uuid:id>/<uuid:revision>/', PipelineHistory.as_view(), name='history'),
     path('<uuid:id>/edit/', PipelineEdit.as_view(), name='edit'),
     path('<uuid:id>/remove/', PipelineRemove.as_view(), name='remove'),
     path('<uuid:id>/<int:pk>/', StepEdit.as_view(), name='step_edit'),

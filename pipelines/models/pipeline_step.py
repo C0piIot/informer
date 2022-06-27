@@ -41,9 +41,13 @@ class PipelineStep(models.Model):
         return typed_instance.step_run(pipeline_run)
 
     def wake_up(self, pipeline_run):
-        typed_instance = self.get_typed_instance()
-        pipeline_run.log(PipelineLog.INFO, 'Waking up pipeline step %s' % typed_instance)
-        return typed_instance.step_wake_up(pipeline_run)        
+        try:
+            typed_instance = self.get_typed_instance()
+            pipeline_run.log(PipelineLog.INFO, 'Waking up pipeline step %s' % typed_instance)
+            return typed_instance.step_wake_up(pipeline_run)
+        except BaseException as err:
+            pipeline_run.log(PipelineLog.ERROR, err)
+            raise
 
 
     class Meta:

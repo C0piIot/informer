@@ -31,7 +31,7 @@ class PipelineLog(models.Model):
     class Meta:
         verbose_name = _('pipeline log')
         verbose_name_plural = _('pipeline logs')
-        ordering = ('-date',)
+        ordering = ('date',)
         indexes = (
             models.Index(fields=('pipeline_run_id', '-date')),
            )
