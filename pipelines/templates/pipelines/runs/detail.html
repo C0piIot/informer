@@ -21,7 +21,7 @@
             <dd><a href="">{{ pipeline_run.contact }}</a></dd>
             <dt>{% translate "Pipeline revision" %}</dt>
             <dd>
-              <a href="{% url 'pipelines:history' pipeline_run.environment.slug pipeline_run.pipeline_id pipeline_run.pipeline_revision.pk %}">
+              <a href="{% url 'pipelines:history' pipeline_run.environment.slug pipeline_run.pipeline_id pipeline_run.pipeline_revision.pk %}#h-{{ pipeline_run.pipeline_revision.pk }}">
                 {{ pipeline_run.pipeline_revision.pk }}
               </a>
             </dd>
