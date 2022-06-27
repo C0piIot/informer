@@ -37,7 +37,7 @@ class StepCreate(CurrentEnvironmentMixin, SuccessMessageMixin, CreateView):
             self.pipeline.environments.remove(self.current_environment)
             self.pipeline.save()
             self.pipeline.environments.add(self.current_environment)
-            form.instance.order = self.pipeline.steps.count()
+            form.instance.order = self.pipeline.steps.count() + 1
             form.instance.pipeline = self.pipeline
             return super().form_valid(form, **kwargs)
 

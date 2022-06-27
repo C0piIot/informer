@@ -28,8 +28,14 @@ class PipelineStep(models.Model):
         self._state.adding = True
         super().save(*args, **kwargs)
 
+    def next_step(self):
+        return PipelineStep.objects.filter(pipeline=self.pipeline, order__gt=self.order).first()
+
+    def prev_step(self):
+        return PipelineStep.objects.filter(pipeline=self.pipeline, order__lt=self.order).last()
+
     def run_next(self, pipeline_run):
-        if next_step := PipelineStep.objects.filter(pipeline=self.pipeline, order__gt=self.order).first():
+        if next_step := self.get_next_step():
             next_step.run(pipeline_run)
         else:
             pipeline_run.log(PipelineLog.INFO, 'Last step reached')

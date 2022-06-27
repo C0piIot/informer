@@ -56,16 +56,12 @@
                             {{ form.instance.content_type.name|title }}
                         </a>
                         <div class="btn-group font-monospace" role="group" aria-label="{% translate 'Step options' %}">
-                            {% if not forloop.first %}
-                            <button type="submit" class="btn btn-sm btn-outline-primary" title="{% translate 'Move up' %}">
+                            <button type="submit" class="btn btn-sm btn-outline-primary" title="{% translate 'Move up' %}" name="up" value="1"{{ forloop.first|yesno:' disabled,' }}>
                                 ▲
                             </button>
-                            {% endif %}
-                            {% if not forloop.last %}
-                            <button type="submit" class="btn btn-sm btn-outline-primary" title="{% translate 'Move down' %}">
+                            <button type="submit" class="btn btn-sm btn-outline-primary" title="{% translate 'Move down' %}"{{ forloop.last|yesno:' disabled,' }}>
                                 ▼
                             </button>
-                            {% endif %}
                             <a data-bs-toggle="modal" href="#modal-delete-{{ form.instance.pk }}" title="{% translate 'Delete' %}" class="btn btn-outline-danger btn-sm">
                                 ❌
                             </a>
