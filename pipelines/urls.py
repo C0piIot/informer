@@ -27,6 +27,7 @@ urlpatterns = [
     path('<uuid:id>/edit/', PipelineEdit.as_view(), name='edit'),
     path('<uuid:id>/remove/', PipelineRemove.as_view(), name='remove'),
     path('<uuid:id>/<int:pk>/', StepEdit.as_view(), name='step_edit'),
+    path('<uuid:id>/<int:pk>/move/', StepMove.as_view(), name='step_move'),
     path('<uuid:id>/<int:pk>/remove/', StepRemove.as_view(), name='step_remove'),
     path('<uuid:id>/<slug:type>/create/', StepCreate.as_view(), name='step_create'),
     path('<uuid:id>/runs/', PipelineRunList.as_view(), name='runs'),

@@ -51,15 +51,27 @@
         <div class="col-md-4 offset-md-2 mt-4">
             {% for form in step_forms %}
                 <div class="card mb-1">
-                    <div class="card-header d-flex align-items-center">
+                    <form class="card-header d-flex align-items-center" method="post" action="{% url 'pipelines:step_move' current_environment.slug pipeline.id form.instance.pk %}">
                         <a class="text-decoration-none text-dark me-2 w-100" data-bs-toggle="modal" href="#modal-edit-{{ form.instance.pk }}">
                             {{ form.instance.content_type.name|title }}
                         </a>
-                        <a data-bs-toggle="modal" href="#modal-delete-{{ form.instance.pk }}" title="{% translate 'Delete' %}" class="btn btn-outline-danger btn-sm">
-                            ❌
-                        </a>
-
-                    </div>
+                        <div class="btn-group font-monospace" role="group" aria-label="{% translate 'Step options' %}">
+                            {% if not forloop.first %}
+                            <button type="submit" class="btn btn-sm btn-outline-primary" title="{% translate 'Move up' %}">
+                                ▲
+                            </button>
+                            {% endif %}
+                            {% if not forloop.last %}
+                            <button type="submit" class="btn btn-sm btn-outline-primary" title="{% translate 'Move down' %}">
+                                ▼
+                            </button>
+                            {% endif %}
+                            <a data-bs-toggle="modal" href="#modal-delete-{{ form.instance.pk }}" title="{% translate 'Delete' %}" class="btn btn-outline-danger btn-sm">
+                                ❌
+                            </a>
+                        </div>
+                        {% csrf_token %}
+                    </form>
                     <a class="card-body text-decoration-none text-dark" data-bs-toggle="modal" href="#modal-edit-{{ form.instance.pk }}">
                         {{ form.instance }}
                     </a>
