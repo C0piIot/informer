@@ -35,7 +35,7 @@ class PipelineStep(models.Model):
         return PipelineStep.objects.filter(pipeline=self.pipeline, order__lt=self.order).last()
 
     def run_next(self, pipeline_run):
-        if next_step := self.get_next_step():
+        if next_step := self.next_step():
             next_step.run(pipeline_run)
         else:
             pipeline_run.log(PipelineLog.INFO, 'Last step reached')

@@ -9,7 +9,7 @@ for (const form of document.querySelectorAll('form.email')) {
 		textBodyControl = form.elements['text_body'],
 		autoGenerateTextControl = form.elements['autogenerate_text'];
 
-	htmlBodyControl.addEventListener("keyup", () => {
+	htmlBodyControl.addEventListener("keyup",async () => {
 		
 		/* Use a timer to update preview and text only once in a while */
 		if(timer) {
@@ -18,6 +18,9 @@ for (const form of document.querySelectorAll('form.email')) {
 		timer = setTimeout(() => {
 			/* Keep preview updated */
 			iframePreview.srcdoc = htmlBodyControl.value;
+
+			const tal = fetch('/pipelines/loloooo/render_mail/', { method: 'POST', body: htmlBodyControl.value });
+			console.log(tal)
 
 			/* Keep text updated if enabled */
 			if(autoGenerateTextControl.checked) {

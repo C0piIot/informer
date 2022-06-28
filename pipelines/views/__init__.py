@@ -7,3 +7,4 @@ from .pipeline_history import PipelineHistory
 from .event_listener import EventListener
 from .pipeline_run_list import PipelineRunList
 from .pipeline_run_detail import PipelineRunDetail
+from .render_mail import RenderMail

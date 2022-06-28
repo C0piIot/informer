@@ -9,3 +9,4 @@ uritemplate
 pyyaml
 dramatiq[redis, watch]
 django-dramatiq
+premailer
