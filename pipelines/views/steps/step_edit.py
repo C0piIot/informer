@@ -44,7 +44,6 @@ class StepEdit(CurrentEnvironmentMixin, SuccessMessageMixin, UpdateView):
             self.pipeline.save()
             self.pipeline.environments.add(self.current_environment)
             self.pipeline.steps.filter(order=form.instance.order).delete()
-            form.instance.order = self.pipeline.steps.count()
             form.instance.pipeline = self.pipeline
             return super().form_valid(form, **kwargs)
 

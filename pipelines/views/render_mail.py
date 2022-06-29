@@ -14,6 +14,6 @@ class RenderMail(CurrentAccountMixin, View):
 	def post(self, request, *args, **kwargs):
 		return HttpResponse(
 			self.premailer.transform(
-				Template(request.body).render(Context())
+				Template(request.body.decode('UTF-8')).render(Context())
 			)
 		)

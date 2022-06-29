@@ -17,7 +17,7 @@
       <div class="col-lg-6 d-flex flex-column">
         <p class="mb-2">{% translate "Message preview" %}</p>
         <output class="w-100 border rounded mb-3 flex-grow-1 d-flex align-items-stretch" for="{{ form.html_body.id_for_label }}">
-          <iframe class="w-100" srcdoc="{{ form.html_body.value|default:'' }}"></iframe>  
+          <iframe class="w-100" srcdoc="{{ form.html_body.value|default:'' }}" data-render-mail-url="{% url 'pipelines:render_mail' current_environment.slug %}"></iframe>  
         </output>
       </div>
     </div>

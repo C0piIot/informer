@@ -9,23 +9,21 @@ for (const form of document.querySelectorAll('form.email')) {
 		textBodyControl = form.elements['text_body'],
 		autoGenerateTextControl = form.elements['autogenerate_text'];
 
-	htmlBodyControl.addEventListener("keyup",async () => {
+	htmlBodyControl.addEventListener("keyup", async () => {
 		
 		/* Use a timer to update preview and text only once in a while */
 		if(timer) {
 			clearTimeout(timer);
 		}
-		timer = setTimeout(() => {
-			/* Keep preview updated */
-			iframePreview.srcdoc = htmlBodyControl.value;
-
-			const tal = fetch('/pipelines/loloooo/render_mail/', { method: 'POST', body: htmlBodyControl.value });
-			console.log(tal)
-
+		timer = setTimeout(async () => {
 			/* Keep text updated if enabled */
 			if(autoGenerateTextControl.checked) {
 				textBodyControl.value = stripHtml(htmlBodyControl.value);
 			}
+
+			/* Keep preview updated */
+			const response = await fetch(iframePreview.dataset.renderMailUrl, { method: 'POST', body: htmlBodyControl.value });
+			iframePreview.srcdoc = await response.text();
 			timer = null;
 		}, 500);
 	});
