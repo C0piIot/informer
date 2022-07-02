@@ -8,3 +8,9 @@ class Group(PipelineStep):
 
     def __str__(self):
         return "⏬ Group by %s" % self.key
+
+    def step_run(self, pipeline_run):
+        pipeline_run.schedule_wake_up(self, self.time)
+
+    def step_wake_up(self, pipeline_run):
+        self.run_next(pipeline_run)

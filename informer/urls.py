@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include
 from .views import HomeRedirect
+from .api import router
+from rest_framework.schemas import get_schema_view
 
 urlpatterns = [
     path('', HomeRedirect.as_view(), name='home'),
@@ -10,5 +12,14 @@ urlpatterns = [
     ])),
     path('config/', include('configuration.urls')),
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls'))
+    path('api/', include([
+        path('auth/', include('rest_framework.urls')),
+        path('openapi/', get_schema_view(
+            title="Your Project",
+            description="API for all things …",
+            version="1.0.0"
+        ), name='openapi-schema'), 
+        path('<slug:environment>/', include(router.urls)),
+    ])) 
+    
 ]

@@ -21,16 +21,20 @@ class PipelineRun(models.Model):
     contact_key = models.CharField(_('contact key'), max_length=100, editable=False)
     event_payload = models.JSONField(_('event payload'), default=dict, editable=False)
     pipeline_data = models.JSONField(_('pipeline data'), default=dict)
+    group_key = models.CharField(_('group_key'), max_length=200, blank=True, editable=False)
 
     def save(self, *args, **kwargs):
         self.account = self.environment.account
         self.pipeline_id = self.pipeline_revision.id
+        if not self.group_key:
+            self.group_key = self.id.hex
         super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = _('pipeline run')
         verbose_name_plural = _('pipeline runs')
         ordering = ('-start',)
+        constraints = [models.UniqueConstraint(fields=('contact_key', 'pipeline_revision','group_key'), name='unique group')]
 
     def __str__(self):
         return _("Pipeline run %s") % self.id
@@ -74,6 +78,24 @@ class PipelineRun(models.Model):
     @classmethod
     def delete_pipeline_run(cls, environment, key):
         cls.objects.filter(environment=environment, key=key).delete()
+
+
+    @classmethod
+    def get_pipeline_group(cls, pipeline_run, group_key):
+        try:
+            return cls.objects.get(group_key=group_key, contact_key=self.contact_key, pipeline_revision=pipeline_revision)
+        except PipelineRun.DoesNotExist:
+            pipeline_run.group_key = group_key
+            pipeline_run.save()
+            return pipeline_run
+
+
+    @classmethod
+    def unset_group(cls, pipeline_run, group_key):
+        pipeline_run.group_key = None
+        pipeline_run.save()
+
+
 
 
     def schedule_wake_up(self, pipeline_step, time_delta):
