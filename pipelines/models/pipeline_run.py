@@ -86,14 +86,12 @@ class PipelineRun(models.Model):
             return cls.objects.get(group_key=group_key, contact_key=self.contact_key, pipeline_revision=pipeline_revision)
         except PipelineRun.DoesNotExist:
             pipeline_run.group_key = group_key
-            pipeline_run.save()
             return pipeline_run
 
 
     @classmethod
     def unset_group(cls, pipeline_run, group_key):
         pipeline_run.group_key = None
-        pipeline_run.save()
 
 
 
