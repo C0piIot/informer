@@ -83,7 +83,7 @@ class PipelineRun(models.Model):
     @classmethod
     def get_pipeline_group(cls, pipeline_run, group_key):
         try:
-            return cls.objects.get(group_key=group_key, contact_key=self.contact_key, pipeline_revision=pipeline_revision)
+            return cls.objects.get(group_key=group_key, contact_key=pipeline_run.contact_key, pipeline_revision=pipeline_run.pipeline_revision)
         except PipelineRun.DoesNotExist:
             pipeline_run.group_key = group_key
             return pipeline_run
