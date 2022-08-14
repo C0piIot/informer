@@ -17,13 +17,16 @@ services:
   informer_app:
     <<: *informer-django
     container_name: informer_app
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:80"
     ports:
       - "80:80"
 
   informer_worker:
     <<: *informer-django
     container_name: informer_worker
-    entrypoint: "python manage.py rundramatiq --reload"   
+    command: "python manage.py rundramatiq --reload"   
   
   informer_redis:
     image: redis:alpine
