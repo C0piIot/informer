@@ -7,7 +7,7 @@ from informer.api import router
 
 app_name = 'pipelines'
 
-router.register('', EventListener, basename='event')
+router.register('pipeline-runs', PipelineRunViewSet)
 
 urlpatterns = [
     path('', PipelineList.as_view(), name='list'),
