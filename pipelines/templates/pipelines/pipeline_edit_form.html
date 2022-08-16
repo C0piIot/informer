@@ -62,7 +62,7 @@
                             <button type="submit" class="btn btn-sm btn-outline-primary" title="{% translate 'Move down' %}"{{ forloop.last|yesno:' disabled,' }}>
                                 ▼
                             </button>
-                            <a data-bs-toggle="modal" href="#modal-delete-{{ form.instance.pk }}" title="{% translate 'Delete' %}" class="btn btn-outline-danger btn-sm">
+                            <a data-bs-toggle="modal" href="#delete-{{ form.instance.pk }}" title="{% translate 'Delete' %}" class="btn btn-outline-danger btn-sm">
                                 ❌
                             </a>
                         </div>
@@ -146,29 +146,11 @@
     </div>
     {% csrf_token %}
 </form>
-<form method="post" 
-    action="{% url 'pipelines:step_remove' current_environment.slug pipeline.id form.instance.pk %}"
-    id="modal-delete-{{ form.instance.pk }}" 
-    aria-labelledby="modal-delete-{{ form.instance.pk }}-title"
-    class="modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modal-delete-{{ form.instance.pk }}-title">
-                {% blocktranslate %}Delete {{ form.instance.content_type.name }} step{% endblocktranslate %}
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
-          </div>
-          <div class="modal-body">
-              {% translate "Are you sure?" %}
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
-            <button type="submit" class="btn btn-danger">{% translate "Delete" %}</button>
-          </div>
-        </div>
-    </div>
-    {% csrf_token %}
-</form>
+
+{% url 'pipelines:step_remove' current_environment.slug pipeline.id form.instance.pk as delete_url %}
+{% with id_slug=form.instance.pk|slugify %}
+{% include 'modal_delete.html' with object=form.instance modal_id='delete-'|add:id_slug %}
+{% endwith %}
+
 {% endfor %}
 {% endblock body-content %}

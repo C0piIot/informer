@@ -49,7 +49,7 @@
         					<a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-{{ contact.key }}">
         						{% translate "Edit" %}
         					</a>
-        					<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ contact.key }}" type="button">
+        					<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ contact.key }}" type="button">
         						{% translate "Delete" %}
         					</button>
                         </div>
@@ -110,29 +110,9 @@
     </div>
     {% csrf_token %}
 </form>
-<form method="post" 
-    action="{% url 'contacts:contact_remove' current_environment.slug form.instance.key %}"
-    id="modal-delete-{{ form.instance.key }}" 
-    aria-labelledby="modal-delete-{{ form.instance.key }}-title"
-    class="modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modal-delete-{{ form.instance.key }}-title">
-                {% blocktranslate with contact=form.instance %}Delete contact {{ contact }}{% endblocktranslate %}
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
-          </div>
-          <div class="modal-body">
-              {% translate "Are you sure?" %}
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
-            <button type="submit" class="btn btn-danger">{% translate "Delete" %}</button>
-          </div>
-        </div>
-    </div>
-    {% csrf_token %}
-</form>
+
+{% url 'contacts:contact_remove' current_environment.slug form.instance.key as delete_url %}
+{% include 'modal_delete.html' with object=form.instance modal_id='delete-'|add:form.instance.key %}
+
 {% endfor %}
 {% endblock body-content %}

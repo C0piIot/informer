@@ -45,7 +45,7 @@
       					<a href="{% url 'pipelines:history' current_environment.slug pipeline.id %}"  class="btn btn-sm btn-outline-info">
       						{% translate 'History' %}
       					</a>
-                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ pipeline.id }}">
+                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ pipeline.id.hex }}">
                   {% translate 'Remove' %}
                 </button>
     					</div>
@@ -83,28 +83,9 @@
     {% csrf_token %}
 </form>
 {% for pipeline in object_list %}
-<form method="post" action="{% url 'pipelines:remove' current_environment.slug pipeline.id %}"
-    id="modal-delete-{{ pipeline.id }}" 
-    aria-labelledby="modal-delete-{{ pipeline.id }}-title"
-    class="modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modal-delete-{{ pipeline.id }}-title">
-                {% blocktranslate %}Delete pipeline {{ pipeline }}{% endblocktranslate %}
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
-          </div>
-          <div class="modal-body">
-              {% translate "Are you sure?" %}
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
-            <button type="submit" class="btn btn-danger">{% translate "Delete" %}</button>
-          </div>
-        </div>
-    </div>
-    {% csrf_token %}
-</form>
+
+{% url 'pipelines:remove' current_environment.slug pipeline.id as delete_url %}
+{% include 'modal_delete.html' with object=pipeline modal_id='delete-'|add:pipeline.id.hex %}
+
 {% endfor %}
 {% endblock body-content %}
