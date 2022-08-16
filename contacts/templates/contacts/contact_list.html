@@ -33,6 +33,7 @@
                     <td>{% translate "Key" %}</td>
                     <td>{% translate "Name" %}</td>
                     <td></td>
+                </tr>
             </thead>
 			<tbody>
     			{% for contact in contact_list %}
@@ -43,7 +44,7 @@
     						{{ contact }}	
     					</a>
     				</td>
-    				<td>
+    				<td class="text-nowrap text-end">
                         <div class="btn-group" role="group" aria-label="{% translate 'Actions' %}">
         					<a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-{{ contact.key }}">
         						{% translate "Edit" %}

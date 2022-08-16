@@ -26,21 +26,36 @@
 	</div>
 	<div class="table-responsive">
 		<table class="table table-hover">
+            <colgroup>
+                <col class="col-7">
+                <col class="col-3">
+                <col class="col-2">
+            </colgroup>
+            <thead>
+                <tr>
+                    <td>{% translate "Name" %}</td>
+                    <td>{% translate "Type" %}</td>
+                    <td></td>
+                </tr>
+            </thead>
 			<tbody>
     			{% for channel in object_list %}
     			<tr>
-    				<td class="w-100">
+    				<td>
     					<a href="#" title="{% translate 'View' %}" class="text-decoration-none">
     						{{ channel }}	
     					</a>
     				</td>
-    				<td class="text-nowrap">
-    					<a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-{{ channel.pk }}">
-    						✏️
-    					</a>
-    					<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ channel.pk }}">
-    						❌
-    					</button>
+                    <td>{{ channel.content_type.name }}</td>
+    				<td class="text-nowrap text-end">
+                        <div class="btn-group" role="group" aria-label="{% translate 'Actions' %}">
+                            <a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-{{ channel.pk }}">
+                                {% translate "Edit" %}
+                            </a>
+                            <button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ channel.pk }}" type="button">
+                                {% translate "Delete" %}
+                            </button>
+                        </div>
     				</td>
     			</tr>
     			{% endfor %}
