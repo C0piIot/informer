@@ -1,44 +1,44 @@
-{% extends 'base.html' %}
-{% load i18n django_bootstrap5 %}
-
+{% extends 'list.html' %}
+{% load i18n static django_bootstrap5 %}
 
 {% block breadcrumbds %}
-<li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
+{{ block.super }}
 <li class="breadcrumb-item active" aria-current="page">{% translate "Environments" %}</li>
 {% endblock breadcrumbds %}
 
+{% block list-actions %}
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-create">
+  {% translate "New environment" %}
+</button>
+{% endblock list-actions %}
+
+{% block colgroup %}<col class="col-10"><col class="col-2">{% endblock colgroup %}
+
+{% block thead-tr %}<th>{% translate "Environment" %}</th>{% endblock thead-tr %}
+
+
+{% block object-tr %}
+<td>
+  <a href="#" title="{% translate 'View' %}" class="text-decoration-none">
+    {{ object }} 
+  </a>
+</td>
+{% endblock object-tr %}
+
+{% block object-actions %}
+<a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-outline-primary">
+  {% translate "Edit" %}
+</a>
+<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ object.pk }}">
+  {% translate "Delete" %}
+</button>
+{% endblock object-actions %}
+
+{% block empty-tr %}<td colspan="3" class="text-center fst-italic">{% translate "No environments found" %}</td>{% endblock empty-tr %}
+
 {% block body-content %}
 {{ block.super }}
-<div class="container">
-	<p class="mt-4 text-right">
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-create">
-			{% translate "New environment" %}
-		</button>
-	</p>
-	<div class="table-responsive">
-		<table class="table table-hover">
-			<tbody>
-    			{% for environment in object_list %}
-    			<tr>
-    				<td class="w-100">
-    					<a href="#" title="{% translate 'View' %}" class="text-decoration-none">
-    						{{ environment }}	
-    					</a>
-    				</td>
-    				<td class="text-nowrap">
-    					<a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-primary">
-    						✏️
-    					</a>
-    					<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ environment.pk }}">
-    						❌
-    					</button>
-    				</td>
-    			</tr>
-    			{% endfor %}
-    		</tbody>
-		</table>
-	</div>
-</div>
+
 {% for environment in object_list %}
 <form method="post" 
     action="{% url 'configuration:environment_remove' environment.slug %}"

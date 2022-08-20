@@ -1,68 +1,55 @@
-{% extends 'base.html' %}
+{% extends 'list.html' %}
 {% load i18n %}
 
-
 {% block breadcrumbds %}
-<li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
+{{ block.super }}
 <li class="breadcrumb-item active" aria-current="page">{% translate "Channels" %}</li>
 {% endblock breadcrumbds %}
 
+{% block list-actions %}
+<div class="dropdown mt-4">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="newChannel" data-bs-toggle="dropdown" aria-expanded="false">
+    {% translate "New channel" %}
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="newChannel">
+        {% for content_type in new_channel_forms.keys %}
+            <li>
+                <a class="dropdown-item" data-bs-toggle="modal" href="#modal-add-{{ content_type.model }}">
+                    {{ content_type.name|title }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock list-actions %}
+
+{% block colgroup %}<col class="col-7"><col class="col-3"><col class="col-2">{% endblock colgroup %}
+
+{% block thead-tr %}<th>{% translate "Name" %}</th><th>{% translate "Type" %}</th>{% endblock thead-tr %}
+
+{% block object-tr %}
+<td>
+    <a href="#" title="{% translate 'View' %}" class="text-decoration-none">
+        {{ object }}   
+    </a>
+</td>
+<td>{{ object.content_type.name }}</td>
+{% endblock object-tr %}
+
+{% block object-actions %}
+ <a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-{{ object.pk }}">
+    {% translate "Edit" %}
+</a>
+<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ object.pk }}" type="button">
+    {% translate "Delete" %}
+</button>
+{% endblock object-actions %}
+
+{% block empty-tr %}<td colspan="3" class="text-center fst-italic">{% translate "No channels found" %}</td>{% endblock empty-tr %}
+
 {% block body-content %}
 {{ block.super }}
-<div class="container">
-	<div class="dropdown mt-4">
-		<button class="btn btn-secondary dropdown-toggle" type="button" id="newChannel" data-bs-toggle="dropdown" aria-expanded="false">
-		{% translate "New channel" %}
-		</button>
-  		<ul class="dropdown-menu" aria-labelledby="newChannel">
-		    {% for content_type in new_channel_forms.keys %}
-                <li>
-                    <a class="dropdown-item" data-bs-toggle="modal" href="#modal-add-{{ content_type.model }}">
-                        {{ content_type.name|title }}
-                    </a>
-                </li>
-		    {% endfor %}
-		</ul>
-	</div>
-	<div class="table-responsive">
-		<table class="table table-hover">
-            <colgroup>
-                <col class="col-7">
-                <col class="col-3">
-                <col class="col-2">
-            </colgroup>
-            <thead>
-                <tr>
-                    <td>{% translate "Name" %}</td>
-                    <td>{% translate "Type" %}</td>
-                    <td></td>
-                </tr>
-            </thead>
-			<tbody>
-    			{% for channel in object_list %}
-    			<tr>
-    				<td>
-    					<a href="#" title="{% translate 'View' %}" class="text-decoration-none">
-    						{{ channel }}	
-    					</a>
-    				</td>
-                    <td>{{ channel.content_type.name }}</td>
-    				<td class="text-nowrap text-end">
-                        <div class="btn-group" role="group" aria-label="{% translate 'Actions' %}">
-                            <a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-{{ channel.pk }}">
-                                {% translate "Edit" %}
-                            </a>
-                            <button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ channel.pk }}" type="button">
-                                {% translate "Delete" %}
-                            </button>
-                        </div>
-    				</td>
-    			</tr>
-    			{% endfor %}
-    		</tbody>
-		</table>
-	</div>
-</div>
+
 {% for content_type, form in new_channel_forms.items %}
 <form method="post" 
 	action="{% url 'configuration:channel_create' content_type.model %}"
