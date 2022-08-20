@@ -29,7 +29,7 @@
 <a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-outline-primary">
   {% translate "Edit" %}
 </a>
-<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modal-delete-{{ object.pk }}">
+<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ object.slug }}">
   {% translate "Delete" %}
 </button>
 {% endblock object-actions %}
@@ -40,30 +40,8 @@
 {{ block.super }}
 
 {% for environment in object_list %}
-<form method="post" 
-    action="{% url 'configuration:environment_remove' environment.slug %}"
-    id="modal-delete-{{ environment.pk }}" 
-    aria-labelledby="modal-delete-{{ environment.pk }}-title"
-    class="modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modal-delete-{{ environment.pk }}-title">
-                {% blocktranslate %}Remove {{ environment }}{% endblocktranslate %}
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
-          </div>
-          <div class="modal-body">
-              {% translate "Are you sure you want to remove this environment?" %}
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
-            <button type="submit" class="btn btn-danger">{% translate "Remove" %}</button>
-          </div>
-        </div>
-    </div>
-    {% csrf_token %}
-</form>
+{% url 'configuration:environment_remove' environment.slug as delete_url %}
+{% include 'modal_delete.html' with object=environment modal_id='delete-'|add:environment.slug %}
 {% endfor %}
 <form 
     action="{% url 'configuration:environment_create' %}" method="post"
