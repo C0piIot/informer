@@ -6,20 +6,13 @@
  <li class="breadcrumb-item active" aria-current="page">{{ current_environment }}</li>
  {% endblock breadcrumbds %}
 
-{% block table %}
-<div class="container">
-  <p class="mt-4 text-right">
-    <a class="btn btn-primary" data-bs-toggle="modal" href="#modal-create-pipeline">
-      {% translate "New pipeline" %}
-    </a>
-  </p>
-</div>
-{{ block.super }}
-{% endblock table %}
+{% block list_actions %}
+<a class="btn btn-primary" data-bs-toggle="modal" href="#modal-create-pipeline">{% translate "New pipeline" %}</a>
+{% endblock list_actions %}
 
 {% block colgroup %}<col class="col-2"><col class="col-8"><col class="col-2">{% endblock colgroup %}
 
-{% block thead_tr %}<th>{% translate "Trigger" %}</th><th>{% translate "Name" %}</th><th></th>{% endblock thead_tr %}
+{% block thead_tr %}<th>{% translate "Trigger" %}</th><th>{% translate "Name" %}</th>{% endblock thead_tr %}
 
 
 {% block object_tr %}
@@ -31,18 +24,22 @@
 </td>
 <td>
   <div class="btn-group" role="group" aria-label="{% translate 'Actions' %}">
-    <a href="{% url 'pipelines:edit' current_environment.slug object.id %}" class="btn btn-sm btn-outline-primary">
-      {% translate 'Edit' %}
-    </a>
-    <a href="{% url 'pipelines:history' current_environment.slug object.id %}"  class="btn btn-sm btn-outline-info">
-      {% translate 'History' %}
-    </a>
-    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ object.id.hex }}">
-      {% translate 'Remove' %}
-    </button>
+    
   </div>
 </td>
 {% endblock object_tr %}
+
+{% block object_actions %}
+<a href="{% url 'pipelines:edit' current_environment.slug object.id %}" class="btn btn-sm btn-outline-primary">
+  {% translate 'Edit' %}
+</a>
+<a href="{% url 'pipelines:history' current_environment.slug object.id %}"  class="btn btn-sm btn-outline-info">
+  {% translate 'History' %}
+</a>
+<button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ object.id.hex }}">
+  {% translate 'Remove' %}
+</button>
+{% endblock object_actions %}
 
 {% block empty_tr %}<td colspan="3" class="text-center fst-italic">{% translate "No pipelines found" %}</td>{% endblock empty_tr %}
 

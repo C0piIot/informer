@@ -1,16 +1,26 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block body-content %}
 {{ block.super }}
-{% block table %}
+<div class="container my-1 text-end">{% block list_actions %}{% endblock list_actions %}</div>
 <div class="container">
 	<div class="table-responsive">
 		<table class="table table-hover">
 			<colgroup>{% block colgroup %}{% endblock colgroup %}</colgroup>
-			<thead><tr>{% block thead_tr %}{% endblock thead_tr %}</tr></thead>
+			<thead class="border border-top-0 border-end-0 border-start-0">
+				<tr>{% block thead_tr %}{% endblock thead_tr %}<th></th></tr>
+			</thead>
 			<tbody>
 				{% for object in object_list %}
-				<tr>{% block object_tr %}{% endblock object_tr %}</tr>
+				<tr>
+					{% block object_tr %}{% endblock object_tr %}
+					<td>
+						<div class="btn-group" role="group" aria-label="{% translate 'Actions' %}">
+							{% block object_actions %}{% endblock object_actions %}
+						</div>
+					</td>
+				</tr>
 				{% empty %}
 				<tr>{% block empty_tr %}{% endblock empty_tr %}</tr>
 				{% endfor %}
@@ -18,5 +28,4 @@
 		</table>
 	</div>
 </div>
-{% endblock table %}
 {% endblock body-content %}
