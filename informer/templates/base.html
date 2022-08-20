@@ -78,8 +78,7 @@
     <div class="container mt-4">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          {% block breadcrumbds %}
-          {% endblock breadcrumbds %}
+          {% block breadcrumbds %}<li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>{% endblock breadcrumbds %}
         </ol>
       </nav>
       {% bootstrap_messages %}

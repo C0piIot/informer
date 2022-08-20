@@ -1,65 +1,53 @@
-{% extends 'base.html' %}
+{% extends 'list.html' %}
 {% load i18n django_bootstrap5 %}
 
  {% block breadcrumbds %}
- <li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
+ {{ block.super }}
  <li class="breadcrumb-item active" aria-current="page">{{ current_environment }}</li>
  {% endblock breadcrumbds %}
 
+{% block table %}
+<div class="container">
+  <p class="mt-4 text-right">
+    <a class="btn btn-primary" data-bs-toggle="modal" href="#modal-create-pipeline">
+      {% translate "New pipeline" %}
+    </a>
+  </p>
+</div>
+{{ block.super }}
+{% endblock table %}
+
+{% block colgroup %}<col class="col-2"><col class="col-8"><col class="col-2">{% endblock colgroup %}
+
+{% block thead_tr %}<th>{% translate "Trigger" %}</th><th>{% translate "Name" %}</th><th></th>{% endblock thead_tr %}
+
+
+{% block object_tr %}
+<td>{{ object.trigger }}</td>
+<td>
+  <a href="{% url 'pipelines:runs' current_environment.slug object.id %}" title="{% translate 'View' %}" class="text-decoration-none">
+    {{ object }}  
+  </a>
+</td>
+<td>
+  <div class="btn-group" role="group" aria-label="{% translate 'Actions' %}">
+    <a href="{% url 'pipelines:edit' current_environment.slug object.id %}" class="btn btn-sm btn-outline-primary">
+      {% translate 'Edit' %}
+    </a>
+    <a href="{% url 'pipelines:history' current_environment.slug object.id %}"  class="btn btn-sm btn-outline-info">
+      {% translate 'History' %}
+    </a>
+    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ object.id.hex }}">
+      {% translate 'Remove' %}
+    </button>
+  </div>
+</td>
+{% endblock object_tr %}
+
+{% block empty_tr %}<td colspan="3" class="text-center fst-italic">{% translate "No pipelines found" %}</td>{% endblock empty_tr %}
+
 {% block body-content %}
 {{ block.super }}
-<div class="container">
-	<p class="mt-4 text-right">
-		<a class="btn btn-primary" data-bs-toggle="modal" href="#modal-create-pipeline">
-			{% translate "New pipeline" %}
-		</a>
-	</p>
-	<div class="table-responsive">
-		<table class="table table-hover">
-      <colgroup>
-        <col class="col-2">
-        <col class="col-8">
-        <col class="col-2">
-      </colgroup>
-      <thead>
-        <tr>
-          <th>{% translate "Trigger" %}</th>
-          <th>{% translate "Name" %}</th>
-          <th></th>
-        </tr>
-      </thead>
-			<tbody>
-    			{% for pipeline in object_list %}
-    			<tr>
-            <td>{{ pipeline.trigger }}</td>
-    				<td>
-    					<a href="{% url 'pipelines:runs' current_environment.slug pipeline.id %}" title="{% translate 'View' %}" class="text-decoration-none">
-    						{{ pipeline }}	
-    					</a>
-    				</td>
-    				<td>
-              <div class="btn-group" role="group" aria-label="{% translate 'Actions' %}">
-                <a href="{% url 'pipelines:edit' current_environment.slug pipeline.id %}" class="btn btn-sm btn-outline-primary">
-      						{% translate 'Edit' %}
-      					</a>
-      					<a href="{% url 'pipelines:history' current_environment.slug pipeline.id %}"  class="btn btn-sm btn-outline-info">
-      						{% translate 'History' %}
-      					</a>
-                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ pipeline.id.hex }}">
-                  {% translate 'Remove' %}
-                </button>
-    					</div>
-    				</td>
-    			</tr>
-          {% empty %}
-          <tr>
-            <td colspan="3" class="text-center fst-italic">{% translate "No pipelines found" %}</td>
-          </tr>
-    			{% endfor %}
-    		</tbody>
-		</table>
-	</div>
-</div>
 <form
     action="{% url 'pipelines:create' current_environment.slug %}" method="post"
     id="modal-create-pipeline" 
@@ -82,10 +70,10 @@
     </div>
     {% csrf_token %}
 </form>
-{% for pipeline in object_list %}
 
+{% for pipeline in object_list %}
 {% url 'pipelines:remove' current_environment.slug pipeline.id as delete_url %}
 {% include 'modal_delete.html' with object=pipeline modal_id='delete-'|add:pipeline.id.hex %}
-
 {% endfor %}
+
 {% endblock body-content %}
