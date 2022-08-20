@@ -1,0 +1,14 @@
+{% extends 'modal.html' %}
+{% load i18n %}
+
+{% block modal_content %}
+{% blocktranslate asvar modal_title %}Remove {{ object }}{% endblocktranslate %}
+<form method="post" action="{{ delete_url }}">{% csrf_token %}{{ block.super }}</form>
+{% endblock modal_content %}
+
+{% block modal_body %}{% translate "Are you sure?" %}{% endblock modal_body %}
+
+{% block modal_footer %}
+<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+<button type="submit" class="btn btn-danger">{% translate "Delete" %}</button>
+{% endblock modal_footer %}

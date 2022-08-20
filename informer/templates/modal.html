@@ -1,0 +1,19 @@
+{% load i18n %}
+{% block modal %}
+<div id="{{ modal_id }}" aria-labelledby="modal-{{ modal_id }}-title" class="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          {% block modal_content %}
+          <div class="modal-header">
+            {% block modal_header %}
+              <h5 class="modal-title" id="modal-{{ modal_id }}-title">{{ modal_title }}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
+            {% endblock modal_header %}
+          </div>
+          <div class="modal-body">{% block modal_body %}{% endblock modal_body %}</div>
+          <div class="modal-footer">{% block modal_footer %}{% endblock modal_footer %}</div>
+          {% endblock modal_content %}
+        </div>
+    </div>
+</div>
+{% endblock modal %}
