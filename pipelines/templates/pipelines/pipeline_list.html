@@ -1,35 +1,30 @@
 {% extends 'list.html' %}
 {% load i18n django_bootstrap5 %}
 
- {% block breadcrumbds %}
- {{ block.super }}
- <li class="breadcrumb-item active" aria-current="page">{{ current_environment }}</li>
- {% endblock breadcrumbds %}
+{% block breadcrumbds %}
+{{ block.super }}
+<li class="breadcrumb-item active" aria-current="page">{{ current_environment }}</li>
+{% endblock breadcrumbds %}
 
-{% block list_actions %}
+{% block list-actions %}
 <a class="btn btn-primary" data-bs-toggle="modal" href="#modal-create-pipeline">{% translate "New pipeline" %}</a>
-{% endblock list_actions %}
+{% endblock list-actions %}
 
 {% block colgroup %}<col class="col-2"><col class="col-8"><col class="col-2">{% endblock colgroup %}
 
-{% block thead_tr %}<th>{% translate "Trigger" %}</th><th>{% translate "Name" %}</th>{% endblock thead_tr %}
+{% block thead-tr %}<th>{% translate "Trigger" %}</th><th>{% translate "Name" %}</th>{% endblock thead-tr %}
 
 
-{% block object_tr %}
+{% block object-tr %}
 <td>{{ object.trigger }}</td>
 <td>
   <a href="{% url 'pipelines:runs' current_environment.slug object.id %}" title="{% translate 'View' %}" class="text-decoration-none">
     {{ object }}  
   </a>
 </td>
-<td>
-  <div class="btn-group" role="group" aria-label="{% translate 'Actions' %}">
-    
-  </div>
-</td>
-{% endblock object_tr %}
+{% endblock object-tr %}
 
-{% block object_actions %}
+{% block object-actions %}
 <a href="{% url 'pipelines:edit' current_environment.slug object.id %}" class="btn btn-sm btn-outline-primary">
   {% translate 'Edit' %}
 </a>
@@ -39,9 +34,9 @@
 <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ object.id.hex }}">
   {% translate 'Remove' %}
 </button>
-{% endblock object_actions %}
+{% endblock object-actions %}
 
-{% block empty_tr %}<td colspan="3" class="text-center fst-italic">{% translate "No pipelines found" %}</td>{% endblock empty_tr %}
+{% block empty-tr %}<td colspan="3" class="text-center fst-italic">{% translate "No pipelines found" %}</td>{% endblock empty-tr %}
 
 {% block body-content %}
 {{ block.super }}

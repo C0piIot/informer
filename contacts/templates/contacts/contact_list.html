@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'list.html' %}
 {% load i18n static %}
 
 {% block head-content %}
@@ -6,65 +6,45 @@
 <script type="module" src="{% static 'contacts/contact.js' %}"></script>
 {% endblock head-content %}
 
-
 {% block breadcrumbds %}
-<li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
+{{ block.super }}
 <li class="breadcrumb-item"><a href="{{ current_environment.get_absolute_url }}">{{ current_environment }}</a></li>
 <li class="breadcrumb-item active" aria-current="page">{% translate "Contacts" %}</li>
 {% endblock breadcrumbds %}
 
+{% block list-actions %}
+<button class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#modal-new">
+    {% translate "New contact" %}
+</button>
+{% endblock list-actions %}
+
+{% block colgroup %}<col class="col-2"><col class="col-8"><col class="col-2">{% endblock colgroup %}
+
+{% block thead-tr %}<th>{% translate "Key" %}</th><th>{% translate "Name" %}</th>{% endblock thead-tr %}
+
+
+{% block object-tr %}
+ <td>{{ object.key }}</td>
+<td>
+    <a href="#" title="{% translate 'View' %}" class="text-decoration-none">
+        {{ object }}   
+    </a>
+</td>
+{% endblock object-tr %}
+
+{% block object-actions %}
+<a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-{{ object.key }}">
+    {% translate "Edit" %}
+</a>
+<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ object.key }}" type="button">
+    {% translate "Delete" %}
+</button>
+{% endblock object-actions %}
+
+{% block empty-tr %}<td colspan="3" class="text-center fst-italic">{% translate "No contacts found" %}</td>{% endblock empty-tr %}
+
 {% block body-content %}
 {{ block.super }}
-<div class="container">
-    <p class="mt-4 text-right">
-    	<button class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#modal-new">
-    		{% translate "New contact" %}
-    	</button>
-    </p>
-  	<div class="table-responsive">
-		<table class="table table-hover">
-            <colgroup>
-                <col class="col-2">
-                <col class="col-8">
-                <col class="col-2">
-            </colgroup>
-            <thead>
-                <tr>
-                    <td>{% translate "Key" %}</td>
-                    <td>{% translate "Name" %}</td>
-                    <td></td>
-                </tr>
-            </thead>
-			<tbody>
-    			{% for contact in contact_list %}
-    			<tr>
-                    <td>{{ contact.key }}</td>
-    				<td>
-    					<a href="#" title="{% translate 'View' %}" class="text-decoration-none">
-    						{{ contact }}	
-    					</a>
-    				</td>
-    				<td class="text-nowrap text-end">
-                        <div class="btn-group" role="group" aria-label="{% translate 'Actions' %}">
-        					<a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-{{ contact.key }}">
-        						{% translate "Edit" %}
-        					</a>
-        					<button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ contact.key }}" type="button">
-        						{% translate "Delete" %}
-        					</button>
-                        </div>
-    				</td>
-    			</tr>
-                {% empty %}
-                <tr>
-                    <td colspan="3" class="text-center fst-italic">{% translate "No contacts found" %}</td>
-                </tr>
-    			{% endfor %}
-    		</tbody>
-		</table>
-	</div>
-</div>
-
 <form method="post" 
     action="{% url 'contacts:contact_create' current_environment.slug %}"
     id="modal-new" 
