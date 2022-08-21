@@ -4,38 +4,31 @@ from django.contrib.messages.views import SuccessMessageMixin
 from pipelines.models import PipelineStep
 from django.db import transaction
 from .pipeline_filtered_mixin import PipelineFilteredMixin
-from pipelines.forms import step_form_classes
+from .pipeline_edit_mixin import PipelineEditMixin
+from pipelines.forms import PipelineForm
 from django.utils.translation import gettext_lazy as _
-from django.contrib.contenttypes.models import ContentType
 
 class PipelineEdit(
     PipelineFilteredMixin,
+    PipelineEditMixin,
     SuccessMessageMixin,
     UpdateView
 ):
-    fields = ('name', 'trigger', 'enabled')
+    form_class = PipelineForm
     template_name_suffix = '_edit_form'
     success_message = _("%(name)s was updated successfully")
 
     def form_valid(self, form, **kwargs):
         with transaction.atomic():
-            self.object.environments.remove(self.current_environment)
+            self.current_environment.pipelines.remove(self.object)
             response = super().form_valid(form, **kwargs)
-            self.object.environments.add(self.current_environment)
+            self.current_environment.pipelines.add(self.object)
         return response
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-
-        content_types = ContentType.objects.get_for_models(*step_form_classes.keys())
-
         context_data.update({
-            'step_types': content_types.values(),
-            'new_step_forms': { content_types[model].model : form_class() for model ,form_class in step_form_classes.items() },
-            'step_forms': [ 
-                step_form_classes[type(step.get_typed_instance())](instance=step.get_typed_instance(), auto_id='id_%%s_%d' % step.pk) 
-                for step in self.object.steps.all()
-            ]
+            'pipeline_form' : context_data['form'],
         })
         return context_data
 

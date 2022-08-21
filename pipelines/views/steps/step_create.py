@@ -16,6 +16,7 @@ from django.contrib.contenttypes.models import ContentType
 class StepCreate(CurrentEnvironmentMixin, SuccessMessageMixin, CreateView):
     pipeline = None
     success_message = _("Step was created successfully")
+    template_name = 'pipelines/pipeline_edit_form.html'
 
     def get_form_class(self):
         try:
@@ -23,10 +24,6 @@ class StepCreate(CurrentEnvironmentMixin, SuccessMessageMixin, CreateView):
             return step_form_classes[content_type.model_class()]
         except (ContentType.DoesNotExist, KeyError):
             raise Http404
-        
-
-    def get(self, request, *args, **kwargs):
-        return HttpResponseRedirect(self.get_success_url())
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
@@ -41,12 +38,6 @@ class StepCreate(CurrentEnvironmentMixin, SuccessMessageMixin, CreateView):
             form.instance.order = last_step.order + 1 if last_step else 1
             form.instance.pipeline = self.pipeline
             return super().form_valid(form, **kwargs)
-
-    def form_invalid(self, form, **kwargs):
-        messages.error(self.request, "Error creating step")
-
-        #self.request.session[form.Meta.model].errors = form.errors
-        return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
         return reverse('pipelines:edit', kwargs={'id': self.pipeline.id, 'environment': self.current_environment.slug })

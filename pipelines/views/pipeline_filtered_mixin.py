@@ -8,7 +8,6 @@ class PipelineFilteredMixin(CurrentEnvironmentMixin):
         return super().get_queryset().filter(environments=self.current_environment)
 
     def get_object(self, queryset=None):
-
         if not queryset:
             queryset = self.get_queryset()
 
