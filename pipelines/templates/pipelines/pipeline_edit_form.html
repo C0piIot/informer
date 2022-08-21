@@ -20,59 +20,97 @@
 <div class="container">
 	<h1>{% trans "Edit pipeline" %}</h1>
     <div class="row">
-        <div class="col-md-4 order-md-last offset-md-2 mt-4">
-            <div class="card">
-                <div class="card-body">
-                    <ul>
-                        <li>{% translate "Name:" %} {{ pipeline }}</li>
-                        <li>{% translate "Trigger:" %} {{ pipeline.trigger }}</li>
-                        <li>{% translate "Updated:" %} {{ pipeline.date }}</li>
-                    </ul>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-pipeline">
-                        {% translate "Change" %}
-                    </button>
-                </div>
-            </div>
-        	<div class="dropdown mt-4">
-        		<button class="btn btn-secondary dropdown-toggle" type="button" id="addStep" data-bs-toggle="dropdown" aria-expanded="false">
-        		{% translate "New step" %}
-        		</button>
-          		<ul class="dropdown-menu" aria-labelledby="addStep">
-        		    {% for content_type in step_types %}
-                        <li>
-                            <a class="dropdown-item" data-bs-toggle="modal" href="#modal-add-{{ content_type.model }}">
-                                {{ content_type.name|title }}
-                            </a>
-                        </li>
-        		    {% endfor %}
-        		</ul>
-        	</div>
-        </div>
-        <div class="col-md-4 offset-md-2 mt-4">
-            {% for form in step_forms %}
-                <div class="card mb-1">
-                    <form class="card-header d-flex align-items-center" method="post" action="{% url 'pipelines:step_move' current_environment.slug pipeline.id form.instance.pk %}">
-                        <a class="text-decoration-none text-dark me-2 w-100" data-bs-toggle="modal" href="#modal-edit-{{ form.instance.pk }}">
-                            {{ form.instance.content_type.name|title }}
-                        </a>
-                        <div class="btn-group font-monospace" role="group" aria-label="{% translate 'Step options' %}">
-                            <button type="submit" class="btn btn-sm btn-outline-primary" title="{% translate 'Move up' %}" name="up" value="1"{{ forloop.first|yesno:' disabled,' }}>
-                                ▲
-                            </button>
-                            <button type="submit" class="btn btn-sm btn-outline-primary" title="{% translate 'Move down' %}"{{ forloop.last|yesno:' disabled,' }}>
-                                ▼
-                            </button>
-                            <a data-bs-toggle="modal" href="#delete-{{ form.instance.pk }}" title="{% translate 'Delete' %}" class="btn btn-outline-danger btn-sm">
-                                ❌
+        <div class="col-5">
+            <div class="row">
+                <div class="mt-4 px-5">
+                    {% for form in step_forms %}
+                        <div class="card mb-1">
+                            <form class="card-header d-flex align-items-center" method="post" action="{% url 'pipelines:step_move' current_environment.slug pipeline.id form.instance.pk %}">
+                                <a class="text-decoration-none text-dark me-2 w-100" data-bs-toggle="collapse" aria-expanded="false" aria-controls="form-edit-{{ form.instance.pk }}"
+                                data-bs-target=".step-forms>.show:not(#form-edit-{{ form.instance.pk }}),#form-edit-{{ form.instance.pk }}:not(.show)">
+                                    {{ form.instance.content_type.name|title }}
+                                </a>
+                                <div class="btn-group font-monospace" role="group" aria-label="{% translate 'Step options' %}">
+                                    <button type="submit" class="btn btn-sm btn-outline-primary" title="{% translate 'Move up' %}" name="up" value="1"{{ forloop.first|yesno:' disabled,' }}>
+                                        ▲
+                                    </button>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary" title="{% translate 'Move down' %}"{{ forloop.last|yesno:' disabled,' }}>
+                                        ▼
+                                    </button>
+                                    <a data-bs-toggle="modal" href="#delete-{{ form.instance.pk }}" title="{% translate 'Delete' %}" class="btn btn-outline-danger btn-sm">
+                                        ❌
+                                    </a>
+                                </div>
+                                {% csrf_token %}
+                            </form>
+                            <a class="card-body text-decoration-none text-dark" data-bs-toggle="collapse" aria-expanded="false" aria-controls="form-edit-{{ form.instance.pk }}"
+                                data-bs-target=".step-forms>.show:not(#form-edit-{{ form.instance.pk }}),#form-edit-{{ form.instance.pk }}:not(.show)">
+                                {{ form.instance }}
                             </a>
                         </div>
-                        {% csrf_token %}
-                    </form>
-                    <a class="card-body text-decoration-none text-dark" data-bs-toggle="modal" href="#modal-edit-{{ form.instance.pk }}">
-                        {{ form.instance }}
-                    </a>
+                        {% if not forloop.last %}<div class="mb-1 text-center">⬇️</div>{% endif %}
+                    {% endfor %}
                 </div>
-                {% if not forloop.last %}<div class="mb-1 text-center">⬇️</div>{% endif %}
+            </div>
+        </div>
+        <div class="col-7 step-forms">
+            <div class="collapse show">
+                <div class="card">
+                    <div class="card-body">
+                        <ul>
+                            <li>{% translate "Name:" %} {{ pipeline }}</li>
+                            <li>{% translate "Trigger:" %} {{ pipeline.trigger }}</li>
+                            <li>{% translate "Updated:" %} {{ pipeline.date }}</li>
+                        </ul>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-pipeline">
+                            {% translate "Change" %}
+                        </button>
+                    </div>
+                </div>
+                <div class="dropdown mt-4">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="addStep" data-bs-toggle="dropdown" aria-expanded="false">
+                    {% translate "New step" %}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="addStep">
+                        {% for content_type in step_types %}
+                            <li>
+                                <button class="dropdown-item" data-bs-toggle="collapse" aria-expanded="false" aria-controls="form-add-{{ content_type.model }}" 
+                                    data-bs-target=".step-forms>.show,#form-add-{{ content_type.model }}">
+                                    {{ content_type.name|title }}
+                                </button>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% for type, form in new_step_forms.items %}
+                <form method="post" id="form-add-{{ type }}" class="collapse"
+                    action="{% url 'pipelines:step_create' current_environment.slug pipeline.id type %}">
+                
+                    <h5>{% blocktranslate %}Add {{ type }} step{% endblocktranslate %}</h5>
+                    {% include "pipelines/steps/"|add:type|add:".html" %}
+                    
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" aria-expanded="false" aria-controls="form-add-{{ type }}" 
+                        data-bs-target=".step-forms>.collapse:first-child,#form-add-{{ type }}">
+                        {% translate "Cancel" %}
+                    </button>
+                    <button type="submit" class="btn btn-primary">{% translate "Add step" %}</button>
+                    {% csrf_token %}
+                </form>
+            {% endfor %}
+
+            {% for form in step_forms %}
+            <form method="post" id="form-edit-{{ form.instance.pk }}" class="collapse"
+                action="{% url 'pipelines:step_edit' current_environment.slug pipeline.id form.instance.pk %}">
+                <h5>{% blocktranslate with type=form.instance.content_type.name %}Edit {{ type }} step{% endblocktranslate %}</h5>
+                {% include "pipelines/steps/"|add:form.instance.content_type.model|add:".html" %}
+                <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" aria-expanded="false" aria-controls="form-edit-{{ form.instance.pk }}"
+                    data-bs-target=".step-forms>.collapse:first-child,#form-edit-{{ form.instance.pk }}">
+                    {% translate "Cancel" %}
+                </button>
+                <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
+                {% csrf_token %}
+            </form>
             {% endfor %}
         </div>
     </div>
@@ -99,58 +137,12 @@
     </div>
     {% csrf_token %}
 </form>
-{% for type, form in new_step_forms.items %}
-<form method="post" 
-	action="{% url 'pipelines:step_create' current_environment.slug pipeline.id type %}"
-    id="modal-add-{{ type }}" 
-  	aria-labelledby="modal-add-{{ type }}-title"
-  	class="modal {{ type }}" tabindex="-1" aria-hidden="true">
-	<div class="modal-dialog modal-xl">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="modal-add-{{ type }}-title">
-	            {% blocktranslate %}Add {{ type }} step{% endblocktranslate %}
-	        </h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
-	      </div>
-          <div class="modal-body">{% include "pipelines/steps/"|add:type|add:".html" %}</div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
-	        <button type="submit" class="btn btn-primary">{% translate "Add step" %}</button>
-	      </div>
-	    </div>
-  	</div>
-    {% csrf_token %}
-</form>
-{% endfor %}
-{% for form in step_forms %}
-<form method="post" 
-    action="{% url 'pipelines:step_edit' current_environment.slug pipeline.id form.instance.pk %}"
-    id="modal-edit-{{ form.instance.pk }}" 
-    aria-labelledby="modal-edit-{{ form.instance.pk }}-title"
-    class="modal {{ form.instance.content_type.model }}" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modal-edit-{{ form.instance.pk }}-title">
-                {% blocktranslate with type=form.instance.content_type.name %}Edit {{ type }} step{% endblocktranslate %}
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
-          </div>
-          <div class="modal-body">{% include "pipelines/steps/"|add:form.instance.content_type.model|add:".html" %}</div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
-            <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
-          </div>
-        </div>
-    </div>
-    {% csrf_token %}
-</form>
 
+{% for form in step_forms %}
 {% url 'pipelines:step_remove' current_environment.slug pipeline.id form.instance.pk as delete_url %}
 {% with id_slug=form.instance.pk|slugify %}
 {% include 'modal_delete.html' with object=form.instance modal_id='delete-'|add:id_slug %}
 {% endwith %}
-
 {% endfor %}
+
 {% endblock body-content %}
