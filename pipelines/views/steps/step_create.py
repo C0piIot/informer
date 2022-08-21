@@ -15,7 +15,7 @@ from django.contrib.contenttypes.models import ContentType
 
 class StepCreate(CurrentEnvironmentMixin, SuccessMessageMixin, CreateView):
     pipeline = None
-    success_message = _("Step was edited successfully")
+    success_message = _("Step was created successfully")
 
     def get_form_class(self):
         try:
@@ -34,9 +34,9 @@ class StepCreate(CurrentEnvironmentMixin, SuccessMessageMixin, CreateView):
 
     def form_valid(self, form, **kwargs):
         with transaction.atomic():
-            self.pipeline.environments.remove(self.current_environment)
+            self.current_environment.pipelines.remove(self.pipeline)
             self.pipeline.save()
-            self.pipeline.environments.add(self.current_environment)
+            self.current_environment.pipelines.add(self.pipeline)
             last_step = self.pipeline.steps.last()
             form.instance.order = last_step.order + 1 if last_step else 1
             form.instance.pipeline = self.pipeline

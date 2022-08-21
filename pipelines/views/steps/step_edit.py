@@ -40,9 +40,9 @@ class StepEdit(CurrentEnvironmentMixin, SuccessMessageMixin, UpdateView):
 
     def form_valid(self, form, **kwargs):
         with transaction.atomic():
-            self.pipeline.environments.remove(self.current_environment)
+            self.current_environment.pipelines.remove(self.pipeline)
             self.pipeline.save()
-            self.pipeline.environments.add(self.current_environment)
+            self.current_environment.pipelines.remove(self.pipeline)
             self.pipeline.steps.filter(order=form.instance.order).delete()
             form.instance.pipeline = self.pipeline
             return super().form_valid(form, **kwargs)

@@ -27,9 +27,9 @@ class StepRemove(CurrentEnvironmentMixin, DeleteView):
     def form_valid(self, form):
         with transaction.atomic():
             success_message =  _("Step %s was removed successfully") % self.object
-            self.pipeline.environments.remove(self.current_environment)
+            self.current_environment.pipelines.remove(self.pipeline)
             self.pipeline.save()
-            self.pipeline.environments.add(self.current_environment)
+            self.current_environment.pipelines.add(self.pipeline)
             self.pipeline.steps.filter(order=self.object.order).delete()
             messages.success(self.request,success_message)
             return super().form_valid(form)

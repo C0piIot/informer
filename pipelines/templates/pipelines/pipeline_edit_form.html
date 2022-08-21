@@ -108,13 +108,12 @@
     action="{% url 'pipelines:step_create' current_environment.slug pipeline.id type %}">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="form-add-{{ type }}-title">{% blocktranslate %}Add {{ type }} step{% endblocktranslate %}</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="{% translate 'Close' %}"></button>
     </div>
     <div class="offcanvas-body">
         {% include "pipelines/steps/"|add:type|add:".html" %}
         
-        <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" aria-expanded="false" aria-controls="form-add-{{ type }}" 
-            data-bs-target=".step-forms>.collapse:first-child,#form-add-{{ type }}">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">
             {% translate "Cancel" %}
         </button>
         <button type="submit" class="btn btn-primary">{% translate "Add step" %}</button>
@@ -131,12 +130,11 @@
         <h5 class="offcanvas-title" id="form-add-{{ type }}-title">
             {% blocktranslate with type=form.instance.content_type.name %}Edit {{ type }} step{% endblocktranslate %}
         </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="{% translate 'Close' %}"></button>
     </div>
     <div class="offcanvas-body">
         {% include "pipelines/steps/"|add:form.instance.content_type.model|add:".html" %}
-        <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" aria-expanded="false" aria-controls="form-edit-{{ form.instance.pk }}"
-            data-bs-target=".step-forms>.collapse:first-child,#form-edit-{{ form.instance.pk }}">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">
             {% translate "Cancel" %}
         </button>
         <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
