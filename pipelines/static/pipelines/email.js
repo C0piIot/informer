@@ -10,7 +10,6 @@ for (const form of document.querySelectorAll('form.email')) {
 		autoGenerateTextControl = form.elements['autogenerate_text'];
 
 	htmlBodyControl.addEventListener("keyup", async () => {
-		
 		/* Use a timer to update preview and text only once in a while */
 		if(timer) {
 			clearTimeout(timer);
@@ -34,4 +33,7 @@ for (const form of document.querySelectorAll('form.email')) {
 			textBodyControl.value = stripHtml(htmlBodyControl.value);
 		}
 	});
+
+	form.addEventListener('reset', () => htmlBodyControl.dispatchEvent(new Event('keyup')));
+
 }

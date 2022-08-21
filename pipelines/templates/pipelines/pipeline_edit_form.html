@@ -95,7 +95,7 @@
           </div>
           <div class="modal-body">{% bootstrap_form pipeline_form %}</div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
+            <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
             <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
           </div>
         </div>
@@ -113,7 +113,7 @@
     </div>
     <div class="offcanvas-body">
         {% include "pipelines/steps/"|add:type|add:".html" %}
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">
+        <button type="reset" class="btn btn-secondary" data-bs-dismiss="offcanvas">
             {% translate "Cancel" %}
         </button>
         <button type="submit" class="btn btn-primary">{% translate "Add step" %}</button>
@@ -134,7 +134,7 @@
     </div>
     <div class="offcanvas-body">
         {% include "pipelines/steps/"|add:form.instance.content_type.model|add:".html" %}
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="offcanvas">
+        <button type="reset" class="btn btn-secondary" data-bs-dismiss="offcanvas">
             {% translate "Cancel" %}
         </button>
         <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
