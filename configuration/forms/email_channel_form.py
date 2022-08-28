@@ -1,23 +1,11 @@
 from django import forms
+from .channel_form import ChannelForm
 from configuration.models import EmailChannel
 from django.utils.translation import gettext_lazy as _
 
-class EmailChannelForm(forms.ModelForm):
-
-    account = None
-
-    def __init__(self, **kwargs):
-        self.account = kwargs.pop('account')
-        super().__init__(**kwargs)
-
-    def save(self):
-        email_channel = super().save(commit=False)
-        email_channel.account = self.account
-        email_channel.save()
-        return email_channel
-
+class EmailChannelForm(ChannelForm):
 
     class Meta:
         model = EmailChannel
-        fields = ('name', 'enabled', 'host', 'port', 'security', 'username', 'password')
+        fields = ('enabled', 'host', 'port', 'security', 'username', 'password')
         widgets = { 'password' : forms.PasswordInput(render_value=True) }

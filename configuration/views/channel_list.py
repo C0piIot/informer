@@ -13,13 +13,8 @@ class ChannelList(CurrentAccountMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data.update({
-            'new_channel_forms': { 
-                ContentType.objects.get_by_natural_key('configuration', model) :  import_string(form_class)(account=self.current_account) 
-                    for model, form_class in settings.CHANNEL_CONFIG_FORMS.items()
-            },
-            'channel_forms': [
-                import_string(
+        context_data.update({'channel_forms': {
+            channel.content_type : import_string(
                     settings.CHANNEL_CONFIG_FORMS[
                         ContentType.objects.get_for_model(channel.get_typed_instance()).model
                     ])(
@@ -28,7 +23,13 @@ class ChannelList(CurrentAccountMixin, ListView):
                         account=self.current_account
                     )
                 for channel in self.get_queryset()
-            ] 
+            },
+        })
+        context_data.update({
+            'new_channel_forms': { 
+                ContentType.objects.get_by_natural_key('configuration', model) :  import_string(form_class)(account=self.current_account) 
+                    for model, form_class in settings.CHANNEL_CONFIG_FORMS.items()
+            },
         })
 
         return context_data

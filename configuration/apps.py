@@ -7,9 +7,11 @@ class ConfigurationConfig(AppConfig):
     DEFAULT_SETTINGS = {
         'CHANNEL_CONTACT_FORMS' : {
             'emailchannel': 'configuration.forms.EmailContactForm',
+            'pushchannel': 'configuration.forms.PushContactForm'
         },
         'CHANNEL_CONFIG_FORMS' : {
             'emailchannel': 'configuration.forms.EmailChannelForm',
+            'pushchannel': 'configuration.forms.PushChannelForm'
         }   
     }
 

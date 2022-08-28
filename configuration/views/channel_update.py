@@ -14,7 +14,7 @@ from configuration.models import Channel
 
 class ChannelUpdate(CurrentAccountMixin, SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy('configuration:channel_list')
-    success_message = _("%(name)s was updated successfully")
+    success_message = _("Channel was updated successfully")
     model = Channel
 
     def get_queryset(self):

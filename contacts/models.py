@@ -1,9 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from configuration.model_storage import ModelStorage
 from uuid import uuid4 
 
-class Contact(ModelStorage, models.Model):
+class Contact(models.Model):
     key = models.CharField(_('key'), max_length=100, help_text=_('Key must be unique to all your contacts'))
     name = models.CharField(_('name'), max_length=200, help_text=_('This name will be used across informer app'))
     account = models.ForeignKey('configuration.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)

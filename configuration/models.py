@@ -41,7 +41,6 @@ class Environment(models.Model):
 
 class Channel(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name=_('account'), editable=False, related_name='channels')
-    name = models.CharField(_('name'), max_length=100)
     enabled = models.BooleanField(_('enabled'), default=True)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, editable=False)
 
@@ -60,13 +59,13 @@ class Channel(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        ordering = ('account', 'name',)
+        ordering = ('account', 'content_type',)
         verbose_name = _('channel')
         verbose_name_plural = _('channels')
-        unique_together = ('account', 'name')
+        unique_together = ('account', 'content_type',)
 
     def __str__(self):
-        return self.name
+        return self.content_type.name
 
 
 class EmailChannel(Channel):

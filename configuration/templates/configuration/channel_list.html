@@ -14,7 +14,12 @@
     <ul class="dropdown-menu" aria-labelledby="newChannel">
         {% for content_type in new_channel_forms.keys %}
             <li>
-                <a class="dropdown-item" data-bs-toggle="modal" href="#modal-add-{{ content_type.model }}">
+                <a {% if content_type in channel_forms.keys %}
+                    class="dropdown-item disabled" href="#" aria-disabled="true"
+                    {% else %}
+                    class="dropdown-item" data-bs-toggle="modal" href="#modal-add-{{ content_type.model }}"
+                    {% endif %}
+                >
                     {{ content_type.name|title }}
                 </a>
             </li>
@@ -23,9 +28,9 @@
 </div>
 {% endblock list-actions %}
 
-{% block colgroup %}<col class="col-7"><col class="col-3"><col class="col-2">{% endblock colgroup %}
+{% block colgroup %}<col class="col-10"><col class="col-2">{% endblock colgroup %}
 
-{% block thead-tr %}<th>{% translate "Name" %}</th><th>{% translate "Type" %}</th>{% endblock thead-tr %}
+{% block thead-tr %}<th>{% translate "Channel" %}</th>{% endblock thead-tr %}
 
 {% block object-tr %}
 <td>
@@ -33,7 +38,6 @@
         {{ object }}   
     </a>
 </td>
-<td>{{ object.content_type.name }}</td>
 {% endblock object-tr %}
 
 {% block object-actions %}
@@ -51,6 +55,7 @@
 {{ block.super }}
 
 {% for content_type, form in new_channel_forms.items %}
+{% if content_type not in channel_forms.keys %}
 <form method="post" 
 	action="{% url 'configuration:channel_create' content_type.model %}"
     id="modal-add-{{ content_type.model }}" 
@@ -73,8 +78,9 @@
   	</div>
     {% csrf_token %}
 </form>
+{% endif %}
 {% endfor %}
-{% for form in channel_forms %}
+{% for form in channel_forms.values %}
 <form method="post" 
     action="{% url 'configuration:channel_update' form.instance.pk %}"
     id="modal-edit-{{ form.instance.pk }}" 
