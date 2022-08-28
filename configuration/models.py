@@ -109,19 +109,17 @@ class EmailChannel(Channel):
 
 
 class PushChannel(Channel):
-    firebase_credentials = models.JSONField(_("Firebase credentials"), default=dict)
+    firebase_credentials = models.JSONField(_("Firebase credentials"), default=dict, blank=True)
 
     def clean_fields(self, exclude=None):
         super().clean_fields(exclude=exclude)
-
         if not exclude or not 'firebase_credentials' in exclude:
             if self.firebase_credentials:
                 try:
-                    get_firebase()
-                except Exception as err:
-                    print(err)
+                    self.get_firebase()
+                except ValueError as err:
                     raise ValidationError({
-                        'firebase_credentials': _("The firebase credentials data doen't seems to be correct")
+                        'firebase_credentials': _("The firebase credentials data doen't seems to be correct: %s" % err)
                     })
 
 

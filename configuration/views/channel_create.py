@@ -12,7 +12,7 @@ from django.conf import settings
 
 class ChannelCreate(CurrentAccountMixin, SuccessMessageMixin, CreateView):
     success_url = reverse_lazy('configuration:channel_list')
-    success_message = _("%(name)s was created successfully")
+    success_message = _("Channel was created successfully")
 
     def get_form_class(self):
         try:
