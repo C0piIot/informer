@@ -4,6 +4,8 @@ from django.utils.text import slugify
 from django.contrib.contenttypes.models import ContentType
 from django.core.mail import get_connection, send_mail
 from django.urls import reverse
+from django.core.exceptions import ValidationError
+import firebase_admin
 
 class Account(models.Model):
     name = models.CharField(_('name'), max_length=50)
@@ -109,6 +111,23 @@ class EmailChannel(Channel):
 
 class PushChannel(Channel):
     firebase_credentials = models.JSONField(_("Firebase credentials"), default=dict)
+
+    def clean_fields(self, exclude=None):
+        super().clean_fields(exclude=exclude)
+
+        if not exclude or not 'firebase_credentials' in exclude:
+            if self.firebase_credentials:
+                try:
+                    get_firebase()
+                except Exception as err:
+                    print(err)
+                    raise ValidationError({
+                        'firebase_credentials': _("The firebase credentials data doen't seems to be correct")
+                    })
+
+
+    def get_firebase(self):
+        return firebase_admin.initialize_app(firebase_admin.credentials.Certificate(self.firebase_credentials))
 
     class Meta:
         verbose_name = _('push channel')
