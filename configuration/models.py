@@ -126,6 +126,25 @@ class PushChannel(Channel):
     def get_firebase(self):
         return firebase_admin.initialize_app(firebase_admin.credentials.Certificate(self.firebase_credentials))
 
+    def send_push(self, title, body, url, tokens):
+        message = messaging.MulticastMessage(
+            notification=messaging.Notification(
+                   title=title,
+                   body=body),
+            tokens=tokens
+        )
+        response = messaging.send_multicast(message)
+        if response.failure_count > 0:
+            responses = response.responses
+            failed_tokens = []
+            for idx, resp in enumerate(responses):
+                if not resp.success:
+                    #print(resp.exception)
+                    # The order of responses corresponds to the order of the registration tokens.
+                    failed_tokens.append(registration_tokens[idx])
+            print('List of tokens that caused failures: {0}'.format(failed_tokens))
+
+
     class Meta:
         verbose_name = _('push channel')
         verbose_name_plural = _('push channels')
