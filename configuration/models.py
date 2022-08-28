@@ -104,3 +104,12 @@ class EmailChannel(Channel):
     class Meta:
         verbose_name = _('email channel')
         verbose_name_plural = _('email channels')
+
+
+
+class PushChannel(Channel):
+    firebase_credentials = models.JSONField(_("Firebase credentials"), default=dict)
+
+    class Meta:
+        verbose_name = _('push channel')
+        verbose_name_plural = _('push channels')
