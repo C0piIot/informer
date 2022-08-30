@@ -4,6 +4,7 @@ from .send_channel import SendChannel
 from .pipeline_step import PipelineStep
 from django.template import Template, Context
 from premailer import Premailer
+from .pipeline_log import PipelineLog
 
 class Email(SendChannel):
     email_channel = models.ForeignKey('configuration.EmailChannel', on_delete=models.CASCADE, verbose_name=_('email channel'))

@@ -6,6 +6,7 @@ from django.core.mail import get_connection, send_mail
 from django.urls import reverse
 from django.core.exceptions import ValidationError
 import firebase_admin
+from firebase_admin import messaging
 
 class Account(models.Model):
     name = models.CharField(_('name'), max_length=50)
@@ -116,34 +117,30 @@ class PushChannel(Channel):
         if not exclude or not 'firebase_credentials' in exclude:
             if self.firebase_credentials:
                 try:
-                    self.get_firebase()
+                    self.init_firebase()
                 except ValueError as err:
                     raise ValidationError({
                         'firebase_credentials': _("The firebase credentials data doen't seems to be correct: %s" % err)
                     })
 
 
-    def get_firebase(self):
+    def init_firebase(self):
         return firebase_admin.initialize_app(firebase_admin.credentials.Certificate(self.firebase_credentials))
 
     def send_push(self, title, body, url, tokens):
-        message = messaging.MulticastMessage(
-            notification=messaging.Notification(
+        firebase = self.init_firebase()
+        
+        response = messaging.send_multicast(
+            messaging.MulticastMessage(
+                notification=messaging.Notification(
                    title=title,
                    body=body),
-            tokens=tokens
+                tokens=tokens
+            )
         )
-        response = messaging.send_multicast(message)
-        if response.failure_count > 0:
-            responses = response.responses
-            failed_tokens = []
-            for idx, resp in enumerate(responses):
-                if not resp.success:
-                    #print(resp.exception)
-                    # The order of responses corresponds to the order of the registration tokens.
-                    failed_tokens.append(registration_tokens[idx])
-            print('List of tokens that caused failures: {0}'.format(failed_tokens))
 
+        return { tokens[i]: r.success for i, r in enumerate(response.responses) } 
+        
 
     class Meta:
         verbose_name = _('push channel')

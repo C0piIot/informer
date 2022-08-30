@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from .send_channel import SendChannel
 from .pipeline_step import PipelineStep
 from django.template import Template, Context
+from .pipeline_log import PipelineLog
 
 class Push(SendChannel):
     push_channel = models.ForeignKey('configuration.PushChannel', on_delete=models.CASCADE, verbose_name=_('push channel'))
@@ -11,7 +12,7 @@ class Push(SendChannel):
     url = models.URLField(_('url'))
     
     def __str__(self):
-        return "🔔 Push %s" % self.subject
+        return "🔔 Push %s" % self.title
 
 
     def step_run(self, pipeline_run):
@@ -28,12 +29,13 @@ class Push(SendChannel):
                 'contact': contact,
             })
 
-            self.push_channel.send_push(
+            response = self.push_channel.send_push(
                 title.render(text_context),
                 body.render(text_context),
                 url.render(text_context),
                 contact.channel_data[key]['fcm_tokens']
             )
+            pipeline_run.log(PipelineLog.INFO, "%s successful sent to %d of %d fcm tokens" % (self, sum(response.values()), len(response)))
         else:
             pipeline_run.log(PipelineLog.INFO, "%s not sent: user doesn't have channel data" % self)
             
