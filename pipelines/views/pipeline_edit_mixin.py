@@ -16,7 +16,7 @@ class PipelineEditMixin(CurrentEnvironmentMixin):
 
         context_data.update({
             'pipeline' : pipeline,
-            'pipeline_form' : PipelineForm(),
+            'pipeline_form' : PipelineForm(instance=pipeline),
             'step_types': content_types.values(),
             'new_step_forms': { content_types[model].model : form_class() for model, form_class in step_form_classes.items() },
             'step_forms': { 

@@ -42,7 +42,6 @@ class StepCreate(PipelineEditMixin, SuccessMessageMixin, CreateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['new_step_forms'][self.type.model] = context_data['form']
-        context_data['form'].show = True
         return context_data
 
     def get_success_url(self):

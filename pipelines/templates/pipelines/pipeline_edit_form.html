@@ -89,7 +89,7 @@
         </div>
     </div>
 </div>
-<form class="offcanvas offcanvas-end{{ form.errors|yesno:' show,' }}" 
+<form class="offcanvas offcanvas-end{{ pipeline_form.errors|yesno:' show,' }}" 
     tabindex="-1" aria-labelledby="form-edit-pipeline-title" method="post" id="form-edit-pipeline"
     action="{% url 'pipelines:edit' current_environment.slug pipeline.id %}">
     <div class="offcanvas-header">
@@ -106,7 +106,7 @@
     {% csrf_token %}
 </form>
 {% for type, form in new_step_forms.items %}
-<form class="offcanvas offcanvas-end w-75{{ form.show|yesno:' show,' }} {{ type }}" 
+<form class="offcanvas offcanvas-end w-75{{ form.errors|yesno:' show,' }} {{ type }}" 
     tabindex="-1" aria-labelledby="form-add-{{ type }}-title" method="post" id="form-add-{{ type }}"
     action="{% url 'pipelines:step_create' current_environment.slug pipeline.id type %}">
     <div class="offcanvas-header">
@@ -125,7 +125,7 @@
 {% endfor %}
 
 {% for form in step_forms.values %}
-<form class="offcanvas offcanvas-end w-75{{ form.show|yesno:' show,' }} {{ form.instance.content_type.model }}"
+<form class="offcanvas offcanvas-end w-75{{ form.errors|yesno:' show,' }} {{ form.instance.content_type.model }}"
     method="post" id="form-edit-{{ form.instance.pk }}" tabindex="-1" aria-labelledby="form-edit-{{ form.instance.pk }}-title" 
     action="{% url 'pipelines:step_edit' current_environment.slug pipeline.id form.instance.pk %}">
     <div class="offcanvas-header">
