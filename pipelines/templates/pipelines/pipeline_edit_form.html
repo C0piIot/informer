@@ -56,7 +56,7 @@
                 <div class="card-body">
                     <div class="text-end mb-2">
                         <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-pipeline">
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="offcanvas" data-bs-target="#form-edit-pipeline" aria-expanded="{{ form.errors|yesno:'true,false' }}">
                                 {% translate "Edit" %}
                             </button>
                             <div class="btn-group" role="group">
@@ -89,27 +89,22 @@
         </div>
     </div>
 </div>
-<form action="{% url 'pipelines:edit' current_environment.slug pipeline.id %}" method="post"
-    id="modal-edit-pipeline" aria-labelledby="modal-edit-pipeline-title"
-    class="modal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modal-edit-pipeline-title">
-                {% blocktranslate %}Change pipeline details{% endblocktranslate %}
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
-          </div>
-          <div class="modal-body">{% bootstrap_form pipeline_form %}</div>
-          <div class="modal-footer">
-            <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
-            <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
-          </div>
-        </div>
+<form class="offcanvas offcanvas-end{{ form.errors|yesno:' show,' }}" 
+    tabindex="-1" aria-labelledby="form-edit-pipeline-title" method="post" id="form-edit-pipeline"
+    action="{% url 'pipelines:edit' current_environment.slug pipeline.id %}">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="form-edit-pipeline-title">{% blocktranslate %}Change pipeline details{% endblocktranslate %}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="{% translate 'Close' %}"></button>
+    </div>
+    <div class="offcanvas-body">
+        {% bootstrap_form pipeline_form %}
+        <button type="reset" class="btn btn-secondary" data-bs-dismiss="offcanvas">
+            {% translate "Cancel" %}
+        </button>
+        <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
     </div>
     {% csrf_token %}
 </form>
-
 {% for type, form in new_step_forms.items %}
 <form class="offcanvas offcanvas-end w-75{{ form.show|yesno:' show,' }} {{ type }}" 
     tabindex="-1" aria-labelledby="form-add-{{ type }}-title" method="post" id="form-add-{{ type }}"
