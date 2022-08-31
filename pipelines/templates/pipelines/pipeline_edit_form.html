@@ -54,30 +54,37 @@
         <div class="col-7 step-forms">
             <div class="card">
                 <div class="card-body">
+                    <div class="text-end mb-2">
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-pipeline">
+                                {% translate "Edit" %}
+                            </button>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="addStep" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {% translate "New step" %}
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="addStep">
+                                    {% for content_type in step_types %}
+                                    <li>
+                                        <button class="dropdown-item" data-bs-toggle="offcanvas" aria-expanded="false" aria-controls="form-add-{{ content_type.model }}" 
+                                            data-bs-target=".step-forms>.show,#form-add-{{ content_type.model }}">
+                                            {{ content_type.name|title }}
+                                        </button>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <button type="button" class="btn btn-primary">
+                                {% translate "Test" %}
+                            </button>
+                        </div>
+                    </div>
                     <ul>
                         <li>{% translate "Name:" %} {{ pipeline }}</li>
                         <li>{% translate "Trigger:" %} {{ pipeline.trigger }}</li>
                         <li>{% translate "Updated:" %} {{ pipeline.date }}</li>
                     </ul>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-pipeline">
-                        {% translate "Change" %}
-                    </button>
                 </div>
-            </div>
-            <div class="dropdown mt-4">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="addStep" data-bs-toggle="dropdown" aria-expanded="false">
-                {% translate "New step" %}
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="addStep">
-                    {% for content_type in step_types %}
-                        <li>
-                            <button class="dropdown-item" data-bs-toggle="offcanvas" aria-expanded="false" aria-controls="form-add-{{ content_type.model }}" 
-                                data-bs-target=".step-forms>.show,#form-add-{{ content_type.model }}">
-                                {{ content_type.name|title }}
-                            </button>
-                        </li>
-                    {% endfor %}
-                </ul>
             </div>
         </div>
     </div>

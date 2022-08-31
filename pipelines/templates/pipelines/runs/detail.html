@@ -46,6 +46,11 @@
       </div>
     </div>
     <div class="col-8">
+      <div class="text-end mb-2">
+        <a href="{{ request.get_full_path }}" class="btn btn-primary">
+          ↻ {% translate "Reload" %}
+        </a>
+      </div>
       <dl>
         {% for log in pipeline_run.get_logs %}
         <dt>
