@@ -78,6 +78,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'informer.wsgi.application'
 
+AUTH_USER_MODEL = 'configuration.User'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
