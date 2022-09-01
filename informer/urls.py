@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include
-from .views import HomeRedirect
 from .api import router
 from rest_framework.schemas import get_schema_view
+from .views import Home
 
 urlpatterns = [
-    path('', HomeRedirect.as_view(), name='home'),
+    path('', Home.as_view(), name='home'),
     path('pipelines/<slug:environment>/', include([
         path('', include('pipelines.urls')),
         path('contacts/', include('contacts.urls')),    

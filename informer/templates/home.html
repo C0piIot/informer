@@ -1,1 +1,31 @@
 {% extends 'base.html' %}
+{% load i18n django_bootstrap5 %}
+
+{% block header-content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">☎️ Informer</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{% translate 'Toggle navigation' %}">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="dropdown ms-auto">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {% translate "Sign in" %}
+          </button>
+          <div class="dropdown-menu">
+            <form class="px-3">
+                {% bootstrap_form login_form %}
+                <button class="btn btn-primary" type="submit">
+                    {% translate "Sign in" %}
+                </button>
+                {% csrf_token %}
+            </form>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">{% translate "Forgot password?" %}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+</nav>
+{% endblock header-content %}
