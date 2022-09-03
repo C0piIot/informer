@@ -6,6 +6,7 @@ from .views import Home
 
 urlpatterns = [
     path('', Home.as_view(), name='home'),
+    path('', include('django.contrib.auth.urls')),
     path('pipelines/<slug:environment>/', include([
         path('', include('pipelines.urls')),
         path('contacts/', include('contacts.urls')),    
