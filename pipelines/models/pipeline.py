@@ -12,6 +12,7 @@ class Pipeline(models.Model):
     name = models.CharField(_('name'), max_length=150)
     enabled = models.BooleanField(_('enabled'), default=True)
     trigger = models.CharField(_('trigger'), max_length=150, db_index=True)
+    user = models.ForeignKey('configuration.user', on_delete=models.PROTECT, verbose_name=_('user'), editable=False)
     
     def save(self, *args, **kwargs):
         steps = list(self.steps.all())

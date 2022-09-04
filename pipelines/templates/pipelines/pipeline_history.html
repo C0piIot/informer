@@ -25,7 +25,7 @@
 	       			{% endfor %}
 	       			{{ revision.name }}
 	       		</span>
-	       		<small title="{% blocktranslate with pk=revision.pk %}Revision {{ pk }}{% endblocktranslate %}">{{ revision.date }}</small>
+	       		<small title="{% blocktranslate with pk=revision.pk %}Revision {{ pk }}{% endblocktranslate %}">{{ revision.user }} - {{ revision.date }}</small>
 	       	</div>
 	      </button>
 	    </h2>

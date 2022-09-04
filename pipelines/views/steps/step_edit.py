@@ -42,6 +42,7 @@ class StepEdit(PipelineEditMixin, SuccessMessageMixin, UpdateView):
     def form_valid(self, form, **kwargs):
         with transaction.atomic():
             self.current_environment.pipelines.remove(self.pipeline)
+            self.pipeline.user = self.request.user
             self.pipeline.save()
             self.current_environment.pipelines.add(self.pipeline)
             self.pipeline.steps.filter(order=form.instance.order).delete()

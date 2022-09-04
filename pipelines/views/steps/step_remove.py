@@ -28,6 +28,7 @@ class StepRemove(CurrentEnvironmentMixin, DeleteView):
         with transaction.atomic():
             success_message =  _("Step %s was removed successfully") % self.object
             self.current_environment.pipelines.remove(self.pipeline)
+            self.pipeline.user = self.request.user
             self.pipeline.save()
             self.current_environment.pipelines.add(self.pipeline)
             self.pipeline.steps.filter(order=self.object.order).delete()

@@ -32,6 +32,7 @@ class StepCreate(PipelineEditMixin, SuccessMessageMixin, CreateView):
     def form_valid(self, form, **kwargs):
         with transaction.atomic():
             self.current_environment.pipelines.remove(self.pipeline)
+            self.pipeline.user = self.request.user
             self.pipeline.save()
             self.current_environment.pipelines.add(self.pipeline)
             last_step = self.pipeline.steps.last()

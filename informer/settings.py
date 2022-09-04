@@ -182,3 +182,6 @@ DRAMATIQ_BROKER = {
 }
 
 DRAMATIQ_AUTODISCOVER_MODULES = ["executors.dramatiq_executor"]
+
+
+LOGIN_REDIRECT_URL = 'configuration:environment_list'

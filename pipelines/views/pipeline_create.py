@@ -15,6 +15,7 @@ class PipelineCreate(CurrentEnvironmentMixin, CreateView):
     def form_valid(self, form):
         self.object = form.save(commit=False)
         self.object.account = self.current_account
+        self.object.user = self.request.user
         self.object.save()
         self.object.environments.add(self.current_environment)
         messages.success(self.request, _("%(name)s was created successfully") % form.cleaned_data)

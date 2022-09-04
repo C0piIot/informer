@@ -25,6 +25,7 @@ class StepMove(CurrentEnvironmentMixin, SingleObjectMixin, View):
             source_step = self.get_object()
             if target_step := source_step.prev_step() if 'up' in request.POST else source_step.next_step():
                 self.current_environment.pipelines.remove(self.pipeline)
+                self.pipeline.user = request.user
                 self.pipeline.save()
                 self.current_environment.pipelines.add(self.pipeline)
                 self.pipeline.steps.filter(order=source_step.order).update(order=0)
