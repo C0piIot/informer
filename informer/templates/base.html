@@ -15,7 +15,13 @@
     {% block header-content %}
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
+          {% if current_account %}
+          <a class="navbar-brand" href="{% url 'home' %}">{{ current_account }} <i class="fs-6 text-secondary
+
+">Informer</i></a>
+          {% else %}
           <a class="navbar-brand" href="{% url 'home' %}">☎️ Informer</a>
+          {% endif %}
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{% translate 'Toggle navigation' %}">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -52,10 +58,11 @@
                     </li>
                   </ul>
                 </li>
-
+              </ul>
+              <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="accountSettings" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="{% translate 'Account' %}">
-                    {{ account }}
+                    {{ user.first_name }}
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="environmentSelector">
                     <li>
@@ -67,6 +74,13 @@
                       <a class="dropdown-item" href="{% url 'configuration:environment_list' %}">
                         {% trans "Environments" %}
                       </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                      <form method="post" action="{% url 'logout' %}">
+                        <button type="submit" class="dropdown-item">{% trans "Logout" %}</button>
+                        {% csrf_token %}
+                      </form>
                     </li>
                   </ul>
                 </li>

@@ -8,7 +8,7 @@ class CurrentAccountMixin(LoginRequiredMixin):
 
 	def setup(self, request, *args, **kwargs):
 		super().setup(request, *args, **kwargs)
-		self.current_account = request.user.account
+		self.current_account = request.user.account if request.user.is_authenticated else None
 
 	def get_context_data(self, **kwargs):
 		context_data = super().get_context_data(**kwargs)

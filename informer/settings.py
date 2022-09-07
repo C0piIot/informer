@@ -183,5 +183,6 @@ DRAMATIQ_BROKER = {
 
 DRAMATIQ_AUTODISCOVER_MODULES = ["executors.dramatiq_executor"]
 
-
+LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'configuration:environment_list'
+LOGOUT_REDIRECT_URL = 'home'

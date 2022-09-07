@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.views import LoginView
 from django.urls import path, include
 from .api import router
 from rest_framework.schemas import get_schema_view
@@ -6,6 +7,7 @@ from .views import Home
 
 urlpatterns = [
     path('', Home.as_view(), name='home'),
+    path('login/', LoginView.as_view(redirect_authenticated_user=True)),
     path('', include('django.contrib.auth.urls')),
     path('pipelines/<slug:environment>/', include([
         path('', include('pipelines.urls')),
