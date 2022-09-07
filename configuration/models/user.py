@@ -37,11 +37,12 @@ class UserManager(BaseUserManager):
 
 class User(DjangoUser):
 
-	USERNAME_FIELD = 'email'
-	REQUIRED_FIELDS = [ 'first_name', 'account' ]
-	
-	objects = UserManager()
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = [ 'first_name', 'account' ]
+    
+    objects = UserManager()
 
-	username = None
-	email = models.EmailField(_("email address"), unique=True)
-	account = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name=_('account'), related_name='users')
+    username = None
+    email = models.EmailField(_("email address"), unique=True)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name=_('account'), related_name='users')
+    date_joined = models.DateTimeField(_("date joined"), auto_now_add=True)

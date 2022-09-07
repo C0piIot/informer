@@ -28,14 +28,6 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             {% if user.is_authenticated %}         
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                {% if current_environment %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'pipelines:list' current_environment.slug %}">{% trans "Pipelines" %}</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'contacts:list' current_environment.slug %}">{% trans "Contacts" %}</a>
-                </li>
-                {% endif %}
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="environmentSelector" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     {{ current_environment|default:_("Environments") }}
@@ -58,6 +50,14 @@
                     </li>
                   </ul>
                 </li>
+                {% if current_environment %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'pipelines:list' current_environment.slug %}">{% trans "Pipelines" %}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'contacts:list' current_environment.slug %}">{% trans "Contacts" %}</a>
+                </li>
+                {% endif %}
               </ul>
               <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item dropdown">

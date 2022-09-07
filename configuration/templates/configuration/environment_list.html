@@ -19,7 +19,7 @@
 
 {% block object-tr %}
 <td>
-  <a href="#" title="{% translate 'View' %}" class="text-decoration-none">
+  <a href="{{ object.get_absolute_url }}" title="{% translate 'View' %}" class="text-decoration-none">
     {{ object }} 
   </a>
 </td>
