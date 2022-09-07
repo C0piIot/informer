@@ -4,10 +4,11 @@ from django.urls import path, include
 from .api import router
 from rest_framework.schemas import get_schema_view
 from .views import Home
+from configuration.forms import LoginForm
 
 urlpatterns = [
     path('', Home.as_view(), name='home'),
-    path('login/', LoginView.as_view(redirect_authenticated_user=True)),
+    path('login/', LoginView.as_view(redirect_authenticated_user=True, authentication_form=LoginForm)),
     path('', include('django.contrib.auth.urls')),
     path('pipelines/<slug:environment>/', include([
         path('', include('pipelines.urls')),
