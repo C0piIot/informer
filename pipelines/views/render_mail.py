@@ -12,8 +12,9 @@ class RenderMail(CurrentAccountMixin, View):
 	premailer = Premailer()
 
 	def post(self, request, *args, **kwargs):
+		message =request.body.decode('UTF-8').strip()
 		return HttpResponse(
 			self.premailer.transform(
-				Template(request.body.decode('UTF-8')).render(Context())
-			)
+				Template(message).render(Context())
+			) if message else ''
 		)
