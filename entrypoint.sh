@@ -5,6 +5,6 @@ if [[ ! -z "$SWAP" ]]; then fallocate -l 64M swapfile && chmod 600 swapfile && m
 python manage.py migrate
 sqlite3 /usr/src/app/db.sqlite3 < /usr/src/app/pragma.sql
 
-#while true; do python manage.py update_prices; echo "Prices updated"; sleep 3600; done&
+redis-server --maxmemory 32M &
 python manage.py rundramatiq &
 uwsgi /usr/src/app/uwsgi.ini

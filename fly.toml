@@ -1,4 +1,4 @@
-# fly.toml file generated for informer on 2022-09-09T19:05:30+02:00
+# fly.toml file generated for informer on 2022-10-08T20:29:02+02:00
 
 app = "informer"
 kill_signal = "SIGINT"
@@ -6,11 +6,19 @@ kill_timeout = 5
 processes = []
 
 [env]
+  ALLOWED_HOSTS = "informer.fly.dev,informer.dropdatabase.es"
+  CACHE_URL = "filecache:////cache"
+  DATABASE_URL = "sqlite:////data//informer.sqlite"
   PORT = "8080"
+  SWAP = "1"
 
 [experimental]
   allowed_public_ports = []
   auto_rollback = true
+
+[mounts]
+  destination = "/data"
+  source = "informer_data"
 
 [[services]]
   http_checks = []
