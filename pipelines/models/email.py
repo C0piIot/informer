@@ -28,14 +28,12 @@ class Email(SendChannel):
             text_body = Template(self.text_body)
             html_body = Template(self.html_body)
 
-            html_context = Context(pipeline_run.event_payload)
-            html_context.update({
-                'contact': contact,
-            })
-            text_context = Context(pipeline_run.event_payload, autoescape=False)
-            text_context.update({
-                'contact': contact,
-            })
+            context = pipeline_run.event_payload.copy()
+            context.update({ 'contact': contact })
+            context.update(pipeline_run.pipeline_data)
+
+            html_context = Context(context)
+            text_context = Context(context, autoescape=False)
             
             self.email_channel.send_mail(
                 subject.render(text_context),
