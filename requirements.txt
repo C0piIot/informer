@@ -11,3 +11,4 @@ dramatiq[redis, watch]
 django-dramatiq
 premailer
 firebase-admin
+uwsgi
