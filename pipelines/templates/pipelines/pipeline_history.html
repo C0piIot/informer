@@ -4,7 +4,9 @@
  {% block breadcrumbds %}
  <li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
  <li class="breadcrumb-item"><a href="{% url 'pipelines:list' current_environment.slug %}">{{ current_environment }}</a></li>
- <li class="breadcrumb-item"><a href="{% url 'pipelines:edit' current_environment.slug object_list.first.id %}">{{ object_list.first }}</a></li>
+ {% with pipeline=object_list.first %}
+ <li class="breadcrumb-item"><a href="{% url 'pipelines:edit' current_environment.slug pipeline.id %}">{{ pipeline }}</a></li>
+ {% endwith %}
  <li class="breadcrumb-item active" aria-current="page">{% translate "History" %}</li>
  {% endblock breadcrumbds %}
 
@@ -37,8 +39,9 @@
 	        	{% endfor %}
 	        </ul>
 	        {% if current_environment not in revision.environments.all %}
-	        <form method="post" action="" class="text-end">
+	        <form method="post" action="{% url 'pipelines:set_revision' current_environment.slug revision.id %}" class="text-end">
 	        	{% csrf_token %}
+	        	<input type="hidden" name="revision" value="{{ revision.pk }}">
 	        	<button type="submit" class="btn btn-primary">
 	        		{% trans "Use this version" %}
 	        	</button>

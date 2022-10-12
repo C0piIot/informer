@@ -1,6 +1,7 @@
 from configuration.views import CurrentEnvironmentMixin
 from pipelines.models import Pipeline
 
+
 class PipelineFilteredMixin(CurrentEnvironmentMixin):
     model = Pipeline
 
