@@ -6,7 +6,7 @@ class PipelineHistory(CurrentEnvironmentMixin, ListView):
     template_name_suffix = '_history'
     model = Pipeline
     def get_queryset(self):
-        return super().get_queryset().filter(id=self.kwargs['id'])
+        return super().get_queryset().filter(id=self.kwargs['id'], account=self.current_account)
 
     def get_context_data(self):
         context_data = super().get_context_data()

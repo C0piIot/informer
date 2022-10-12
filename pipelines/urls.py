@@ -17,6 +17,7 @@ urlpatterns = [
         path('<uuid:revision>/', PipelineHistory.as_view(), name='history'),
         path('edit/', PipelineEdit.as_view(), name='edit'),
         path('remove/', PipelineRemove.as_view(), name='remove'),
+        path('set_revision/', PipelineSetRevision.as_view(), name='set_revision'),
         path('<int:pk>/', include([
             path('', StepEdit.as_view(), name='step_edit'),
             path('move/', StepMove.as_view(), name='step_move'),

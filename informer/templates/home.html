@@ -9,22 +9,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <div class="dropdown ms-auto">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {% translate "Sign in" %}
-          </button>
-          <div class="dropdown-menu">
-            <form class="px-3" method="post" action="{% url 'login' %}">
-                {% bootstrap_form login_form %}
-                <button class="btn btn-primary" type="submit">
-                    {% translate "Sign in" %}
-                </button>
-                {% csrf_token %}
-            </form>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">{% translate "Forgot password?" %}</a>
-          </div>
-        </div>
+        <a class="ms-auto btn btn-secondary" href="{% url 'login' %}">{% translate "Sign in" %}</a>
       </div>
     </div>
 </nav>
@@ -32,3 +17,10 @@
 
 
 {% block breadcrumbds %}{% endblock breadcrumbds %}
+
+{% block body-content %}
+{{ block.super }}
+<div class="container">
+  <p>Hello there</p>
+</div>
+{% endblock body-content %}

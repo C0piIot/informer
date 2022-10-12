@@ -6,5 +6,6 @@ from .pipeline_remove import PipelineRemove
 from .pipeline_history import PipelineHistory
 from .pipeline_run_list import PipelineRunList
 from .pipeline_run_detail import PipelineRunDetail
+from .pipeline_set_revision import PipelineSetRevision
 from .render_mail import RenderMail
 from .pipeline_run_viewset import PipelineRunViewSet

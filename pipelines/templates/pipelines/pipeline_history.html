@@ -36,6 +36,14 @@
 	        		<li>{{ step }}</li>
 	        	{% endfor %}
 	        </ul>
+	        {% if current_environment not in revision.environments.all %}
+	        <form method="post" action="" class="text-end">
+	        	{% csrf_token %}
+	        	<button type="submit" class="btn btn-primary">
+	        		{% trans "Use this version" %}
+	        	</button>
+	        </form>
+	        {% endif %}
 	      </div>
 	    </div>
 	  </div>

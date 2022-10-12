@@ -2,7 +2,7 @@ version: '3.7'
 
 x-informer-django: &informer-django
   environment:
-    - "DJANGO_DEBUG=True"
+    - "DEBUG=True"
     - "EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend"
     - "ROLLBAR_TOKEN=40ec2edf6d464fff8f776094438a809e"
     - "CACHE_URL=locmemcache://"
