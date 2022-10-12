@@ -8,8 +8,8 @@ processes = []
 [env]
   ALLOWED_HOSTS = "informer.fly.dev,informer.dropdatabase.es"
   CACHE_URL = "filecache:////cache"
+  REDIS_URL = "redis://localhost"
   DATABASE_URL = "sqlite:////data//informer.sqlite"
-  PORT = "8080"
   SWAP = "1"
 
 [experimental]
@@ -22,7 +22,7 @@ processes = []
 
 [[services]]
   http_checks = []
-  internal_port = 8080
+  internal_port = 80
   processes = ["app"]
   protocol = "tcp"
   script_checks = []

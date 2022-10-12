@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-f71wevx&=04*+4@96a1ltskmaj2)%w^%$gl1@_)gyzi)50epas'
+SECRET_KEY = env('SECRET_KEY', default='django-insecure-f71wevx&=04*+4@96a1ltskmaj2)%w^%$gl1@_)gyzi)50epas')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', False))
@@ -31,9 +31,9 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK' :  lambda request: DEBUG
 }
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost'])
 
-
+SECURE_SSL_REDIRECT = False
 # Application definition
 
 INSTALLED_APPS = [
@@ -90,10 +90,7 @@ AUTH_USER_MODEL = 'configuration.User'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': env.db('DATABASE_URL', default='sqlite:///%s' % os.path.join(BASE_DIR, 'db.sqlite3'))
 }
 
 # Password validation
@@ -179,7 +176,7 @@ LOGOUT_REDIRECT_URL = 'home'
 DRAMATIQ_BROKER = {
     "BROKER": "dramatiq.brokers.redis.RedisBroker",
     "OPTIONS": {
-        "url": "redis://informer_redis",
+        "url": env.str("REDIS_URL", default="redis://informer_redis"),
     },
     "MIDDLEWARE": [
         "dramatiq.middleware.Prometheus",
