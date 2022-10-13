@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block breadcrumbds %}
+<li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
+<li class="breadcrumb-item"><a href="{{ current_environment.get_absolute_url }}">{{ current_environment }}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'flows:runs' current_environment.slug flow.id %}">{{ flow }}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{{ flow_run }}</li>
+{% endblock breadcrumbds %}
+
+{% block body-content %}
+{{ block.super }}
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <div class="card mb-3">
+        <h5 class="card-header">{% translate "Run information" %}</h5>
+        <div class="card-body">
+          <dl>
+            <dt>{% translate "Contact" %}</dt>
+            <dd><a href="">{{ flow_run.contact }}</a></dd>
+            <dt>{% translate "Flow revision" %}</dt>
+            <dd>
+              <a href="{% url 'flows:history' flow_run.environment.slug flow_run.flow_id flow_run.flow_revision.pk %}#h-{{ flow_run.flow_revision.pk }}">
+                {{ flow_run.flow_revision.pk }}
+              </a>
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <h5 class="card-header">{% translate "Event payload" %}</h5>
+        <div class="card-body">
+          <code>
+            {{ flow_run.event_payload }}
+          </code>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <h5 class="card-header">{% translate "Flow data" %}</h5>
+        <div class="card-body">
+          <code>
+            {{ flow_run.flow_data }}
+          </code>
+        </div>
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="text-end mb-2">
+        <a href="{{ request.get_full_path }}" class="btn btn-primary">
+          ↻ {% translate "Reload" %}
+        </a>
+      </div>
+      <dl>
+        {% for log in flow_run.get_logs %}
+        <dt>
+          <span title="{{ log.date|date:'c' }}">{{ log.date|date:"SHORT_DATETIME_FORMAT" }}</span>
+          <span class="text-{% if log.level == log.DEBUG %}muted{% elif log.level == log.INFO %}info{% elif log.level == log.WARNING %}warning{% elif log.level == log.ERROR %}danger{% endif %}">
+            {{ log.level }}
+          </span>
+        </dt>
+        <dd>{{ log.message }}</dd>
+        {% endfor %}
+      </dl>
+    </div>
+  </div>
+</div>
+{% endblock body-content %}

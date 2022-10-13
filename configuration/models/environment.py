@@ -11,7 +11,7 @@ class Environment(models.Model):
     slug = models.SlugField(_('slug'), editable=False)
 
     def get_absolute_url(self):
-        return reverse('pipelines:list', kwargs={ 'environment': self.slug })
+        return reverse('flows:list', kwargs={ 'environment': self.slug })
 
     def __str__(self):
         return self.name

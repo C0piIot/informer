@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+ {% block breadcrumbds %}
+ <li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
+ <li class="breadcrumb-item"><a href="{% url 'flows:list' current_environment.slug %}">{{ current_environment }}</a></li>
+ {% with flow=object_list.first %}
+ <li class="breadcrumb-item"><a href="{% url 'flows:edit' current_environment.slug flow.id %}">{{ flow }}</a></li>
+ {% endwith %}
+ <li class="breadcrumb-item active" aria-current="page">{% translate "History" %}</li>
+ {% endblock breadcrumbds %}
+
+
+
+{% block body-content %}
+{{ block.super }}
+<div class="container">
+    <div class="accordion" id="flow-history">
+    {% for revision in object_list %}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="h-{{ revision.pk }}">
+          <button class="accordion-button{% if revision.pk != highlight %} collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#b-{{ revision.pk }}"{% if revision.pk == highlight %} aria-expanded="true"{% endif %} aria-controls="b-{{ revision.pk }}">
+            <div class="d-flex w-100 justify-content-between pe-2">
+                <span>                  
+                    {% for environment in revision.environments.all %}
+                        <code class="small">[{{ environment }}]</code>
+                    {% endfor %}
+                    {{ revision.name }}
+                </span>
+                <small title="{% blocktranslate with pk=revision.pk %}Revision {{ pk }}{% endblocktranslate %}">{{ revision.user }} - {{ revision.date }}</small>
+            </div>
+          </button>
+        </h2>
+        <div id="b-{{ revision.pk }}" class="accordion-collapse collapse{% if revision.pk == highlight %} show{% endif %}" aria-labelledby="h-{{ revision.pk }}" data-bs-parent="#flow-history">
+          <div class="accordion-body">
+            <ul>
+                {% for step in revision.steps.all %}
+                    <li>{{ step }}</li>
+                {% endfor %}
+            </ul>
+            {% if current_environment not in revision.environments.all or account.environments.all|length > 1 %}
+                <form method="post" action="{% url 'flows:set_revision' current_environment.slug revision.id %}" class="text-end">
+                    {% csrf_token %}
+                    <input type="hidden" name="revision" value="{{ revision.pk }}">
+                    <div class="dropdown">
+                      <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        {% trans "Use in environment" %}
+                      </button>
+                      <ul class="dropdown-menu">
+                        {% for environment in account.environments.all %}
+                            {% if environment not in revision.environments.all %}
+                                <li>
+                                    <button type="submit" class="dropdown-item" name="environment" value="{{ environment.pk }}">
+                                        {{ environment }}
+                                    </button>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                      </ul>
+                    </div>
+                </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    </div>
+</div>
+
+{% endblock body-content %}

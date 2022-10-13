@@ -11,7 +11,7 @@ class NewEnvironmentForm(forms.ModelForm):
         queryset=Environment.objects.all(),
         required=False,
         label=_('Copy from'),
-        help_text=_('Copy pipelines from existing environment')
+        help_text=_('Copy flows from existing environment')
     )
 
     def __init__(self, **kwargs):
@@ -25,7 +25,7 @@ class NewEnvironmentForm(forms.ModelForm):
             environment.account = self.account
             environment.save()
             if self.cleaned_data['source_environment']:
-                environment.pipelines.add(*self.cleaned_data['source_environment'].pipelines.all())
+                environment.flows.add(*self.cleaned_data['source_environment'].flows.all())
         return environment
 
 

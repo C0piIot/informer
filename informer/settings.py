@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_dramatiq',
     'configuration.apps.ConfigurationConfig',
-    'pipelines.apps.PipelinesConfig',
+    'flows.apps.FlowsConfig',
     'contacts.apps.ContactsConfig',
 ]
 

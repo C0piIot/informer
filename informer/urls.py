@@ -11,8 +11,8 @@ urlpatterns = [
     path('', Home.as_view(), name='home'),
     path('login/', LoginView.as_view(redirect_authenticated_user=True, authentication_form=LoginForm)),
     path('', include('django.contrib.auth.urls')),
-    path('pipelines/<slug:environment>/', include([
-        path('', include('pipelines.urls')),
+    path('flows/<slug:environment>/', include([
+        path('', include('flows.urls')),
         path('contacts/', include('contacts.urls')),    
     ])),
     path('config/', include('configuration.urls')),

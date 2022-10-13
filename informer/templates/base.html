@@ -35,7 +35,7 @@
                   <ul class="dropdown-menu" aria-labelledby="environmentSelector">
                     {% for environment in account.environments.all %}
                       <li>
-                        <a class="dropdown-item" href="{% url 'pipelines:list' environment.slug %}">
+                        <a class="dropdown-item" href="{% url 'flows:list' environment.slug %}">
                           {{ environment }}
                         </a>
                       </li>
@@ -52,7 +52,7 @@
                 </li>
                 {% if current_environment %}
                 <li class="nav-item">
-                  <a class="nav-link" href="{% url 'pipelines:list' current_environment.slug %}">{% trans "Pipelines" %}</a>
+                  <a class="nav-link" href="{% url 'flows:list' current_environment.slug %}">{% trans "Flows" %}</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'contacts:list' current_environment.slug %}">{% trans "Contacts" %}</a>
