@@ -4,6 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from pipelines.models import Pipeline
 from pipelines.forms import PipelineForm
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 
 class PipelineEditMixin(CurrentEnvironmentMixin):
 
@@ -22,7 +23,8 @@ class PipelineEditMixin(CurrentEnvironmentMixin):
             'step_forms': { 
                 step.order: step_form_classes[type(step.get_typed_instance())](instance=step.get_typed_instance(), auto_id='id_%%s_%d' % step.pk) 
                     for step in pipeline.steps.all()
-            }
+            },
+            'api_endpoint' : self.request.build_absolute_uri(reverse('pipelinerun-list', kwargs={'environment': self.current_environment.slug }))
         })
     
         return context_data

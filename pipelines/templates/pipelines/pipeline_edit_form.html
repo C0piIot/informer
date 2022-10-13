@@ -17,8 +17,55 @@
 {{ block.super }}
 <div class="container">
 	<h1>{% trans "Edit pipeline" %}</h1>
-    <div class="row">
-        <div class="col-5">
+    <div class="row mb-4">
+        <div class="col-md-7 order-md-last step-forms">
+            <div class="card">
+                <div class="card-body">
+                    <div class="text-end mb-2">
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="offcanvas" data-bs-target="#form-edit-pipeline" aria-expanded="{{ form.errors|yesno:'true,false' }}">
+                                {% translate "Edit" %}
+                            </button>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="addStep" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {% translate "New step" %}
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="addStep">
+                                    {% for content_type in step_types %}
+                                    <li>
+                                        <button class="dropdown-item" data-bs-toggle="offcanvas" aria-expanded="false" aria-controls="form-add-{{ content_type.model }}" 
+                                            data-bs-target=".step-forms>.show,#form-add-{{ content_type.model }}">
+                                            {{ content_type.name|title }}
+                                        </button>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            <button type="button" class="btn btn-primary">
+                                {% translate "Test" %}
+                            </button>
+                        </div>
+                    </div>
+
+                    <dl class="row">
+                      <dt class="col-sm-3">{% translate "Name" %}</dt>
+                      <dd class="col-sm-9">{{ pipeline }}</dd>
+
+                      <dt class="col-sm-3">{% translate "Trigger" %}</dt>
+                      <dd class="col-sm-9">{{ pipeline.trigger }}</dd>
+
+                      <dt class="col-sm-3">{% translate "Updated" %}</dt>
+                      <dd class="col-sm-9">{{ pipeline.date }}</dd>
+
+                      <dt class="col-sm-3">{% translate "API Endpoint" %}</dt>
+                      <dd class="col-sm-9">
+                        <a href="{{ api_endpoint }}" target="_blank">{{ api_endpoint }}</a>
+                    </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
             <div class="row">
                 <div class="mt-4 px-5">
                     {% for form in step_forms.values %}
@@ -48,42 +95,6 @@
                         </div>
                         {% if not forloop.last %}<div class="mb-1 text-center">⬇️</div>{% endif %}
                     {% endfor %}
-                </div>
-            </div>
-        </div>
-        <div class="col-7 step-forms">
-            <div class="card">
-                <div class="card-body">
-                    <div class="text-end mb-2">
-                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                            <button type="button" class="btn btn-outline-primary" data-bs-toggle="offcanvas" data-bs-target="#form-edit-pipeline" aria-expanded="{{ form.errors|yesno:'true,false' }}">
-                                {% translate "Edit" %}
-                            </button>
-                            <div class="btn-group" role="group">
-                                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="addStep" data-bs-toggle="dropdown" aria-expanded="false">
-                                    {% translate "New step" %}
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="addStep">
-                                    {% for content_type in step_types %}
-                                    <li>
-                                        <button class="dropdown-item" data-bs-toggle="offcanvas" aria-expanded="false" aria-controls="form-add-{{ content_type.model }}" 
-                                            data-bs-target=".step-forms>.show,#form-add-{{ content_type.model }}">
-                                            {{ content_type.name|title }}
-                                        </button>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                            <button type="button" class="btn btn-primary">
-                                {% translate "Test" %}
-                            </button>
-                        </div>
-                    </div>
-                    <ul>
-                        <li>{% translate "Name:" %} {{ pipeline }}</li>
-                        <li>{% translate "Trigger:" %} {{ pipeline.trigger }}</li>
-                        <li>{% translate "Updated:" %} {{ pipeline.date }}</li>
-                    </ul>
                 </div>
             </div>
         </div>
