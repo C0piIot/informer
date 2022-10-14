@@ -1,15 +1,15 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from .send_channel import SendChannel
 from .flow_step import FlowStep
 from django.template import Template, Context
 from .flow_log import FlowLog
+from accounts.models import PushChannel
 
-class Push(SendChannel):
-    push_channel = models.ForeignKey('accounts.PushChannel', on_delete=models.CASCADE, verbose_name=_('push channel'))
+class Push(FlowStep):
     title = models.CharField(_('title'), max_length=200)
     body = models.TextField(_('body'))
     url = models.URLField(_('url'))
+    testing_context = models.JSONField(_('testing context'), default=dict)
     
     def __str__(self):
         return "🔔 Push %s" % self.title
@@ -17,7 +17,8 @@ class Push(SendChannel):
 
     def step_run(self, flow_run):
         contact = flow_run.contact()
-        key = str(self.push_channel.pk)
+        push_channel = PushChannel.objects.get(account=self.account)
+        key = str(push_channel.pk)
 
         if key in contact.channel_data:
             title = Template(self.title)
@@ -29,7 +30,7 @@ class Push(SendChannel):
                 'contact': contact,
             })
 
-            response = self.push_channel.send_push(
+            response = push_channel.send_push(
                 title.render(text_context),
                 body.render(text_context),
                 url.render(text_context),
@@ -42,5 +43,5 @@ class Push(SendChannel):
         self.run_next(flow_run)
 
     class Meta:
-        verbose_name = _('push template')
-        verbose_name_plural = _('push templates')
+        verbose_name = _('send push')
+        verbose_name_plural = _('push sending')

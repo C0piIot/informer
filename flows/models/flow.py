@@ -30,6 +30,6 @@ class Flow(models.Model):
 
     class Meta:
         verbose_name = _('flow')
-        verbose_name_plural = _('flows')
+        verbose_name_plural = _('communication flows')
         ordering = ('id', '-date')
         unique_together = ('id', 'date')
