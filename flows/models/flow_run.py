@@ -18,8 +18,8 @@ class FlowRun(models.Model):
     start = models.DateTimeField(_('start'), auto_now_add=True)
     flow_revision = models.ForeignKey(Flow, on_delete=models.PROTECT, verbose_name=_('flow'), editable=False)
     flow_id = models.UUIDField(_('id'), editable=False)
-    contact_key = models.CharField(_('contact key'), max_length=100, editable=False)
-    event_payload = models.JSONField(_('event payload'), default=dict, editable=False)
+    contact_key = models.CharField(_('contact key'), max_length=100)
+    event_payload = models.JSONField(_('event payload'), default=dict, blank=True)
     flow_data = models.JSONField(_('flow data'), default=dict)
     group_key = models.CharField(_('group_key'), max_length=200, blank=True, editable=False)
 

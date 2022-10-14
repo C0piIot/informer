@@ -15,7 +15,6 @@ class FlowEdit(
     UpdateView
 ):
     form_class = FlowForm
-    template_name_suffix = '_edit_form'
     success_message = _("%(name)s was updated successfully")
 
     def form_valid(self, form, **kwargs):

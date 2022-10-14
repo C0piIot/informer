@@ -41,7 +41,7 @@
                                     {% endfor %}
                                 </ul>
                             </div>
-                            <button type="button" class="btn btn-primary">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="offcanvas" data-bs-target="#form-test-flow" aria-expanded="{{ test_form.errors|yesno:'true,false' }}" >
                                 {% translate "Test" %}
                             </button>
                         </div>
@@ -100,6 +100,22 @@
         </div>
     </div>
 </div>
+<form class="offcanvas offcanvas-end{{ test_form.errors|yesno:' show,' }}" 
+    tabindex="-1" aria-labelledby="form-test-flow-title" method="post" id="form-test-flow"
+    action="{% url 'flows:test' current_environment.slug flow.id %}">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="form-test-flow-title">{% blocktranslate %}Test flow{% endblocktranslate %}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="{% translate 'Close' %}"></button>
+    </div>
+    <div class="offcanvas-body">
+        {% bootstrap_form test_form %}
+        <button type="reset" class="btn btn-secondary" data-bs-dismiss="offcanvas">
+            {% translate "Cancel" %}
+        </button>
+        <button type="submit" class="btn btn-primary">{% translate "Test" %}</button>
+    </div>
+    {% csrf_token %}
+</form>
 <form class="offcanvas offcanvas-end{{ flow_form.errors|yesno:' show,' }}" 
     tabindex="-1" aria-labelledby="form-edit-flow-title" method="post" id="form-edit-flow"
     action="{% url 'flows:edit' current_environment.slug flow.id %}">

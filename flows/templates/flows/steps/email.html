@@ -23,15 +23,18 @@
     </div>
   </div>
   <div class="tab-pane" id="text-{{ form.instance.pk|default:'new' }}" role="tabpanel" aria-labelledby="tab-text-{{ form.instance.pk|default:'new' }}">
-  	{% bootstrap_field form.text_body %}
+    <div class="row">
+      <div class="col-lg-6">
+        {% bootstrap_field form.text_body %}
+      </div>
+      <div class="col-lg-6 d-flex flex-column">
+        <p class="mb-2">{% translate "Message preview" %}</p>
+        <output class="w-100 border rounded mb-3 flex-grow-1 d-flex align-items-stretch" for="{{ form.text_body.id_for_label }}">
+          <iframe class="w-100" srcdoc="{{ form.text_body.value|default:'' }}" data-render-mail-url="{% url 'flows:render_mail' current_environment.slug %}"></iframe>  
+        </output>
+      </div>
+    </div>
   	{% bootstrap_field form.autogenerate_text %}
   </div>
+  {% bootstrap_field form.testing_context %}
 </div>
-<hr>
-<div class="row">
-  <div class="col">{% bootstrap_field form.email_channel %}</div>
-  <div class="col d-flex align-items-center">
-    <a href="{% url 'configuration:channel_list' %}" target="_blank">{% translate "Manage channels…" %}⧉</a>
-  </div>
-</div>
-{% bootstrap_field form.only_unread %}

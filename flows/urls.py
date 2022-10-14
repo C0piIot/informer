@@ -16,6 +16,7 @@ urlpatterns = [
         path('', FlowHistory.as_view(), name='history'),
         path('<uuid:revision>/', FlowHistory.as_view(), name='history'),
         path('edit/', FlowEdit.as_view(), name='edit'),
+        path('test/', FlowTest.as_view(), name='test'),
         path('remove/', FlowRemove.as_view(), name='remove'),
         path('set_revision/', FlowSetRevision.as_view(), name='set_revision'),
         path('<int:pk>/', include([

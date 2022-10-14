@@ -13,17 +13,14 @@ from django.contrib.contenttypes.models import ContentType
 
 
 class StepCreate(FlowEditMixin, SuccessMessageMixin, CreateView):
-    flow = None
     type = None
     success_message = _("Step was created successfully")
-    template_name = 'flows/flow_edit_form.html'
 
     def get_form_class(self):
         return step_form_classes[self.type.model_class()]
         
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.flow = get_object_or_404(Flow, environments=self.current_environment, id=self.kwargs['id'])
         try:
             self.type = ContentType.objects.get_by_natural_key('flows', self.kwargs['type'])
         except (ContentType.DoesNotExist, KeyError):

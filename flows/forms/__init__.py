@@ -3,6 +3,7 @@ from .group_form import GroupForm
 from .email_form import EmailForm
 from .push_form import PushForm
 from .flow_form import FlowForm
+from .test_form import TestForm
 from flows.models import *
 
 step_form_classes = { 
