@@ -1,6 +1,6 @@
 from django.test import TestCase
 from flows.models import FlowRun, Flow
-from configuration.models import Environment, Account
+from accounts.models import Environment, Account
 from contacts.models import Contact
 
 class FlowRunTestCase(TestCase):

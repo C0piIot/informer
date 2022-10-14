@@ -6,7 +6,7 @@ from django.template import Template, Context
 from .flow_log import FlowLog
 
 class Push(SendChannel):
-    push_channel = models.ForeignKey('configuration.PushChannel', on_delete=models.CASCADE, verbose_name=_('push channel'))
+    push_channel = models.ForeignKey('accounts.PushChannel', on_delete=models.CASCADE, verbose_name=_('push channel'))
     title = models.CharField(_('title'), max_length=200)
     body = models.TextField(_('body'))
     url = models.URLField(_('url'))

@@ -1,10 +1,10 @@
 from django.views.generic.edit import CreateView
 from django.contrib.messages.views import SuccessMessageMixin
-from configuration.models import Environment
+from accounts.models import Environment
 from django.urls import reverse_lazy
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from configuration.forms import NewEnvironmentForm
+from accounts.forms import NewEnvironmentForm
 from django.utils.translation import gettext_lazy as _
 from .current_account_mixin import CurrentAccountMixin
 

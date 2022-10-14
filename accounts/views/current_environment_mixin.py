@@ -1,4 +1,4 @@
-from configuration.models import Environment
+from accounts.models import Environment
 from .current_account_mixin import CurrentAccountMixin
 from django.shortcuts import get_object_or_404
 

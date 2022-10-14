@@ -1,7 +1,7 @@
 from django.urls import reverse
 from django.views.generic.edit import CreateView
 from django.contrib import messages
-from configuration.views import CurrentEnvironmentMixin
+from accounts.views import CurrentEnvironmentMixin
 from django.http import HttpResponseRedirect
 from flows.forms import FlowForm
 from django.utils.translation import gettext_lazy as _

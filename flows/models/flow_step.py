@@ -7,7 +7,7 @@ from .flow_log import FlowLog
 
 class FlowStep(models.Model):
     flow = models.ForeignKey(Flow, on_delete=models.CASCADE, verbose_name=_('flow'), related_name='steps', editable=False)
-    account = models.ForeignKey('configuration.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
+    account = models.ForeignKey('accounts.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
     order = models.PositiveSmallIntegerField(_('order'), editable=False)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, editable=False)
 

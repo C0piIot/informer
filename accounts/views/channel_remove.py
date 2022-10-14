@@ -4,7 +4,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from .current_account_mixin import CurrentAccountMixin
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
-from configuration.models import Channel
+from accounts.models import Channel
 
 
 class ChannelRemove(CurrentAccountMixin, SuccessMessageMixin, DeleteView):

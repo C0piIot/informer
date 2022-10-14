@@ -1,6 +1,6 @@
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
-from configuration.views import CurrentEnvironmentMixin
+from accounts.views import CurrentEnvironmentMixin
 from rest_framework import serializers, status, mixins
 from rest_framework.response import Response
 from contacts.forms import ContactKeyField

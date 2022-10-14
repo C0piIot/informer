@@ -7,7 +7,7 @@ from django.db import transaction
 from .flow_filtered_mixin import FlowFilteredMixin
 from django.shortcuts import get_object_or_404
 from django.views.generic.detail import SingleObjectMixin
-from configuration.models import Environment
+from accounts.models import Environment
 import uuid
 
 from flows.models import Flow

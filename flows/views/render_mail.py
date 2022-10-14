@@ -1,5 +1,5 @@
 from django.views.generic.base import View
-from configuration.views import CurrentAccountMixin
+from accounts.views import CurrentAccountMixin
 from django.template import Template, Context
 from django.http import HttpResponse
 from premailer import Premailer

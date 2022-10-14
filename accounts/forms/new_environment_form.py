@@ -1,5 +1,5 @@
 from django import forms
-from configuration.models import Environment
+from accounts.models import Environment
 from django.utils.translation import gettext_lazy as _
 from django.db import transaction
 

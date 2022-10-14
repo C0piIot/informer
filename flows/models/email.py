@@ -7,7 +7,7 @@ from premailer import Premailer
 from .flow_log import FlowLog
 
 class Email(SendChannel):
-    email_channel = models.ForeignKey('configuration.EmailChannel', on_delete=models.CASCADE, verbose_name=_('email channel'))
+    email_channel = models.ForeignKey('accounts.EmailChannel', on_delete=models.CASCADE, verbose_name=_('email channel'))
     subject = models.CharField(_('subject'), max_length=200)
     html_body = models.TextField(_('html body message'))
     text_body = models.TextField(_('plain text message'), help_text=_("Text used on clients that don't support html emails"))

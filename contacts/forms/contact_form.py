@@ -1,8 +1,8 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from contacts.models import Contact 
-from configuration.models import Channel
-from configuration.forms import get_contact_form
+from accounts.models import Channel
+from accounts.forms import get_contact_form
 from django.utils.module_loading import import_string
 from django.conf import settings
 

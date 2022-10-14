@@ -1,7 +1,7 @@
 from  django.views.generic.base import TemplateView
 from django.utils.module_loading import import_string
 from django.conf import settings
-from configuration.views import CurrentEnvironmentMixin
+from accounts.views import CurrentEnvironmentMixin
 from contacts.forms import ContactForm
 
 

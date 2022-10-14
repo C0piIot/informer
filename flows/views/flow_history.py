@@ -1,5 +1,5 @@
 from django.views.generic.list import ListView
-from configuration.views import CurrentEnvironmentMixin
+from accounts.views import CurrentEnvironmentMixin
 from flows.models import Flow, FlowStep
 from django.db.models import Prefetch
 

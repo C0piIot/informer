@@ -1,6 +1,6 @@
 from django.views.generic.list import ListView
-from configuration.models import Environment
-from configuration.forms import NewEnvironmentForm
+from accounts.models import Environment
+from accounts.forms import NewEnvironmentForm
 from .current_account_mixin import CurrentAccountMixin
 
 class EnvironmentList(CurrentAccountMixin, ListView):

@@ -1,5 +1,5 @@
 from django.views.generic.list import ListView
-from configuration.models import Channel
+from accounts.models import Channel
 from .current_account_mixin import CurrentAccountMixin
 from django.contrib.contenttypes.models import ContentType
 from django.conf import settings

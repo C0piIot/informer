@@ -16,8 +16,8 @@ class FlowLog(models.Model):
     )
 
     id = models.UUIDField(_('id'), default=uuid4, primary_key=True, editable=False)
-    account = models.ForeignKey('configuration.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
-    environment = models.ForeignKey('configuration.Environment', on_delete=models.CASCADE, verbose_name=_('environment'), editable=False)
+    account = models.ForeignKey('accounts.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
+    environment = models.ForeignKey('accounts.Environment', on_delete=models.CASCADE, verbose_name=_('environment'), editable=False)
     flow_run_id = models.UUIDField(_('flow_run_id'))
     date = models.DateTimeField(_('date'), auto_now_add=True)
     level = models.CharField(_('level'), max_length=10, default=INFO, choices=LEVEL_CHOICES)

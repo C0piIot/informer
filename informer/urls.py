@@ -5,7 +5,7 @@ from django.urls import path, include
 from .api import router
 from rest_framework.schemas import get_schema_view
 from .views import Home
-from configuration.forms import LoginForm
+from accounts.forms import LoginForm
 
 urlpatterns = [
     path('', Home.as_view(), name='home'),
@@ -15,7 +15,7 @@ urlpatterns = [
         path('', include('flows.urls')),
         path('contacts/', include('contacts.urls')),    
     ])),
-    path('config/', include('configuration.urls')),
+    path('config/', include('accounts.urls')),
     path('admin/', admin.site.urls),
     path('api/', include([
         path('auth/', include('rest_framework.urls')),

@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'debug_toolbar',
     'django_dramatiq',
-    'configuration.apps.ConfigurationConfig',
+    'accounts.apps.AccountsConfig',
     'flows.apps.FlowsConfig',
     'contacts.apps.ContactsConfig',
 ]
@@ -76,7 +76,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'configuration.context_processors.account'
+                'accounts.context_processors.account'
             ],
         },
     },
@@ -84,7 +84,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'informer.wsgi.application'
 
-AUTH_USER_MODEL = 'configuration.User'
+AUTH_USER_MODEL = 'accounts.User'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases

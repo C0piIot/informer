@@ -5,8 +5,8 @@ from uuid import uuid4
 class Contact(models.Model):
     key = models.CharField(_('key'), max_length=100, help_text=_('Key must be unique to all your contacts'))
     name = models.CharField(_('name'), max_length=200, help_text=_('This name will be used across informer app'))
-    account = models.ForeignKey('configuration.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
-    environment = models.ForeignKey('configuration.Environment', on_delete=models.CASCADE, verbose_name=_('environment'), editable=False)
+    account = models.ForeignKey('accounts.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
+    environment = models.ForeignKey('accounts.Environment', on_delete=models.CASCADE, verbose_name=_('environment'), editable=False)
     index1 = models.CharField(_('index 1'), max_length=100, blank=True)
     index2 = models.CharField(_('index 2'), max_length=100, blank=True)
     index3 = models.CharField(_('index 3'), max_length=100, blank=True)

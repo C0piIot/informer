@@ -1,4 +1,4 @@
-from configuration.views import CurrentEnvironmentMixin
+from accounts.views import CurrentEnvironmentMixin
 from django.views.generic.edit import DeleteView
 from django.http import HttpResponseRedirect
 from django.contrib import messages

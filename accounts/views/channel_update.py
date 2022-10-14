@@ -9,7 +9,7 @@ from django.utils.module_loading import import_string
 from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
 from django.http import Http404
-from configuration.models import Channel
+from accounts.models import Channel
 
 
 class ChannelUpdate(CurrentAccountMixin, SuccessMessageMixin, UpdateView):

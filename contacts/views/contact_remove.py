@@ -1,6 +1,6 @@
 from django.views.generic.edit import DeleteView
 from contacts.forms import ContactForm
-from configuration.views import CurrentEnvironmentMixin
+from accounts.views import CurrentEnvironmentMixin
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse

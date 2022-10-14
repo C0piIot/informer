@@ -1,17 +1,17 @@
 from django.apps import AppConfig
 
 
-class ConfigurationConfig(AppConfig):
+class AccountsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'configuration'
+    name = 'accounts'
     DEFAULT_SETTINGS = {
         'CHANNEL_CONTACT_FORMS' : {
-            'emailchannel': 'configuration.forms.EmailContactForm',
-            'pushchannel': 'configuration.forms.PushContactForm'
+            'emailchannel': 'accounts.forms.EmailContactForm',
+            'pushchannel': 'accounts.forms.PushContactForm'
         },
         'CHANNEL_CONFIG_FORMS' : {
-            'emailchannel': 'configuration.forms.EmailChannelForm',
-            'pushchannel': 'configuration.forms.PushChannelForm'
+            'emailchannel': 'accounts.forms.EmailChannelForm',
+            'pushchannel': 'accounts.forms.PushChannelForm'
         }   
     }
 

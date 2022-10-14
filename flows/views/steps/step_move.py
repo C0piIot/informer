@@ -1,6 +1,6 @@
 from django.views.generic.base import View
 from django.views.generic.detail import SingleObjectMixin
-from configuration.views import CurrentEnvironmentMixin
+from accounts.views import CurrentEnvironmentMixin
 from flows.models import Flow, FlowStep
 from django.contrib import messages
 from django.db import transaction

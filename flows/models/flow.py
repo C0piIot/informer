@@ -6,13 +6,13 @@ from django.urls import reverse
 class Flow(models.Model):
     id = models.UUIDField(_('id'), default=uuid4, editable=False)
     revision = models.UUIDField(_('revision'), primary_key=True, default=uuid4, editable=False)
-    account = models.ForeignKey('configuration.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
+    account = models.ForeignKey('accounts.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
     date = models.DateTimeField(_('date'), auto_now_add=True)
-    environments = models.ManyToManyField('configuration.Environment', related_name='flows', editable=False)
+    environments = models.ManyToManyField('accounts.Environment', related_name='flows', editable=False)
     name = models.CharField(_('name'), max_length=150)
     enabled = models.BooleanField(_('enabled'), default=True)
     trigger = models.CharField(_('trigger'), max_length=150, db_index=True)
-    user = models.ForeignKey('configuration.user', on_delete=models.PROTECT, verbose_name=_('user'), editable=False)
+    user = models.ForeignKey('accounts.user', on_delete=models.PROTECT, verbose_name=_('user'), editable=False)
     
     def save(self, *args, **kwargs):
         steps = list(self.steps.all())

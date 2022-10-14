@@ -1,7 +1,7 @@
 import uuid
 from django.core import serializers
 from django.conf import settings
-from configuration.models import Environment
+from accounts.models import Environment
 from django.utils.module_loading import import_string
 from flows.models import FlowLog
 

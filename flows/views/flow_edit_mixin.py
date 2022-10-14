@@ -1,5 +1,5 @@
 from flows.forms import step_form_classes
-from configuration.views import CurrentEnvironmentMixin
+from accounts.views import CurrentEnvironmentMixin
 from django.contrib.contenttypes.models import ContentType
 from flows.models import Flow
 from flows.forms import FlowForm

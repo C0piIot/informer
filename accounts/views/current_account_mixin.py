@@ -1,4 +1,4 @@
-from configuration.models import Account
+from accounts.models import Account
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 
