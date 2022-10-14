@@ -5,6 +5,7 @@ from .flow import Flow
 from .flow_log import FlowLog
 from django.utils.module_loading import import_string
 from django.conf import settings
+from django.urls import reverse
 import logging
 
 logger = logging.getLogger()
@@ -29,6 +30,9 @@ class FlowRun(models.Model):
         if not self.group_key:
             self.group_key = self.id.hex
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('flows:run', kwargs={ 'environment': self.environment.slug, 'id': self.flow_id, 'flow_run_id': self.id })
 
     class Meta:
         verbose_name = _('flow run')

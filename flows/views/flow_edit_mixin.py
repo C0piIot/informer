@@ -22,7 +22,7 @@ class FlowEditMixin(CurrentEnvironmentMixin):
         context_data.update({
             'flow' : self.flow,
             'flow_form' : FlowForm(instance=self.flow),
-            'test_form' : TestForm(),
+            'test_form' : TestForm(flow=self.flow, environment=self.current_environment),
             'step_types': content_types.values(),
             'new_step_forms': { content_types[model].model : form_class() for model, form_class in step_form_classes.items() },
             'step_forms': { 
