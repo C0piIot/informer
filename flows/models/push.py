@@ -9,7 +9,7 @@ class Push(FlowStep):
     title = models.CharField(_('title'), max_length=200)
     body = models.TextField(_('body'))
     url = models.URLField(_('url'))
-    testing_context = models.JSONField(_('testing context'), default=dict)
+    preview_context = models.JSONField(_('preview context'), blank=True, default=dict)
     
     def __str__(self):
         return "🔔 Push %s" % self.title

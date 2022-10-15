@@ -13,7 +13,7 @@ class Email(FlowStep):
     autogenerate_text = models.BooleanField(_('autogenerate text'), default=True, help_text="Generate text automatically from html template")
     from_email = models.EmailField(_('from email'), max_length=200, blank=True, help_text=_("From address for this step. Overrides channel's default from address"))
     premailer = Premailer()
-    testing_context = models.JSONField(_('testing context'), default=dict)
+    preview_context = models.JSONField(_('preview context'), blank=True, default=dict)
 
     def __str__(self):
         return "✉️ Email %s" % self.subject

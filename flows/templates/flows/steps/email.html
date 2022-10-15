@@ -1,6 +1,6 @@
 {% load i18n django_bootstrap5 %}
 {% bootstrap_field form.subject %}
-<ul class="nav nav-tabs" id="tabs-{{ form.instance.pk|default:'new' }}" role="tablist">
+<ul class="nav nav-tabs" id="tabs-{{ form.instance.pk|default:'new' }}" role="tablist" data-render-mail-url="{% url 'flows:render_mail' current_environment.slug %}">
   <li class="nav-item" role="presentation">
     <button class="nav-link active" id="tab-html-{{ form.instance.pk|default:'new' }}" data-bs-toggle="tab" data-bs-target="#html-{{ form.instance.pk|default:'new' }}" type="button" role="tab" aria-controls="html-{{ form.instance.pk|default:'new' }}" aria-selected="true">{% translate "HTML" %}</button>
   </li>
@@ -17,7 +17,7 @@
       <div class="col-lg-6 d-flex flex-column">
         <p class="mb-2">{% translate "Message preview" %}</p>
         <output class="w-100 border rounded mb-3 flex-grow-1 d-flex align-items-stretch" for="{{ form.html_body.id_for_label }}">
-          <iframe class="w-100" srcdoc="{{ form.html_body.value|default:'' }}" data-render-mail-url="{% url 'flows:render_mail' current_environment.slug %}"></iframe>  
+          <iframe class="w-100" srcdoc="{{ form.html_body.value|default:'' }}"></iframe>  
         </output>
       </div>
     </div>
@@ -29,12 +29,12 @@
       </div>
       <div class="col-lg-6 d-flex flex-column">
         <p class="mb-2">{% translate "Message preview" %}</p>
-        <output class="w-100 border rounded mb-3 flex-grow-1 d-flex align-items-stretch" for="{{ form.text_body.id_for_label }}">
-          <iframe class="w-100" srcdoc="{{ form.text_body.value|default:'' }}" data-render-mail-url="{% url 'flows:render_mail' current_environment.slug %}"></iframe>  
+        <output class="w-100 border rounded mb-3 flex-grow-1 d-flex align-items-stretch p-1" for="{{ form.text_body.id_for_label }}">
+          <pre class="w-100">{{ form.text_body.value|default:'' }}</pre>
         </output>
       </div>
     </div>
   	{% bootstrap_field form.autogenerate_text %}
   </div>
-  {% bootstrap_field form.testing_context %}
+  {% bootstrap_field form.preview_context %}
 </div>

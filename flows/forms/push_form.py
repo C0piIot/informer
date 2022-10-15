@@ -4,4 +4,4 @@ from flows.models import Push
 class PushForm(ModelForm):
     class Meta:
         model = Push
-        fields = ('title', 'body', 'url', 'testing_context',)
+        fields = ('title', 'body', 'url', 'preview_context',)
