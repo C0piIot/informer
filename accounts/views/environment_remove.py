@@ -10,7 +10,7 @@ from .current_account_mixin import CurrentAccountMixin
 class EnvironmentRemove(CurrentAccountMixin, SuccessMessageMixin, DeleteView):
 
     model = Environment
-    success_url = reverse_lazy('configuration:environment_list')
+    success_url = reverse_lazy('accounts:environment_list')
     success_message = _("Environment was removed successfully")
 
     def get_queryset(self, **kwargs):

@@ -170,7 +170,7 @@ LOGGING = {
 }
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'configuration:environment_list'
+LOGIN_REDIRECT_URL = 'accounts:environment_list'
 LOGOUT_REDIRECT_URL = 'home'
 
 DRAMATIQ_BROKER = {

@@ -40,11 +40,11 @@
 {{ block.super }}
 
 {% for environment in object_list %}
-{% url 'configuration:environment_remove' environment.slug as delete_url %}
+{% url 'accounts:environment_remove' environment.slug as delete_url %}
 {% include 'modal_delete.html' with object=environment modal_id='delete-'|add:environment.slug %}
 {% endfor %}
 <form 
-    action="{% url 'configuration:environment_create' %}" method="post"
+    action="{% url 'accounts:environment_create' %}" method="post"
     id="modal-create" 
     aria-labelledby="modal-create-title"
     class="modal" tabindex="-1" aria-hidden="true">

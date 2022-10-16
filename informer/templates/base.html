@@ -44,7 +44,7 @@
                       <li><hr class="dropdown-divider"></li>
                     {% endif %}
                     <li>
-                      <a class="dropdown-item" href="{% url 'configuration:environment_list' %}">
+                      <a class="dropdown-item" href="{% url 'accounts:environment_list' %}">
                         {% trans "Manage…" %}
                       </a>
                     </li>
@@ -66,12 +66,12 @@
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="environmentSelector">
                     <li>
-                      <a class="dropdown-item" href="{% url 'configuration:channel_list' %}">
+                      <a class="dropdown-item" href="{% url 'accounts:channel_list' %}">
                         {% trans "Channels" %}
                       </a>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="{% url 'configuration:environment_list' %}">
+                      <a class="dropdown-item" href="{% url 'accounts:environment_list' %}">
                         {% trans "Environments" %}
                       </a>
                     </li>

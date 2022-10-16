@@ -27,7 +27,7 @@ class ChannelList(CurrentAccountMixin, ListView):
         })
         context_data.update({
             'new_channel_forms': { 
-                ContentType.objects.get_by_natural_key('configuration', model) :  import_string(form_class)(account=self.current_account) 
+                ContentType.objects.get_by_natural_key('accounts', model) :  import_string(form_class)(account=self.current_account) 
                     for model, form_class in settings.CHANNEL_CONFIG_FORMS.items()
             },
         })

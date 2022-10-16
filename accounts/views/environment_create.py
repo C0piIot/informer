@@ -11,7 +11,7 @@ from .current_account_mixin import CurrentAccountMixin
 class EnvironmentCreate(CurrentAccountMixin, SuccessMessageMixin, CreateView):
     success_message = _("Environment %(name)s was created successfully")
     form_class = NewEnvironmentForm
-    success_url = reverse_lazy('configuration:environment_list')
+    success_url = reverse_lazy('accounts:environment_list')
 
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(self.success_url)

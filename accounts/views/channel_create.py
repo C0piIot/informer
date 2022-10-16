@@ -11,7 +11,7 @@ from django.http import Http404
 from django.conf import settings
 
 class ChannelCreate(CurrentAccountMixin, SuccessMessageMixin, CreateView):
-    success_url = reverse_lazy('configuration:channel_list')
+    success_url = reverse_lazy('accounts:channel_list')
     success_message = _("Channel was created successfully")
 
     def get_form_class(self):

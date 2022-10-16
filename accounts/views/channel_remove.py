@@ -8,7 +8,7 @@ from accounts.models import Channel
 
 
 class ChannelRemove(CurrentAccountMixin, SuccessMessageMixin, DeleteView):
-    success_url = reverse_lazy('configuration:channel_list')
+    success_url = reverse_lazy('accounts:channel_list')
     success_message = _("Channel was removed successfully")
     model = Channel
 
