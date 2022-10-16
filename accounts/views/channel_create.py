@@ -19,7 +19,7 @@ class ChannelCreate(CurrentAccountMixin, SuccessMessageMixin, CreateView):
             return import_string(
                 settings.CHANNEL_CONFIG_FORMS[
                     ContentType.objects.get_by_natural_key(
-                        'configuration',
+                        'accounts',
                         self.kwargs['type']
                     ).model
                 ]

@@ -83,7 +83,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="{% translate 'Close' %}"></button>
     </div>
     <div class="offcanvas-body">
-        {% include "configuration/channels/"|add:form.instance.content_type.model|add:".html" %}
+        {% include "accounts/channels/"|add:form.instance.content_type.model|add:".html" %}
         <button type="reset" class="btn btn-secondary" data-bs-dismiss="offcanvas">
             {% translate "Cancel" %}
         </button>
