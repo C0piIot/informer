@@ -7,6 +7,6 @@ from .flow_history import FlowHistory
 from .flow_run_list import FlowRunList
 from .flow_run_detail import FlowRunDetail
 from .flow_set_revision import FlowSetRevision
-from .render_mail import RenderMail
+from .preview import Preview
 from .flow_run_viewset import FlowRunViewSet
 from .flow_test import FlowTest

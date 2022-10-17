@@ -5,12 +5,14 @@ for (const form of document.querySelectorAll('form.email')) {
 
 	let timer = null;
 	const iframePreview = form.querySelector('iframe'),
-		textPreview = form.querySelector('pre'),
+		subjectPreview = form.querySelector('pre.subject'),
+		textPreview = form.querySelector('pre.text'),
+		subjectControl = form.elements['subject'],
 		htmlBodyControl = form.elements['html_body'],
 		textBodyControl = form.elements['text_body'],
 		autoGenerateTextControl = form.elements['autogenerate_text'],
 		previewContextControl = form.elements['preview_context'],
-		previewUrl = form.querySelector("[data-render-mail-url]").dataset.renderMailUrl,
+		previewUrl = document.querySelector("[data-preview-url]").dataset.previewUrl,
 	    update = async () => {
 			/* Use a timer to update preview and text only once in a while */
 			if(timer) {
@@ -21,24 +23,35 @@ for (const form of document.querySelectorAll('form.email')) {
 				if(autoGenerateTextControl.checked) {
 					textBodyControl.value = stripHtml(htmlBodyControl.value);
 				}
-
-				/* Keep preview updated */
-				const response = await (await fetch(previewUrl, { method: 'POST', body: new FormData(form) })).json();
-				iframePreview.srcdoc = response['html_preview'];
-				textPreview.textContent = response['text_preview'];
+				/* Keep previews updated */
+				let formData = new FormData();
+				formData.set('mode', 'email');
+				formData.set('context', previewContextControl.value);
+				formData.set('message', htmlBodyControl.value);
+				fetch(previewUrl, { method: 'POST', body: formData }).then(async response => iframePreview.srcdoc = await response.text());
+				formData.set('mode', 'plain');
+				formData.set('message', textBodyControl.value);
+				fetch(previewUrl, { method: 'POST', body: formData }).then(async response => textPreview.textContent = await response.text());
+				formData.set('message', subjectControl.value);
+				fetch(previewUrl, { method: 'POST', body: formData }).then(async response => subjectPreview.textContent = await response.text());
 				timer = null;
 			}, 500);
 		};
-
-	[htmlBodyControl, textBodyControl, previewContextControl].forEach((e) => e.addEventListener("keyup", update));
+	update();
+	[
+		subjectControl, 
+		htmlBodyControl, 
+		textBodyControl,
+		previewContextControl
+	].forEach(e => e.addEventListener("keyup", update));
 
 	/* Update text on enable control */
 	autoGenerateTextControl.addEventListener("change", () => {
+		textBodyControl.readOnly = autoGenerateTextControl.checked;
 		if(autoGenerateTextControl.checked) {
 			update();
 		}
 	});
 
 	form.addEventListener('reset', () => htmlBodyControl.dispatchEvent(new Event('keyup')));
-
 }

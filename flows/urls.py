@@ -30,5 +30,5 @@ urlpatterns = [
             path('<uuid:flow_run_id>/', FlowRunDetail.as_view(), name='run'),  
         ]))
     ])),
-    path('render_mail/', RenderMail.as_view(), name='render_mail'),
+    path('preview/', Preview.as_view(), name='preview'),
 ]
