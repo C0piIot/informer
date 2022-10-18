@@ -18,6 +18,7 @@ for (const form of document.querySelectorAll('form.email')) {
 			if(timer) {
 				clearTimeout(timer);
 			}
+			textBodyControl.readOnly = autoGenerateTextControl.checked;
 			timer = setTimeout(async () => {
 				/* Keep text updated if enabled */
 				if(autoGenerateTextControl.checked) {
@@ -38,20 +39,10 @@ for (const form of document.querySelectorAll('form.email')) {
 			}, 500);
 		};
 	update();
-	[
-		subjectControl, 
-		htmlBodyControl, 
-		textBodyControl,
-		previewContextControl
-	].forEach(e => e.addEventListener("keyup", update));
-
+	form.addEventListener("keyup", update);
+	form.addEventListener('reset', update);
 	/* Update text on enable control */
-	autoGenerateTextControl.addEventListener("change", () => {
-		textBodyControl.readOnly = autoGenerateTextControl.checked;
-		if(autoGenerateTextControl.checked) {
-			update();
-		}
-	});
+	autoGenerateTextControl.addEventListener("change", update);
 
-	form.addEventListener('reset', () => htmlBodyControl.dispatchEvent(new Event('keyup')));
+	
 }

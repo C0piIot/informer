@@ -1,8 +1,8 @@
 {% load i18n django_bootstrap5 %}
 {% bootstrap_field form.subject %}
 <p class="mb-2">{% translate "Subject preview" %}</p>
-<output class="w-100 border rounded mb-3 p-2" for="id_subject">
-  <pre class="w-100 mb-0 subject">{{ form.subject.value|default:'' }}</pre>
+<output class="w-100 border rounded mb-3 p-2" for="{{ form.subject.id_for_label }}">
+  <pre class="mb-0 subject d-inline-block"></pre>&nbsp;
 </output>
 <ul class="nav nav-tabs" id="tabs-{{ form.instance.pk|default:'new' }}" role="tablist">
   <li class="nav-item" role="presentation">
@@ -21,7 +21,7 @@
       <div class="col-lg-6 d-flex flex-column">
         <p class="mb-2">{% translate "Message preview" %}</p>
         <output class="w-100 border rounded mb-3 flex-grow-1 d-flex align-items-stretch" for="{{ form.html_body.id_for_label }}">
-          <iframe class="w-100" srcdoc="{{ form.html_body.value|default:'' }}"></iframe>  
+          <iframe class="w-100"></iframe>  
         </output>
       </div>
     </div>
@@ -34,7 +34,7 @@
       <div class="col-lg-6 d-flex flex-column">
         <p class="mb-2">{% translate "Message preview" %}</p>
         <output class="w-100 border rounded mb-3 flex-grow-1 d-flex align-items-stretch p-1" for="{{ form.text_body.id_for_label }}">
-          <pre class="w-100 text">{{ form.text_body.value|default:'' }}</pre>
+          <pre class="w-100 text"></pre>
         </output>
       </div>
     </div>
