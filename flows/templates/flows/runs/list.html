@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
- {% block breadcrumbds %}
- <li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
- <li class="breadcrumb-item"><a href="{{ current_environment.get_absolute_url }}">{{ current_environment }}</a></li>
- <li class="breadcrumb-item active" aria-current="page">{{ flow }}</li>
- {% endblock breadcrumbds %}
+{% block title %}{{ flow }} - {% translate "Flow runs" %} - {{ current_environment }} - {{ block.super }}{% endblock title %}
+
+{% block breadcrumbds %}
+<li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
+<li class="breadcrumb-item"><a href="{{ current_environment.get_absolute_url }}">{{ current_environment }}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{{ flow }}</li>
+{% endblock breadcrumbds %}
 
 {% block body-content %}
 {{ block.super }}

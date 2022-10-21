@@ -1,6 +1,8 @@
 {% extends 'list.html' %}
 {% load i18n static django_bootstrap5 %}
 
+{% block title %}{% translate "Environments" %} - {{ block.super }}{% endblock title %}
+
 {% block breadcrumbds %}
 {{ block.super }}
 <li class="breadcrumb-item active" aria-current="page">{% translate "Environments" %}</li>

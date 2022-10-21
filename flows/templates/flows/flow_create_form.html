@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load i18n django_bootstrap5 %}
 
- {% block breadcrumbds %}
- {{ block.super }}
- <li class="breadcrumb-item"><a href="{% url 'flows:home' current_environment.slug %}">{{ current_environment }}</a></li>
- <li class="breadcrumb-item active" aria-current="page">{% translate "New flow" %}</li>
- {% endblock breadcrumbds %}
+{% block breadcrumbds %}
+{{ block.super }}
+<li class="breadcrumb-item"><a href="{% url 'flows:home' current_environment.slug %}">{{ current_environment }}</a></li>
+<li class="breadcrumb-item active" aria-current="page">{% translate "New flow" %}</li>
+{% endblock breadcrumbds %}
 
 {% block body-content %}
 {{ block.super }}

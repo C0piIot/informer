@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load i18n django_bootstrap5 static %}
 
+{% block title %}{{ flow }} - {% translate "Flows" %} - {{ current_environment }} - {{ block.super }}{% endblock title %}
+
 {% block head-content %}
 {{ block.super }}
 <script type="module" src="{% static 'flows/email.js' %}"></script>

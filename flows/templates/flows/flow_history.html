@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+{% block title %}{{ object_list.first }} - {% translate "History" %} - {% translate "Flows" %} - {{ current_environment }} - {{ block.super }}{% endblock title %}
+
  {% block breadcrumbds %}
  <li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
  <li class="breadcrumb-item"><a href="{% url 'flows:list' current_environment.slug %}">{{ current_environment }}</a></li>
@@ -9,7 +11,6 @@
  {% endwith %}
  <li class="breadcrumb-item active" aria-current="page">{% translate "History" %}</li>
  {% endblock breadcrumbds %}
-
 
 
 {% block body-content %}

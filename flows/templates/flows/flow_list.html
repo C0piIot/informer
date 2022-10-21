@@ -6,6 +6,8 @@
 <li class="breadcrumb-item active" aria-current="page">{{ current_environment }}</li>
 {% endblock breadcrumbds %}
 
+{% block title %}{% translate "Flows" %} - {{ current_environment }} - {{ block.super }}{% endblock title %}
+
 {% block list-actions %}
 <a class="btn btn-primary" data-bs-toggle="modal" href="#modal-create-flow">{% translate "New flow" %}</a>
 {% endblock list-actions %}
