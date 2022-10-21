@@ -1,51 +1,72 @@
-{% load i18n django_bootstrap5 %}
+{% extends 'base.html' %}
+{% load i18n django_bootstrap5 static %}
+
+{% block head-content %}
+{{ block.super }}
+<script type="module" src="{% static 'contacts/contact.js' %}"></script>
+{% endblock head-content %}
+
+{% block breadcrumbds %}
+{{ block.super }}
+<li class="breadcrumb-item"><a href="{{ current_environment.get_absolute_url }}">{{ current_environment }}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'contacts:list' current_environment.slug %}">{% translate "Contacts" %}</a></li>
+<li class="breadcrumb-item active" aria-current="page">
+  {% if form.instance.pk %}{{ form.instance }}{% else %}{% translate "New contact" %}{% endif %}
+</li>
+{% endblock breadcrumbds %}
+
+{% block body-content %}
+{{ block.super }}
 {% with instance_pk=form.instance.pk|default:'new' %}
-<nav>
-  <div class="nav nav-tabs" role="tablist">
-    <button class="nav-link active" id="tab-contact-data-{{ instance_pk }}" data-bs-toggle="tab" data-bs-target="#contact-data-{{ instance_pk }}" type="button" role="tab" aria-controls="contact-data-{{ instance_pk }}" aria-selected="true">
-    	{% translate "Contact data" %}
-    </button>
-    {% for channel in form.channel_forms %}
-    <button class="nav-link  channel-{{ channel.pk }}" id="tab-channel-{{ instance_pk }}-{{ channel.pk }}" data-bs-toggle="tab" data-bs-target="#channel-{{ instance_pk }}-{{ channel.pk }}" type="button" role="tab" aria-controls="channel-{{ instance_pk }}-{{ channel.pk }}" aria-selected="false"{% if  2 > 1 %} hidden{% endif %}>
-    	{{ channel }}
-    </button>
+<form method="post"  action="{% url 'contacts:contact_create' current_environment.slug %}" class="container contact">
+  <nav>
+    <div class="nav nav-tabs" role="tablist">
+      <button class="nav-link active" id="tab-contact-data-{{ instance_pk }}" data-bs-toggle="tab" data-bs-target="#contact-data-{{ instance_pk }}" type="button" role="tab" aria-controls="contact-data-{{ instance_pk }}" aria-selected="true">
+      	{% translate "Contact Data" %}
+      </button>
+      {% for channel in form.channel_forms %}
+      <button class="nav-link  channel-{{ channel.pk }}" id="tab-channel-{{ instance_pk }}-{{ channel.pk }}" data-bs-toggle="tab" data-bs-target="#channel-{{ instance_pk }}-{{ channel.pk }}" type="button" role="tab" aria-controls="channel-{{ instance_pk }}-{{ channel.pk }}" aria-selected="false"{% if  2 > 1 %} hidden{% endif %}>
+      	{{ channel|title }}
+      </button>
+      {% endfor %}
+    </div>
+  </nav>
+  <div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane active" id="contact-data-{{ instance_pk }}" role="tabpanel" aria-labelledby="tab-contact-data-{{ instance_pk }}">
+    	<div class="row">
+        <div class="col-6">{% bootstrap_field form.name %}</div>
+        <div class="col-6">{% bootstrap_field form.key %}</div>
+        <div class="col-12">
+          <hr><h2 class="h5">{% translate "Indexed data" %}</h2>
+          <p>
+            {% translate "Indexed data can be queried for creating segments." %}
+            {% translate "You cand add up to 6 values." %}
+          </p>
+        </div>
+    		<div class="col-4">{% bootstrap_field form.index1 %}</div>
+    		<div class="col-4">{% bootstrap_field form.index2 %}</div>
+    		<div class="col-4">{% bootstrap_field form.index3 %}</div>
+    		<div class="col-4">{% bootstrap_field form.index4 %}</div>
+    		<div class="col-4">{% bootstrap_field form.index5 %}</div>
+    		<div class="col-4">{% bootstrap_field form.index6 %}</div>
+        <div class="col-12">
+          <hr><h2 class="h5">{% translate "Contact channels" %}</h2>
+          <p>
+            {% translate "Enable channels for communicating with your contact." %}
+            {% translate "Channel data must be configured in its own tab." %}
+          </p>
+        </div>
+        {% for checkbox in form.channels %}
+        <div class="col-4">{{ checkbox }}</div>
+        {% endfor %}
+    	</div>
+    </div>
+  	{% for channel, channel_form in form.channel_forms.items %}
+    <div class="tab-pane channel-{{ channel.pk }}" id="channel-{{ instance_pk }}-{{ channel.pk }}" role="tabpanel" aria-labelledby="tab-channel-{{ instance_pk }}-{{ channel.pk }}">
+    	{% bootstrap_form channel_form %}
+    </div>
     {% endfor %}
   </div>
-</nav>
-<div class="tab-content" id="nav-tabContent">
-  <div class="tab-pane active" id="contact-data-{{ instance_pk }}" role="tabpanel" aria-labelledby="tab-contact-data-{{ instance_pk }}">
-  	<div class="row">
-      <div class="col-6">{% bootstrap_field form.name %}</div>
-      <div class="col-6">{% bootstrap_field form.key %}</div>
-      <div class="col-12">
-        <hr><h2 class="h5">{% translate "Indexed data" %}</h2>
-        <p>
-          {% translate "Indexed data can be queried for creating segments." %}
-          {% translate "You cand add up to 6 values." %}
-        </p>
-      </div>
-  		<div class="col-4">{% bootstrap_field form.index1 %}</div>
-  		<div class="col-4">{% bootstrap_field form.index2 %}</div>
-  		<div class="col-4">{% bootstrap_field form.index3 %}</div>
-  		<div class="col-4">{% bootstrap_field form.index4 %}</div>
-  		<div class="col-4">{% bootstrap_field form.index5 %}</div>
-  		<div class="col-4">{% bootstrap_field form.index6 %}</div>
-      <div class="col-12">
-        <hr><h2 class="h5">{% translate "Contact channels" %}</h2>
-        <p>
-          {% translate "Enable channels for communicating with your contact." %}
-          {% translate "Channel data must be configured in its own tab." %}
-        </p>
-      </div>
-      {% for checkbox in form.channels %}
-      <div class="col-4">{{ checkbox }}</div>
-      {% endfor %}
-  	</div>
-  </div>
-	{% for channel, channel_form in form.channel_forms.items %}
-  <div class="tab-pane channel-{{ channel.pk }}" id="channel-{{ instance_pk }}-{{ channel.pk }}" role="tabpanel" aria-labelledby="tab-channel-{{ instance_pk }}-{{ channel.pk }}">
-  	{% bootstrap_form channel_form %}
-  </div>
-  {% endfor %}
-</div>
+</form>
 {% endwith %}
+{% endblock body-content %}

@@ -1,11 +1,6 @@
 {% extends 'list.html' %}
 {% load i18n static %}
 
-{% block head-content %}
-{{ block.super }}
-<script type="module" src="{% static 'contacts/contact.js' %}"></script>
-{% endblock head-content %}
-
 {% block breadcrumbds %}
 {{ block.super }}
 <li class="breadcrumb-item"><a href="{{ current_environment.get_absolute_url }}">{{ current_environment }}</a></li>
@@ -13,9 +8,7 @@
 {% endblock breadcrumbds %}
 
 {% block list-actions %}
-<button class="btn btn-secondary" type="button" data-bs-toggle="modal" data-bs-target="#modal-new">
-    {% translate "New contact" %}
-</button>
+<a class="btn btn-secondary" href="{% url 'contacts:contact_create' current_environment.slug %}">{% translate "New contact" %}</a>
 {% endblock list-actions %}
 
 {% block colgroup %}<col class="col-2"><col class="col-8"><col class="col-2">{% endblock colgroup %}
@@ -33,7 +26,7 @@
 {% endblock object-tr %}
 
 {% block object-actions %}
-<a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-edit-{{ object.key }}">
+<a title="{% translate 'Edit' %}" class="btn btn-sm btn-outline-primary" href="{% url 'contacts:contact_update' current_environment.slug object.key %}">
     {% translate "Edit" %}
 </a>
 <button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ object.key }}" type="button">
@@ -45,54 +38,8 @@
 
 {% block body-content %}
 {{ block.super }}
-<form method="post" 
-    action="{% url 'contacts:contact_create' current_environment.slug %}"
-    id="modal-new" 
-    aria-labelledby="modal-new-title"
-    class="modal contact" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modal-new-title">
-                {% trans "New contact" %}
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
-          </div>
-          <div class="modal-body">{% include "contacts/contact_form.html" %}</div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
-            <button type="submit" class="btn btn-primary">{% translate "Create" %}</button>
-          </div>
-        </div>
-    </div>
-    {% csrf_token %}
-</form>
-{% for form in contact_forms %}
-<form method="post" 
-    action="{% url 'contacts:contact_update' current_environment.slug form.instance.key %}"
-    id="modal-edit-{{ form.instance.key }}" 
-    aria-labelledby="modal-edit-{{ form.instance.key }}-title"
-    class="modal contact" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modal-edit-{{ form.instance.key }}-title">
-                {% blocktranslate with contact=form.instance %}Edit contact {{ contact }}{% endblocktranslate %}
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
-          </div>
-          <div class="modal-body">{% include "contacts/contact_form.html" %}</div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Cancel" %}</button>
-            <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
-          </div>
-        </div>
-    </div>
-    {% csrf_token %}
-</form>
-
-{% url 'contacts:contact_remove' current_environment.slug form.instance.key as delete_url %}
-{% include 'modal_delete.html' with object=form.instance modal_id='delete-'|add:form.instance.key %}
-
+{% for contact in object_list %}
+{% url 'contacts:contact_remove' current_environment.slug contact.key as delete_url %}
+{% include 'modal_delete.html' with object=contact.instance modal_id='delete-'|add:contact.key %}
 {% endfor %}
 {% endblock body-content %}

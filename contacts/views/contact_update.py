@@ -4,7 +4,6 @@ from accounts.views import CurrentEnvironmentMixin
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
-from django.contrib import messages
 from django.utils.module_loading import import_string
 from django.contrib.messages.views import SuccessMessageMixin
 from django.conf import settings
@@ -20,16 +19,9 @@ class ContactUpdate(CurrentEnvironmentMixin, SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse('contacts:list', kwargs={'environment': self.current_environment.slug})
 
-    def get(self, request, *args, **kwargs):
-        return HttpResponseRedirect(self.get_success_url())
-
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs.update({
             'environment': self.current_environment
         })
         return kwargs
-
-    def form_invalid(self, form, **kwargs):
-        messages.error(self.request, _("Error updating contact"))
-        return HttpResponseRedirect(self.get_success_url())
