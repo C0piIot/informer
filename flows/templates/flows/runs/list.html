@@ -29,7 +29,13 @@
     			{% for flow_run in object_list %}
     			<tr>
     				<td>{{ flow_run.start|date:"SHORT_DATETIME_FORMAT"}}</td>
-    				<td>{{ flow_run.contact }}</td>
+    				<td>
+    					{% if flow_run.contact %}
+    					<a href="{% url 'contacts:contact_update' current_environment.slug flow_run.contact.key %}" class="text-decoration-none">
+    						{{ flow_run.contact }}
+    					</a>
+    					{% endif %}
+    				</td>
     				<td class="w-100">
     					<a href="{% url 'flows:run' current_environment.slug flow.id flow_run.pk %}" title="{% translate 'View' %}" class="text-decoration-none">
     						{{ flow_run.pk }}	
