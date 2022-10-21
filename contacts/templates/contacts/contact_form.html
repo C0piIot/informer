@@ -18,7 +18,10 @@
 {% block body-content %}
 {{ block.super }}
 {% with instance_pk=form.instance.pk|default:'new' %}
-<form method="post"  action="{% url 'contacts:contact_create' current_environment.slug %}" class="container contact">
+<form method="post"  
+  action="{% if form.instance.pk %}{% url 'contacts:contact_update' current_environment.slug contact.key%}{% else %}{% url 'contacts:contact_create' current_environment.slug %}{% endif %}" 
+  class="container contact">
+  {% csrf_token %}
   <nav>
     <div class="nav nav-tabs" role="tablist">
       <button class="nav-link active" id="tab-contact-data-{{ instance_pk }}" data-bs-toggle="tab" data-bs-target="#contact-data-{{ instance_pk }}" type="button" role="tab" aria-controls="contact-data-{{ instance_pk }}" aria-selected="true">
@@ -67,6 +70,7 @@
     </div>
     {% endfor %}
   </div>
+  <button type="submit" class="btn btn-primary">{% translate "Save" %}</button>
 </form>
 {% endwith %}
 {% endblock body-content %}
