@@ -13,9 +13,13 @@
 <a class="btn btn-secondary" href="{% url 'contacts:contact_create' current_environment.slug %}">{% translate "New contact" %}</a>
 {% endblock list-actions %}
 
-{% block colgroup %}<col class="col-2"><col class="col-8"><col class="col-2">{% endblock colgroup %}
+{% block colgroup %}<col class="col-2"><col class="col-4"><col class="col-4"><col class="col-2">{% endblock colgroup %}
 
-{% block thead-tr %}<th>{% translate "Key" %}</th><th>{% translate "Name" %}</th>{% endblock thead-tr %}
+{% block thead-tr %}
+<th>{% translate "Key" %}</th>
+<th>{% translate "Name" %}</th>
+<th>{% translate "Channels" %}</th>
+{% endblock thead-tr %}
 
 
 {% block object-tr %}
@@ -24,6 +28,9 @@
     <a href="#" title="{% translate 'View' %}" class="text-decoration-none">
         {{ object }}   
     </a>
+</td>
+<td>
+#TODO#
 </td>
 {% endblock object-tr %}
 

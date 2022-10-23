@@ -11,6 +11,6 @@ class ContactList(CurrentEnvironmentMixin, TemplateView):
 	def get_context_data(self, **kwargs):
 		context_data = super().get_context_data(**kwargs)
 		context_data.update({
-			'object_list': import_string(settings.CONTACT_STORAGE).get_contacts(self.current_environment)
+			'object_list': import_string(settings.CONTACT_STORAGE).get_contacts(self.current_environment),
 		})
 		return context_data
