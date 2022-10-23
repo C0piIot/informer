@@ -6,14 +6,14 @@ from .flow_log import FlowLog
 from accounts.models import PushChannel
 
 class Push(FlowStep):
+    icon = '🔔'
     title = models.CharField(_('title'), max_length=200)
     body = models.TextField(_('body'))
     url = models.URLField(_('url'))
     preview_context = models.JSONField(_('preview context'), blank=True, default=dict)
     
     def __str__(self):
-        return "🔔 Push %s" % self.title
-
+        return "%s %s" % (super().__str__(), self.title)
 
     def step_run(self, flow_run):
         contact = flow_run.contact()

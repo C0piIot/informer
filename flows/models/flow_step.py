@@ -6,6 +6,7 @@ from .flow import Flow
 from .flow_log import FlowLog
 
 class FlowStep(models.Model):
+    icon = '⏭️'
     flow = models.ForeignKey(Flow, on_delete=models.CASCADE, verbose_name=_('flow'), related_name='steps', editable=False)
     account = models.ForeignKey('accounts.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
     order = models.PositiveSmallIntegerField(_('order'), editable=False)
@@ -13,9 +14,6 @@ class FlowStep(models.Model):
 
     def get_typed_instance(self):
         return getattr(self, self.content_type.model)
-
-    def __str__(self):
-        return self.get_typed_instance().__str__()
 
     def save(self, *args, **kwargs):
         if not self.content_type_id:
@@ -55,6 +53,8 @@ class FlowStep(models.Model):
             flow_run.log(FlowLog.ERROR, err)
             raise
 
+    def __str__(self):
+        return '%s %s' % (self.icon, self._meta.verbose_name.title())
 
     class Meta:
         verbose_name = _('flow step')

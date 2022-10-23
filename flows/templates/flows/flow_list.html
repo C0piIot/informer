@@ -14,14 +14,16 @@
 
 {% block colgroup %}
 <col class="col-2">
-<col class="col-4">
-<col class="col-4">
+<col class="col-3">
+<col class="col-2">
+<col class="col-3">
 <col class="col-2">
 {% endblock colgroup %}
 
 {% block thead-tr %}
 <th>{% translate "Trigger" %}</th>
 <th>{% translate "Name" %}</th>
+<th>{% translate "Actions" %}</th>
 <th>{% translate "Updated" %}</th>
 {% endblock thead-tr %}
 
@@ -32,6 +34,11 @@
   <a href="{% url 'flows:runs' current_environment.slug object.id %}" title="{% translate 'View' %}" class="text-decoration-none">
     {{ object }}  
   </a>
+</td>
+<td>
+  {% for step in object.steps.all %}{% with typed_step=step.get_typed_instance %}
+    <span title="{{ typed_step }}">{{ typed_step.icon }}</span>
+  {% endwith %}{% endfor %}
 </td>
 <td title="{{ object.date }}">
   {{ object.date|date:"SHORT_DATE_FORMAT" }} - {{ object.user}}

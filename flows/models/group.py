@@ -5,12 +5,13 @@ from django.utils.module_loading import import_string
 from django.conf import settings
 
 class Group(FlowStep):
+    icon = '⏬'
     DATA_KEY = 'GROUP_%s'
     window = models.DurationField(_('time window'))
     key = models.SlugField(_('grouping key'), max_length=150)
 
     def __str__(self):
-        return "⏬ Group by %s ⏲️ %s" % (self.key, self.window)
+        return "%s by %s ⏲️ %s" % (super().__str__(), self.key, self.window)
 
     def step_run(self, flow_run):
         key = self.DATA_KEY % self.key
@@ -29,3 +30,7 @@ class Group(FlowStep):
     def step_wake_up(self, flow_run):
         import_string(settings.FLOW_RUN_STORAGE).unset_group(flow_run, self.key)
         self.run_next(flow_run)
+
+    class Meta:
+        verbose_name = _('group')
+        verbose_name_plural = _('groupings')
