@@ -30,7 +30,9 @@
     </a>
 </td>
 <td>
-#TODO#
+{% for channel in channels %}
+    {% if channel.pk|title in object.channel_data %}{{ channel }}{% endif %}
+{% endfor %}
 </td>
 {% endblock object-tr %}
 
@@ -46,7 +48,10 @@
 {% block empty-tr %}<td colspan="3" class="text-center fst-italic">{% translate "No contacts found" %}</td>{% endblock empty-tr %}
 
 {% block body-content %}
+
+{% with channels=current_environment.account.channels.all %}
 {{ block.super }}
+{% endwith %}
 {% for contact in object_list %}
 {% url 'contacts:contact_remove' current_environment.slug contact.key as delete_url %}
 {% include 'modal_delete.html' with object=contact.instance modal_id='delete-'|add:contact.key %}

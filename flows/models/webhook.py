@@ -18,7 +18,8 @@ class Webhook(FlowStep):
         return "%s %s %s" % (super().__str__(), self.method, urlparse(self.url).netloc)
 
     def step_run(self, flow_run):
-        flow_run.schedule_wake_up(self, self.time)
+        ## TODO ##
+        pass
 
     class Meta:
         verbose_name = _('webook')
