@@ -4,6 +4,7 @@ from .email_form import EmailForm
 from .push_form import PushForm
 from .flow_form import FlowForm
 from .test_form import TestForm
+from .webhook_form import WebhookForm
 from flows.models import *
 
 step_form_classes = { 
@@ -11,6 +12,7 @@ step_form_classes = {
         DelayForm, 
         GroupForm, 
         EmailForm,
-        PushForm
+        PushForm,
+        WebhookForm
     ]
 }
