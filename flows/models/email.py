@@ -7,7 +7,7 @@ from .flow_log import FlowLog
 from accounts.models import EmailChannel
 
 class Email(FlowStep):
-    icon = "✉️"
+    ICON = "✉️"
     subject = models.CharField(_('subject'), max_length=200)
     html_body = models.TextField(_('html body message'))
     text_body = models.TextField(_('plain text message'), help_text=_("Text used on clients that don't support html emails"))

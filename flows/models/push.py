@@ -6,7 +6,7 @@ from .flow_log import FlowLog
 from accounts.models import PushChannel
 
 class Push(FlowStep):
-    icon = '🔔'
+    ICON = '🔔'
     title = models.CharField(_('title'), max_length=200)
     body = models.TextField(_('body'))
     url = models.URLField(_('url'))

@@ -37,7 +37,7 @@
 </td>
 <td>
   {% for step in object.steps.all %}{% with typed_step=step.get_typed_instance %}
-    <span title="{{ typed_step }}">{{ typed_step.icon }}</span>
+    <span title="{{ typed_step }}">{{ typed_step.ICON }}</span>
   {% endwith %}{% endfor %}
 </td>
 <td title="{{ object.date }}">

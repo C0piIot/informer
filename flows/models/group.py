@@ -5,7 +5,7 @@ from django.utils.module_loading import import_string
 from django.conf import settings
 
 class Group(FlowStep):
-    icon = '⏬'
+    ICON = '⏬'
     DATA_KEY = 'GROUP_%s'
     window = models.DurationField(_('time window'))
     key = models.SlugField(_('grouping key'), max_length=150)

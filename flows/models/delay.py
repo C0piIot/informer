@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from .flow_step import FlowStep
 
 class Delay(FlowStep):
-    icon = '⏲️';
+    ICON = '⏲️';
     time = models.DurationField(_('time'))
 
     def step_run(self, flow_run):
