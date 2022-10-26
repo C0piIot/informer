@@ -12,7 +12,7 @@ class FlowHistory(CurrentEnvironmentMixin, ListView):
             ).prefetch_related(
                 Prefetch('environments'),
                 Prefetch('steps', queryset=FlowStep.objects.select_related(
-                    'content_type', 'delay', 'group', 'email', 'push'
+                    'content_type', 'delay', 'group', 'email', 'push', 'webhook'
                     )
                 )
             ).select_related('user')

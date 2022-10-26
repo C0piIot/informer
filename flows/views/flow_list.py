@@ -9,7 +9,7 @@ class FlowList(FlowFilteredMixin, ListView):
     def get_queryset(self):
         return super().get_queryset().prefetch_related(
             Prefetch('steps', queryset=FlowStep.objects.select_related(
-                    'content_type', 'delay', 'group', 'email', 'push'
+                    'content_type', 'delay', 'group', 'email', 'push', 'webhook'
                     )
                 )
             )
