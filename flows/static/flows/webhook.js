@@ -1,9 +1,7 @@
-for (const form of document.querySelectorAll('form.push')) {
+for (const form of document.querySelectorAll('form.webhook')) {
 	let timer = null;
-	const titlePreview = form.querySelector('pre.title'),
-		urlPreview = form.querySelector('pre.url'),
+	const urlPreview = form.querySelector('pre.url'),
 		bodyPreview = form.querySelector('pre.body'),
-		titleControl = form.elements['title'],
 		urlControl = form.elements['url'],
 		bodyControl = form.elements['body'],
 		previewContextControl = form.elements['preview_context'],
@@ -18,8 +16,6 @@ for (const form of document.querySelectorAll('form.push')) {
 				let formData = new FormData();
 				formData.set('mode', 'plain');
 				formData.set('context', previewContextControl.value);
-				formData.set('message', titleControl.value);
-				fetch(previewUrl, { method: 'POST', body: formData }).then(async response => titlePreview.textContent = await response.text());
 				formData.set('message', urlControl.value);
 				fetch(previewUrl, { method: 'POST', body: formData }).then(async response => urlPreview.textContent = await response.text());
 				formData.set('message', bodyControl.value);

@@ -1,2 +1,20 @@
 {% load i18n django_bootstrap5 %}
-{% bootstrap_form form %}
+{% bootstrap_field form.url %}
+<p class="mb-2">{% translate "Url preview" %}</p>
+<output class="w-100 border rounded mb-3 p-2" for="{{ form.url.id_for_label }}">
+  <pre class="mb-0 url d-inline-block align-middle"></pre>&nbsp;
+</output>
+{% bootstrap_field form.method %}
+{% bootstrap_field form.contenttype %}
+<div class="row">
+  <div class="col-lg-6">
+    {% bootstrap_field form.body %}
+  </div>
+  <div class="col-lg-6 d-flex flex-column">
+    <p class="mb-2">{% translate "Body preview" %}</p>
+    <output class="w-100 border rounded mb-3 flex-grow-1 d-flex align-items-stretch p-1" for="{{ form.body.id_for_label }}">
+      <pre class="w-100 mb-0 body"></pre>
+    </output>
+  </div>
+</div>
+{% bootstrap_field form.preview_context %}
