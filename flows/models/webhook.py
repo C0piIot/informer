@@ -3,6 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from .flow_step import FlowStep
 from urllib.parse import urlparse
 from django.template import Template, Context
+from .flow_log import FlowLog
 from urllib import request
 
 
@@ -30,14 +31,13 @@ class Webhook(FlowStep):
         body = Template(self.body).render(context)
         url = Template(self.url).render(context)
 
-        req = request.Request(url.render(context), 
-            headers={'Content-Type': self.contenttype },
+        req = request.Request(url, 
+            headers={ 'Content-Type': self.contenttype },
             method=self.method,
-            data=body.render(context))
+            data=body.encode('utf-8'))
 
-        response = request.urlopen(req)
-
-        low_run.log(FlowLog.INFO, "Webhook %s response: %s" % (r, response.getcode()))
+        with request.urlopen(req, timeout=3) as response:
+            flow_run.log(FlowLog.INFO, "Webhook %s %s response: %s" % (self.method, url, response.getcode()))
         
         self.run_next(flow_run)
 

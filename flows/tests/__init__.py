@@ -1,1 +1,1 @@
-from .webhook_tests import WebhookTests
+from .models import *
