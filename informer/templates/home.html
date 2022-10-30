@@ -20,10 +20,12 @@
 
 {% block body-content %}
 {{ block.super }}
-<div class="container">
+<div class="container mb-5">
   <p>Hello there</p>
-  <div class="embed-responsive embed-responsive-16by9 text-center">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/7vy7fbPEfpc?controls=0&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  <div class="col-md-6 offset-md-3">
+    <div class="ratio ratio-16x9 text-center">
+      <iframe  src="https://www.youtube.com/embed/7vy7fbPEfpc?controls=0&autoplay=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
   </div>
 </div>
 {% endblock body-content %}
