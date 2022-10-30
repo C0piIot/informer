@@ -7,7 +7,7 @@ import firebase_admin
 from firebase_admin import messaging
 
 class PushChannel(Channel):
-    firebase_credentials = models.JSONField(_("Firebase credentials"), default=dict, blank=True)
+    firebase_credentials = models.JSONField(_("Firebase credentials"), default=dict)
 
     def clean_fields(self, exclude=None):
         super().clean_fields(exclude=exclude)

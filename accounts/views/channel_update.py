@@ -1,9 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
-from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from .current_account_mixin import CurrentAccountMixin
-from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 from django.utils.module_loading import import_string
 from django.contrib.contenttypes.models import ContentType
@@ -38,9 +36,3 @@ class ChannelUpdate(CurrentAccountMixin, SuccessMessageMixin, UpdateView):
         kwargs.update({'account' : self.current_account})
         return kwargs
 
-    def get(self, request, *args, **kwargs):
-        return HttpResponseRedirect(self.success_url)
-
-    def form_invalid(self, form, **kwargs):
-        messages.error(self.request, _("Error updating channel"))
-        return HttpResponseRedirect(self.success_url)

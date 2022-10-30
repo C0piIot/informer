@@ -1,9 +1,7 @@
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
-from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from .current_account_mixin import CurrentAccountMixin
-from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.utils.module_loading import import_string
@@ -31,10 +29,3 @@ class ChannelCreate(CurrentAccountMixin, SuccessMessageMixin, CreateView):
         kwargs = super().get_form_kwargs()
         kwargs.update({'account' : self.current_account})
         return kwargs
-
-    def get(self, request, *args, **kwargs):
-        return HttpResponseRedirect(self.success_url)
-
-    def form_invalid(self, form, **kwargs):
-        messages.error(self.request, _("Error creating channel"))
-        return HttpResponseRedirect(self.success_url)
