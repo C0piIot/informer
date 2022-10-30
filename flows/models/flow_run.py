@@ -96,22 +96,7 @@ class FlowRun(models.Model):
     @classmethod
     def unset_group(cls, flow_run, group_key):
         flow_run.group_key = None
-
-
-
+        
 
     def schedule_wake_up(self, flow_step, time_delta):
         import_string(settings.FLOW_EXECUTOR).schedule_wake_up(self, flow_step, time_delta)
-
-
-    @classmethod
-    def dispatch_event(cls, environment, contact, event, event_payload={}):
-        for flow in Flow.objects.filter(environments=environment, trigger=event, enabled=True):
-            flow_run = cls(
-                flow_revision=flow,
-                contact_key=contact.key,
-                event_payload=event_payload,
-            )
-            flow_run.contact = contact
-            import_string(settings.FLOW_RUN_STORAGE).save_flow_run(environment, flow_run)
-            import_string(settings.FLOW_EXECUTOR).run(flow_run)
