@@ -54,6 +54,11 @@
                 {% translate "Contact Data" %}
               </button>
             </li>
+            <li class="nav-item">
+              <button class="nav-link" id="tab-indexed-data" data-bs-toggle="tab" data-bs-target="#indexed-data" type="button" role="tab" aria-controls="indexed-data" aria-selected="false">
+                {% translate "Indexed Data" %}
+              </button>
+            </li>
             {% for channel in form.channel_forms %}
             <li class="nav-item">
               <button class="nav-link  channel-{{ channel.pk }}" id="tab-channel-{{ channel.pk }}" data-bs-toggle="tab" data-bs-target="#channel-{{ channel.pk }}" type="button" role="tab" aria-controls="channel-{{ channel.pk }}" aria-selected="false"{% if  2 > 1 %} hidden{% endif %}>
@@ -65,18 +70,25 @@
         </div>
         <div class="card-body tab-content" id="nav-tabContent">
           <div class="tab-pane active" id="contact-data" role="tabpanel" aria-labelledby="tab-contact-data">
+            <h5 class="card-title">{% translate "Contact data" %}</h5>
+            <p class="card-text">
+              {% translate "You can add arbitrary data to a contact in JSON format" %}
+            </p>
+            {% bootstrap_field form.contact_data %}
+          </div>
+          <div class="tab-pane" id="indexed-data" role="tabpanel" aria-labelledby="tab-indexed-data">
             <h5 class="card-title">{% translate "Indexed data" %}</h5>
             <p class="card-text">
               {% translate "Indexed data can be queried for creating segments." %}
               {% translate "You cand add up to 6 values." %}
             </p>
             <div class="row">
-              <div class="col-4">{% bootstrap_field form.index1 %}</div>
-              <div class="col-4">{% bootstrap_field form.index2 %}</div>
-              <div class="col-4">{% bootstrap_field form.index3 %}</div>
-              <div class="col-4">{% bootstrap_field form.index4 %}</div>
-              <div class="col-4">{% bootstrap_field form.index5 %}</div>
-              <div class="col-4">{% bootstrap_field form.index6 %}</div>
+              <div class="col-lg-6">{% bootstrap_field form.index1 %}</div>
+              <div class="col-lg-6">{% bootstrap_field form.index2 %}</div>
+              <div class="col-lg-6">{% bootstrap_field form.index3 %}</div>
+              <div class="col-lg-6">{% bootstrap_field form.index4 %}</div>
+              <div class="col-lg-6">{% bootstrap_field form.index5 %}</div>
+              <div class="col-lg-6">{% bootstrap_field form.index6 %}</div>
             </div>
           </div>
           {% for channel, channel_form in form.channel_forms.items %}

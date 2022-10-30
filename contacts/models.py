@@ -13,7 +13,7 @@ class Contact(models.Model):
     index4 = models.CharField(_('index 4'), max_length=100, blank=True)
     index5 = models.CharField(_('index 5'), max_length=100, blank=True)
     index6 = models.CharField(_('index 6'), max_length=100, blank=True)
-    contact_data = models.JSONField(_('contact data'), default=dict)
+    contact_data = models.JSONField(_('contact data'), default=dict, help_text=_('Contact data will be available for use in flow templates'))
     channel_data = models.JSONField(_('channel data'), default=dict)
 
     def __str__(self):
