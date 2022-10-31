@@ -21,10 +21,7 @@ class StepEdit(FlowEditMixin, SuccessMessageMixin, UpdateView):
         return super().get_queryset().filter(flow=self.flow)
 
     def get_form_class(self):
-        try:
-            return step_form_classes[self.type.model_class()]
-        except (ContentType.DoesNotExist, KeyError):
-            raise Http404
+        return step_form_classes[self.type.model_class()]
     
     def get_object(self):
         return super().get_object().get_typed_instance()      

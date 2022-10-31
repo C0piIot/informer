@@ -24,7 +24,7 @@ class StepCreate(FlowEditMixin, SuccessMessageMixin, CreateView):
         try:
             self.type = ContentType.objects.get_by_natural_key('flows', self.kwargs['type'])
         except (ContentType.DoesNotExist, KeyError):
-            raise Http404            
+            raise Http404
 
     def form_valid(self, form, **kwargs):
         with transaction.atomic():
@@ -39,7 +39,7 @@ class StepCreate(FlowEditMixin, SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data['new_step_forms'][self.type.model] = context_data['form']
+        context_data['new_step_forms'].update({ self.type.model: context_data['form'] })
         return context_data
 
     def get_success_url(self):
