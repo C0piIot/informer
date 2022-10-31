@@ -14,12 +14,12 @@
     {% translate "New channel" %}
     </button>
     <ul class="dropdown-menu" aria-labelledby="newChannel">
-        {% for content_type in new_channel_forms.keys %}
+        {% for content_type, form in new_channel_forms.items %}
             <li>
                 <a {% if content_type in channel_forms.keys %}
                     class="dropdown-item disabled" href="#" aria-disabled="true"
                     {% else %}
-                    class="dropdown-item" data-bs-toggle="offcanvas" aria-expanded="false" href="#form-add-{{ content_type.model }}"
+                    class="dropdown-item" data-bs-toggle="offcanvas" aria-expanded="{{ form.errors|yesno:'true,false' }}" href="#form-add-{{ content_type.model }}"
                     {% endif %}
                 >
                     {{ content_type.name|title }}
@@ -58,7 +58,7 @@
 
 {% for content_type, form in new_channel_forms.items %}
 {% if content_type not in channel_forms.keys %}
-<form class="offcanvas offcanvas-end w-75{{ form.show|yesno:' show,' }}" 
+<form class="offcanvas offcanvas-end w-75{{ form.errors|yesno:' show,' }}" 
     tabindex="-1" aria-labelledby="form-add-{{ content_type.model }}-title" method="post" id="form-add-{{ content_type.model }}"
     action="{% url 'accounts:channel_create' content_type.model %}">
     <div class="offcanvas-header">
@@ -77,7 +77,7 @@
 {% endif %}
 {% endfor %}
 {% for form in channel_forms.values %}
-<form class="offcanvas offcanvas-end w-75{{ form.show|yesno:' show,' }}" 
+<form class="offcanvas offcanvas-end w-75{{ form.errors|yesno:' show,' }}" 
     tabindex="-1" aria-labelledby="form-edit-{{ form.instance.pk }}-title" method="post" id="form-edit-{{ form.instance.pk }}"
     action="{% url 'accounts:channel_update' form.instance.pk %}">
     <div class="offcanvas-header">
