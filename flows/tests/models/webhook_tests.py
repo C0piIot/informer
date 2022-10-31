@@ -16,10 +16,9 @@ class WebhookTests(TestCase):
 		webhook = Webhook(url='http://example.com', method='POST', contenttype='application/json', body='{ "a":"{{ testvar }}"}')
 		webhook.run_next = MagicMock()
 		
-
-		response = MagicMock()
-		response.getcode = MagicMock(return_value=200)
-
+		response = MagicMock(name='response')
+		response.__enter__.return_value.getcode.return_value = 200
+		
 		with patch.object(urllib.request, 'urlopen', return_value=response) as mock_urlopen:
 			webhook.step_run(flow_run)
 
