@@ -11,7 +11,7 @@ class Flow(models.Model):
     environments = models.ManyToManyField('accounts.Environment', related_name='flows', editable=False)
     name = models.CharField(_('name'), max_length=150)
     enabled = models.BooleanField(_('enabled'), default=True)
-    trigger = models.CharField(_('trigger'), max_length=150, unique=True)
+    trigger = models.CharField(_('trigger'), max_length=150, db_index=True)
     user = models.ForeignKey('accounts.user', on_delete=models.PROTECT, verbose_name=_('user'), editable=False)
     
     def save(self, *args, **kwargs):
