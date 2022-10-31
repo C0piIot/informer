@@ -3,14 +3,39 @@ from rest_framework.decorators import action
 from accounts.views import CurrentEnvironmentMixin
 from rest_framework import serializers, status, mixins
 from rest_framework.response import Response
-from contacts.forms import ContactKeyField
 from flows.models import FlowRun, Flow
+from django.conf import settings
+from django.utils.module_loading import import_string
 
-class FlowRunSerializer(serializers.Serializer):
 
-    event = serializers.CharField()
-    contact = ContactKeyField()
-    payload = serializers.JSONField(default=dict, required=False)
+class FlowRunSerializer(serializers.ModelSerializer):
+    event = serializers.CharField(write_only=True)
+  
+    def validate(self, data):
+        data['contact'] = import_string(settings.CONTACT_STORAGE).get_contact(self.context['environment'], data['contact_key'])
+        if not data['contact']:
+            raise serializers.ValidationError({
+                'contact_key' : 'There is no contact with the supplied key'
+            }, code='invalid_key')
+        return data
+
+
+    def create(self, validated_data):
+        flow_runs = []
+        for flow in Flow.objects.filter(environments=self.context['environment'], trigger=validated_data['event']):
+            flow_run = FlowRun(
+                flow_revision = flow,
+                contact_key = validated_data['contact_key'],
+                event_payload = validated_data['event_payload'] or {}
+            )
+            flow_run.contact = validated_data['contact']
+            import_string(settings.FLOW_RUN_STORAGE).save_flow_run(self.context['environment'], flow_run)
+            flow_runs.append(flow_run)
+        return flow_runs
+
+    class Meta:
+        model = FlowRun
+        fields = ['event', 'contact_key', 'event_payload']
 
 
 class FlowRunViewSet(CurrentEnvironmentMixin, mixins.CreateModelMixin, GenericViewSet):
@@ -30,9 +55,6 @@ class FlowRunViewSet(CurrentEnvironmentMixin, mixins.CreateModelMixin, GenericVi
     def get_queryset(self):
         return super().get_queryset().filter(environment=self.current_environment)
 
-    def perform_create(self, serializer):
-        FlowRun.dispatch_event(
-            self.current_environment, 
-            serializer.validated_data['contact'], 
-            serializer.validated_data['event'], 
-            event_payload=serializer.validated_data['payload'] or {})
+    #def perform_create(self, serializer):
+        
+        

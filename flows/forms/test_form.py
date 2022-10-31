@@ -16,15 +16,16 @@ class TestForm(ModelForm):
         self.environment = kwargs.pop('environment')
         super().__init__(**kwargs)
 
-    def clean(self):
-        cleaned_data = super().clean()
-        cleaned_data['contact'] = import_string(settings.CONTACT_STORAGE).get_contact(self.environment, cleaned_data['contact_key'])
-        if not cleaned_data['contact']:
-            self.add_error('contact_key', ValidationError(
+    def clean_contact_key(self):
+        contact_key = self.cleaned_data['contact_key']
+        self.cleaned_data['contact'] = import_string(settings.CONTACT_STORAGE).get_contact(self.environment, contact_key)
+        if not self.cleaned_data['contact']:
+            raise ValidationError(
                 _("Can't find contact with key %(contact_key)s"),
                 code='invalid_contact_key',
-                params={'contact_key': cleaned_data['contact_key']},
-            ))
+                params={'contact_key': contact_key},
+            )
+        return contact_key
 
     def save(self, commit=True):
         flow_run = super().save(commit=False)
