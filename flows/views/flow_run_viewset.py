@@ -8,7 +8,7 @@ from django.conf import settings
 from django.utils.module_loading import import_string
 
 
-class FlowRunSerializer(serializers.ModelSerializer):
+class FlowTriggerSerializer(serializers.ModelSerializer):
     event = serializers.CharField(write_only=True)
   
     def validate(self, data):
@@ -19,9 +19,10 @@ class FlowRunSerializer(serializers.ModelSerializer):
             }, code='invalid_key')
         return data
 
-
     def create(self, validated_data):
         flow_runs = []
+        flow_run_storage = import_string(settings.FLOW_RUN_STORAGE)
+        flow_run_executor = import_string(settings.FLOW_EXECUTOR)
         for flow in Flow.objects.filter(environments=self.context['environment'], trigger=validated_data['event']):
             flow_run = FlowRun(
                 flow_revision = flow,
@@ -29,9 +30,15 @@ class FlowRunSerializer(serializers.ModelSerializer):
                 event_payload = validated_data['event_payload'] or {}
             )
             flow_run.contact = validated_data['contact']
-            import_string(settings.FLOW_RUN_STORAGE).save_flow_run(self.context['environment'], flow_run)
+            flow_run_storage.save_flow_run(self.context['environment'], flow_run)
             flow_runs.append(flow_run)
+            flow_run_executor.run(flow_run)
         return flow_runs
+
+    def to_representation(self, instances):
+        return { 
+            'flow_runs' : [ instance.id for instance in instances ]
+        }
 
     class Meta:
         model = FlowRun
@@ -39,7 +46,7 @@ class FlowRunSerializer(serializers.ModelSerializer):
 
 
 class FlowRunViewSet(CurrentEnvironmentMixin, mixins.CreateModelMixin, GenericViewSet):
-    serializer_class = FlowRunSerializer
+    serializer_class = FlowTriggerSerializer
     queryset = FlowRun.objects.all()
 
     def dispatch(self, request, *args, **kwargs):
@@ -54,7 +61,4 @@ class FlowRunViewSet(CurrentEnvironmentMixin, mixins.CreateModelMixin, GenericVi
 
     def get_queryset(self):
         return super().get_queryset().filter(environment=self.current_environment)
-
-    #def perform_create(self, serializer):
-        
         

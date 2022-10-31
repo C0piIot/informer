@@ -33,6 +33,7 @@ class TestForm(ModelForm):
         flow_run.contact = self.cleaned_data['contact']
         if commit:
             import_string(settings.FLOW_RUN_STORAGE).save_flow_run(self.environment, flow_run)
+            import_string(settings.FLOW_EXECUTOR).run(flow_run)
         return flow_run
             
     class Meta:
