@@ -6,7 +6,7 @@ kill_timeout = 5
 processes = []
 
 [env]
-  ALLOWED_HOSTS = "informer.fly.dev,informer.dropdatabase.es"
+  ALLOWED_HOSTS = "informer.fly.dev,.dropdatabase.es"
   CACHE_URL = "filecache:////cache"
   REDIS_URL = "redis://localhost"
   DATABASE_URL = "sqlite:////data//informer.sqlite"
