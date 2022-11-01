@@ -2,11 +2,12 @@ from uuid import uuid4
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
+from django.contrib.sites.models import Site
 
 class Flow(models.Model):
     id = models.UUIDField(_('id'), default=uuid4, editable=False)
     revision = models.UUIDField(_('revision'), primary_key=True, default=uuid4, editable=False)
-    account = models.ForeignKey('accounts.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
+    site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='flows', editable=False)
     date = models.DateTimeField(_('date'), auto_now_add=True)
     environments = models.ManyToManyField('accounts.Environment', related_name='flows', editable=False)
     name = models.CharField(_('name'), max_length=150)

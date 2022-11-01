@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from uuid import uuid4 
+from uuid import uuid4
+from django.contrib.sites.models import Site
 
 class FlowLog(models.Model):
     DEBUG = 'DEBUG'
@@ -16,8 +17,8 @@ class FlowLog(models.Model):
     )
 
     id = models.UUIDField(_('id'), default=uuid4, primary_key=True, editable=False)
-    account = models.ForeignKey('accounts.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
-    environment = models.ForeignKey('accounts.Environment', on_delete=models.CASCADE, verbose_name=_('environment'), editable=False)
+    site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='+', editable=False)
+    environment = models.ForeignKey('accounts.Environment', on_delete=models.CASCADE, verbose_name=_('environment'), related_name='+', editable=False)
     flow_run_id = models.UUIDField(_('flow_run_id'))
     date = models.DateTimeField(_('date'), auto_now_add=True)
     level = models.CharField(_('level'), max_length=10, default=INFO, choices=LEVEL_CHOICES)

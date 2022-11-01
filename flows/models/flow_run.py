@@ -6,6 +6,7 @@ from .flow_log import FlowLog
 from django.utils.module_loading import import_string
 from django.conf import settings
 from django.urls import reverse
+from django.contrib.sites.models import Site
 import logging
 
 logger = logging.getLogger()
@@ -14,8 +15,8 @@ class FlowRun(models.Model):
     _contact = None
 
     id = models.UUIDField(_('id'), primary_key=True, default=uuid4, editable=False)
-    account = models.ForeignKey('accounts.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
-    environment = models.ForeignKey('accounts.Environment', on_delete=models.CASCADE, verbose_name=_('environment'), editable=False)
+    site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='+', editable=False)
+    environment = models.ForeignKey('accounts.Environment', on_delete=models.CASCADE, verbose_name=_('environment'),related_name='+', editable=False)
     start = models.DateTimeField(_('start'), auto_now_add=True)
     flow_revision = models.ForeignKey(Flow, on_delete=models.PROTECT, verbose_name=_('flow'), editable=False)
     flow_id = models.UUIDField(_('id'), editable=False)

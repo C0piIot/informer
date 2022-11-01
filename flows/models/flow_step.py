@@ -4,11 +4,13 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from .flow import Flow
 from .flow_log import FlowLog
+from django.contrib.sites.models import Site
 
 class FlowStep(models.Model):
     ICON = '⏭️'
     flow = models.ForeignKey(Flow, on_delete=models.CASCADE, verbose_name=_('flow'), related_name='steps', editable=False)
-    account = models.ForeignKey('accounts.Account', on_delete=models.CASCADE, verbose_name=_('account'), editable=False)
+    site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='+', editable=False)
+
     order = models.PositiveSmallIntegerField(_('order'), editable=False)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, editable=False)
 

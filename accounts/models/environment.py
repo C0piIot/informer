@@ -3,11 +3,10 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.text import slugify
 from django.urls import reverse
 from rest_framework.authtoken.models import Token
-from .account import Account
-
+from django.contrib.sites.models import Site
 
 class Environment(models.Model):
-    account = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name=_('account'), editable=False, related_name='environments')
+    site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='environments', editable=False)
     name = models.CharField(_('name'), max_length=50)
     slug = models.SlugField(_('slug'), editable=False)
     private_key = models.CharField(_('private key'), max_length=40, unique=True)
@@ -28,6 +27,6 @@ class Environment(models.Model):
         super().save(**kwargs)
 
     class Meta:
-        unique_together = ('account', 'name')
+        unique_together = ('site', 'name')
         verbose_name = _('environment')
         verbose_name_plural = _('environments')
