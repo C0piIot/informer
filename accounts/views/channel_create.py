@@ -25,7 +25,7 @@ class ChannelCreate(ChannelListMixin, SuccessMessageMixin, CreateView):
         
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update({'account' : self.current_account})
+        kwargs.update(site=self.current_site)
         return kwargs
 
     def get_context_data(self, **kwargs):

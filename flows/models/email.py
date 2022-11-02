@@ -21,7 +21,7 @@ class Email(FlowStep):
 
     def step_run(self, flow_run):
         contact = flow_run.contact()
-        email_channel = EmailChannel.objects.get(account=self.account)
+        email_channel = EmailChannel.objects.get(site=self.account)
         key = str(email_channel.pk)
 
         if key in contact.channel_data:

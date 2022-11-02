@@ -1,5 +1,5 @@
 from .current_environment_mixin import CurrentEnvironmentMixin
-from .current_account_mixin import CurrentAccountMixin
+from .current_site_mixin import CurrentSiteMixin
 from .environment_list import EnvironmentList
 from .environment_create import EnvironmentCreate
 from .environment_remove import EnvironmentRemove

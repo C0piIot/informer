@@ -15,8 +15,8 @@
     {% block header-content %}
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-          {% if current_account %}
-          <a class="navbar-brand" href="{% url 'home' %}">{{ current_account }} <i class="fs-6 text-secondary
+          {% if current_site %}
+          <a class="navbar-brand" href="{% url 'home' %}">{{ current_site }} <i class="fs-6 text-secondary
 
 ">Informer</i></a>
           {% else %}

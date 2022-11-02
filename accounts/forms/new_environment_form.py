@@ -17,7 +17,7 @@ class NewEnvironmentForm(forms.ModelForm):
     def __init__(self, **kwargs):
         self.account = kwargs.pop('account')
         super().__init__(**kwargs)
-        self.fields['source_environment'].queryset = self.fields['source_environment'].queryset.filter(account=self.account)
+        self.fields['source_environment'].queryset = self.fields['source_environment'].queryset.filter(site=self.account)
 
     def save(self):
         with transaction.atomic():

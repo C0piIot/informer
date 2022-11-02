@@ -11,7 +11,7 @@ class FlowRunDetail(FlowFilteredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        flow = get_object_or_404(Flow, account=self.current_account, environments=self.current_environment, id=self.kwargs['id'])
+        flow = get_object_or_404(Flow, site=self.current_site, environments=self.current_environment, id=self.kwargs['id'])
         flow_run = import_string(settings.FLOW_RUN_STORAGE).get_flow_run(self.current_environment, self.kwargs['flow_run_id'])
 
         context_data.update({

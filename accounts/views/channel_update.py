@@ -24,7 +24,7 @@ class ChannelUpdate(ChannelListMixin, SuccessMessageMixin, UpdateView):
             raise Http404
 
     def get_queryset(self):
-        return super().get_queryset().filter(account=self.current_account)
+        return super().get_queryset().filter(site=self.current_site)
 
     def get_object(self):
         return super().get_object().get_typed_instance()
@@ -34,7 +34,7 @@ class ChannelUpdate(ChannelListMixin, SuccessMessageMixin, UpdateView):
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update({'account' : self.current_account})
+        kwargs.update(site=self.current_site)
         return kwargs
 
     def get_context_data(self, **kwargs):

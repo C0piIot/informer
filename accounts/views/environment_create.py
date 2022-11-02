@@ -6,9 +6,9 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from accounts.forms import NewEnvironmentForm
 from django.utils.translation import gettext_lazy as _
-from .current_account_mixin import CurrentAccountMixin
+from .current_site_mixin import CurrentSiteMixin
 
-class EnvironmentCreate(CurrentAccountMixin, SuccessMessageMixin, CreateView):
+class EnvironmentCreate(CurrentSiteMixin, SuccessMessageMixin, CreateView):
     success_message = _("Environment %(name)s was created successfully")
     form_class = NewEnvironmentForm
     success_url = reverse_lazy('accounts:environment_list')
@@ -22,6 +22,6 @@ class EnvironmentCreate(CurrentAccountMixin, SuccessMessageMixin, CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update(account=self.current_account)
+        kwargs.update(site=self.current_site)
         return kwargs
 
