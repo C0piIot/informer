@@ -1,9 +1,9 @@
 from accounts.models import Environment
-from .current_site_mixin import CurrentSiteMixin
+from .current_site_mixin import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 
 
-class CurrentEnvironmentMixin(CurrentSiteMixin):
+class CurrentEnvironmentMixin(LoginRequiredMixin):
 	current_environment = None
 
 	def setup(self, request, *args, **kwargs):

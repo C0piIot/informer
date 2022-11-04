@@ -8,7 +8,7 @@ from accounts.forms import NewEnvironmentForm
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-class EnvironmentCreate(CurrentSiteMixin, SuccessMessageMixin, CreateView):
+class EnvironmentCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_message = _("Environment %(name)s was created successfully")
     form_class = NewEnvironmentForm
     success_url = reverse_lazy('accounts:environment_list')

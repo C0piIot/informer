@@ -1,5 +1,5 @@
 from django.views.generic.base import View
-from accounts.views import CurrentSiteMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.template import Template, Context
 from django.http import HttpResponse
 from premailer import Premailer
@@ -9,7 +9,7 @@ import json
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class Preview(CurrentSiteMixin, View):
+class Preview(LoginRequiredMixin, View):
 	RENDER_MODE_EMAIL = 'email'
 	RENDER_MODE_HTML = 'html'
 	RENDER_MODE_PLAIN = 'plain'

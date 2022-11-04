@@ -5,7 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
 from django.utils.module_loading import import_string
 
-class ChannelListMixin(CurrentSiteMixin):
+class ChannelListMixin(LoginRequiredMixin):
     template_name = 'accounts/channel_list.html'
 
     def get_context_data(self, **kwargs):

@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from accounts.models import Channel
 
 
-class ChannelRemove(CurrentSiteMixin, SuccessMessageMixin, DeleteView):
+class ChannelRemove(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     success_url = reverse_lazy('accounts:channel_list')
     success_message = _("Channel was removed successfully")
     model = Channel
