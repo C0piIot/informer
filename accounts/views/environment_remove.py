@@ -4,10 +4,10 @@ from django.http import HttpResponseRedirect
 from accounts.models import Environment
 from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext_lazy as _
-from .current_site_mixin import CurrentSiteMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class EnvironmentRemove(CurrentSiteMixin, SuccessMessageMixin, DeleteView):
+class EnvironmentRemove(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
     model = Environment
     success_url = reverse_lazy('accounts:environment_list')

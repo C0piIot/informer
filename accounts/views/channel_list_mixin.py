@@ -1,6 +1,6 @@
 from django.views.generic.list import ListView
 from accounts.models import Channel
-from .current_site_mixin import CurrentSiteMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
 from django.utils.module_loading import import_string

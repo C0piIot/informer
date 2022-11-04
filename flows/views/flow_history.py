@@ -1,9 +1,9 @@
 from django.views.generic.list import ListView
-from accounts.views import CurrentEnvironmentMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from flows.models import Flow, FlowStep
 from django.db.models import Prefetch
 
-class FlowHistory(CurrentEnvironmentMixin, ListView):
+class FlowHistory(LoginRequiredMixin, ListView):
     template_name_suffix = '_history'
     model = Flow
     def get_queryset(self):

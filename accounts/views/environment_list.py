@@ -1,9 +1,9 @@
 from django.views.generic.list import ListView
 from accounts.models import Environment
 from accounts.forms import NewEnvironmentForm
-from .current_site_mixin import CurrentSiteMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class EnvironmentList(CurrentSiteMixin, ListView):
+class EnvironmentList(LoginRequiredMixin, ListView):
     model = Environment
 
     def get_queryset(self, **kwargs):

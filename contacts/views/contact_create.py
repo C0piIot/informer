@@ -1,13 +1,13 @@
 from django.views.generic.edit import CreateView
 from contacts.forms import ContactForm
-from accounts.views import CurrentEnvironmentMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.contrib.messages.views import SuccessMessageMixin
 from contacts.models import Contact
 
-class ContactCreate(CurrentEnvironmentMixin, SuccessMessageMixin, CreateView):
+class ContactCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     form_class = ContactForm
     model = Contact
     success_message = _("%(name)s was created successfully")

@@ -1,10 +1,10 @@
 from  django.views.generic.base import TemplateView
 from django.utils.module_loading import import_string
 from django.conf import settings
-from accounts.views import CurrentEnvironmentMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ContactList(CurrentEnvironmentMixin, TemplateView):
+class ContactList(LoginRequiredMixin, TemplateView):
 
 	template_name = 'contacts/contact_list.html'
 

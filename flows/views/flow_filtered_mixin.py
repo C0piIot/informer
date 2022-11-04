@@ -1,8 +1,8 @@
-from accounts.views import CurrentEnvironmentMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from flows.models import Flow
 
 
-class FlowFilteredMixin(CurrentEnvironmentMixin):
+class FlowFilteredMixin(LoginRequiredMixin):
     model = Flow
 
     def get_queryset(self):

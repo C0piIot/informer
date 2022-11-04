@@ -1,6 +1,6 @@
 from django.views.generic.base import View
 from django.views.generic.detail import SingleObjectMixin
-from accounts.views import CurrentEnvironmentMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from flows.models import Flow, FlowStep
 from django.contrib import messages
 from django.db import transaction
@@ -9,7 +9,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-class StepMove(CurrentEnvironmentMixin, SingleObjectMixin, View):
+class StepMove(LoginRequiredMixin, SingleObjectMixin, View):
     model = FlowStep
 
     def get_queryset(self):

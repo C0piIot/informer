@@ -1,6 +1,6 @@
 from django.views.generic.edit import UpdateView
 from contacts.forms import ContactForm
-from accounts.views import CurrentEnvironmentMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
@@ -8,7 +8,7 @@ from django.utils.module_loading import import_string
 from django.contrib.messages.views import SuccessMessageMixin
 from django.conf import settings
 
-class ContactUpdate(CurrentEnvironmentMixin, SuccessMessageMixin, UpdateView):
+class ContactUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     form_class = ContactForm
     success_message = _("%(name)s was updated successfully")
 

@@ -1,12 +1,12 @@
 from django.urls import reverse
 from django.views.generic.edit import CreateView
 from django.contrib import messages
-from accounts.views import CurrentEnvironmentMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from flows.forms import FlowForm
 from django.utils.translation import gettext_lazy as _
 
-class FlowCreate(CurrentEnvironmentMixin, CreateView):
+class FlowCreate(LoginRequiredMixin, CreateView):
     form_class = FlowForm
 
     def get(self, request, *args, **kwargs):

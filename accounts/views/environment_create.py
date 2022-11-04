@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from accounts.forms import NewEnvironmentForm
 from django.utils.translation import gettext_lazy as _
-from .current_site_mixin import CurrentSiteMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class EnvironmentCreate(CurrentSiteMixin, SuccessMessageMixin, CreateView):
     success_message = _("Environment %(name)s was created successfully")
