@@ -7,9 +7,9 @@ class EnvironmentList(CurrentSiteMixin, ListView):
     model = Environment
 
     def get_queryset(self, **kwargs):
-        return super().get_queryset(**kwargs).filter(site=self.current_site)
+        return super().get_queryset(**kwargs).filter(site=self.request.site)
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data.update(new_environment_form=NewEnvironmentForm(site=self.current_site))
+        context_data.update(new_environment_form=NewEnvironmentForm(site=self.request.site))
         return context_data

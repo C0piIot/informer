@@ -13,7 +13,7 @@ class ChannelRemove(CurrentSiteMixin, SuccessMessageMixin, DeleteView):
     model = Channel
 
     def get_queryset(self):
-        return super().get_queryset().filter(site=self.current_site)
+        return super().get_queryset().filter(site=self.request.site)
 
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(self.success_url)

@@ -8,7 +8,7 @@ class CurrentEnvironmentMixin(CurrentSiteMixin):
 
 	def setup(self, request, *args, **kwargs):
 		super().setup(request, *args, **kwargs)
-		self.current_environment = get_object_or_404(Environment, slug=kwargs.pop('environment'), site=self.current_site)
+		self.current_environment = get_object_or_404(Environment, slug=kwargs.pop('environment'), site=self.request.site)
 		
 
 	def get_context_data(self, **kwargs):

@@ -14,7 +14,7 @@ class FlowCreate(CurrentEnvironmentMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
-        self.object.site = self.current_site
+        self.object.site = self.request.site
         self.object.user = self.request.user
         self.object.save()
         self.object.environments.add(self.current_environment)

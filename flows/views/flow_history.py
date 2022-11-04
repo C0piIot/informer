@@ -8,7 +8,7 @@ class FlowHistory(CurrentEnvironmentMixin, ListView):
     model = Flow
     def get_queryset(self):
         return super().get_queryset().filter(
-            id=self.kwargs['id'], site=self.current_site
+            id=self.kwargs['id'], site=self.request.site
             ).prefetch_related(
                 Prefetch('environments'),
                 Prefetch('steps', queryset=FlowStep.objects.select_related(

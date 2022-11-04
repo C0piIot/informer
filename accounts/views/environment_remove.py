@@ -14,7 +14,7 @@ class EnvironmentRemove(CurrentSiteMixin, SuccessMessageMixin, DeleteView):
     success_message = _("Environment was removed successfully")
 
     def get_queryset(self, **kwargs):
-        return super().get_queryset(**kwargs).filter(site=self.current_site)
+        return super().get_queryset(**kwargs).filter(site=self.request.site)
 
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(self.get_success_url())

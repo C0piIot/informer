@@ -10,7 +10,7 @@ class ChannelListMixin(CurrentSiteMixin):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        channels = Channel.objects.filter(site=self.current_site)
+        channels = Channel.objects.filter(site=self.request.site)
         context_data.update({
             'object_list': channels,
             'channel_forms': {
@@ -20,12 +20,12 @@ class ChannelListMixin(CurrentSiteMixin):
                         ])(
                             instance=channel.get_typed_instance(),
                             auto_id='id_%%s_%d' % channel.pk,
-                            site=self.current_site
+                            site=self.request.site
                         )
                     for channel in channels
             },
             'new_channel_forms': { 
-                ContentType.objects.get_by_natural_key('accounts', model) :  import_string(form_class)(site=self.current_site) 
+                ContentType.objects.get_by_natural_key('accounts', model) :  import_string(form_class)(site=self.request.site) 
                     for model, form_class in settings.CHANNEL_CONFIG_FORMS.items()
             },
         })
