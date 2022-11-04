@@ -17,7 +17,7 @@ class Push(FlowStep):
 
     def step_run(self, flow_run):
         contact = flow_run.contact()
-        push_channel = PushChannel.objects.get(site=self.account)
+        push_channel = PushChannel.objects.get(site=self.site)
         key = str(push_channel.pk)
 
         if key in contact.channel_data:

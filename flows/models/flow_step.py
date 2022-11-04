@@ -22,7 +22,7 @@ class FlowStep(models.Model):
             content_type = ContentType.objects.get_for_model(self, for_concrete_model=True)
             if content_type.model_class() != FlowStep:
                 self.content_type = content_type
-        self.account = self.flow.account
+        self.site = self.flow.site
         self.id = None
         self.pk = None
         self._state.adding = True

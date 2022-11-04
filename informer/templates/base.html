@@ -33,14 +33,14 @@
                     {{ current_environment|default:_("Environments") }}
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="environmentSelector">
-                    {% for environment in account.environments.all %}
+                    {% for environment in request.site.environments.all %}
                       <li>
                         <a class="dropdown-item" href="{% url 'flows:list' environment.slug %}">
                           {{ environment }}
                         </a>
                       </li>
                     {% endfor %}
-                    {% if account.environments.exists %}
+                    {% if request.site.environments.exists %}
                       <li><hr class="dropdown-divider"></li>
                     {% endif %}
                     <li>

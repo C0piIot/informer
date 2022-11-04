@@ -40,11 +40,11 @@ class FlowLog(models.Model):
 
     @classmethod
     def save_flow_log(cls, log):
-        log.account = log.environment.account
+        log.site = log.environment.site
         log.save()
 
 
     @classmethod
-    def get_flow_logs(cls, account, flow_run_id):
-        return cls.objects.filter(account=account, flow_run_id=flow_run_id)
+    def get_flow_logs(cls, site, flow_run_id):
+        return cls.objects.filter(site=site, flow_run_id=flow_run_id)
 

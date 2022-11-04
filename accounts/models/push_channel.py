@@ -10,7 +10,7 @@ class PushChannel(Channel):
     firebase_credentials = models.JSONField(_("Firebase credentials"), default=dict)
 
     def firebase_app_name(self):
-        return "firebase-app-%d" % self.account.pk
+        return "firebase-app-%d" % self.site.pk
 
     def clean_fields(self, exclude=None):
         super().clean_fields(exclude=exclude)

@@ -26,7 +26,7 @@ class FlowRun(models.Model):
     group_key = models.CharField(_('group_key'), max_length=200, blank=True, editable=False)
 
     def save(self, *args, **kwargs):
-        self.account = self.environment.account
+        self.site = self.environment.site
         self.flow_id = self.flow_revision.id
         if not self.group_key:
             self.group_key = self.id.hex
@@ -56,7 +56,7 @@ class FlowRun(models.Model):
         ))
 
     def get_logs(self):
-        return import_string(settings.FLOW_LOG_STORAGE).get_flow_logs(self.account, self.pk)
+        return import_string(settings.FLOW_LOG_STORAGE).get_flow_logs(self.site, self.pk)
 
 
     def contact(self):

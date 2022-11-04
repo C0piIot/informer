@@ -21,7 +21,7 @@ class ContactForm(forms.ModelForm):
     def __init__(self, **kwargs):
         self.environment = kwargs.pop('environment')
         super().__init__(**kwargs)
-        channels = self.environment.account.channels.all()
+        channels = self.environment.site.channels.all()
         self.fields['channels'].queryset = channels
         if self.instance:
             self.fields['channels'].initial = self.instance.channel_data.keys()

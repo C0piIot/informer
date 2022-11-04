@@ -49,7 +49,7 @@
 
 {% block body-content %}
 
-{% with channels=current_environment.account.channels.all %}
+{% with channels=current_environment.site.channels.all %}
 {{ block.super }}
 {% endwith %}
 {% for contact in object_list %}

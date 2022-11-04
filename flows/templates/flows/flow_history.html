@@ -39,7 +39,7 @@
                     <li>{{ step }}</li>
                 {% endfor %}
             </ul>
-            {% if current_environment not in revision.environments.all or account.environments.all|length > 1 %}
+            {% if current_environment not in revision.environments.all or request.site.environments.all|length > 1 %}
                 <form method="post" action="{% url 'flows:set_revision' current_environment.slug revision.id %}" class="text-end">
                     {% csrf_token %}
                     <input type="hidden" name="revision" value="{{ revision.pk }}">
@@ -48,7 +48,7 @@
                         {% trans "Use in environment" %}
                       </button>
                       <ul class="dropdown-menu">
-                        {% for environment in account.environments.all %}
+                        {% for environment in request.site.environments.all %}
                             {% if environment not in revision.environments.all %}
                                 <li>
                                     <button type="submit" class="dropdown-item" name="environment" value="{{ environment.pk }}">
