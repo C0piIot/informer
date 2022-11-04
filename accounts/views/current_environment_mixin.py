@@ -1,5 +1,5 @@
 from accounts.models import Environment
-from .current_site_mixin import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 
 
