@@ -1,6 +1,5 @@
 from rest_framework.viewsets import GenericViewSet
 from rest_framework.decorators import action
-from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework import serializers, status, mixins
 from rest_framework.response import Response
 from flows.models import FlowRun, Flow
@@ -45,7 +44,7 @@ class FlowTriggerSerializer(serializers.ModelSerializer):
         fields = ['event', 'contact_key', 'event_payload']
 
 
-class FlowRunViewSet(LoginRequiredMixin, mixins.CreateModelMixin, GenericViewSet):
+class FlowRunViewSet(mixins.CreateModelMixin, GenericViewSet):
     serializer_class = FlowTriggerSerializer
     queryset = FlowRun.objects.all()
 

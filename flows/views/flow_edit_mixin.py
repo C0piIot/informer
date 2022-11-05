@@ -1,12 +1,12 @@
 from flows.forms import step_form_classes
-from django.contrib.auth.mixins import LoginRequiredMixin
+from accounts.views import CurrentEnvironmentMixin
 from django.contrib.contenttypes.models import ContentType
 from flows.models import Flow
 from flows.forms import FlowForm, TestForm
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 
-class FlowEditMixin(LoginRequiredMixin):
+class FlowEditMixin(CurrentEnvironmentMixin):
     template_name = 'flows/flow_edit_form.html'
     flow = None
 

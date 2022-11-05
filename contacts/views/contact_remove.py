@@ -1,6 +1,6 @@
 from django.views.generic.edit import DeleteView
 from contacts.forms import ContactForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from accounts.views import CurrentEnvironmentMixin
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
@@ -9,7 +9,7 @@ from django.utils.module_loading import import_string
 from django.contrib.messages.views import SuccessMessageMixin
 from django.conf import settings
 
-class ContactRemove(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class ContactRemove(CurrentEnvironmentMixin, SuccessMessageMixin, DeleteView):
     success_message = _("Contact was removed successfully")
 
     def get_object(self):

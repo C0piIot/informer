@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from accounts.views import CurrentEnvironmentMixin
 from django.views.generic.edit import DeleteView
 from django.http import HttpResponseRedirect
 from flows.models import Flow, FlowStep
@@ -9,7 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.messages.views import SuccessMessageMixin
 
 
-class StepRemove(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class StepRemove(CurrentEnvironmentMixin, SuccessMessageMixin, DeleteView):
     flow = None
     success_message = _("Step was removed successfully")
     model = FlowStep

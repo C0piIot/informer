@@ -1,13 +1,12 @@
 from flows.views.flow_edit_mixin import FlowEditMixin
 from django.views.generic.edit import CreateView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.mixins import LoginRequiredMixin
 from flows.forms import TestForm
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.utils.module_loading import import_string
 
-class FlowTest(FlowEditMixin, LoginRequiredMixin, SuccessMessageMixin, CreateView):
+class FlowTest(FlowEditMixin, SuccessMessageMixin, CreateView):
     form_class = TestForm
     success_message = _("Flow test engaged")
 
