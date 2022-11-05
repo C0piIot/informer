@@ -6,6 +6,7 @@ from flows.models import FlowRun, Flow
 from django.conf import settings
 from django.utils.module_loading import import_string
 from accounts.models import Environment
+from accounts.rest_permissions import HasEnvironmentPermission
 from django.shortcuts import get_object_or_404
 
 
@@ -50,6 +51,7 @@ class FlowRunViewSet(mixins.CreateModelMixin, GenericViewSet):
     serializer_class = FlowTriggerSerializer
     queryset = FlowRun.objects.all()
     current_environment = None
+    permission_classes = [HasEnvironmentPermission]
 
     def initial(self, request, *args, **kwargs):
         self.current_environment = get_object_or_404(Environment, slug=kwargs.pop('environment'), site=self.request.site)
