@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from flows.models import FlowRun, Flow
 from django.conf import settings
 from django.utils.module_loading import import_string
+from accounts.models import Environment
+from django.shortcuts import get_object_or_404
 
 
 class FlowTriggerSerializer(serializers.ModelSerializer):
@@ -47,11 +49,11 @@ class FlowTriggerSerializer(serializers.ModelSerializer):
 class FlowRunViewSet(mixins.CreateModelMixin, GenericViewSet):
     serializer_class = FlowTriggerSerializer
     queryset = FlowRun.objects.all()
+    current_environment = None
 
-    def dispatch(self, request, *args, **kwargs):
-        super().setup(request, *args, **kwargs)
-        del(kwargs['environment'])
-        return super().dispatch(request, *args, **kwargs)
+    def initial(self, request, *args, **kwargs):
+        self.current_environment = get_object_or_404(Environment, slug=kwargs.pop('environment'), site=self.request.site)
+        super().initial(request, *args, **kwargs)
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
