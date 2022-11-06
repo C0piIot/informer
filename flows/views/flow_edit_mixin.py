@@ -28,8 +28,7 @@ class FlowEditMixin(CurrentEnvironmentMixin):
             'step_forms': { 
                 step.order: step_form_classes[type(step.get_typed_instance())](instance=step.get_typed_instance(), auto_id='id_%%s_%d' % step.pk) 
                     for step in self.flow.steps.all()
-            },
-            'api_endpoint' : self.request.build_absolute_uri(reverse('flowrun-list', kwargs={'environment': self.current_environment.slug }))
+            }
         })
     
         return context_data

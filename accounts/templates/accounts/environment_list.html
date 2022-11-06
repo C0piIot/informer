@@ -14,9 +14,14 @@
 </button>
 {% endblock list-actions %}
 
-{% block colgroup %}<col class="col-10"><col class="col-2">{% endblock colgroup %}
+{% block colgroup %}
+<col class="col-9">
+<col class="col-3">
+{% endblock colgroup %}
 
-{% block thead-tr %}<th>{% translate "Environment" %}</th>{% endblock thead-tr %}
+{% block thead-tr %}
+<th>{% translate "Environment" %}</th>
+{% endblock thead-tr %}
 
 
 {% block object-tr %}
@@ -28,15 +33,15 @@
 {% endblock object-tr %}
 
 {% block object-actions %}
-<a href="" title="{% translate 'Edit' %}" class="btn btn-sm btn-outline-primary">
-  {% translate "Edit" %}
-</a>
+<button title="{% translate 'Details' %}" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modal-details-{{ object.slug }}">
+  {% translate "Details" %}
+</button>
 <button title="{% translate 'Remove' %}" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete-{{ object.slug }}">
   {% translate "Delete" %}
 </button>
 {% endblock object-actions %}
 
-{% block empty-tr %}<td colspan="3" class="text-center fst-italic">{% translate "No environments found" %}</td>{% endblock empty-tr %}
+{% block empty-tr %}<td colspan="2" class="text-center fst-italic">{% translate "No environments found" %}</td>{% endblock empty-tr %}
 
 {% block body-content %}
 {{ block.super }}
@@ -44,6 +49,41 @@
 {% for environment in object_list %}
 {% url 'accounts:environment_remove' environment.slug as delete_url %}
 {% include 'modal_delete.html' with object=environment modal_id='delete-'|add:environment.slug %}
+<div id="modal-details-{{ environment.slug }}" aria-labelledby="modal-details-{{ environment.slug }}-title" class="modal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modal-details-{{ environment.slug }}-title">
+                {{ environment }}
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{% translate 'Close' %}"></button>
+          </div>
+          <div class="modal-body">
+            <dl>
+              <dt>{% translate "Endpoint" %}</dt>
+              <dd>
+                {% url 'flowrun-list' environment.slug as api_endpoint %}
+                <a href="{{ request.scheme }}://{{ request.site.domain }}{{ api_endpoint }}" target="_blank">
+                  {{ request.scheme }}://{{ request.site.domain }}{{ api_endpoint }}
+                </a>
+              </dd>
+              <dt>{% translate "Public key" %}</dt>
+              <dd>{{ environment.public_key }}</dd>
+              <dt>{% translate "Private key" %}</dt>
+              <dd>
+                  <details>
+                    <summary>{% translate "Show private key" %}</summary>
+                    {{ environment.private_key }}
+                  </details>
+              </dd>
+            </dl>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% translate "Close" %}</button>
+          </div>
+        </div>
+    </div>
+</div>
 {% endfor %}
 <form 
     action="{% url 'accounts:environment_create' %}" method="post"
