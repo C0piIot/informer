@@ -107,11 +107,12 @@
     </div>
     <div class="offcanvas-body">
         {% bootstrap_form test_form %}
-        <div class="mb-3">
-            <label class="form-label" for="id_curl_example">Curl example</label>
+        <details class="mb-3">
+            <summary>
+                <label class="form-label" for="id_curl_example">{% translate "View curl example" %}</label>
+            </summary>
             <textarea readonly cols="40" rows="10" class="form-control" placeholder="Curl example" id="id_curl_example" data-url-endpoint="{{ request.scheme }}://{{ request.site.domain }}{% url 'flowrun-list' current_environment.slug %}" data-event="{{ flow.trigger }}" data-private-key="{{ current_environment.private_key }}" target="_blank"></textarea>
-        </div>
-
+        </details>
         <div class="text-end">
             <button type="reset" class="btn btn-secondary" data-bs-dismiss="offcanvas">
                 {% translate "Cancel" %}
