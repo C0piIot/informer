@@ -15,7 +15,7 @@ urlpatterns = [
         path('', include('flows.urls')),
         path('contacts/', include('contacts.urls')),    
     ])),
-    path('config/', include('accounts.urls')),
+    path('accounts/', include('accounts.urls')),
     path('admin/', admin.site.urls),
     path('api/', include([
         path('auth/', include('rest_framework.urls')),
