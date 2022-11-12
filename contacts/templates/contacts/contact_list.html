@@ -52,6 +52,19 @@
 {% with channels=current_environment.site.channels.all %}
 {{ block.super }}
 {% endwith %}
+{% if object_list|length and object_list|length >= amount %}
+{% with last_contact=object_list|last %}
+<nav class="container" aria-label="{% translate 'Contact list pagination' %}">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+        <a class="page-link" href="{{ request.path }}?start_key={{ last_contact.key|urlencode }}">
+            {% translate "Next" %}
+        </a>
+    </li>
+  </ul>
+</nav>
+{% endwith %}
+{% endif %}
 {% for contact in object_list %}
 {% url 'contacts:contact_remove' current_environment.slug contact.key as delete_url %}
 {% include 'modal_delete.html' with object=contact.instance modal_id='delete-'|add:contact.key %}
