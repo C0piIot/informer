@@ -2,9 +2,13 @@ from contacts.models import Contact
 
 class DefaultContactStorage:
     @classmethod
-    def get_contacts(cls, environment, start_key=None, amount=50, **filters):
+    def get_contacts(cls, environment, start_key=None, amount=50, filter_key=None, filter_name=None):
         queryset = Contact.objects.filter(environment=environment)
-        if start_key is not None:
+        if filter_key:
+            queryset = queryset.filter(key=filter_key)
+        if filter_name:
+            queryset = queryset.filter(name__startswith=filter_name)
+        if start_key:
             queryset = queryset.filter(key__gt=start_key)
         return queryset[:amount]
         

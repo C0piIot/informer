@@ -38,14 +38,30 @@ class TrendierContactStorage:
         return
 
     @classmethod
-    def get_contacts(cls, environment, start_key=None, amount=50, **filters):
+    def get_contacts(cls, environment, start_key=None, amount=50, filter_key=None, filter_name=None):
         connection = cls.get_connection()
         cursor = connection.cursor(dictionary=True)
+
+        filters = ['i_user_id > %s']
+        values = [start_key if start_key else 0]
+        if filter_key:
+            filters.append('i_user_id = %s')
+            values.append(filter_key)
+
+        if filter_name:
+            filters.append('s_user_name LIKE %s')
+            values.append('%s%%' % filter_name.replace('%', '\\%').replace('_', '\\_'))
+
+        values.append(amount)
+
         cursor.execute(cls.select + """
-            WHERE i_user_id > %s
+            WHERE 
+                %s
             ORDER BY i_user_id
-            LIMIT %s
-        """, (start_key if start_key else 0, amount))
+            LIMIT %%s
+        """ % ' AND '.join(filters), 
+            values
+        )
         
         email_channel = EmailChannel.objects.filter(site=environment.site).first()
             
