@@ -5,8 +5,11 @@ from django.template import Template, Context
 from premailer import Premailer
 from .flow_log import FlowLog
 from accounts.models import EmailChannel
+from django.contrib.sites.managers import CurrentSiteManager
 
 class Email(FlowStep):
+    objects = CurrentSiteManager
+
     ICON = "✉️"
     subject = models.CharField(_('subject'), max_length=200)
     html_body = models.TextField(_('html body message'))

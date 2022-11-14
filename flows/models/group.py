@@ -3,8 +3,11 @@ from django.utils.translation import gettext_lazy as _
 from .flow_step import FlowStep
 from django.utils.module_loading import import_string
 from django.conf import settings
+from django.contrib.sites.managers import CurrentSiteManager
 
 class Group(FlowStep):
+    objects = CurrentSiteManager
+
     ICON = '⏬'
     DATA_KEY = 'GROUP_%s'
     window = models.DurationField(_('time window'))

@@ -3,9 +3,12 @@ from django.utils.translation import gettext_lazy as _
 from django.core.mail import get_connection, send_mail
 from django.core.exceptions import ValidationError
 from .channel import Channel
+from django.contrib.sites.managers import CurrentSiteManager
 
 
 class EmailChannel(Channel):
+    objects = CurrentSiteManager
+    
     SECURITY_NONE = 'none'
     SECURITY_TSL_SSL = 'ssl'
     SECURITY_STARTTLS = 'starttls'

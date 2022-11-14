@@ -2,8 +2,11 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from uuid import uuid4
 from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
 
 class FlowLog(models.Model):
+    objects = CurrentSiteManager
+
     DEBUG = 'DEBUG'
     INFO = 'INFO'
     WARNING ='WARNING'

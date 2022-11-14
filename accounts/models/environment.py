@@ -4,8 +4,12 @@ from django.utils.text import slugify
 from django.urls import reverse
 from rest_framework.authtoken.models import Token
 from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
+
 
 class Environment(models.Model):
+    objects = CurrentSiteManager
+    
     site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='environments', editable=False)
     name = models.CharField(_('name'), max_length=50)
     slug = models.SlugField(_('slug'), editable=False)

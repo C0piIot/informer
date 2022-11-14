@@ -7,11 +7,14 @@ from django.utils.module_loading import import_string
 from django.conf import settings
 from django.urls import reverse
 from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
 import logging
 
 logger = logging.getLogger()
 
 class FlowRun(models.Model):
+    objects = CurrentSiteManager
+
     _contact = None
 
     id = models.UUIDField(_('id'), primary_key=True, default=uuid4, editable=False)
