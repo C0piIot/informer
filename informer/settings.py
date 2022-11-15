@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os, environ
 from pathlib import Path
-from django.conf import settings
+from django.conf import settings as default_settings
 
 
 env = environ.Env()
@@ -30,7 +30,7 @@ SECRET_KEY = env('SECRET_KEY', default='django-insecure-f71wevx&=04*+4@96a1ltskm
 DEBUG = bool(os.environ.get('DEBUG', False))
 
 DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK' :  lambda request: settings.DEBUG
+    'SHOW_TOOLBAR_CALLBACK' :  lambda request: default_settings.DEBUG
 }
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost'])
@@ -193,3 +193,7 @@ DRAMATIQ_BROKER = {
 }
 
 DRAMATIQ_AUTODISCOVER_MODULES = ["executors.dramatiq_executor"]
+
+
+if env.str("CONTACT_STORAGE", default=False):
+    CONTACT_STORAGE = env.str("CONTACT_STORAGE")

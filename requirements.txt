@@ -12,4 +12,3 @@ django-dramatiq
 premailer
 firebase-admin
 uwsgi
-#pip install git+ssh://git@github.com/callmewind/informer-trendier.git
