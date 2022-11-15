@@ -3,11 +3,8 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.contrib.sites.models import Site
-from django.contrib.sites.managers import CurrentSiteManager
 
 class Flow(models.Model):
-    objects = CurrentSiteManager
-
     id = models.UUIDField(_('id'), default=uuid4, editable=False)
     revision = models.UUIDField(_('revision'), primary_key=True, default=uuid4, editable=False)
     site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='flows', editable=False)

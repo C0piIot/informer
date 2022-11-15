@@ -2,10 +2,8 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from uuid import uuid4 
 from django.contrib.sites.models import Site
-from django.contrib.sites.managers import CurrentSiteManager
 
 class Contact(models.Model):
-    objects = CurrentSiteManager 
 
     key = models.CharField(_('key'), max_length=100, help_text=_('Key must be unique to all your contacts'))
     name = models.CharField(_('name'), max_length=200, help_text=_('This name will be used across informer app'))
