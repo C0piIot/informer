@@ -1,8 +1,11 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from .flow_step import FlowStep
+from django.contrib.sites.managers import CurrentSiteManager
 
 class Delay(FlowStep):
+    objects = CurrentSiteManager
+
     ICON = '⏲️';
     time = models.DurationField(_('time'))
 

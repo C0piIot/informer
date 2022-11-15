@@ -2,8 +2,12 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
+
 
 class Channel(models.Model):
+    objects = CurrentSiteManager
+    
     site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='channels')
     enabled = models.BooleanField(_('enabled'), default=True)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, editable=False)
