@@ -6,7 +6,7 @@ class ContactsConfig(AppConfig):
     name = 'contacts'
     DEFAULT_SETTINGS = {
         #'CONTACT_STORAGE': 'contacts.storages.DefaultContactStorage',
-        'CONTACT_STORAGE': 'contacts.storages.TrendierContactStorage',
+        'CONTACT_STORAGE': 'informer_trendier.TrendierContactStorage',
     }
 
 

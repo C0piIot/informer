@@ -1,2 +1,1 @@
 from .default_contact_storage import DefaultContactStorage
-from .trendier_contact_storage import TrendierContactStorage
