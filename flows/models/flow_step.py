@@ -5,10 +5,8 @@ from django.contrib.contenttypes.models import ContentType
 from .flow import Flow
 from .flow_log import FlowLog
 from django.contrib.sites.models import Site
-from django.contrib.sites.managers import CurrentSiteManager
 
 class FlowStep(models.Model):
-    objects = CurrentSiteManager
 
     ICON = '⏭️'
     flow = models.ForeignKey(Flow, on_delete=models.CASCADE, verbose_name=_('flow'), related_name='steps', editable=False)

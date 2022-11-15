@@ -5,7 +5,7 @@ class ContactsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'contacts'
     DEFAULT_SETTINGS = {
-        'CONTACT_STORAGE': 'contacts.models.Contact',
+        'CONTACT_STORAGE': 'contacts.storages.DefaultContactStorage',
     }
 
 

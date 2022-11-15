@@ -5,6 +5,7 @@
 {{ block.super }}
 <div class="container my-1 text-end">{% block list-actions %}{% endblock list-actions %}</div>
 <div class="container">
+	{% block table %}
 	<div class="table-responsive">
 		<table class="table table-hover">
 			<colgroup>{% block colgroup %}{% endblock colgroup %}</colgroup>
@@ -12,6 +13,7 @@
 				<tr>{% block thead-tr %}{% endblock thead-tr %}<th></th></tr>
 			</thead>
 			<tbody>
+				{% block tbody-top %}{% endblock tbody-top %}
 				{% for object in object_list %}
 				<tr>
 					{% block object-tr %}{% endblock object-tr %}
@@ -27,5 +29,6 @@
 			</tbody>
 		</table>
 	</div>
+	{% endblock table %}
 </div>
 {% endblock body-content %}

@@ -1,5 +1,5 @@
 {% extends 'list.html' %}
-{% load i18n static %}
+{% load i18n static django_bootstrap5 %}
 
 {% block title %}{% translate "Contacts" %} - {{ current_environment }} - {{ block.super }}{% endblock title %}
 
@@ -13,6 +13,13 @@
 <a class="btn btn-secondary" href="{% url 'contacts:contact_create' current_environment.slug %}">{% translate "New contact" %}</a>
 {% endblock list-actions %}
 
+
+{% block table %}
+<form method="GET" action="{{ request.path }}">
+    {{ block.super }}
+</form>
+{% endblock table %}
+
 {% block colgroup %}<col class="col-2"><col class="col-4"><col class="col-4"><col class="col-2">{% endblock colgroup %}
 
 {% block thead-tr %}
@@ -20,6 +27,26 @@
 <th>{% translate "Name" %}</th>
 <th>{% translate "Channels" %}</th>
 {% endblock thead-tr %}
+
+{% block tbody-top %}
+<tr class="table-secondary">
+    <td>
+        {% bootstrap_field form.filter_key show_label=False wrapper_class='mb-0' server_side_validation=form.errors size='sm' %}
+    </td>
+    <td>
+        {% bootstrap_field form.filter_name show_label=False wrapper_class='mb-0' server_side_validation=form.errors size='sm' %}
+    </td>
+    <td></td>
+    <td class="text-end">
+        <div class="btn-group" role="group" aria-label="{% translate 'Filtering' %}">
+            <button type="submit" class="btn btn-primary btn-sm">{% translate "Search" %}</button>
+            <a href="{{ request.path }}" class="btn btn-outline-primary btn-sm">
+                {% translate "Reset" %}
+            </a>
+        </div>
+    </td>
+</tr>
+{% endblock tbody-top %}
 
 
 {% block object-tr %}
@@ -45,28 +72,27 @@
 </button>
 {% endblock object-actions %}
 
-{% block empty-tr %}<td colspan="3" class="text-center fst-italic">{% translate "No contacts found" %}</td>{% endblock empty-tr %}
+{% block empty-tr %}<td colspan="4" class="text-center fst-italic">{% translate "No contacts found" %}</td>{% endblock empty-tr %}
 
 {% block body-content %}
-
 {% with channels=current_environment.site.channels.all %}
 {{ block.super }}
 {% endwith %}
-{% if object_list|length and object_list|length >= amount %}
-{% with last_contact=object_list|last %}
+{% if next_url %}
 <nav class="container" aria-label="{% translate 'Contact list pagination' %}">
   <ul class="pagination justify-content-center">
     <li class="page-item">
-        <a class="page-link" href="{{ request.path }}?start_key={{ last_contact.key|urlencode }}">
+        <a class="page-link" href="{{ next_url }}">
             {% translate "Next" %}
         </a>
     </li>
   </ul>
 </nav>
-{% endwith %}
 {% endif %}
 {% for contact in object_list %}
 {% url 'contacts:contact_remove' current_environment.slug contact.key as delete_url %}
-{% include 'modal_delete.html' with object=contact.instance modal_id='delete-'|add:contact.key %}
+{% with key_slug=contact.key|slugify %}
+{% include 'modal_delete.html' with object=contact modal_id='delete-'|add:key_slug %}
+{% endwith %}
 {% endfor %}
 {% endblock body-content %}

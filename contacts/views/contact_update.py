@@ -7,9 +7,11 @@ from django.urls import reverse
 from django.utils.module_loading import import_string
 from django.contrib.messages.views import SuccessMessageMixin
 from django.conf import settings
+from contacts.models import Contact
 
 class ContactUpdate(CurrentEnvironmentMixin, SuccessMessageMixin, UpdateView):
     form_class = ContactForm
+    model = Contact
     success_message = _("%(name)s was updated successfully")
 
 

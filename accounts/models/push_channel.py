@@ -5,11 +5,9 @@ from django.core.exceptions import ValidationError
 from .channel import Channel
 import firebase_admin
 from firebase_admin import messaging
-from django.contrib.sites.managers import CurrentSiteManager
 
 
 class PushChannel(Channel):
-    objects = CurrentSiteManager
     
     firebase_credentials = models.JSONField(_("Firebase credentials"), default=dict)
 
