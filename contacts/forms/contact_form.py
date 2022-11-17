@@ -24,7 +24,7 @@ class ContactForm(forms.ModelForm):
         channels = self.environment.site.channels.all()
         self.fields['channels'].queryset = channels
         if self.instance:
-            self.fields['channels'].initial = self.instance.channel_data.keys()
+            self.fields['channels'].initial = channels.filter(content_type__model__in=self.instance.channel_data.keys())
         self.channel_forms = {
             channel : get_contact_form(channel)(
                 prefix='%s%d' % (self.CHANNEL_PREFIX, channel.pk),
