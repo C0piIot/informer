@@ -23,9 +23,8 @@ class Email(FlowStep):
     def step_run(self, flow_run):
         contact = flow_run.contact()
         email_channel = EmailChannel.objects.get(site=self.site)
-        key = str(email_channel.pk)
 
-        if key in contact.channel_data:
+        if channel_data := contact.get_channel_data(email_channel.content_type.model):
             subject = Template(self.subject)
             text_body = Template(self.text_body)
             html_body = Template(self.html_body)
@@ -42,7 +41,7 @@ class Email(FlowStep):
                 text_body.render(text_context),
                 self.premailer.transform(html_body.render(html_context)),
                 self.from_email or email_channel.from_email,
-                contact.channel_data[key]['email']
+                channel_data['email']
             )
         else:
             flow_run.log(FlowLog.INFO, "%s not sent: user doesn't have channel data" % self)

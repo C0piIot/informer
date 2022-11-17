@@ -18,9 +18,8 @@ class Push(FlowStep):
     def step_run(self, flow_run):
         contact = flow_run.contact()
         push_channel = PushChannel.objects.get(site=self.site)
-        key = str(push_channel.pk)
 
-        if key in contact.channel_data:
+        if channel_data := contact.get_channel_data(push_channel.content_type.model):
             title = Template(self.title)
             body = Template(self.body)
             url = Template(self.url)
@@ -34,7 +33,7 @@ class Push(FlowStep):
                 title.render(text_context),
                 body.render(text_context),
                 url.render(text_context),
-                contact.channel_data[key]['fcm_tokens']
+                channel_data['fcm_tokens']
             )
             flow_run.log(FlowLog.INFO, "%s successful sent to %d of %d fcm tokens" % (self, sum(response.values()), len(response)))
         else:

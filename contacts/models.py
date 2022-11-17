@@ -25,6 +25,12 @@ class Contact(models.Model):
         self.site = self.environment.site
         super().save(*args, **kwargs)
 
+    def set_channel_data(self, channel_type, data):
+        self.channel_data[channel_type] = data
+
+    def get_channel_data(self, channel_type):
+        return self.channel_data.get(channel_type, {})
+
     class Meta:
         verbose_name = _('contact')
         verbose_name_plural = _('contacts')

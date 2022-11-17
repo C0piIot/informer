@@ -58,7 +58,7 @@
 </td>
 <td>
 {% for channel in channels %}
-    {% if channel.pk|title in object.channel_data %}{{ channel }}{% endif %}
+    {% if channel.content_type.model in object.channel_data %}{{ channel }}{% endif %}
 {% endfor %}
 </td>
 {% endblock object-tr %}
