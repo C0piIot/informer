@@ -1,3 +1,3 @@
 # informer
 
-![CI Build](https://github.com/callmewind/informer/actions/workflows/django.yml/badge.svg)
+![Build](https://github.com/callmewind/informer/actions/workflows/build.yml/badge.svg)
