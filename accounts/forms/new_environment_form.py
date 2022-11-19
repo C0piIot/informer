@@ -5,8 +5,6 @@ from django.db import transaction
 
 class NewEnvironmentForm(forms.ModelForm):
 
-    site = None
-
     source_environment = forms.ModelChoiceField(
         queryset=Environment.objects.all(),
         required=False,
@@ -15,15 +13,14 @@ class NewEnvironmentForm(forms.ModelForm):
     )
 
     def __init__(self, **kwargs):
-        self.site = kwargs.pop('site')
+        site = kwargs.pop('site')
         super().__init__(**kwargs)
-        self.fields['source_environment'].queryset = self.fields['source_environment'].queryset.filter(site=self.site)
+        self.instance.site = site
+        self.fields['source_environment'].queryset = self.fields['source_environment'].queryset.filter(site=site)
 
     def save(self):
         with transaction.atomic():
-            environment = super().save(commit=False)
-            environment.site = self.site
-            environment.save()
+            environment = super().save()
             if self.cleaned_data['source_environment']:
                 environment.flows.add(*self.cleaned_data['source_environment'].flows.all())
         return environment

@@ -13,13 +13,12 @@ class EnvironmentsTestCase(TransactionTestCase):
 		with self.settings(ALLOWED_HOSTS=('example.com',)):
 			self.client.force_login(get_user_model().objects.first())
 			
-			self.assertNotContains(
-				self.client.get(
-					reverse('accounts:environment_list'),
-					HTTP_HOST='example.com'
-				),
-				'data-bs-target="#delete'
+			response = self.client.get(
+				reverse('accounts:environment_list'),
+				HTTP_HOST='example.com'
 			)
+			self.assertNotContains(response, 'data-bs-target="#delete')
+			self.assertTemplateUsed(response, 'accounts/environment_list.html')
 
 			self.assertRedirects(
 				self.client.post(
