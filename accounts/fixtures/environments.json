@@ -1,0 +1,1 @@
+[{"model": "accounts.environment", "pk": 1, "fields": {"site": 1, "name": "Test environment", "slug": "test-environment", "private_key": "a28c3503bb710353cb6b2101fc3e33a95538c15a", "public_key": "f18510299429c2c6ed89981c07f29905d7a5546h"}}]
