@@ -25,6 +25,7 @@ class ChannelsTestCase(TransactionTestCase):
 			self.assertContains(response, 'href="#form-add-emailchannel"')
 			self.assertContains(response, 'href="#form-add-pushchannel"')
 
+			
 			self.assertRedirects(
 				self.client.post(
 					reverse('accounts:channel_create', kwargs={'type': 'emailchannel'}), 
@@ -41,6 +42,7 @@ class ChannelsTestCase(TransactionTestCase):
 				),
 				reverse('accounts:channel_list')
 			)
+		
 
 			PushChannel.get_firebase = lambda x: True
 			self.assertRedirects(
@@ -55,14 +57,31 @@ class ChannelsTestCase(TransactionTestCase):
 				reverse('accounts:channel_list')
 			)
 
-'''
-
-			self.assertContains(
-				self.client.get(
-					reverse('accounts:environment_list'),
-					HTTP_HOST='example.com'
-				), 
-				'data-bs-target="#delete',
-				count=1
+			response = self.client.get(
+				reverse('accounts:channel_list'),
+				HTTP_HOST='example.com'
 			)
-'''
+
+			self.assertNotContains(response, 'href="#form-add-emailchannel"')
+			self.assertNotContains(response, 'href="#form-add-pushchannel"')
+
+
+			email_channel = EmailChannel.objects.get(site__domain='example.com')
+			push_channel = PushChannel.objects.get(site__domain='example.com')
+
+			self.assertRedirects(
+				self.client.post(
+					reverse('accounts:channel_remove', kwargs={'pk': email_channel.pk}), HTTP_HOST='example.com'
+				),
+				reverse('accounts:channel_list')
+			)
+
+			self.assertRedirects(
+				self.client.post(
+					reverse('accounts:channel_remove', kwargs={'pk': push_channel.pk}), HTTP_HOST='example.com'
+				),
+				reverse('accounts:channel_list')
+			)
+
+			self.assertIsNone(EmailChannel.objects.first())
+			self.assertIsNone(PushChannel.objects.first())
