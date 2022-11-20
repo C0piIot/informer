@@ -17,7 +17,7 @@
 </li>
 {% endblock breadcrumbds %}
 
-{% block body-content %}
+{% block main-content %}
 {{ block.super }}
 {% with instance_pk=form.instance.pk|default:'new' %}
 <form method="post"  
@@ -105,4 +105,4 @@
   </div>
 </form>
 {% endwith %}
-{% endblock body-content %}
+{% endblock main-content %}

@@ -18,7 +18,7 @@
  <li class="breadcrumb-item active" aria-current="page">{% translate  "Edit" %}</li>
  {% endblock breadcrumbds %}
 
-{% block body-content %}
+{% block main-content %}
 {{ block.super }}
 <div class="container" data-preview-url="{% url 'flows:preview' current_environment.slug %}">
 	<h1>{% trans "Edit flow" %}</h1>
@@ -98,6 +98,9 @@
         </div>
     </div>
 </div>
+{% endblock main-content %}
+{% block body-content %}
+{{ block.super }}
 <form class="offcanvas offcanvas-end{{ test_form.errors|yesno:' show,' }} test" 
     tabindex="-1" aria-labelledby="form-test-flow-title" method="post" id="form-test-flow"
     action="{% url 'flows:test' current_environment.slug flow.id %}">

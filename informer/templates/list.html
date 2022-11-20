@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block body-content %}
+{% block main-content %}
 {{ block.super }}
 <div class="container my-1 text-end">{% block list-actions %}{% endblock list-actions %}</div>
 <div class="container">
@@ -31,4 +31,4 @@
 	</div>
 	{% endblock table %}
 </div>
-{% endblock body-content %}
+{% endblock main-content %}
