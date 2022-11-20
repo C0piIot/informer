@@ -3,32 +3,31 @@
 
 {% block main-content %}
 {{ block.super }}
-<div class="container my-1 text-end">{% block list-actions %}{% endblock list-actions %}</div>
-<div class="container">
-	{% block table %}
-	<div class="table-responsive">
-		<table class="table table-hover">
-			<colgroup>{% block colgroup %}{% endblock colgroup %}</colgroup>
-			<thead class="border border-top-0 border-end-0 border-start-0">
-				<tr>{% block thead-tr %}{% endblock thead-tr %}<th></th></tr>
-			</thead>
-			<tbody>
-				{% block tbody-top %}{% endblock tbody-top %}
-				{% for object in object_list %}
-				<tr>
-					{% block object-tr %}{% endblock object-tr %}
-					<td class="text-end">
-						<div class="btn-group" role="group" aria-label="{% translate 'Actions' %}">
-							{% block object-actions %}{% endblock object-actions %}
-						</div>
-					</td>
-				</tr>
-				{% empty %}
-				<tr class="text-end">{% block empty-tr %}{% endblock empty-tr %}</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</div>
-	{% endblock table %}
+<div class="my-1 text-end">{% block list-actions %}{% endblock list-actions %}</div>
+
+{% block table %}
+<div class="table-responsive">
+	<table class="table table-hover">
+		<colgroup>{% block colgroup %}{% endblock colgroup %}</colgroup>
+		<thead class="border border-top-0 border-end-0 border-start-0">
+			<tr>{% block thead-tr %}{% endblock thead-tr %}<th></th></tr>
+		</thead>
+		<tbody>
+			{% block tbody-top %}{% endblock tbody-top %}
+			{% for object in object_list %}
+			<tr>
+				{% block object-tr %}{% endblock object-tr %}
+				<td class="text-end">
+					<div class="btn-group" role="group" aria-label="{% translate 'Actions' %}">
+						{% block object-actions %}{% endblock object-actions %}
+					</div>
+				</td>
+			</tr>
+			{% empty %}
+			<tr class="text-end">{% block empty-tr %}{% endblock empty-tr %}</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 </div>
+{% endblock table %}
 {% endblock main-content %}

@@ -11,14 +11,19 @@
 <script type="module" src="{% static 'flows/test.js' %}"></script>
 {% endblock head-content %}
 
- {% block breadcrumbds %}
- {{ block.super }}
- <li class="breadcrumb-item"><a href="{{ current_environment.get_absolute_url }}">{{ current_environment }}</a></li>
- <li class="breadcrumb-item"><a href="{% url 'flows:runs' current_environment.slug flow.id %}">{{ flow }}</a></li>
- <li class="breadcrumb-item active" aria-current="page">{% translate  "Edit" %}</li>
- {% endblock breadcrumbds %}
-
 {% block main-content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+     <li class="breadcrumb-item">
+        <a href="{% url 'flows:list' current_environment.slug %}">
+            {% blocktranslate %}{{ current_environment}} flows{% endblocktranslate %}
+        </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {% blocktranslate %}Edit {{ flow }}{% endblocktranslate %}
+    </li>
+  </ol>
+</nav>
 {{ block.super }}
 <div class="container" data-preview-url="{% url 'flows:preview' current_environment.slug %}">
 	<h1>{% trans "Edit flow" %}</h1>
