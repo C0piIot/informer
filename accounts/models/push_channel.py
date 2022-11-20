@@ -8,7 +8,7 @@ from firebase_admin import messaging
 
 
 class PushChannel(Channel):
-    
+    ICON = '🔔'
     firebase_credentials = models.JSONField(_("Firebase credentials"), default=dict)
 
     def firebase_app_name(self):

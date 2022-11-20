@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from .channel import Channel
 
 class EmailChannel(Channel):
-    
+    ICON = "✉️"
     SECURITY_NONE = 'none'
     SECURITY_TSL_SSL = 'ssl'
     SECURITY_STARTTLS = 'starttls'

@@ -4,16 +4,13 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 
 class Channel(models.Model):
+    ICON = "🔊"
     site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='channels')
     enabled = models.BooleanField(_('enabled'), default=True)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE, editable=False)
 
     def get_typed_instance(self):
         return getattr(self, self.content_type.model)
-
-    def __str__(self):
-        return self.get_typed_instance().__str__()
-
 
     def save(self, *args, **kwargs):
         if not self.content_type_id:
@@ -29,4 +26,4 @@ class Channel(models.Model):
         unique_together = ('site', 'content_type',)
 
     def __str__(self):
-        return self.content_type.name
+        return "%s %s" % (self.get_typed_instance().ICON, self.content_type.name)

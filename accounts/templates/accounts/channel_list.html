@@ -60,7 +60,11 @@
     tabindex="-1" aria-labelledby="form-add-{{ content_type.model }}-title" method="post" id="form-add-{{ content_type.model }}"
     action="{% url 'accounts:channel_create' content_type.model %}">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="form-add-{{ content_type.model }}-title">{% blocktranslate with name=content_type.name %}Add {{ name }}{% endblocktranslate %}</h5>
+        <h5 class="offcanvas-title" id="form-add-{{ content_type.model }}-title">
+            {% blocktranslate with name=content_type.name icon=content_type.model_class.ICON %}
+                {{ icon }} Add {{ name }}
+            {% endblocktranslate %}
+        </h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="{% translate 'Close' %}"></button>
     </div>
     <div class="offcanvas-body">
@@ -79,7 +83,11 @@
     tabindex="-1" aria-labelledby="form-edit-{{ form.instance.pk }}-title" method="post" id="form-edit-{{ form.instance.pk }}"
     action="{% url 'accounts:channel_update' form.instance.pk %}">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="form-edit-{{ form.instance.pk }}-title">{% blocktranslate with name=form.instance.content_type.name %}Edit {{ name }}{% endblocktranslate %}</h5>
+        <h5 class="offcanvas-title" id="form-edit-{{ form.instance.pk }}-title">
+            {% blocktranslate with name=form.instance.content_type.name icon=form.instance.content_type.model_class.ICON %}
+                {{ icon }} Edit {{ name }}
+            {% endblocktranslate %}
+        </h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="{% translate 'Close' %}"></button>
     </div>
     <div class="offcanvas-body">
