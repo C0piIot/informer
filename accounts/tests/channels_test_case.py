@@ -69,6 +69,42 @@ class ChannelsTestCase(TransactionTestCase):
 			email_channel = EmailChannel.objects.get(site__domain='example.com')
 			push_channel = PushChannel.objects.get(site__domain='example.com')
 
+
+			self.assertRedirects(
+				self.client.post(
+					reverse('accounts:channel_update', kwargs={'pk': email_channel.pk }), 
+					{
+						'host': 'example.com',
+						'port': '465',
+						'username': 'test',
+						'password': 'password-updated',
+						'security': EmailChannel.SECURITY_TSL_SSL,
+						'from_email': 'test@example.com',
+						'enabled': True
+					},
+					HTTP_HOST='example.com'
+				),
+				reverse('accounts:channel_list')
+			)
+
+			self.assertEquals('password-updated', EmailChannel.objects.first().password)
+
+
+			self.assertRedirects(
+				self.client.post(
+					reverse('accounts:channel_update', kwargs={'pk': push_channel.pk }), 
+					{
+						'firebase_credentials': '{"credentials":"updated-credentials"}',
+						'enabled': True
+					},
+					HTTP_HOST='example.com'
+				),
+				reverse('accounts:channel_list')
+			)
+
+			self.assertEquals('updated-credentials', PushChannel.objects.first().firebase_credentials['credentials'])
+
+
 			self.assertRedirects(
 				self.client.post(
 					reverse('accounts:channel_remove', kwargs={'pk': email_channel.pk}), HTTP_HOST='example.com'
