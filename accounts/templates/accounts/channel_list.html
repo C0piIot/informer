@@ -3,8 +3,12 @@
 
 {% block title %}{% translate "Channels" %} - {{ block.super }}{% endblock title %}
 
+{% block main-content %}
+<div class="container">{{ block.super }}</div>
+{% endblock main-content %}
+
 {% block list-actions %}
-<div class="dropdown mt-4">
+<div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="newChannel" data-bs-toggle="dropdown" aria-expanded="false">
     {% translate "New channel" %}
     </button>
@@ -50,7 +54,6 @@
 
 {% block body-content %}
 {{ block.super }}
-
 {% for content_type, form in new_channel_forms.items %}
 {% if content_type not in channel_forms.keys %}
 <form class="offcanvas offcanvas-end w-75{{ form.errors|yesno:' show,' }}" 

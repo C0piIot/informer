@@ -3,8 +3,12 @@
 
 {% block title %}{% translate "Environments" %} - {{ block.super }}{% endblock title %}
 
+{% block main-content %}
+<div class="container">{{ block.super }}</div>
+{% endblock main-content %}
+
 {% block list-actions %}
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-create">
+<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-create">
   {% translate "New environment" %}
 </button>
 {% endblock list-actions %}
