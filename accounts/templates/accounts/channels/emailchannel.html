@@ -1,2 +1,10 @@
 {% load i18n django_bootstrap5 %}
-{% bootstrap_form form %}
+{% bootstrap_field form.host %}
+<div class="row">
+	<div class="col-6">{% bootstrap_field form.username %}</div>
+	<div class="col-6">{% bootstrap_field form.password %}</div>
+	<div class="col-6">{% bootstrap_field form.security %}</div>
+	<div class="col-6">{% bootstrap_field form.port %}</div>
+</div>
+{% bootstrap_field form.from_email %}
+{% bootstrap_field form.enabled %}
