@@ -13,20 +13,14 @@
     {% block body-content %}
     <header>
     {% block header-content %}
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-          {% if current_site %}
-          <a class="navbar-brand" href="{% url 'home' %}">{{ current_site }} <i class="fs-6 text-secondary
-
-">Informer</i></a>
-          {% else %}
-          <a class="navbar-brand" href="{% url 'home' %}">☎️ Informer</a>
-          {% endif %}
+          <a class="navbar-brand" href="{% url 'home' %}">{{ request.site.name }} <i class="fs-6 text-secondary">Informer</i></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{% translate 'Toggle navigation' %}">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            {% if user.is_authenticated %}         
+            {% if user.is_authenticated %}     
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="environmentSelector" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -50,14 +44,6 @@
                     </li>
                   </ul>
                 </li>
-                {% if current_environment %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'flows:list' current_environment.slug %}">{% trans "Flows" %}</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'contacts:list' current_environment.slug %}">{% trans "Contacts" %}</a>
-                </li>
-                {% endif %}
               </ul>
               <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
@@ -90,14 +76,32 @@
         </div>
       </nav>
     {% endblock header-content %}</header>
-    <div class="container mt-2">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          {% block breadcrumbds %}<li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>{% endblock breadcrumbds %}
-        </ol>
-      </nav>
-      {% bootstrap_messages %}
+    {% if current_environment %}
+    <div class="container mt-2 mb-5">
+      <div class="row">
+        <nav class="col-md-2 bg-light py-3">
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link{% if request.resolver_match.app_name == 'flows' %} active{% endif %}" href="{% url 'flows:list' current_environment.slug %}">
+                {% trans "Flows" %}
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link{% if request.resolver_match.app_name == 'contacts' %} active{% endif %}" href="{% url 'contacts:list' current_environment.slug %}">
+                {% trans "Contacts" %}
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <div class="col-md-10">
+    {% endif %}
+          {% bootstrap_messages %}
+          {% block main-content %}{% endblock main-content %}
+    {% if current_environment %}
+        </div> 
+      </div>
     </div>
+    {% endif %}
     {% endblock body-content %}
   </body>
 </html>

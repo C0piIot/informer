@@ -3,11 +3,6 @@
 
 {% block title %}{% translate "Environments" %} - {{ block.super }}{% endblock title %}
 
-{% block breadcrumbds %}
-{{ block.super }}
-<li class="breadcrumb-item active" aria-current="page">{% translate "Environments" %}</li>
-{% endblock breadcrumbds %}
-
 {% block list-actions %}
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-create">
   {% translate "New environment" %}

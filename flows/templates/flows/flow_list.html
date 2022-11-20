@@ -1,10 +1,15 @@
 {% extends 'list.html' %}
 {% load i18n django_bootstrap5 %}
 
-{% block breadcrumbds %}
+{% block main-content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">{% blocktranslate %}{{ current_environment}} flows{% endblocktranslate %}</li>
+  </ol>
+</nav>
 {{ block.super }}
-<li class="breadcrumb-item active" aria-current="page">{{ current_environment }}</li>
-{% endblock breadcrumbds %}
+{% endblock main-content %}
+
 
 {% block title %}{% translate "Flows" %} - {{ current_environment }} - {{ block.super }}{% endblock title %}
 

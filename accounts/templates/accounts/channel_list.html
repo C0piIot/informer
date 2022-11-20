@@ -3,11 +3,6 @@
 
 {% block title %}{% translate "Channels" %} - {{ block.super }}{% endblock title %}
 
-{% block breadcrumbds %}
-{{ block.super }}
-<li class="breadcrumb-item active" aria-current="page">{% translate "Channels" %}</li>
-{% endblock breadcrumbds %}
-
 {% block list-actions %}
 <div class="dropdown mt-4">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="newChannel" data-bs-toggle="dropdown" aria-expanded="false">

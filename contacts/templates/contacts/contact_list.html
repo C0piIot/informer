@@ -3,11 +3,14 @@
 
 {% block title %}{% translate "Contacts" %} - {{ current_environment }} - {{ block.super }}{% endblock title %}
 
-{% block breadcrumbds %}
+{% block main-content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">{% blocktranslate %}{{ current_environment}} contacts{% endblocktranslate %}</li>
+  </ol>
+</nav>
 {{ block.super }}
-<li class="breadcrumb-item"><a href="{{ current_environment.get_absolute_url }}">{{ current_environment }}</a></li>
-<li class="breadcrumb-item active" aria-current="page">{% translate "Contacts" %}</li>
-{% endblock breadcrumbds %}
+{% endblock main-content %}
 
 {% block list-actions %}
 <a class="btn btn-secondary" href="{% url 'contacts:contact_create' current_environment.slug %}">{% translate "New contact" %}</a>

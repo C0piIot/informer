@@ -1,59 +1,57 @@
-{% extends 'base.html' %}
+{% extends 'list.html' %}
 {% load i18n %}
+
+{% block main-content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+     <li class="breadcrumb-item">
+        <a href="{% url 'flows:list' current_environment.slug %}">
+            {% blocktranslate %}{{ current_environment}} flows{% endblocktranslate %}
+        </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">
+        {% blocktranslate %}{{ flow }} runs{% endblocktranslate %}
+    </li>
+  </ol>
+</nav>
+{{ block.super }}
+{% endblock main-content %}
 
 {% block title %}{{ flow }} - {% translate "Flow runs" %} - {{ current_environment }} - {{ block.super }}{% endblock title %}
 
-{% block breadcrumbds %}
-<li class="breadcrumb-item"><a href="{% url 'home' %}">{% translate "Home" %}</a></li>
-<li class="breadcrumb-item"><a href="{{ current_environment.get_absolute_url }}">{{ current_environment }}</a></li>
-<li class="breadcrumb-item active" aria-current="page">{{ flow }}</li>
-{% endblock breadcrumbds %}
+{% block colgroup %}
+<col class="col-2">
+<col class="col-2">
+<col class="col-7">
+<col class="col-1">
+{% endblock colgroup %}
 
-{% block body-content %}
-{{ block.super }}
-<div class="container">
-	<div class="table-responsive">
-		<table class="table table-hover">
-			<colgroup>
-		        <col class="col-2">
-		        <col class="col-2">
-		        <col class="col-7">
-		        <col class="col-1">
-		    </colgroup>
-			<thead>
-				<tr>
-					<td>{% translate "Date" %}</td>
-					<td>{% translate "Contact" %}</td>
-					<td>{% translate "Identifier" %}</td>
-					<td></td>
-			</thead>
-			<tbody>
-    			{% for flow_run in object_list %}
-    			<tr>
-    				<td>{{ flow_run.start|date:"SHORT_DATETIME_FORMAT"}}</td>
-    				<td>
-    					{% if flow_run.contact %}
-    					<a href="{% url 'contacts:contact_update' current_environment.slug flow_run.contact.key %}" class="text-decoration-none">
-    						{{ flow_run.contact }}
-    					</a>
-    					{% endif %}
-    				</td>
-    				<td class="w-100">
-    					<a href="{% url 'flows:run' current_environment.slug flow.id flow_run.pk %}" title="{% translate 'View' %}" class="text-decoration-none">
-    						{{ flow_run.pk }}	
-    					</a>
-    				</td>
-    				<td>
-    					<a href="{% url 'flows:run' current_environment.slug flow.id flow_run.pk %}" class="btn btn-outline-primary btn-sm">{% translate "View" %}</a>
-    				</td>
-    			</tr>
-    			{% empty %}
-    			<tr>
-    				<td colspan="4" class="text-center fst-italic">{% translate "No flow runs found" %}</td>
-    			</tr>
-    			{% endfor %}
-    		</tbody>
-		</table>
-	</div>
-</div>
-{% endblock body-content %}
+{% block thead-tr %}
+<td>{% translate "Date" %}</td>
+<td>{% translate "Contact" %}</td>
+<td>{% translate "Identifier" %}</td>
+{% endblock thead-tr %}
+
+{% block object-tr %}
+<td>{{ object.start|date:"SHORT_DATETIME_FORMAT"}}</td>
+<td>
+	{% if object.contact %}
+	<a href="{% url 'contacts:contact_update' current_environment.slug object.contact.key %}" class="text-decoration-none">
+		{{ object.contact }}
+	</a>
+	{% endif %}
+</td>
+<td class="w-100">
+	<a href="{% url 'flows:run' current_environment.slug flow.id object.pk %}" title="{% translate 'View' %}" class="text-decoration-none">
+		{{ object.pk }}	
+	</a>
+</td>
+{% endblock object-tr %}
+
+{% block object-actions %}
+<a href="{% url 'flows:run' current_environment.slug flow.id object.pk %}" class="btn btn-outline-primary btn-sm">{% translate "View" %}</a>
+{% endblock object-actions %}
+
+{% block empty-tr %}
+<td colspan="4" class="text-center fst-italic">{% translate "No flow runs found" %}</td>
+{% endblock empty-tr %}
