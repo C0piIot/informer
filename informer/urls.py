@@ -25,8 +25,8 @@ urlpatterns = [
             version="1.0.0"
         ), name='openapi-schema'), 
         path('<slug:environment>/', include(router.urls)),
-    ])) 
-    
+    ])),
+    path('hijack/', include('hijack.urls')),
 ]
 
 if settings.DEBUG:

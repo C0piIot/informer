@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django_bootstrap5',
+    'hijack',
+    'hijack.contrib.admin',
     'rest_framework',
     'debug_toolbar',
     'django_dramatiq',
@@ -65,7 +67,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
-    'accounts.middleware.CheckSiteMiddleware'
+    'accounts.middleware.CheckSiteMiddleware',
+    'hijack.middleware.HijackUserMiddleware'
 ]
 
 ROOT_URLCONF = 'informer.urls'

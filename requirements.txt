@@ -11,3 +11,4 @@ django-dramatiq
 premailer
 firebase-admin
 uwsgi
+django-hijack
