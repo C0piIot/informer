@@ -4,9 +4,8 @@ from rest_framework.response import Response
 from flows.models import FlowRun, Flow
 from django.conf import settings
 from django.utils.module_loading import import_string
-from accounts.models import Environment
 from accounts.rest_permissions import HasEnvironmentPermission
-from django.shortcuts import get_object_or_404
+from accounts.views import ContextAwareViewSetMixin
 
 
 class FlowTriggerSerializer(serializers.ModelSerializer):
@@ -46,21 +45,10 @@ class FlowTriggerSerializer(serializers.ModelSerializer):
         fields = ['event', 'contact_key', 'event_payload']
 
 
-class FlowRunViewSet(mixins.CreateModelMixin, GenericViewSet):
+class FlowRunViewSet(mixins.CreateModelMixin, ContextAwareViewSetMixin, GenericViewSet):
     serializer_class = FlowTriggerSerializer
     queryset = FlowRun.objects.none()
-    current_environment = None
     permission_classes = [HasEnvironmentPermission]
 
-    def initial(self, request, *args, **kwargs):
-        self.current_environment = get_object_or_404(Environment, slug=kwargs.pop('environment'), site=self.request.site)
-        super().initial(request, *args, **kwargs)
 
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        context.update({ 'environment': self.current_environment })
-        return context
-
-    def get_queryset(self):
-        return super().get_queryset().filter(environment=self.current_environment)
-        
+    

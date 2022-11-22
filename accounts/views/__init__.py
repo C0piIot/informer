@@ -7,3 +7,4 @@ from .channel_list_mixin import ChannelListMixin
 from .channel_create import ChannelCreate
 from .channel_update import ChannelUpdate
 from .channel_remove import ChannelRemove
+from .context_aware_viewset_mixin import ContextAwareViewSetMixin
