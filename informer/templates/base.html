@@ -95,8 +95,7 @@
         </nav>
         <div class="col-md-10">
     {% endif %}
-          {% bootstrap_messages %}
-          {% block main-content %}{% endblock main-content %}
+          {% block main-content %}{% bootstrap_messages %}{% endblock main-content %}
     {% if current_environment %}
         </div> 
       </div>
