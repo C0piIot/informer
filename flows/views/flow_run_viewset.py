@@ -1,5 +1,4 @@
 from rest_framework.viewsets import GenericViewSet
-from rest_framework.decorators import action
 from rest_framework import serializers, status, mixins
 from rest_framework.response import Response
 from flows.models import FlowRun, Flow
@@ -49,7 +48,7 @@ class FlowTriggerSerializer(serializers.ModelSerializer):
 
 class FlowRunViewSet(mixins.CreateModelMixin, GenericViewSet):
     serializer_class = FlowTriggerSerializer
-    queryset = FlowRun.objects.all()
+    queryset = FlowRun.objects.none()
     current_environment = None
     permission_classes = [HasEnvironmentPermission]
 

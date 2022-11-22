@@ -12,3 +12,4 @@ premailer
 firebase-admin
 uwsgi
 django-hijack
+django-debug-toolbar

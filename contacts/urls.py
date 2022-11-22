@@ -1,7 +1,10 @@
 from .views import *
 from django.urls import path, include
+from informer.api import router
 
 app_name = 'contacts'
+
+router.register('contacts',ContactViewSet)
 
 urlpatterns = [
     path('', ContactList.as_view(), name='list'),
