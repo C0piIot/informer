@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'hijack',
     'hijack.contrib.admin',
     'rest_framework',
-    'debug_toolbar',
     'django_dramatiq',
     'accounts.apps.AccountsConfig',
     'flows.apps.FlowsConfig',
@@ -59,7 +58,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -70,6 +68,10 @@ MIDDLEWARE = [
     'accounts.middleware.CheckSiteMiddleware',
     'hijack.middleware.HijackUserMiddleware'
 ]
+
+if DEBUG:
+    INSTALLED_APPS.append('debug_toolbar')
+    MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
 
 ROOT_URLCONF = 'informer.urls'
 

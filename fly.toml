@@ -12,6 +12,9 @@ processes = []
   DATABASE_URL = "sqlite:////data//informer.sqlite"
   SWAP = "1"
 
+[build]
+build-target = "prod"
+
 [experimental]
   allowed_public_ports = []
   auto_rollback = true
