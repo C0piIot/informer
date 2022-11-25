@@ -4,7 +4,12 @@ from contacts.models import Contact
 from accounts.rest_permissions import HasEnvironmentPermission
 from accounts.views import ContextAwareViewSetMixin
 
+
 class ContactSerializer(serializers.ModelSerializer):
+    #email_data = getGenericSerializer(EmailData)()
+    #email_data = getGenericSerializer(EmailDa)
+    #email_data = https://stackoverflow.com/questions/64810287/django-dynamically-generated-serializer
+    #https://stackoverflow.com/questions/30831731/create-a-generic-serializer-with-a-dynamic-model-in-meta
 
     def create(self, validated_data):
         flow_runs = []
@@ -24,7 +29,7 @@ class ContactSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Contact
-        fields = ['key', 'name', 'contact_data',]
+        fields = ['key', 'name', 'contact_data', 'email_data']
 
 
 class ContactViewSet(

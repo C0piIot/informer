@@ -6,9 +6,10 @@ from .channel import Channel
 import firebase_admin
 from firebase_admin import messaging
 
-
 class PushChannel(Channel):
     ICON = '🔔'
+    CONTACT_FORM = 'accounts.forms.PushContactForm'
+    CONFIG_FORM = 'accounts.forms.PushChannelForm'
     firebase_credentials = models.JSONField(_("Firebase credentials"), default=dict)
 
     def firebase_app_name(self):

@@ -2,9 +2,9 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from contacts.models import Contact 
 from accounts.models import Channel
-from accounts.forms import get_contact_form
 from django.utils.module_loading import import_string
 from django.conf import settings
+from django.forms.models import modelform_factory
 
 class ContactForm(forms.ModelForm):
 
@@ -26,7 +26,7 @@ class ContactForm(forms.ModelForm):
         if self.instance:
             self.fields['channels'].initial = channels.filter(content_type__model__in=self.instance.channel_data.keys())
         self.channel_forms = {
-            channel : get_contact_form(channel)(
+            channel : import_string(channel.get_typed_instance().CONTACT_FORM)(
                 prefix='%s%d' % (self.CHANNEL_PREFIX, channel.pk),
                 data=kwargs.get('data'),
                 files=kwargs.get('files'),

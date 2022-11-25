@@ -14,7 +14,7 @@ class FCMTokensWidget(forms.Textarea):
     def format_value(self, value):
         if value is None:
             return None
-        return "\n".join(value)
+        return "\n".join(value) if type(value) == list else value
 
 
 class FCMTokensField(forms.Field):

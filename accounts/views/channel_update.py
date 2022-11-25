@@ -4,7 +4,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.translation import gettext_lazy as _
 from django.utils.module_loading import import_string
 from django.contrib.contenttypes.models import ContentType
-from django.conf import settings
 from django.http import Http404
 from accounts.models import Channel
 from .channel_list_mixin import ChannelListMixin
@@ -30,7 +29,7 @@ class ChannelUpdate(ChannelListMixin, SuccessMessageMixin, UpdateView):
         return super().get_object().get_typed_instance()
 
     def get_form_class(self):
-        return import_string(settings.CHANNEL_CONFIG_FORMS[self.type.model])
+        return import_string(self.type.model_class().CONFIG_FORM)
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

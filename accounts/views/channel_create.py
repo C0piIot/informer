@@ -5,7 +5,6 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from django.utils.module_loading import import_string
 from django.http import Http404
-from django.conf import settings
 from .channel_list_mixin import ChannelListMixin
 
 class ChannelCreate(ChannelListMixin, SuccessMessageMixin, CreateView):
@@ -21,7 +20,7 @@ class ChannelCreate(ChannelListMixin, SuccessMessageMixin, CreateView):
             raise Http404
 
     def get_form_class(self):
-        return import_string(settings.CHANNEL_CONFIG_FORMS[self.type.model])
+        return import_string(self.type.model_class().CONFIG_FORM)
         
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
