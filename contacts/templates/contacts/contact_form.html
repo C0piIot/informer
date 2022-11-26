@@ -49,8 +49,8 @@
         <div class="card-header">
           <ul class="nav nav-tabs card-header-tabs" role="tablist">
             <li class="nav-item">
-              <button class="nav-link active" id="tab-contact-data" data-bs-toggle="tab" data-bs-target="#contact-data" type="button" role="tab" aria-controls="contact-data" aria-selected="true">
-                {% translate "Contact Data" %}
+              <button class="nav-link{% if not form.active_channel_tab %} active{% endif %}" id="tab-contact-data" data-bs-toggle="tab" data-bs-target="#contact-data" type="button" role="tab" aria-controls="contact-data" aria-selected="true">
+                {% translate "Contact Data" %} {{ form.active_channel_tab }}
               </button>
             </li>
             <li class="nav-item">
@@ -60,7 +60,7 @@
             </li>
             {% for channel in form.channel_forms %}
             <li class="nav-item">
-              <button class="nav-link  channel-{{ channel.pk }}" id="tab-channel-{{ channel.pk }}" data-bs-toggle="tab" data-bs-target="#channel-{{ channel.pk }}" type="button" role="tab" aria-controls="channel-{{ channel.pk }}" aria-selected="false"{% if  2 > 1 %} hidden{% endif %}>
+              <button class="nav-link  channel-{{ channel.pk }}{% if form.active_channel_tab == channel.pk %} active{% endif %}" id="tab-channel-{{ channel.pk }}" data-bs-toggle="tab" data-bs-target="#channel-{{ channel.pk }}" type="button" role="tab" aria-controls="channel-{{ channel.pk }}" aria-selected="false">
                 {{ channel|title }}
               </button>
             </li>
@@ -68,7 +68,7 @@
           </ul>
         </div>
         <div class="card-body tab-content" id="nav-tabContent">
-          <div class="tab-pane active" id="contact-data" role="tabpanel" aria-labelledby="tab-contact-data">
+          <div class="tab-pane{% if not form.active_channel_tab %} active{% endif %}" id="contact-data" role="tabpanel" aria-labelledby="tab-contact-data">
             <h5 class="card-title">{% translate "Contact data" %}</h5>
             <p class="card-text">
               {% translate "You can add arbitrary data to a contact in JSON format" %}
@@ -91,7 +91,7 @@
             </div>
           </div>
           {% for channel, channel_form in form.channel_forms.items %}
-          <div class="tab-pane channel-{{ channel.pk }}" id="channel-{{ channel.pk }}" role="tabpanel" aria-labelledby="tab-channel-{{ channel.pk }}">
+          <div class="tab-pane channel-{{ channel.pk }}{% if form.active_channel_tab == channel.pk %} active{% endif %}" id="channel-{{ channel.pk }}" role="tabpanel" aria-labelledby="tab-channel-{{ channel.pk }}">
             {% bootstrap_form channel_form %}
           </div>
           {% endfor %}

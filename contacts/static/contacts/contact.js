@@ -2,7 +2,6 @@
 
 const form = document.querySelector('form.contact'),
 	toggleChannel = (idChannel, enabled) => {
-		document.getElementById('tab-contact-data').dispatchEvent(new Event('click'));
 		form.querySelector(`button.channel-${idChannel}`).hidden = !enabled;
 		form.querySelectorAll(`div.channel-${idChannel} :is(input,select,textarea,button)`).forEach(formControl => formControl.disabled = !enabled);
 	};

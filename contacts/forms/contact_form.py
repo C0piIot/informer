@@ -8,6 +8,7 @@ from django.forms.models import modelform_factory
 
 class ContactForm(forms.ModelForm):
 
+    active_channel_tab = None
     CHANNEL_PREFIX = 'channel-'
     environment = None
     channel_forms = None
@@ -40,6 +41,8 @@ class ContactForm(forms.ModelForm):
         if is_valid := super().is_valid():
             for channel in self.cleaned_data['channels']:
                 is_valid = is_valid and self.channel_forms[channel].is_valid()
+                if not self.channel_forms[channel].is_valid():
+                    self.active_channel_tab = channel.pk
         return is_valid
            
     def save(self, commit=True):
