@@ -6,6 +6,7 @@ from django.contrib.sites.models import Site
 class Channel(models.Model):
     ICON = "🔊"
     CONTACT_FORM = None
+    CONTACT_SERIALIZER = None
     CONFIG_FORM = None
     site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='channels')
     enabled = models.BooleanField(_('enabled'), default=True)

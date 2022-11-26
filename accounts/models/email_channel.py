@@ -7,6 +7,7 @@ from .channel import Channel
 class EmailChannel(Channel):
     ICON = "✉️"
     CONTACT_FORM = 'accounts.forms.EmailContactForm'
+    CONTACT_SERIALIZER = 'accounts.serializers.EmailContactSerializer'
     CONFIG_FORM = 'accounts.forms.EmailChannelForm'
     SECURITY_NONE = 'none'
     SECURITY_TSL_SSL = 'ssl'

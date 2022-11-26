@@ -9,6 +9,7 @@ from firebase_admin import messaging
 class PushChannel(Channel):
     ICON = '🔔'
     CONTACT_FORM = 'accounts.forms.PushContactForm'
+    CONTACT_SERIALIZER = 'accounts.serializers.PushContactSerializer'
     CONFIG_FORM = 'accounts.forms.PushChannelForm'
     firebase_credentials = models.JSONField(_("Firebase credentials"), default=dict)
 
