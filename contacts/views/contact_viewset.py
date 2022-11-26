@@ -5,9 +5,11 @@ from accounts.rest_permissions import HasEnvironmentPermission
 from accounts.views import ContextAwareViewSetMixin
 from django.utils.translation import gettext_lazy as _
 from django.utils.module_loading import import_string
-
+from django.conf import settings
 
 class ContactSerializer(serializers.ModelSerializer):
+
+    contact_storage = import_string(settings.CONTACT_STORAGE)
     
     def validate_channel_data(self, value):
         if not value:
@@ -30,8 +32,10 @@ class ContactSerializer(serializers.ModelSerializer):
 
 
     def create(self, validated_data):
-        
-        return []
+        validated_data = {k: v for k, v in validated_data.items() if v is not None }
+        contact = Contact(**validated_data)
+        ContactSerializer.contact_storage.save_contact(self.context['environment'], contact)
+        return contact
 
     class Meta:
         model = Contact
