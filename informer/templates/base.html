@@ -82,13 +82,18 @@
         <nav class="col-md-2 bg-light py-3">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
+              <a class="nav-link{% if request.resolver_match.app_name == 'dashboard' %} active{% endif %}" href="#">
+                🌡️ {% trans "Dashboard" %}
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link{% if request.resolver_match.app_name == 'flows' %} active{% endif %}" href="{% url 'flows:list' current_environment.slug %}">
-                {% trans "Flows" %}
+                ⏭️ {% trans "Flows" %}
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link{% if request.resolver_match.app_name == 'contacts' %} active{% endif %}" href="{% url 'contacts:list' current_environment.slug %}">
-                {% trans "Contacts" %}
+                👤 {% trans "Contacts" %}
               </a>
             </li>
           </ul>
