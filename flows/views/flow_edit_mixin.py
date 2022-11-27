@@ -4,7 +4,7 @@ from django.contrib.contenttypes.models import ContentType
 from flows.models import Flow
 from flows.forms import FlowForm, TestForm
 from django.shortcuts import get_object_or_404
-from django.urls import reverse
+from rest_framework.reverse import reverse
 
 class FlowEditMixin(CurrentEnvironmentMixin):
     template_name = 'flows/flow_edit_form.html'
@@ -28,7 +28,12 @@ class FlowEditMixin(CurrentEnvironmentMixin):
             'step_forms': { 
                 step.order: step_form_classes[type(step.get_typed_instance())](instance=step.get_typed_instance(), auto_id='id_%%s_%d' % step.pk) 
                     for step in self.flow.steps.all()
-            }
+            },
+            'url_endpoint' : reverse(
+                'flowrun-list',
+                kwargs={ 'environment' : self.current_environment.slug },
+                request=self.request
+            )
         })
     
         return context_data

@@ -6,10 +6,21 @@ from accounts.views import ContextAwareViewSetMixin
 from django.utils.translation import gettext_lazy as _
 from django.utils.module_loading import import_string
 from django.conf import settings
+from rest_framework.reverse import reverse
+
+contact_storage = import_string(settings.CONTACT_STORAGE)
 
 class ContactSerializer(serializers.ModelSerializer):
 
-    contact_storage = import_string(settings.CONTACT_STORAGE)
+    url = serializers.SerializerMethodField()
+
+    def get_url(self, obj):
+        return reverse(
+            'contact-detail', 
+            kwargs={'environment': self.context['environment'].slug, 'pk': obj.key },
+            request=self.context['request']
+        )
+
     
     def validate_channel_data(self, value):
         if not value:
@@ -34,12 +45,12 @@ class ContactSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data = {k: v for k, v in validated_data.items() if v is not None }
         contact = Contact(**validated_data)
-        ContactSerializer.contact_storage.save_contact(self.context['environment'], contact)
+        contact_storage.save_contact(self.context['environment'], contact)
         return contact
 
     class Meta:
         model = Contact
-        fields = ['key', 'name', 'contact_data', 'channel_data']
+        fields = ['url', 'key', 'name', 'contact_data', 'channel_data']
 
 
 class ContactViewSet(
@@ -51,5 +62,12 @@ class ContactViewSet(
     serializer_class = ContactSerializer
     permission_classes = [HasEnvironmentPermission]
     queryset = Contact.objects.none()
+
+    def get_object(self):
+        return contact_storage.get_contact(self.current_environment, self.kwargs['pk'])
+
+
+    def perform_destroy(self, instance):
+        instance.delete() #TODO
 
     
