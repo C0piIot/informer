@@ -11,8 +11,8 @@ class Environment(models.Model):
     site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='environments', editable=False)
     name = models.CharField(_('name'), max_length=50)
     slug = models.SlugField(_('slug'), editable=False)
-    private_key = models.CharField(_('private key'), max_length=40, unique=True)
-    public_key = models.CharField(_('public key'), max_length=40, unique=True)
+    private_key = models.CharField(_('private key'), max_length=40)
+    public_key = models.CharField(_('public key'), max_length=40)
 
     def get_absolute_url(self):
         return reverse('flows:list', kwargs={ 'environment': self.slug })

@@ -2,10 +2,11 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from uuid import uuid4 
 from django.contrib.sites.models import Site
+from rest_framework.authtoken.models import Token
 
 class Contact(models.Model):
 
-    key = models.CharField(_('key'), max_length=100, help_text=_('Key must be unique to all your contacts'))
+    key = models.SlugField(_('key'), max_length=100, help_text=_('Id must be unique to all contacts for this environment'))
     name = models.CharField(_('name'), max_length=200, help_text=_('This name will be used across informer app'))
     site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='+', editable=False)
     environment = models.ForeignKey('accounts.Environment', on_delete=models.CASCADE, verbose_name=_('environment'), related_name='+', editable=False)
@@ -17,12 +18,15 @@ class Contact(models.Model):
     index6 = models.CharField(_('index 6'), max_length=100, blank=True)
     contact_data = models.JSONField(_('contact data'), default=dict, help_text=_('Contact data will be available for use in flow templates'), blank=True)
     channel_data = models.JSONField(_('channel data'), default=dict)
+    public_key = models.CharField(_('public key'), max_length=40)
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
         self.site = self.environment.site
+        if not self.public_key:
+            self.public_key = Token.generate_key()
         super().save(*args, **kwargs)
 
     def set_channel_data(self, channel_type, data):
