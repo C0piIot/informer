@@ -48,6 +48,13 @@ class ContactSerializer(serializers.ModelSerializer):
         contact_storage.save_contact(self.context['environment'], contact)
         return contact
 
+    def update(self, contact, validated_data):
+        validated_data = {k: v for k, v in validated_data.items() if v is not None }
+        for attr, value in validated_data.items():
+            setattr(contact, attr, value)
+        contact_storage.save_contact(self.context['environment'], contact)
+        return contact
+
     class Meta:
         model = Contact
         fields = ['url', 'key', 'name', 'contact_data', 'channel_data']
