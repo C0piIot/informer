@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.module_loading import import_string
 from django.conf import settings
 from rest_framework.reverse import reverse
+from contacts.rest_permissions import HasContactPermission
 
 contact_storage = import_string(settings.CONTACT_STORAGE)
 
@@ -67,11 +68,13 @@ class ContactViewSet(
     ContextAwareViewSetMixin,
     GenericViewSet):
     serializer_class = ContactSerializer
-    permission_classes = [HasEnvironmentPermission]
+    permission_classes = [HasContactPermission]
     queryset = Contact.objects.none()
 
     def get_object(self):
-        return contact_storage.get_contact(self.current_environment, self.kwargs['pk'])
+        contact = contact_storage.get_contact(self.current_environment, self.kwargs['pk'])
+        self.check_object_permissions(self.request, contact)
+        return contact
 
 
     def perform_destroy(self, instance):
