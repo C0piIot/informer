@@ -25,7 +25,7 @@ class HasContactPermission(HasEnvironmentPermission):
         if auth[0].lower() != self.keyword.lower().encode():
             return False
 
-        return auth[1] == obj.public_key.encode()
+        return auth[1] == obj.auth_key.encode()
 
 
 

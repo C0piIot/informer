@@ -58,7 +58,7 @@ class ContactSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Contact
-        fields = ['url', 'key', 'public_key', 'name', 'contact_data', 'channel_data']
+        fields = ['url', 'key', 'auth_key', 'name', 'contact_data', 'channel_data']
 
 
 class ContactViewSet(

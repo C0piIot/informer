@@ -18,15 +18,15 @@ class Contact(models.Model):
     index6 = models.CharField(_('index 6'), max_length=100, blank=True)
     contact_data = models.JSONField(_('contact data'), default=dict, help_text=_('Contact data will be available for use in flow templates'), blank=True)
     channel_data = models.JSONField(_('channel data'), default=dict)
-    public_key = models.CharField(_('public key'), max_length=40)
+    auth_key = models.CharField(_('auth key'), max_length=40)
 
     def __str__(self):
         return self.name
 
     def save(self, *args, **kwargs):
         self.site = self.environment.site
-        if not self.public_key:
-            self.public_key = Token.generate_key()
+        if not self.auth_key:
+            self.auth_key = Token.generate_key()
         super().save(*args, **kwargs)
 
     def set_channel_data(self, channel_type, data):
