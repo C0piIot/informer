@@ -16,6 +16,7 @@ urlpatterns = [
         path('contacts/', include('contacts.urls')),    
     ])),
     path('accounts/', include('accounts.urls')),
+    path('inbox/', include('inbox.urls')),
     path('admin/', admin.site.urls),
     path('api/', include([
         path('auth/', include('rest_framework.urls')),

@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'flows.apps.FlowsConfig',
     'contacts.apps.ContactsConfig',
+    'inbox.apps.InboxConfig'
 ]
 
 MIDDLEWARE = [
