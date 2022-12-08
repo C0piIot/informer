@@ -20,9 +20,9 @@ services:
     container_name: informer_app
     command: >
       sh -c "python manage.py migrate &&
-             python manage.py runserver 0.0.0.0:80"
+             python manage.py runserver 0.0.0.0:8080"
     ports:
-      - "80:80"
+      - "8080:8080"
 
   informer_worker:
     <<: *informer-django
@@ -39,6 +39,3 @@ services:
     environment:
       MYSQL_DATABASE: gotrendier_co
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-    ports:
-      - "3306:3306"
-  
