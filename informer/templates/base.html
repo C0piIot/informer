@@ -70,6 +70,29 @@
                     </li>
                   </ul>
                 </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="help" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {% translate 'Help' %}
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="environmentSelector">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        {% trans "Contextual help" %}
+                      </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        {% trans "FAQs" %}
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        {% trans "Get support" %}
+                      </a>
+                    </li>
+                  </ul>
+                </li>
               </ul>
             {% endif %}
           </div>
