@@ -21,16 +21,15 @@ class Email(FlowStep):
         return "%s %s" % (super().__str__(), self.subject)
 
     def step_run(self, flow_run):
-        contact = flow_run.contact()
         email_channel = EmailChannel.objects.get(site=self.site)
 
-        if channel_data := contact.get_channel_data(email_channel.content_type.model):
+        if channel_data := flow_run.contact.get_channel_data(email_channel.content_type.model):
             subject = Template(self.subject)
             text_body = Template(self.text_body)
             html_body = Template(self.html_body)
 
             context = flow_run.event_payload.copy()
-            context.update({ 'contact': contact })
+            context.update({ 'contact': flow_run.contact })
             context.update(flow_run.flow_data)
 
             html_context = Context(context)

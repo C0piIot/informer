@@ -16,17 +16,16 @@ class Push(FlowStep):
         return "%s %s" % (super().__str__(), self.title)
 
     def step_run(self, flow_run):
-        contact = flow_run.contact()
         push_channel = PushChannel.objects.get(site=self.site)
 
-        if channel_data := contact.get_channel_data(push_channel.content_type.model):
+        if channel_data := flow_run.contact.get_channel_data(push_channel.content_type.model):
             title = Template(self.title)
             body = Template(self.body)
             url = Template(self.url)
 
             text_context = Context(flow_run.event_payload, autoescape=False)
             text_context.update({
-                'contact': contact,
+                'contact': flow_run.contact,
             })
 
             response = push_channel.send_push(

@@ -59,6 +59,7 @@ class FlowRun(models.Model):
         return import_string(settings.FLOW_LOG_STORAGE).get_flow_logs(self.site, self.pk)
 
 
+    @property
     def contact(self):
         if self._contact is None:
             self._contact = import_string(settings.CONTACT_STORAGE).get_contact(self.environment, self.contact_key)

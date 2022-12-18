@@ -18,7 +18,6 @@ class Inbox(FlowStep):
         return "%s %s" % (super().__str__(), self.title)
 
     def step_run(self, flow_run):
-        contact = flow_run.contact()
         text_context = Context(flow_run.event_payload, autoescape=False)
         title = Template(self.title)
         message = Template(self.message)
@@ -29,7 +28,7 @@ class Inbox(FlowStep):
         inbox_entry = InboxEntry(
             site=flow_run.site,
             environment=flow_run.environment,
-            contact_key=contact.key,
+            contact_key=flow_run.contact.key,
             title=title.render(text_context),
             message=message.render(text_context),
             url=url.render(text_context),

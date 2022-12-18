@@ -22,10 +22,9 @@ class Webhook(FlowStep):
 
     def step_run(self, flow_run):
 
-        contact = flow_run.contact()
         context = Context(flow_run.event_payload, autoescape=False)
         context.update({
-            'contact': contact,
+            'contact': flow_run.contact,
         })
 
         body = Template(self.body).render(context)
