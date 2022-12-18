@@ -7,20 +7,16 @@ from django.utils.module_loading import import_string
 from django.conf import settings
 from django.urls import reverse
 from django.contrib.sites.models import Site
+from contacts.models import RelatedContactModel
 import logging
 
 logger = logging.getLogger()
 
-class FlowRun(models.Model):
-    _contact = None
-
+class FlowRun(RelatedContactModel):
     id = models.UUIDField(_('id'), primary_key=True, default=uuid4, editable=False)
-    site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='+', editable=False)
-    environment = models.ForeignKey('accounts.Environment', on_delete=models.CASCADE, verbose_name=_('environment'),related_name='+', editable=False)
     start = models.DateTimeField(_('start'), auto_now_add=True)
     flow_revision = models.ForeignKey(Flow, on_delete=models.PROTECT, verbose_name=_('flow'), editable=False)
     flow_id = models.UUIDField(_('id'), editable=False)
-    contact_key = models.CharField(_('contact key'), max_length=100)
     event_payload = models.JSONField(_('event payload'), default=dict, blank=True)
     flow_data = models.JSONField(_('flow data'), default=dict)
     group_key = models.CharField(_('group_key'), max_length=200, blank=True, editable=False)
@@ -57,13 +53,6 @@ class FlowRun(models.Model):
 
     def get_logs(self):
         return import_string(settings.FLOW_LOG_STORAGE).get_flow_logs(self.site, self.pk)
-
-
-    @property
-    def contact(self):
-        if self._contact is None:
-            self._contact = import_string(settings.CONTACT_STORAGE).get_contact(self.environment, self.contact_key)
-        return self._contact
 
     @classmethod
     def get_flow_runs(cls, environment, flow, start_key=None, amount=50, **filters):

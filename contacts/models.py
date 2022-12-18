@@ -47,3 +47,25 @@ class Contact(models.Model):
             models.Index(fields=('environment', 'index5')),
             models.Index(fields=('environment', 'index6')),
         )
+
+class RelatedContactModel(models.Model):
+    _contact = None
+    contact_key = models.CharField(_('contact key'), max_length=100)
+    environment = models.ForeignKey('accounts.Environment', on_delete=models.CASCADE, verbose_name=_('environment'),related_name='+', editable=False)
+    site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='+', editable=False)
+    
+    @property
+    def contact(self):
+        if self._contact is None:
+            self._contact = import_string(settings.CONTACT_STORAGE).get_contact(self.environment, self.contact_key)
+        return self._contact
+
+    @contact.setter
+    def set_contact(contact):
+        self._contact = contact
+        self.contact_key = contact.key
+        self.environment = contact.environment
+        self.site = contact.site
+
+    class Meta:
+        abstract = True
