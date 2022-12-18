@@ -37,3 +37,6 @@ jobs:
       run: |
         coverage run --source='.' manage.py test
         coverage report
+
+    - uses: superfly/flyctl-actions/setup-flyctl@master
+    - run: flyctl deploy --remote-only
