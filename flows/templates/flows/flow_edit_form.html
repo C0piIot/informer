@@ -146,10 +146,11 @@
     </div>
     {% csrf_token %}
 </form>
-{% for type, form in new_step_forms.items %}
+{% for content_type, form in new_step_forms.items %}
+{% with type=content_type.model %}
 <form class="offcanvas offcanvas-end w-75{{ form.errors|yesno:' show,' }} {{ type }}" 
     tabindex="-1" aria-labelledby="form-add-{{ type }}-title" method="post" id="form-add-{{ type }}"
-    action="{% url 'flows:step_create' current_environment.slug flow.id type %}">
+    action="{% url 'flows:step_create' current_environment.slug flow.id content_type.pk %}">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="form-add-{{ type }}-title">{% blocktranslate %}Add {{ type }} step{% endblocktranslate %}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="{% translate 'Close' %}"></button>
@@ -163,6 +164,7 @@
     </div>
     {% csrf_token %}
 </form>
+{% endwith type=content_type.model %}
 {% endfor %}
 
 {% for form in step_forms.values %}

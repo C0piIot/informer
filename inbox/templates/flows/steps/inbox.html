@@ -1,0 +1,26 @@
+{% load i18n django_bootstrap5 %}
+{% bootstrap_field form.title %}
+<p class="mb-2">{% translate "Title preview" %}</p>
+<output class="w-100 border rounded mb-3 p-2" for="{{ form.title.id_for_label }}">
+  <pre class="mb-0 title d-inline align-middle"></pre>&nbsp;
+</output>
+{% bootstrap_field form.url %}
+<p class="mb-2">{% translate "Url preview" %}</p>
+<output class="w-100 border rounded mb-3 p-2" for="{{ form.url.id_for_label }}">
+  <pre class="mb-0 url d-inline align-middle"></pre>&nbsp;
+</output>
+<div class="row">
+  <div class="col-lg-6">
+    {% bootstrap_field form.message %}
+  </div>
+  <div class="col-lg-6 d-flex flex-column">
+    <p class="mb-2">{% translate "Text preview" %}</p>
+    <output class="w-100 border rounded mb-3 flex-grow-1 d-flex align-items-stretch p-1" for="{{ form.message.id_for_label }}">
+      <pre class="w-100 mb-0 message"></pre>
+    </output>
+  </div>
+</div>
+{% bootstrap_field form.preview_context %}
+<p class="form-text">
+  {% blocktranslate %}Variable interpolation and <a href="https://docs.djangoproject.com/en/dev/ref/templates/builtins/" target="_blank">django template filters</a> available.{% endblocktranslate %}
+</p>

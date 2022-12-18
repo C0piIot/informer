@@ -1,5 +1,5 @@
 from django.apps import AppConfig
-
+#
 
 class InboxConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
@@ -14,3 +14,7 @@ class InboxConfig(AppConfig):
         for name, value in self.DEFAULT_SETTINGS.items():
             if not hasattr(settings, name):
                 setattr(settings, name, value)
+
+        from .forms import InboxForm
+        from flows.forms import step_form_classes
+        step_form_classes[InboxForm.Meta.model] = InboxForm

@@ -9,7 +9,9 @@
 			<form class="card" method="post" action="{% url 'login' %}">
   				<div class="card-body">
     				<h5 class="card-title">{% translate "Sign in" %}</h5>
-					{% bootstrap_form form %}
+    				{% bootstrap_form_errors form type='non_fields' %}
+					{% bootstrap_field form.username server_side_validation=False %}
+					{% bootstrap_field form.password server_side_validation=False %}
 					{% csrf_token %}
 					<div class="text-end">
 						<button type="submit" class="btn btn-primary">

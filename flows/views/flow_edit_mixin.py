@@ -24,7 +24,7 @@ class FlowEditMixin(CurrentEnvironmentMixin):
             'flow_form' : FlowForm(instance=self.flow),
             'test_form' : TestForm(flow=self.flow, environment=self.current_environment),
             'step_types': content_types.values(),
-            'new_step_forms': { content_types[model].model : form_class() for model, form_class in step_form_classes.items() },
+            'new_step_forms': { content_types[model] : form_class() for model, form_class in step_form_classes.items() },
             'step_forms': { 
                 step.order: step_form_classes[type(step.get_typed_instance())](instance=step.get_typed_instance(), auto_id='id_%%s_%d' % step.pk) 
                     for step in self.flow.steps.all()

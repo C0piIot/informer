@@ -24,7 +24,7 @@ urlpatterns = [
             path('move/', StepMove.as_view(), name='step_move'),
             path('remove/', StepRemove.as_view(), name='step_remove'), 
         ])),
-        path('<slug:type>/create/', StepCreate.as_view(), name='step_create'),
+        path('<int:content_type_id>/create/', StepCreate.as_view(), name='step_create'),
         path('runs/', include([
             path('', FlowRunList.as_view(), name='runs'),
             path('<uuid:flow_run_id>/', FlowRunDetail.as_view(), name='run'),  
