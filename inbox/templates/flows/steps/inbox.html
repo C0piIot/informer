@@ -2,21 +2,38 @@
 {% bootstrap_field form.title %}
 <p class="mb-2">{% translate "Title preview" %}</p>
 <output class="w-100 border rounded mb-3 p-2" for="{{ form.title.id_for_label }}">
-  <pre class="mb-0 title d-inline align-middle"></pre>&nbsp;
+  <pre class="mb-0 d-inline align-middle" data-preview-from="title" data-preview-mode="text"></pre>&nbsp;
 </output>
 {% bootstrap_field form.url %}
 <p class="mb-2">{% translate "Url preview" %}</p>
 <output class="w-100 border rounded mb-3 p-2" for="{{ form.url.id_for_label }}">
-  <pre class="mb-0 url d-inline align-middle"></pre>&nbsp;
+  <pre class="mb-0 d-inline align-middle" data-preview-from="url" data-preview-mode="text"></pre>&nbsp;
+</output>
+
+{% bootstrap_field form.image %}
+<p class="mb-2">{% translate "Image url preview" %}</p>
+<output class="w-100 border rounded mb-3 p-2" for="{{ form.image.id_for_label }}">
+  <pre class="mb-0 d-inline align-middle" data-preview-from="image" data-preview-mode="text"></pre>&nbsp;
 </output>
 <div class="row">
   <div class="col-lg-6">
     {% bootstrap_field form.message %}
   </div>
   <div class="col-lg-6 d-flex flex-column">
-    <p class="mb-2">{% translate "Text preview" %}</p>
+    <p class="mb-2">{% translate "Message preview" %}</p>
     <output class="w-100 border rounded mb-3 flex-grow-1 d-flex align-items-stretch p-1" for="{{ form.message.id_for_label }}">
-      <pre class="w-100 mb-0 message"></pre>
+      <pre class="w-100 mb-0" data-preview-from="message" data-preview-mode="text"></pre>
+    </output>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6">
+    {% bootstrap_field form.entry_data %}
+  </div>
+  <div class="col-lg-6 d-flex flex-column">
+    <p class="mb-2">{% translate "Entry data preview" %}</p>
+    <output class="w-100 border rounded mb-3 flex-grow-1 d-flex align-items-stretch p-1" for="{{ form.entry_data.id_for_label }}">
+      <pre class="w-100 mb-0" data-preview-from="entry_data" data-preview-mode="text"></pre>
     </output>
   </div>
 </div>
