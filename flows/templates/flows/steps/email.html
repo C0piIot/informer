@@ -2,7 +2,7 @@
 {% bootstrap_field form.subject %}
 <p class="mb-2">{% translate "Subject preview" %}</p>
 <output class="w-100 border rounded mb-3 p-2" for="{{ form.subject.id_for_label }}">
-  <pre class="mb-0 subject d-inline-block align-middle"></pre>&nbsp;
+  <pre class="mb-0 d-inline-block align-middle" data-preview-from="subject" data-preview-mode="plain"></pre>&nbsp;
 </output>
 <ul class="nav nav-tabs" id="tabs-{{ form.instance.pk|default:'new' }}" role="tablist">
   <li class="nav-item" role="presentation">

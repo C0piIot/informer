@@ -2,12 +2,12 @@
 {% bootstrap_field form.title %}
 <p class="mb-2">{% translate "Title preview" %}</p>
 <output class="w-100 border rounded mb-3 p-2" for="{{ form.title.id_for_label }}">
-  <pre class="mb-0 title d-inline align-middle"></pre>&nbsp;
+  <pre class="mb-0 d-inline align-middle" data-preview-from="title" data-preview-mode="plain"></pre>&nbsp;
 </output>
 {% bootstrap_field form.url %}
 <p class="mb-2">{% translate "Url preview" %}</p>
 <output class="w-100 border rounded mb-3 p-2" for="{{ form.url.id_for_label }}">
-  <pre class="mb-0 url d-inline align-middle"></pre>&nbsp;
+  <pre class="mb-0 d-inline align-middle" data-preview-from="url" data-preview-mode="plain"></pre>&nbsp;
 </output>
 <div class="row">
   <div class="col-lg-6">
@@ -16,7 +16,7 @@
   <div class="col-lg-6 d-flex flex-column">
     <p class="mb-2">{% translate "Body preview" %}</p>
     <output class="w-100 border rounded mb-3 flex-grow-1 d-flex align-items-stretch p-1" for="{{ form.body.id_for_label }}">
-      <pre class="w-100 mb-0 body"></pre>
+      <pre class="w-100 mb-0" data-preview-from="body" data-preview-mode="plain"></pre>
     </output>
   </div>
 </div>

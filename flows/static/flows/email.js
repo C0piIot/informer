@@ -5,9 +5,7 @@ for (const form of document.querySelectorAll('form.email')) {
 
 	let timer = null;
 	const iframePreview = form.querySelector('iframe'),
-		subjectPreview = form.querySelector('pre.subject'),
 		textPreview = form.querySelector('pre.text'),
-		subjectControl = form.elements['subject'],
 		htmlBodyControl = form.elements['html_body'],
 		textBodyControl = form.elements['text_body'],
 		autoGenerateTextControl = form.elements['autogenerate_text'],
@@ -33,8 +31,6 @@ for (const form of document.querySelectorAll('form.email')) {
 				formData.set('mode', 'plain');
 				formData.set('message', textBodyControl.value);
 				fetch(previewUrl, { method: 'POST', body: formData }).then(async response => textPreview.textContent = await response.text());
-				formData.set('message', subjectControl.value);
-				fetch(previewUrl, { method: 'POST', body: formData }).then(async response => subjectPreview.textContent = await response.text());
 				timer = null;
 			}, 500);
 		};
