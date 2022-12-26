@@ -203,3 +203,7 @@ DRAMATIQ_AUTODISCOVER_MODULES = ["executors.dramatiq_executor"]
 
 if env.str("CONTACT_STORAGE", default=False):
     CONTACT_STORAGE = env.str("CONTACT_STORAGE")
+
+
+if env.str("INBOX_ENTRY_STORAGE", default=False):
+    INBOX_ENTRY_STORAGE = env.str("INBOX_ENTRY_STORAGE")

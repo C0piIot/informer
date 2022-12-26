@@ -17,3 +17,7 @@ COPY . /usr/src/app
 RUN python manage.py collectstatic --no-input
 
 CMD ["bash", "/usr/src/app/entrypoint.sh"]
+
+
+FROM dev AS trendier
+RUN pip install mysql-connector-python boto3
