@@ -15,7 +15,7 @@ contact_storage = import_string(settings.CONTACT_STORAGE)
 class InboxEntrySerializer(serializers.ModelSerializer):
     class Meta:
         model = InboxEntry
-        fields = ['key', 'date', 'title', 'message', 'url', 'image', 'read', 'entry_data']
+        fields = ['key', 'contact_key', 'date', 'title', 'message', 'url', 'image', 'read', 'entry_data']
 
 
 class InboxEntryViewSet(
@@ -55,17 +55,15 @@ class InboxEntryViewSet(
 
     def list(self, request, *args, **kwargs):
 
-        inbox_entries = inbox_storage.get_entries(self.current_environment, self.contact, start_key=None, amount=50)
-        #queryset = self.filter_queryset(self.get_queryset())
-
+        inbox_entries, cursor = inbox_storage.get_entries(self.current_environment, self.contact, cursor=request.GET.get('cursor', None), amount=50)
+        
         #page = self.paginate_queryset(queryset)
         #if page is not None:
         #    serializer = self.get_serializer(page, many=True)
         #    return self.get_paginated_response(serializer.data)
 
-        #serializer = self.get_serializer(queryset, many=True)
-        #return Response(serializer.data)
-        return Response([])
+        serializer = self.get_serializer(inbox_entries, many=True)
+        return Response(serializer.data)
 
 
     def get_object(self):

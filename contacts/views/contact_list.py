@@ -11,19 +11,20 @@ class ContactList(CurrentEnvironmentMixin, TemplateView):
 	def get_context_data(self, **kwargs):
 		context_data = super().get_context_data(**kwargs)
 		context_data.update({
-			'object_list': import_string(settings.CONTACT_STORAGE).get_contacts(
-				self.current_environment,
-				start_key=self.request.GET.get('start_key', None),
-				filter_key=self.request.GET.get('filter_key', None),
-				filter_name=self.request.GET.get('filter_name', None),
-			),
 			'amount' : self.amount,
 			'form' : ContactSearchForm(self.request.GET),
 			'next_url': None
 		})
-		if 0 < len(context_data['object_list']) >= self.amount:
+		context_data['object_list'], cursor = import_string(settings.CONTACT_STORAGE).get_contacts(
+			self.current_environment,
+			cursor=self.request.GET.get('cursor', None),
+			filter_key=self.request.GET.get('filter_key', None),
+			filter_name=self.request.GET.get('filter_name', None),
+		)
+		
+		if cursor:
 			query = self.request.GET.copy()
-			query['start_key'] = context_data['object_list'][-1].key
+			query['cursor'] = cursor
 			context_data['next_url'] = '%s?%s' % (self.request.path, query.urlencode())
 
 		return context_data

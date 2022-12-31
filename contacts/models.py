@@ -61,11 +61,11 @@ class RelatedContactModel(models.Model):
         return self._contact
 
     @contact.setter
-    def set_contact(contact):
-        self._contact = contact
-        self.contact_key = contact.key
-        self.environment = contact.environment
-        self.site = contact.site
+    def contact(self, new_contact):
+        self._contact = new_contact
+        self.contact_key = new_contact.key
+        self.environment = new_contact.environment
+        self.site = new_contact.site
 
     class Meta:
         abstract = True
