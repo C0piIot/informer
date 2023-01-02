@@ -119,6 +119,11 @@
                 👤 {% trans "Contacts" %}
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link{% if request.resolver_match.app_name == 'inbox' %} active{% endif %}" href="{% url 'inbox:list' current_environment.slug %}">
+                📥 {% trans "Inboxes" %}
+              </a>
+            </li>
           </ul>
         </nav>
         <div class="col-md-10">

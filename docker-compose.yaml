@@ -32,10 +32,3 @@ services:
   informer_redis:
     image: redis:alpine
     container_name: informer_redis
-
-  informer_mysql:
-    container_name: informer_mysql
-    image: mysql
-    environment:
-      MYSQL_DATABASE: gotrendier_co
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"

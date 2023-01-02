@@ -13,10 +13,10 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('flows/<slug:environment>/', include([
         path('', include('flows.urls')),
-        path('contacts/', include('contacts.urls')),    
+        path('contacts/', include('contacts.urls')),
+        path('inbox/', include('inbox.urls')),
     ])),
     path('accounts/', include('accounts.urls')),
-    path('inbox/', include('inbox.urls')),
     path('admin/', admin.site.urls),
     path('api/', include([
         path('auth/', include('rest_framework.urls')),
