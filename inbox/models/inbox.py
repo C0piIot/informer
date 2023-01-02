@@ -15,7 +15,7 @@ class Inbox(FlowStep):
     preview_context = models.JSONField(_('preview context'), blank=True, default=dict)
 
     def __str__(self):
-        return "%s %s" % (super().__str__(), self.title)
+        return "%s \"%s\"" % (super().__str__(), self.title)
 
     def step_run(self, flow_run):
         text_context = Context(flow_run.event_payload, autoescape=False)
