@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block title %}{{ object }} - {% translate "Inboxes" %} - {{ current_environment }} - {{ block.super }}{% endblock title %}
+
+{% block main-content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'inbox:list' current_environment.slug %}">{% blocktranslate %}{{ current_environment}} inboxes{% endblocktranslate %}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{% blocktranslate %}{{ object }} inbox{% endblocktranslate %}</li>
+  </ol>
+</nav>
+{{ block.super }}
+{% for inbox_entry in object_list %}
+<div class="card mb-3{% if not inbox_entry.read %} border-2 border-secondary{% endif %}">
+  <div class="row g-0">
+    {% if inbox_entry.image %}
+    <a class="col-md-4" href="{{ inbox_entry.image }}" target="_blank">
+      <img src="{{ inbox_entry.image }}" class="img-fluid rounded-start" alt="">
+    </a>
+    {% endif %}
+    <div class="col">
+      <div class="card-body">
+        {% if inbox_entry.title %}
+          <h5 class="card-title">{{ inbox_entry.title }}</h5>
+        {% endif %}
+        <p class="card-text">{{ inbox_entry.message }}</p>
+        <p class="card-text">
+          <small class="text-muted" title="{{ inbox_entry.date|date:'SHORT_DATETIME_FORMAT' }}">
+            {% blocktranslate with sent=inbox_entry.date|timesince %}Sent: {{ sent }}{% endblocktranslate %}
+          </small>
+          {% if inbox_entry.read %}
+          - <small class="text-muted" title="{{ inbox_entry.read|date:'SHORT_DATETIME_FORMAT' }}">
+            {% blocktranslate with read=inbox_entry.read|timesince %}Read: {{ read }}{% endblocktranslate %}
+          </small>
+          {% endif %}
+        </p>
+        {% if inbox_entry.url %}
+          <p class="card-text text-end">
+            <a class="btn btn-outline-primary" href="{{ inbox_entry.url }}" target="_blank" title="{{ inbox_entry.url }}">
+              {% translate "Visit target" %}
+            </a>
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% if inbox_entry.entry_data %}
+  <div class="card-footer">
+    <details>
+      <summary>{% translate "Show entry data" %}</summary>
+      <code>{{ inbox_entry.entry_data }}</code>
+    </details>
+  </div>
+  {% endif %}
+</div>
+{% endfor %}
+{% endblock main-content %}
+
+{% block body-content %}
+{{ block.super }}
+{% if next_url %}
+<nav class="container" aria-label="{% translate 'Inbox list pagination' %}">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+        <a class="page-link" href="{{ next_url }}">
+            {% translate "Next" %}
+        </a>
+    </li>
+  </ul>
+</nav>
+{% endif %}
+{% endblock body-content %}

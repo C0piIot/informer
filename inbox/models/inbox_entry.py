@@ -15,7 +15,7 @@ class InboxEntry(RelatedContactModel):
     entry_data = models.JSONField(_('entry data'), default=dict, help_text=_('Additional data for custom implementations'), blank=True)
 
     def __str__(self):
-        return self.title
+        return self.message
 
     class Meta:
         verbose_name = _('inbox entry')

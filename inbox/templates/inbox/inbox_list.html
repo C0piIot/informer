@@ -1,0 +1,76 @@
+{% extends 'list.html' %}
+{% load i18n static django_bootstrap5 %}
+
+{% block title %}{% translate "Inboxes" %} - {{ current_environment }} - {{ block.super }}{% endblock title %}
+
+{% block main-content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">{% blocktranslate %}{{ current_environment}} inboxes{% endblocktranslate %}</li>
+  </ol>
+</nav>
+{{ block.super }}
+{% endblock main-content %}
+
+{% block table %}<form method="GET" action="{{ request.path }}">{{ block.super }}</form>{% endblock table %}
+
+{% block colgroup %}<col class="col-2"><col class="col-8"><col class="col-2">{% endblock colgroup %}
+
+{% block thead-tr %}
+<th>{% translate "Contact Key" %}</th>
+<th>{% translate "Name" %}</th>
+{% endblock thead-tr %}
+
+{% block tbody-top %}
+<tr class="table-secondary">
+    <td>
+        {% bootstrap_field form.filter_key show_label=False wrapper_class='mb-0' server_side_validation=form.errors size='sm' %}
+    </td>
+    <td>
+        {% bootstrap_field form.filter_name show_label=False wrapper_class='mb-0' server_side_validation=form.errors size='sm' %}
+    </td>
+    <td class="text-end">
+        <div class="btn-group" role="group" aria-label="{% translate 'Filtering' %}">
+            <button type="submit" class="btn btn-primary btn-sm">{% translate "Search" %}</button>
+            <a href="{{ request.path }}" class="btn btn-outline-primary btn-sm">
+                {% translate "Reset" %}
+            </a>
+        </div>
+    </td>
+</tr>
+{% endblock tbody-top %}
+
+
+{% block object-tr %}
+<td>{{ object.key }}</td>
+<td>
+    <a href="{% url 'inbox:inbox_entry_list' current_environment.slug object.key %}" title="{% translate 'View' %}" class="text-decoration-none">
+        {{ object }}   
+    </a>
+</td>
+{% endblock object-tr %}
+
+{% block object-actions %}
+<a title="{% translate 'View' %}" class="btn btn-sm btn-outline-primary" href="{% url 'inbox:inbox_entry_list' current_environment.slug object.key %}">
+    {% translate "View" %}
+</a>
+{% endblock object-actions %}
+
+{% block empty-tr %}<td colspan="3" class="text-center fst-italic">{% translate "No contacts found" %}</td>{% endblock empty-tr %}
+
+{% block body-content %}
+{% with channels=current_environment.site.channels.all %}
+{{ block.super }}
+{% endwith %}
+{% if next_url %}
+<nav class="container" aria-label="{% translate 'Inbox list pagination' %}">
+  <ul class="pagination justify-content-center">
+    <li class="page-item">
+        <a class="page-link" href="{{ next_url }}">
+            {% translate "Next" %}
+        </a>
+    </li>
+  </ul>
+</nav>
+{% endif %}
+{% endblock body-content %}
