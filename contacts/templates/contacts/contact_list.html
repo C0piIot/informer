@@ -57,7 +57,9 @@
 <td>{{ object }}</td>
 <td>
 {% for channel in channels %}
-    {% if channel.content_type.model in object.channel_data %}{{ channel }}{% endif %}
+    {% if channel.content_type.model in object.channel_data %}{% with typed_channel=channel.get_typed_instance %}
+        <span title="{{ typed_channel }}">{{ typed_channel.ICON }}</span>
+    {% endwith %}{% endif %}
 {% endfor %}
 </td>
 {% endblock object-tr %}

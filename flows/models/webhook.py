@@ -15,8 +15,7 @@ class Webhook(FlowStep):
     method = models.CharField(_('method'), max_length=6, choices=((m, m) for m in METHODS))
     contenttype = models.CharField(_('Content type'), max_length=50, choices=((e, e) for e in CONTENT_TYPES))
     body = models.TextField(_('body'), blank=True)
-    preview_context = models.JSONField(_('preview context'), blank=True, default=dict)
-
+    
     def __str__(self):
         return "%s %s %s" % (super().__str__(), self.method, urlparse(self.url).netloc)
 

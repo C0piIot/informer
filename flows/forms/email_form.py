@@ -10,4 +10,4 @@ class EmailForm(ModelForm):
 
     class Meta:
         model = Email
-        fields = ('subject', 'html_body', 'text_body', 'autogenerate_text', 'from_email', 'preview_context',)
+        fields = ('subject', 'html_body', 'text_body', 'autogenerate_text', 'from_email',)

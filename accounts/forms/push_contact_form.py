@@ -22,7 +22,7 @@ class FCMTokensField(forms.Field):
     fcm_token_validation = re.compile("^[0-9A-Za-z_:-]{100,500}$")
 
     def to_python(self, value):
-        lines = [s.strip() for s in value.splitlines()]
+        lines = [s.strip() for s in value.splitlines()] if value else []
         for line in lines:
             if not self.fcm_token_validation.match(line):
                 raise ValidationError(_('Invalid tokens'))

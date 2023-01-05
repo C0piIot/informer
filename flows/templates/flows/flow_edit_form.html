@@ -24,7 +24,7 @@
   </ol>
 </nav>
 {{ block.super }}
-<div class="container" data-preview-url="{% url 'flows:preview' current_environment.slug %}">
+<div class="container" data-preview-url="{% url 'flows:preview' current_environment.slug flow.id %}">
 	<h1>{% trans "Edit flow" %}</h1>
     <div class="row mb-4">
         <div class="col-md-7 order-md-last step-forms">

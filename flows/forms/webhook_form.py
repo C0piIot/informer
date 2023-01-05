@@ -4,4 +4,4 @@ from flows.models import Webhook
 class WebhookForm(ModelForm):
     class Meta:
         model = Webhook
-        fields = ('url', 'method','contenttype', 'body', 'preview_context')
+        fields = ('url', 'method','contenttype', 'body')

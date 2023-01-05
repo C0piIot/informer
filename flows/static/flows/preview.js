@@ -16,7 +16,6 @@ for (const form of document.getElementsByTagName('form')) {
 				if(source.value) {
 					const formData = new FormData();
 					formData.set('mode', target.dataset.previewMode ?? 'html');
-					formData.set('context', form.elements[target.dataset.previewContext ?? 'preview_context'].value ?? '');
 					formData.set('message', source.value);
 					fetch(previewUrl, { method: 'POST', body: formData }).then(async response => target.textContent = await response.text());
 				} else {

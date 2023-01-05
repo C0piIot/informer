@@ -1,7 +1,6 @@
 from accounts.views import CurrentEnvironmentMixin
 from flows.models import Flow
 
-
 class FlowFilteredMixin(CurrentEnvironmentMixin):
     model = Flow
 

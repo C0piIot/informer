@@ -13,7 +13,7 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{% url 'contacts:list' current_environment.slug %}">{% blocktranslate %}{{ current_environment}} contacts{% endblocktranslate %}</a></li>
     <li class="breadcrumb-item active" aria-current="page">
-    {% if form.instance.pk %}{{ form.instance }}{% else %}{% translate "New contact" %}{% endif %}
+      {{ form.instance.name|default:_("New contact") }}
   </li>
   </ol>
 </nav>

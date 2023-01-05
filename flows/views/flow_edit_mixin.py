@@ -16,13 +16,11 @@ class FlowEditMixin(CurrentEnvironmentMixin):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-
         content_types = ContentType.objects.get_for_models(*step_form_classes.keys())
-
         context_data.update({
             'flow' : self.flow,
             'flow_form' : FlowForm(instance=self.flow),
-            'test_form' : TestForm(flow=self.flow, environment=self.current_environment),
+            'test_form' : TestForm(flow=self.flow, environment=self.current_environment, initial={ 'event_payload': self.flow.preview_context }),
             'step_types': content_types.values(),
             'new_step_forms': { content_types[model] : form_class() for model, form_class in step_form_classes.items() },
             'step_forms': { 

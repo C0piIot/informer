@@ -8,8 +8,15 @@ class Group(FlowStep):
 
     ICON = '⏬'
     DATA_KEY = 'GROUP_%s'
-    window = models.DurationField(_('time window'))
-    key = models.SlugField(_('grouping key'), max_length=150)
+    window = models.DurationField(
+        _('time window'),
+        help_text=_('All flows for the same user will be merged withint the time window started with the first one')
+    )
+    key = models.SlugField(
+        _('grouping key'),
+        max_length=150,
+        help_text=_('Context data from each flow will be available in an array with the name GROUP_{grouping key}')
+    )
 
     def __str__(self):
         return "%s by %s ⏲️ %s" % (super().__str__(), self.key, self.window)
