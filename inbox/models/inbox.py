@@ -12,7 +12,6 @@ class Inbox(FlowStep):
     url = models.URLField(_('url'), blank=True, default='')
     image = models.URLField(_('image'), blank=True, default='')
     entry_data = models.JSONField(_('entry data'), default=dict, help_text=_('Additional data for custom implementations'), blank=True)
-    preview_context = models.JSONField(_('preview context'), blank=True, default=dict)
 
     def __str__(self):
         return "%s \"%s\"" % (super().__str__(), self.title)

@@ -4,4 +4,4 @@ from inbox.models import Inbox
 class InboxForm(ModelForm):
     class Meta:
         model = Inbox
-        fields = ('title', 'message', 'url', 'image', 'entry_data', 'preview_context',)
+        fields = ('title', 'message', 'url', 'image', 'entry_data',)

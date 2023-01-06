@@ -37,7 +37,7 @@
       <div class="accordion-body">
         <ul>
             {% for step in revision.steps.all %}
-                <li>{{ step }}</li>
+                <li>{{ step.get_typed_instance }}</li>
             {% endfor %}
         </ul>
         {% if current_environment not in revision.environments.all or request.site.environments.all|length > 1 %}

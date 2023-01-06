@@ -1,12 +1,13 @@
 from django.views.generic.detail import View
 from accounts.views import CurrentEnvironmentMixin
 from django.template import Template, Context
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from premailer import Premailer
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from flows.models import Flow
 from django.shortcuts import get_object_or_404
+from django.template import TemplateSyntaxError
 import json
 
 
@@ -24,8 +25,10 @@ class Preview(CurrentEnvironmentMixin, View):
 		render_mode = request.POST.get('mode', self.RENDER_MODE_HTML)
 		if render_mode not in self.RENDER_MODES:
 			render_mode = self.RENDER_MODE_HTML
-		response = Template(message).render(Context(flow.preview_context, autoescape=render_mode != self.RENDER_MODE_PLAIN))
-		if render_mode == self.RENDER_MODE_EMAIL and response:
-			response = self.premailer.transform(response)
-
-		return HttpResponse(response)
+		try:
+			response = Template(message).render(Context(flow.preview_context, autoescape=render_mode != self.RENDER_MODE_PLAIN))
+			if render_mode == self.RENDER_MODE_EMAIL and response:
+				response = self.premailer.transform(response)
+			return HttpResponse(response)
+		except TemplateSyntaxError as e:
+			return HttpResponseBadRequest(str(e))
