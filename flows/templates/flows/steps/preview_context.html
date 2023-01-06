@@ -1,0 +1,10 @@
+{% load i18n %}
+<details class="mb-3">
+    <summary>{% translate "Show preview context" %}</summary>
+    <code class="border rounded p-1 d-block">
+      {{ flow.preview_context }}
+    </code>
+    <p class="form-text">
+      {% blocktranslate %}Variable interpolation and <a href="https://docs.djangoproject.com/en/dev/ref/templates/builtins/" target="_blank">django template filters</a> available.{% endblocktranslate %}
+    </p>
+</details>
