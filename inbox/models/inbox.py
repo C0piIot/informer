@@ -4,6 +4,9 @@ from django.utils.translation import gettext_lazy as _
 from flows.models import FlowStep
 from .inbox_entry import InboxEntry
 from django.utils.module_loading import import_string
+from django.template import Template, Context
+from django.conf import settings
+import json
 
 class Inbox(FlowStep):
     ICON = '📥'
@@ -32,9 +35,9 @@ class Inbox(FlowStep):
             message=message.render(text_context),
             url=url.render(text_context),
             image=image.render(text_context),
-            entry_data=entry_data.render(text_context)
+            entry_data=json.loads(entry_data.render(text_context))
         )
-        import_string(settings.FLOW_LOG_STORAGE).save_entry(flow_run.environment, inbox_entry)
+        import_string(settings.INBOX_ENTRY_STORAGE).save_entry(inbox_entry)
         flow_run.log(FlowLog.INFO, "Inbox entry %s created" % str(inbox_entry.key))
         self.run_next(flow_run)
 

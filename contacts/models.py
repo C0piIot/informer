@@ -3,6 +3,8 @@ from django.utils.translation import gettext_lazy as _
 from uuid import uuid4 
 from django.contrib.sites.models import Site
 from rest_framework.authtoken.models import Token
+from django.utils.module_loading import import_string
+from django.conf import settings
 
 class Contact(models.Model):
 

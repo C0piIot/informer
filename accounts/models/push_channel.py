@@ -39,7 +39,6 @@ class PushChannel(Channel):
             return firebase_admin.initialize_app(firebase_admin.credentials.Certificate(self.firebase_credentials), name=self.firebase_app_name())
 
     def send_push(self, title, body, url, tokens):
-        firebase = self.get_firebase()
         
         response = messaging.send_multicast(
             messaging.MulticastMessage(
@@ -47,7 +46,8 @@ class PushChannel(Channel):
                    title=title,
                    body=body),
                 tokens=tokens
-            )
+            ),
+            app=self.get_firebase()
         )
 
         return { tokens[i]: r.success for i, r in enumerate(response.responses) } 
