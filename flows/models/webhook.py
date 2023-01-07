@@ -11,7 +11,7 @@ class Webhook(FlowStep):
     ICON = '🌐'
     CONTENT_TYPES = ('application/x-www-form-urlencoded', 'application/json', 'application/xml', 'text/plain', 'text/html')
     METHODS = ('GET', 'POST', 'PUT', 'PATCH', 'DELETE',)
-    url = models.URLField(_('url'))
+    url = models.CharField(_('url'), max_length=500)
     method = models.CharField(_('method'), max_length=6, choices=((m, m) for m in METHODS))
     contenttype = models.CharField(_('Content type'), max_length=50, choices=((e, e) for e in CONTENT_TYPES))
     body = models.TextField(_('body'), blank=True)

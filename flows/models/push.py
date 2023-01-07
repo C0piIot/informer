@@ -9,7 +9,7 @@ class Push(FlowStep):
     ICON = '🔔'
     title = models.CharField(_('title'), max_length=200)
     body = models.TextField(_('body'))
-    url = models.URLField(_('url'))
+    url = models.CharField(_('url'), max_length=500)
     
     def __str__(self):
         return "%s \"%s\"" % (super().__str__(), self.title)
