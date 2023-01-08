@@ -11,6 +11,7 @@ processes = []
   REDIS_URL = "redis://localhost"
   DATABASE_URL = "sqlite:////data//informer.sqlite"
   ROLLBAR_ENVIRONMENT = "fly"
+  ROLLBAR_CLIENT_TOKEN = "882f4c50682347a8bf598e628144dcbf"
   SWAP = "1"
 
 [build]

@@ -5,6 +5,7 @@ x-informer-django: &informer-django
     - "DEBUG=True"
     - "EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend"
     - "ROLLBAR_TOKEN=9d10822598ac487ba4a6f672d39941d5"
+    - "ROLLBAR_CLIENT_TOKEN=882f4c50682347a8bf598e628144dcbf"
     - "CACHE_URL=locmemcache://"
   build: 
     context: .

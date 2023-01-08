@@ -87,7 +87,8 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages'
+                'django.contrib.messages.context_processors.messages',
+                'informer.context_processors.rollbar_settings'
             ],
         },
     },
@@ -150,6 +151,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
 
+ROLLBAR_CLIENT_TOKEN = env('ROLLBAR_CLIENT_TOKEN', default='')
+
 ROLLBAR = {
     'access_token': env('ROLLBAR_TOKEN', default=''),
     'environment': env('ROLLBAR_ENVIRONMENT', default='development'),
@@ -160,6 +163,7 @@ ROLLBAR = {
         (PermissionDenied, 'ignored'),
     ],
 }
+
 
 LOGGING = {
     'version': 1,
