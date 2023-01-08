@@ -151,8 +151,9 @@ from django.core.exceptions import PermissionDenied
 
 ROLLBAR = {
     'access_token': env('ROLLBAR_TOKEN', default=''),
-    'environment': 'development' if DEBUG else 'production',
+    'environment': env('ROLLBAR_ENVIRONMENT', default='development'),
     'root': BASE_DIR,
+    'code_version': '1.0',
     'exception_level_filters': [
         (Http404, 'ignored'),
         (PermissionDenied, 'ignored'),

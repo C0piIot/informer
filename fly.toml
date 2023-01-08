@@ -10,6 +10,7 @@ processes = []
   CACHE_URL = "filecache:////cache"
   REDIS_URL = "redis://localhost"
   DATABASE_URL = "sqlite:////data//informer.sqlite"
+  ROLLBAR_ENVIRONMENT = "fly"
   SWAP = "1"
 
 [build]
