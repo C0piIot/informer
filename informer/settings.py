@@ -67,7 +67,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'accounts.middleware.CheckSiteMiddleware',
-    'hijack.middleware.HijackUserMiddleware'
+    'hijack.middleware.HijackUserMiddleware',
+    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
 ]
 
 if DEBUG:
@@ -178,6 +179,10 @@ LOGGING = {
             'level': env('DJANGO_LOG_LEVEL', default='INFO'),
         },
     },
+}
+
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'rollbar.contrib.django_rest_framework.post_exception_handler'
 }
 
 LOGIN_URL = 'login'
