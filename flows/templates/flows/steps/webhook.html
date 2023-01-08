@@ -4,12 +4,11 @@
 <output class="w-100 border rounded mb-3 p-2" for="{{ form.url.id_for_label }}">
   <pre class="mb-0 d-inline-block align-middle" data-preview-from="url" data-preview-mode="plain"></pre>&nbsp;
 </output>
-{% bootstrap_field form.method %}
-{% bootstrap_field form.contenttype %}
 <div class="row">
-  <div class="col-lg-6">
-    {% bootstrap_field form.body %}
-  </div>
+  <div class="col-lg-6">{% bootstrap_field form.method %}</div>
+  <div class="col-lg-6">{% bootstrap_field form.contenttype %}</div>
+  <div class="col-12">{% bootstrap_field form.skip_ssl %}</div>
+  <div class="col-lg-6">{% bootstrap_field form.body %}</div>
   <div class="col-lg-6 d-flex flex-column">
     <p class="mb-2">{% translate "Body preview" %}</p>
     <output class="w-100 border rounded mb-3 flex-grow-1 d-flex align-items-stretch p-1" for="{{ form.body.id_for_label }}">
