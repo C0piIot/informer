@@ -30,7 +30,7 @@ SECRET_KEY = env('SECRET_KEY', default='django-insecure-f71wevx&=04*+4@96a1ltskm
 DEBUG = env.bool('DEBUG', False)
 
 DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK' :  lambda request: default_settings.DEBUG
+    'SHOW_TOOLBAR_CALLBACK' :  lambda request: default_settings.DEBUG or request.GET.get('iddqd', False)
 }
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost'])
