@@ -29,9 +29,11 @@
 </div>
 {% endblock list-actions %}
 
-{% block colgroup %}<col class="col-10"><col class="col-2">{% endblock colgroup %}
+{% block colgroup %}<col class="col-9"><col class="col-1"><col class="col-2">{% endblock colgroup %}
 
-{% block thead-tr %}<th>{% translate "Channel" %}</th>{% endblock thead-tr %}
+{% block thead-tr %}
+<th>{% translate "Channel" %}</th>
+<th class="text-center">{% translate "Active" %}</th>{% endblock thead-tr %}
 
 {% block object-tr %}
 <td>
@@ -39,6 +41,7 @@
         {{ object }}   
     </a>
 </td>
+<td class="text-center">{{ object.enabled|yesno:"✔️,❌"}}</td>
 {% endblock object-tr %}
 
 {% block object-actions %}
@@ -50,7 +53,7 @@
 </button>
 {% endblock object-actions %}
 
-{% block empty-tr %}<td colspan="3" class="text-center fst-italic">{% translate "No channels found" %}</td>{% endblock empty-tr %}
+{% block empty-tr %}<td colspan="4" class="text-center fst-italic">{% translate "No channels found" %}</td>{% endblock empty-tr %}
 
 {% block body-content %}
 {{ block.super }}
