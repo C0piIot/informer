@@ -23,7 +23,7 @@ class FlowTriggerSerializer(serializers.ModelSerializer):
         flow_runs = []
         flow_run_storage = import_string(settings.FLOW_RUN_STORAGE)
         flow_run_executor = import_string(settings.FLOW_EXECUTOR)
-        for flow in Flow.objects.filter(environments=self.context['environment'], trigger=validated_data['event']):
+        for flow in Flow.objects.filter(environments=self.context['environment'], trigger=validated_data['event'], enabled=True):
             flow_run = FlowRun(
                 flow_revision = flow,
                 contact_key = validated_data['contact_key'],

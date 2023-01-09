@@ -20,29 +20,36 @@ class Email(FlowStep):
         return "%s \"%s\"" % (super().__str__(), self.subject)
 
     def step_run(self, flow_run):
-        email_channel = EmailChannel.objects.get(site=self.site)
+        if not (email_channel := EmailChannel.objects.get(site=self.site)):
+            flow_run.log(FlowLog.WARNING, "%s not sent: channel not configured")
+            return self.run_next()
 
-        if channel_data := flow_run.contact.get_channel_data(email_channel.content_type.model):
-            subject = Template(self.subject)
-            text_body = Template(self.text_body)
-            html_body = Template(self.html_body)
+        if not email_channel.enabled:
+            flow_run.log(FlowLog.WARNING, "%s not sent: channel disabled")
+            return self.run_next()
 
-            context = flow_run.event_payload.copy()
-            context.update({ 'contact': flow_run.contact })
-            context.update(flow_run.flow_data)
-
-            html_context = Context(context)
-            text_context = Context(context, autoescape=False)
-            
-            email_channel.send_mail(
-                subject.render(text_context),
-                text_body.render(text_context),
-                self.premailer.transform(html_body.render(html_context)),
-                self.from_email or email_channel.from_email,
-                channel_data['email']
-            )
-        else:
+        if not (channel_data := flow_run.contact.get_channel_data(email_channel.content_type.model)):
             flow_run.log(FlowLog.INFO, "%s not sent: user doesn't have channel data" % self)
+            return self.run_next()
+
+        subject = Template(self.subject)
+        text_body = Template(self.text_body)
+        html_body = Template(self.html_body)
+
+        context = flow_run.event_payload.copy()
+        context.update({ 'contact': flow_run.contact })
+        context.update(flow_run.flow_data)
+
+        html_context = Context(context)
+        text_context = Context(context, autoescape=False)
+        
+        email_channel.send_mail(
+            subject.render(text_context),
+            text_body.render(text_context),
+            self.premailer.transform(html_body.render(html_context)),
+            self.from_email or email_channel.from_email,
+            channel_data['email']
+        )
             
         self.run_next(flow_run)
 
