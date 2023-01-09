@@ -26,6 +26,9 @@
 {{ block.super }}
 <div class="container" data-preview-url="{% url 'flows:preview' current_environment.slug flow.id %}">
 	<h1>{% trans "Edit flow" %}</h1>
+    <div class="alert alert-warning" role="alert">
+      {% translate "Flow is disabled" %}
+    </div>
     <div class="row mb-4">
         <div class="col-md-7 order-md-last step-forms">
             <div class="card">
