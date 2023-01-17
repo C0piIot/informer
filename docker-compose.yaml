@@ -7,6 +7,8 @@ x-informer-django: &informer-django
     - "ROLLBAR_TOKEN=9d10822598ac487ba4a6f672d39941d5"
     - "ROLLBAR_CLIENT_TOKEN=882f4c50682347a8bf598e628144dcbf"
     - "CACHE_URL=locmemcache://"
+    - "DRAMATIQ_REDIS_URL=redis://informer_redis"
+    - "REDISTS_SERIES_URL=redis://informer_redis"
   build: 
     context: .
     target: "dev"
@@ -31,5 +33,7 @@ services:
     command: "python manage.py rundramatiq --reload"   
   
   informer_redis:
-    image: redis:alpine
+    #image: redis:alpine
+    image: redisfab/redistimeseries:1.8.5-arm64v8-jammy
     container_name: informer_redis
+    command: "redis-server --loadmodule /usr/lib/redis/modules/redistimeseries.so DUPLICATE_POLICY sum COMPACTION_POLICY sum:1M:1h;sum:30M:24h;sum:1d:30d ENCODING compressed"
