@@ -196,7 +196,7 @@ LOGOUT_REDIRECT_URL = 'home'
 DRAMATIQ_BROKER = {
     "BROKER": "dramatiq.brokers.redis.RedisBroker",
     "OPTIONS": {
-        "url": env.str("DRAMATIQ_REDIS_URL"),
+        "url": env.str("DRAMATIQ_REDIS_URL", default="redis://informer_redis"),
     },
     "MIDDLEWARE": [
         "dramatiq.middleware.Prometheus",
