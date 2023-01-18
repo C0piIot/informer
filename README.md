@@ -25,4 +25,9 @@ Track all the changes and revert to previous states with just a click.
 - (TODO)SMS
 
 ##### Observability and metrics
-Keep track of all your communications. TODO metrics
+Keep track of all your communications. 
+ - (TODO)Channel metrics
+ - (TODO)Flow metrics
+ - (TODO)Account metrics
+ - (TODO)Export registers
+

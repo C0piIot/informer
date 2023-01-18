@@ -217,3 +217,6 @@ if env.str("CONTACT_STORAGE", default=False):
 
 if env.str("INBOX_ENTRY_STORAGE", default=False):
     INBOX_ENTRY_STORAGE = env.str("INBOX_ENTRY_STORAGE")
+
+
+TIME_SERIES_STORAGE = env.str("TIME_SERIES_STORAGE", default="redists_series_storage.RedisTSSeriesStorage")
