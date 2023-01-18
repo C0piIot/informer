@@ -3,6 +3,7 @@
 Manage your application transactional messaging.
 
 ![Build](https://github.com/callmewind/informer/actions/workflows/build.yml/badge.svg)
+[![codecov](https://codecov.io/github/callmewind/informer/branch/master/graph/badge.svg?token=CVLWDQAYY8)](https://codecov.io/github/callmewind/informer)
 
 
 ##### Flow oriented
