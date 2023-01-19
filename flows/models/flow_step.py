@@ -44,13 +44,13 @@ class FlowStep(models.Model):
 
     def run(self, flow_run):
         typed_instance = self.get_typed_instance()
-        flow_run.log(FlowLog.INFO, 'Running flow step %s' % typed_instance)
+        flow_run.log(FlowLog.INFO, f"Running flow step {typed_instance}")
         return typed_instance.step_run(flow_run)
 
     def wake_up(self, flow_run):
         try:
             typed_instance = self.get_typed_instance()
-            flow_run.log(FlowLog.INFO, 'Waking up flow step %s' % typed_instance)
+            flow_run.log(FlowLog.INFO, f"Waking up flow step {typed_instance}")
             return typed_instance.step_wake_up(flow_run)
         except BaseException as err:
             flow_run.log(FlowLog.ERROR, err)
