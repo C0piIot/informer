@@ -44,6 +44,6 @@ jobs:
         curl -Os https://uploader.codecov.io/latest/linux/codecov
         chmod +x codecov
         ./codecov 
-
+        
     - uses: superfly/flyctl-actions/setup-flyctl@master
     - run: flyctl deploy --remote-only
