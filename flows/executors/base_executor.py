@@ -37,7 +37,7 @@ class BaseExecutor:
             environment, 
             uuid.UUID(flow_run_pk_hex)
         )
-        store_event(flow_run.environment, f"flow step {typed_instance}")
+        store_event(flow_run.environment, f"flow_start.{flow_run.flow_id}")
         try:
             if flow_step := flow_run.flow_revision.steps.first():
                 flow_step.run(flow_run)
