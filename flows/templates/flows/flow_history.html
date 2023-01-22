@@ -7,9 +7,7 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
      <li class="breadcrumb-item">
-        <a href="{% url 'flows:list' current_environment.slug %}">
-            {% blocktranslate %}{{ current_environment}} flows{% endblocktranslate %}
-        </a>
+        <a href="{% url 'flows:list' current_environment.slug %}">{% translate "Flows" %}</a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">
         {% blocktranslate with flow=object_list.first %}{{ flow }} history{% endblocktranslate %}

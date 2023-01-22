@@ -6,7 +6,7 @@
 {% block main-content %}
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
-    <li class="breadcrumb-item"><a href="{% url 'inbox:list' current_environment.slug %}">{% blocktranslate %}{{ current_environment}} inboxes{% endblocktranslate %}</a></li>
+    <li class="breadcrumb-item"><a href="{% url 'inbox:list' current_environment.slug %}">{% translate "Inboxes" %}</a></li>
     <li class="breadcrumb-item active" aria-current="page">{% blocktranslate %}{{ object }} inbox{% endblocktranslate %}</li>
   </ol>
 </nav>
