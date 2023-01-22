@@ -13,8 +13,8 @@ urlpatterns = [
     path('', FlowList.as_view(), name='list'),
     path('create/', FlowCreate.as_view(), name='create'),
     path('<uuid:id>/', include([
-        path('', FlowHistory.as_view(), name='history'),
-        path('<uuid:revision>/', FlowHistory.as_view(), name='history'),
+        path('history', FlowHistory.as_view(), name='history'),
+        path('history/<uuid:revision>/', FlowHistory.as_view(), name='history'),
         path('edit/', FlowEdit.as_view(), name='edit'),
         path('test/', FlowTest.as_view(), name='test'),
         path('remove/', FlowRemove.as_view(), name='remove'),
