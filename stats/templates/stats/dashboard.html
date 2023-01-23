@@ -35,7 +35,7 @@
   </div>
 </div>
 {% for flow in flows %}
-  <table class="my-3 charts-css column show-heading show-data-on-hover show-labels show-primary-axis show-data-axes">
+  <table class="table charts-css column show-heading show-data-on-hover show-labels show-primary-axis show-data-axes">
     <caption>{{ flow }}</caption>
     <thead>
       <tr>
@@ -53,6 +53,8 @@
             <span class="data">{{ count|floatformat }}</span>
           </td>
         </tr>
+      {% empty %}
+        <tr><td colspan="2">{% translate "No data" %}</td></tr>
       {% endfor %}
     </tbody>
   </table>

@@ -21,8 +21,8 @@ class Dashboard(CurrentEnvironmentMixin, TemplateView):
 		context_data['flows'] = list(self.current_environment.flows.all())
 		context_data['date_format'] = self.DATE_FORMATS[period]
 		for flow in context_data['flows']:
-			stats = ts_storage.read_series(self.current_environment, f"flow_start.{flow.id}", period)
-			max_val = max([c for d, c in stats])
-			flow.stats = [(date, count, float(count)/max_val ) for date, count in stats ]
+			if stats := ts_storage.read_series(self.current_environment, f"flow_start.{flow.id}", period):
+				max_val = max([c for d, c in stats])
+				flow.stats = [(date, count, float(count)/max_val ) for date, count in stats ]
 		return context_data
 

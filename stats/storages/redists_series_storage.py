@@ -10,9 +10,9 @@ env = environ.Env()
 class RedisTSSeriesStorage(BaseSeriesStorage):
     ONE_MINUTE_MSECS = 60000
     COMPACT_SUFFIX = {
-        BaseSeriesStorage.PERIOD_HOUR : '_SUM_60000',
-        BaseSeriesStorage.PERIOD_DAY : '_SUM_1800000',
-        BaseSeriesStorage.PERIOD_MONTH : '_SUM_86400000'
+        BaseSeriesStorage.PERIOD_HOUR : '_SUM_60000_60000',
+        BaseSeriesStorage.PERIOD_DAY : '_SUM_1800000_1800000',
+        BaseSeriesStorage.PERIOD_MONTH : '_SUM_86400000_86400000'
     }
 
     client = None
@@ -34,12 +34,13 @@ class RedisTSSeriesStorage(BaseSeriesStorage):
 
     @classmethod
     def read_series(cls, environment, event, period):
+        print(f'ts.{environment.site.pk}.{environment.slug}.{event}{cls.COMPACT_SUFFIX[period]}')
         try:
             return [
                 (datetime.fromtimestamp(timestamp/1000), count)
                 for timestamp, count in cls.get_connection().ts().range(
                     f'ts.{environment.site.pk}.{environment.slug}.{event}{cls.COMPACT_SUFFIX[period]}',
-                    0,
+                    '-',
                     '+',
                     latest=True
                 )
