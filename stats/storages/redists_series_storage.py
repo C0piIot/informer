@@ -34,7 +34,6 @@ class RedisTSSeriesStorage(BaseSeriesStorage):
 
     @classmethod
     def read_series(cls, environment, event, period):
-        print(f'ts.{environment.site.pk}.{environment.slug}.{event}{cls.COMPACT_SUFFIX[period]}')
         try:
             return [
                 (datetime.fromtimestamp(timestamp/1000), count)

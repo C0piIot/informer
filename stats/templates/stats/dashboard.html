@@ -46,9 +46,7 @@
     <tbody>
       {% for date, count, normalized in flow.stats %}
         <tr>
-          <th scope="row">
-            {{ date|date:date_format }}
-          </th>
+          <th scope="row">{{ date }}</th>
           <td style="--size: {{ normalized }};">
             <span class="data">{{ count|floatformat }}</span>
           </td>
