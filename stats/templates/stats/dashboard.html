@@ -35,7 +35,7 @@
   </div>
 </div>
 {% for flow in flows %}
-  <table class="table charts-css column show-heading show-data-on-hover show-labels show-primary-axis show-data-axes">
+  <table class="charts-css column show-heading show-data-on-hover show-primary-axis show-data-axes{% if period == 'month' %} show-labels{% endif %}">
     <caption>{{ flow }}</caption>
     <thead>
       <tr>
@@ -48,7 +48,10 @@
         <tr>
           <th scope="row">{{ date }}</th>
           <td style="--size: {{ normalized }};">
-            <span class="data">{{ count|floatformat }}</span>
+            <span class="data">
+              {{ count|floatformat }}
+              {% if period != 'month'%}<span class="tooltip">{{ date }}</span>{% endif %}
+            </span>
           </td>
         </tr>
       {% empty %}
