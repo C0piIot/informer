@@ -54,7 +54,8 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'flows.apps.FlowsConfig',
     'contacts.apps.ContactsConfig',
-    'inbox.apps.InboxConfig'
+    'inbox.apps.InboxConfig',
+    'stats.apps.StatsConfig'
 ]
 
 MIDDLEWARE = [
@@ -217,3 +218,6 @@ if env.str("CONTACT_STORAGE", default=False):
 
 if env.str("INBOX_ENTRY_STORAGE", default=False):
     INBOX_ENTRY_STORAGE = env.str("INBOX_ENTRY_STORAGE")
+
+if env.str("TIME_SERIES_STORAGE", default=False):
+    TIME_SERIES_STORAGE = env.str("TIME_SERIES_STORAGE")

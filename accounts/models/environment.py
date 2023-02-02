@@ -15,7 +15,7 @@ class Environment(models.Model):
     public_key = models.CharField(_('public key'), max_length=40)
 
     def get_absolute_url(self):
-        return reverse('flows:list', kwargs={ 'environment': self.slug })
+        return reverse('stats:dashboard', kwargs={ 'environment': self.slug })
 
     def __str__(self):
         return self.name

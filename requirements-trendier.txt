@@ -1,0 +1,3 @@
+-r requirements.txt
+mysql-connector-python
+boto3

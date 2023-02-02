@@ -14,9 +14,7 @@
 <nav aria-label="breadcrumb">
   <ol class="breadcrumb">
      <li class="breadcrumb-item">
-        <a href="{% url 'flows:list' current_environment.slug %}">
-            {% blocktranslate %}{{ current_environment}} flows{% endblocktranslate %}
-        </a>
+        <a href="{% url 'flows:list' current_environment.slug %}">{% translate "Flows" %}</a>
     </li>
     <li class="breadcrumb-item active" aria-current="page">
         {% blocktranslate %}Edit {{ flow }}{% endblocktranslate %}
@@ -143,10 +141,12 @@
     </div>
     <div class="offcanvas-body">
         {% bootstrap_form flow_form %}
-        <button type="reset" class="btn btn-secondary" data-bs-dismiss="offcanvas">
-            {% translate "Cancel" %}
-        </button>
-        <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
+        <div class="text-end">
+            <button type="reset" class="btn btn-secondary" data-bs-dismiss="offcanvas">
+                {% translate "Cancel" %}
+            </button>
+            <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
+        </div>
     </div>
     {% csrf_token %}
 </form>
@@ -161,10 +161,12 @@
     </div>
     <div class="offcanvas-body">
         {% include "flows/steps/"|add:type|add:".html" %}
-        <button type="reset" class="btn btn-secondary" data-bs-dismiss="offcanvas">
-            {% translate "Cancel" %}
-        </button>
-        <button type="submit" class="btn btn-primary">{% translate "Add step" %}</button>
+        <div class="text-end">
+            <button type="reset" class="btn btn-secondary" data-bs-dismiss="offcanvas">
+                {% translate "Cancel" %}
+            </button>
+            <button type="submit" class="btn btn-primary">{% translate "Add step" %}</button>
+        </div>
     </div>
     {% csrf_token %}
 </form>
@@ -183,10 +185,12 @@
     </div>
     <div class="offcanvas-body">
         {% include "flows/steps/"|add:form.instance.content_type.model|add:".html" %}
-        <button type="reset" class="btn btn-secondary" data-bs-dismiss="offcanvas">
-            {% translate "Cancel" %}
-        </button>
-        <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
+        <div class="text-end">
+            <button type="reset" class="btn btn-secondary" data-bs-dismiss="offcanvas">
+                {% translate "Cancel" %}
+            </button>
+            <button type="submit" class="btn btn-primary">{% translate "Update" %}</button>
+        </div>
     </div>
     {% csrf_token %}
 </form>

@@ -77,6 +77,16 @@
                         {% trans "Environments" %}
                       </a>
                     </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        {% trans "Users" %}
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        {% trans "Billing" %}
+                      </a>
+                    </li>
                     <li><hr class="dropdown-divider"></li>
                     <li>
                       <form method="post" action="{% url 'logout' %}">
@@ -121,7 +131,7 @@
         <nav class="col-md-2 bg-light py-3">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link{% if request.resolver_match.app_name == 'dashboard' %} active{% endif %}" href="#">
+              <a class="nav-link{% if request.resolver_match.app_name == 'stats' %} active{% endif %}" href="{% url 'stats:dashboard' current_environment.slug %}">
                 🌡️ {% trans "Dashboard" %}
               </a>
             </li>

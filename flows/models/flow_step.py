@@ -5,6 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from .flow import Flow
 from .flow_log import FlowLog
 from django.contrib.sites.models import Site
+from stats.utils import store_event
 
 class FlowStep(models.Model):
 
@@ -44,13 +45,14 @@ class FlowStep(models.Model):
 
     def run(self, flow_run):
         typed_instance = self.get_typed_instance()
-        flow_run.log(FlowLog.INFO, 'Running flow step %s' % typed_instance)
+        flow_run.log(FlowLog.INFO, f"Running flow step {typed_instance}")
+        store_event(flow_run.environment, f"flow_step.{flow_run.flow_id}.{self.content_type.model}")
         return typed_instance.step_run(flow_run)
 
     def wake_up(self, flow_run):
         try:
             typed_instance = self.get_typed_instance()
-            flow_run.log(FlowLog.INFO, 'Waking up flow step %s' % typed_instance)
+            flow_run.log(FlowLog.INFO, f"Waking up flow step {typed_instance}")
             return typed_instance.step_wake_up(flow_run)
         except BaseException as err:
             flow_run.log(FlowLog.ERROR, err)

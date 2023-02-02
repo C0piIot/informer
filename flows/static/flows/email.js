@@ -1,5 +1,7 @@
 /* Strips html leaving only text */
 const stripHtml = (html) => (new DOMParser().parseFromString(html, 'text/html')).body.textContent || "";
+const removeEmptyLines = (text) => text.replace(/^(\s+\n)+/gm, '\n')
+const removeExtraSpaces = (text) => text.replace(/(\s+)(^\s)/g, ' ')
 
 for (const form of document.querySelectorAll('form.email')) {
 
@@ -19,7 +21,14 @@ for (const form of document.querySelectorAll('form.email')) {
 			timer = setTimeout(async () => {
 				/* Keep text updated if enabled */
 				if(autoGenerateTextControl.checked) {
-					textBodyControl.value = stripHtml(htmlBodyControl.value);
+					textBodyControl.value = 
+						removeExtraSpaces(
+							removeEmptyLines(
+								stripHtml(
+									htmlBodyControl.value
+								)
+							)
+						);
 				}
 				/* Keep previews updated */
 				let formData = new FormData();

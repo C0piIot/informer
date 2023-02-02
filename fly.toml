@@ -3,27 +3,29 @@
 app = "informer"
 kill_signal = "SIGINT"
 kill_timeout = 5
-processes = []
+
+[processes]
+app = "sh /app/fly/app-entrypoint.sh"
+workers = "sh /app/fly/workers-entrypoint.sh"
 
 [env]
   ALLOWED_HOSTS = "informer.fly.dev,.dropdatabase.es"
   CACHE_URL = "filecache:////cache"
-  REDIS_URL = "redis://localhost"
-  DATABASE_URL = "sqlite:////data//informer.sqlite"
+  REDISTS_SERIES_URL = "redis://localhost"
+  DRAMATIQ_REDIS_URL = "redis://default:6951c47f1d5d4d7d8a03a090ba5d73f7@fly-informer-redis.upstash.io"
   ROLLBAR_ENVIRONMENT = "fly"
   ROLLBAR_CLIENT_TOKEN = "882f4c50682347a8bf598e628144dcbf"
-  SWAP = "1"
+  DEBUG = 0
 
 [build]
-build-target = "prod"
+  build-target = "prod"
+
+[deploy]
+  release_command = "python manage.py migrate"
 
 [experimental]
   allowed_public_ports = []
   auto_rollback = true
-
-[mounts]
-  destination = "/data"
-  source = "informer_data"
 
 [[services]]
   http_checks = []

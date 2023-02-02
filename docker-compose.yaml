@@ -13,7 +13,7 @@ x-informer-django: &informer-django
     context: .
     target: "dev"
   volumes:
-    - .:/usr/src/app
+    - .:/app
   depends_on:
     - informer_redis
 
@@ -36,4 +36,4 @@ services:
     #image: redis:alpine
     image: redisfab/redistimeseries:1.8.5-arm64v8-jammy
     container_name: informer_redis
-    command: "redis-server --loadmodule /usr/lib/redis/modules/redistimeseries.so DUPLICATE_POLICY sum COMPACTION_POLICY sum:1M:1h;sum:30M:24h;sum:1d:30d ENCODING compressed"
+    command: "redis-server --loadmodule /usr/lib/redis/modules/redistimeseries.so DUPLICATE_POLICY sum COMPACTION_POLICY sum:1M:1h:1M;sum:30M:24h:30M;sum:1d:30d:1d ENCODING compressed"

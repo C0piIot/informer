@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load i18n django_bootstrap5 static %}
+
+{% block head-content %}
+{{ block.super }}
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/charts.css/dist/charts.min.css">
+{% endblock head-content %}
+
+{% block title %}{% translate "Dashboard" %} - {{ current_environment }} - {{ block.super }}{% endblock title %}
+
+{% block main-content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">{% translate "Dashboard" %}</li>
+  </ol>
+</nav>
+{{ block.super }}
+<div class="text-end">
+  <div class="dropdown">
+    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+      {% translate "Period:" %}
+      {% for key, label in periods %}{% if period ==  key %}{{ label|title }}{% endif %}{% endfor %}
+    </a>
+    <ul class="dropdown-menu">
+      {% for key, label in periods %}
+        {% if period !=  key %}
+        <li>
+          <a class="dropdown-item" href="{% url 'stats:dashboard' current_environment.slug %}?period={{ key }}">
+            {{ label|title }}
+          </a>
+        </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% for flow in flows %}
+  <table class="charts-css column show-heading show-data-on-hover show-primary-axis show-data-axes{% if period == 'month' %} show-labels{% endif %}">
+    <caption>{{ flow }}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{% translate "Date" %}</th>
+        <th scope="col">{% translate "Count" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for date, count, normalized in flow.stats %}
+        <tr>
+          <th scope="row">{{ date }}</th>
+          <td style="--size: {{ normalized }};">
+            <span class="data">
+              {{ count|floatformat }}
+              {% if period != 'month'%}<span class="tooltip">{{ date }}</span>{% endif %}
+            </span>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="2">{% translate "No data" %}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endfor %}
+{% endblock main-content %}
