@@ -104,6 +104,12 @@ class ChannelsTestCase(TransactionTestCase):
 
 			self.assertEquals('updated-credentials', PushChannel.objects.first().firebase_credentials['credentials'])
 
+			response = self.client.get(
+				reverse('accounts:channel_list'),
+				HTTP_HOST='example.com'
+			)
+			self.assertContains(response, f"Remove {push_channel}")
+			self.assertContains(response, f"Remove {email_channel}")
 
 			self.assertRedirects(
 				self.client.post(

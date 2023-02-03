@@ -1,6 +1,7 @@
 from django.test import TransactionTestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
+from accounts.models import Environment
 
 class EnvironmentsTestCase(TransactionTestCase):
 	fixtures = ['users.json']
@@ -36,4 +37,19 @@ class EnvironmentsTestCase(TransactionTestCase):
 				), 
 				'data-bs-target="#delete',
 				count=1
+			)			
+
+			environment = Environment.objects.first()
+			self.assertEquals('test_environment', environment.name)
+			
+			self.assertRedirects(
+				self.client.post(
+					reverse('accounts:environment_create'), 
+					{
+						'name': 'test_environment2',
+						'source_environment' : environment.pk
+					},
+					HTTP_HOST='example.com'
+				),
+				reverse('accounts:environment_list')
 			)
