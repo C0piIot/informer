@@ -5,7 +5,7 @@ from unittest.mock import patch, MagicMock
 import urllib
 
 
-class WebhookTests(TestCase):
+class WebhookTestCase(TestCase):
 
 	def test_step_run(self):
 		
