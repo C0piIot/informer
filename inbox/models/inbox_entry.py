@@ -11,7 +11,7 @@ class InboxEntry(RelatedContactModel):
     url = models.URLField(_('url'), blank=True, default='')
     image = models.URLField(_('image'), blank=True, default='')
     read = models.DateTimeField(_('read'), blank=True, null=True)
-    entry_data = models.JSONField(_('entry data'), default=dict, 
+    entry_data = models.JSONField(_('entry data'), default=dict,
         help_text=_('Additional data for custom implementations'), blank=True)
 
     def __str__(self):

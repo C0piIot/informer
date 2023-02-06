@@ -28,7 +28,7 @@ class ChannelsTestCase(TransactionTestCase):
 			
 			self.assertRedirects(
 				self.client.post(
-					reverse('accounts:channel_create', kwargs={'type': 'emailchannel'}), 
+					reverse('accounts:channel_create', kwargs={'type': 'emailchannel'}),
 					{
 						'host': 'example.com',
 						'port': '465',
@@ -47,7 +47,7 @@ class ChannelsTestCase(TransactionTestCase):
 			PushChannel.get_firebase = lambda x: True
 			self.assertRedirects(
 				self.client.post(
-					reverse('accounts:channel_create', kwargs={'type': 'pushchannel'}), 
+					reverse('accounts:channel_create', kwargs={'type': 'pushchannel'}),
 					{
 						'firebase_credentials': '{"credentials":"yes please"}',
 						'enabled': True
@@ -72,7 +72,7 @@ class ChannelsTestCase(TransactionTestCase):
 
 			self.assertRedirects(
 				self.client.post(
-					reverse('accounts:channel_update', kwargs={'pk': email_channel.pk }), 
+					reverse('accounts:channel_update', kwargs={'pk': email_channel.pk }),
 					{
 						'host': 'example.com',
 						'port': '465',
@@ -92,7 +92,7 @@ class ChannelsTestCase(TransactionTestCase):
 
 			self.assertRedirects(
 				self.client.post(
-					reverse('accounts:channel_update', kwargs={'pk': push_channel.pk }), 
+					reverse('accounts:channel_update', kwargs={'pk': push_channel.pk }),
 					{
 						'firebase_credentials': '{"credentials":"updated-credentials"}',
 						'enabled': True

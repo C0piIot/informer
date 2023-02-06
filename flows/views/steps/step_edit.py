@@ -22,16 +22,16 @@ class StepEdit(FlowEditMixin, SuccessMessageMixin, UpdateView):
 
     def get_form_class(self):
         return step_form_classes[self.type.model_class()]
-    
+
     def get_object(self):
-        return super().get_object().get_typed_instance()      
+        return super().get_object().get_typed_instance()
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
         try:
             self.type = ContentType.objects.get_for_model(self.get_object().get_typed_instance())
         except (ContentType.DoesNotExist, KeyError):
-            raise Http404            
+            raise Http404
 
     def form_valid(self, form, **kwargs):
         with transaction.atomic():

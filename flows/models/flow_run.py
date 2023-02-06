@@ -1,5 +1,5 @@
 from django.db import models
-from uuid import uuid4 
+from uuid import uuid4
 from django.utils.translation import gettext_lazy as _
 from .flow import Flow
 from .flow_log import FlowLog
@@ -60,7 +60,7 @@ class FlowRun(RelatedContactModel):
         if start_key is not None:
             queryset = queryset.filter(key__gt=start_key)
         return queryset[:amount]
-        
+
     @classmethod
     def get_flow_run(cls, environment, id):
         return cls.objects.get(environment=environment, id=id)
@@ -87,7 +87,7 @@ class FlowRun(RelatedContactModel):
     @classmethod
     def unset_group(cls, flow_run, group_key):
         flow_run.group_key = None
-        
+
 
     def schedule_wake_up(self, flow_step, time_delta):
         import_string(settings.FLOW_EXECUTOR).schedule_wake_up(self, flow_step, time_delta)

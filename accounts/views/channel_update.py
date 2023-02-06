@@ -30,7 +30,7 @@ class ChannelUpdate(ChannelListMixin, SuccessMessageMixin, UpdateView):
 
     def get_form_class(self):
         return import_string(self.type.model_class().CONFIG_FORM)
-    
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs.update(site=self.request.site)

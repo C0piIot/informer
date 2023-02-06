@@ -2,7 +2,7 @@ from rest_framework.authentication import  get_authorization_header
 from accounts.rest_permissions import HasEnvironmentPermission
 
 class HasContactPermission(HasEnvironmentPermission):
-    
+
     keyword = 'Bearer'
     has_environment_permission = HasEnvironmentPermission()
 
@@ -29,4 +29,4 @@ class HasContactPermission(HasEnvironmentPermission):
 
 
 
-        
+

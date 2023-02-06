@@ -23,12 +23,12 @@ urlpatterns = [
         path('<int:pk>/', include([
             path('', StepEdit.as_view(), name='step_edit'),
             path('move/', StepMove.as_view(), name='step_move'),
-            path('remove/', StepRemove.as_view(), name='step_remove'), 
+            path('remove/', StepRemove.as_view(), name='step_remove'),
         ])),
         path('<int:content_type_id>/create/', StepCreate.as_view(), name='step_create'),
         path('runs/', include([
             path('', FlowRunList.as_view(), name='runs'),
-            path('<uuid:flow_run_id>/', FlowRunDetail.as_view(), name='run'),  
+            path('<uuid:flow_run_id>/', FlowRunDetail.as_view(), name='run'),
         ]))
     ])),
 ]

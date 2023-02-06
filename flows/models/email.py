@@ -7,7 +7,7 @@ from .flow_log import FlowLog
 from accounts.models import EmailChannel
 
 class Email(FlowStep):
-    
+
     ICON = "✉️"
     subject = models.CharField(_('subject'), max_length=200)
     html_body = models.TextField(_('html body message'))
@@ -42,7 +42,7 @@ class Email(FlowStep):
 
         html_context = Context(context)
         text_context = Context(context, autoescape=False)
-        
+
         email_channel.send_mail(
             subject.render(text_context),
             text_body.render(text_context),
@@ -50,7 +50,7 @@ class Email(FlowStep):
             self.from_email or email_channel.from_email,
             channel_data['email']
         )
-            
+
         self.run_next(flow_run)
 
     class Meta:

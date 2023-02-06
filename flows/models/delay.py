@@ -17,6 +17,6 @@ class Delay(FlowStep):
     class Meta:
         verbose_name = _('delay')
         verbose_name_plural = _('delays')
-    
+
     def __str__(self):
         return "%s %s" % (super().__str__(), self.time)

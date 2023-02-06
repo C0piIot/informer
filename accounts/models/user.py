@@ -39,7 +39,7 @@ class User(DjangoUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = [ 'first_name', 'site' ]
-    
+
     objects = UserManager()
 
     username = None

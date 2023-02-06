@@ -7,7 +7,7 @@ from django.contrib.sites.models import Site
 
 
 class Environment(models.Model):
-    
+
     site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='environments', editable=False)
     name = models.CharField(_('name'), max_length=50)
     slug = models.SlugField(_('slug'), editable=False)

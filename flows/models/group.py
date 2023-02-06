@@ -24,7 +24,7 @@ class Group(FlowStep):
     def step_run(self, flow_run):
         key = self.DATA_KEY % self.key
         flow_group = import_string(settings.FLOW_RUN_STORAGE).get_flow_group(flow_run, self.key)
-        
+
         if not key in flow_group.flow_data:
             flow_group.flow_data[key] = [flow_run.flow_data.copy()]
         else:

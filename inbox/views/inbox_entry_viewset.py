@@ -19,11 +19,11 @@ class InboxEntrySerializer(serializers.ModelSerializer):
 
 
 class InboxEntryViewSet(
-    mixins.RetrieveModelMixin, 
-    mixins.ListModelMixin, 
+    mixins.RetrieveModelMixin,
+    mixins.ListModelMixin,
     ContextAwareViewSetMixin,
     GenericViewSet):
-    
+
     queryset = InboxEntry.objects.none()
     serializer_class = InboxEntrySerializer
 
@@ -39,7 +39,7 @@ class InboxEntryViewSet(
             raise exceptions.AuthenticationFailed(_('Missing auth'))
 
         contact_auth = auth[1].decode().split('/')
-        
+
         if not contact_auth or len(contact_auth) != 2:
             raise exceptions.AuthenticationFailed(_('Invalid token'))
 
@@ -56,7 +56,7 @@ class InboxEntryViewSet(
     def list(self, request, *args, **kwargs):
 
         inbox_entries, cursor = inbox_storage.get_entries(self.current_environment, self.contact, cursor=request.GET.get('cursor', None), amount=50)
-        
+
         #page = self.paginate_queryset(queryset)
         #if page is not None:
         #    serializer = self.get_serializer(page, many=True)

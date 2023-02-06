@@ -12,7 +12,7 @@ class DefaultContactStorage:
             queryset = queryset.filter(key__gt=cursor)
         contacts = list(queryset[:amount])
         return (contacts, contacts[-1].key if contacts else None)
-        
+
     @classmethod
     def get_contact(cls, environment, key):
         return Contact.objects.filter(environment=environment, key=key).first()

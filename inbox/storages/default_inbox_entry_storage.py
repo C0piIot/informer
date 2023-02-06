@@ -7,7 +7,7 @@ class DefaultInboxEntryStorage:
         if start_key:
             queryset = queryset.filter(key__gt=start_key)
         return queryset[:amount]
-        
+
     @classmethod
     def get_entry(cls, environment, contact, key):
         return Contact.objects.filter(environment=environment, contact=contacts, key=key).first()
@@ -18,4 +18,4 @@ class DefaultInboxEntryStorage:
         entry.environment = environment
         entry.save()
 
- 
+

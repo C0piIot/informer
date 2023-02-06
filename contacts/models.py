@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from uuid import uuid4 
+from uuid import uuid4
 from django.contrib.sites.models import Site
 from rest_framework.authtoken.models import Token
 from django.utils.module_loading import import_string
@@ -55,7 +55,7 @@ class RelatedContactModel(models.Model):
     contact_key = models.CharField(_('contact key'), max_length=100)
     environment = models.ForeignKey('accounts.Environment', on_delete=models.CASCADE, verbose_name=_('environment'),related_name='+', editable=False)
     site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='+', editable=False)
-    
+
     @property
     def contact(self):
         if self._contact is None:

@@ -2,7 +2,7 @@ from rest_framework import permissions
 from rest_framework.authentication import  get_authorization_header
 
 class HasEnvironmentPermission(permissions.BasePermission):
-    
+
     keyword = 'Bearer'
 
     def has_permission(self, request, view):

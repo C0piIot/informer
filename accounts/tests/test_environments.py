@@ -23,7 +23,7 @@ class EnvironmentsTestCase(TransactionTestCase):
 
 			self.assertRedirects(
 				self.client.post(
-					reverse('accounts:environment_create'), 
+					reverse('accounts:environment_create'),
 					{'name': 'test_environment'},
 					HTTP_HOST='example.com'
 				),
@@ -34,7 +34,7 @@ class EnvironmentsTestCase(TransactionTestCase):
 				self.client.get(
 					reverse('accounts:environment_list'),
 					HTTP_HOST='example.com'
-				), 
+				),
 				'data-bs-target="#delete',
 				count=1
 			)			
@@ -44,7 +44,7 @@ class EnvironmentsTestCase(TransactionTestCase):
 			
 			self.assertRedirects(
 				self.client.post(
-					reverse('accounts:environment_create'), 
+					reverse('accounts:environment_create'),
 					{
 						'name': 'test_environment2',
 						'source_environment' : environment.pk

@@ -24,7 +24,7 @@ class BaseSeriesStorage:
         PERIOD_HOUR: timedelta(hours=1),
         PERIOD_MONTH: timedelta(days=30)
     }
-    
+
     PERIOD_STEPS = {
         PERIOD_HOUR: timedelta(minutes=1),
         PERIOD_DAY: timedelta(minutes=30),

@@ -10,7 +10,7 @@ from accounts.views import ContextAwareViewSetMixin
 
 class FlowTriggerSerializer(serializers.ModelSerializer):
     event = serializers.CharField(write_only=True)
-  
+
     def validate(self, data):
         data['contact'] = import_string(settings.CONTACT_STORAGE).get_contact(self.context['environment'], data['contact_key'])
         if not data['contact']:
@@ -36,7 +36,7 @@ class FlowTriggerSerializer(serializers.ModelSerializer):
         return flow_runs
 
     def to_representation(self, instances):
-        return { 
+        return {
             'flow_runs' : [ instance.id for instance in instances ]
         }
 
@@ -51,4 +51,4 @@ class FlowRunViewSet(mixins.CreateModelMixin, ContextAwareViewSetMixin, GenericV
     permission_classes = [HasEnvironmentPermission]
 
 
-    
+

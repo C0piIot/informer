@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from contacts.models import Contact 
+from contacts.models import Contact
 from accounts.models import Channel
 from django.utils.module_loading import import_string
 from django.conf import settings
@@ -13,8 +13,8 @@ class ContactForm(forms.ModelForm):
     environment = None
     channel_forms = None
     channels = forms.ModelMultipleChoiceField(
-        required=False, 
-        label=_('Channels'), 
+        required=False,
+        label=_('Channels'),
         widget=forms.CheckboxSelectMultiple,
         queryset=Channel.objects.none()
     )
@@ -44,7 +44,7 @@ class ContactForm(forms.ModelForm):
                 if not self.channel_forms[channel].is_valid():
                     self.active_channel_tab = channel.pk
         return is_valid
-           
+
     def save(self, commit=True):
         contact = super().save(commit=False)
         contact.channel_data = {}

@@ -10,7 +10,7 @@ class Push(FlowStep):
     title = models.CharField(_('title'), max_length=200)
     body = models.TextField(_('body'))
     url = models.CharField(_('url'), max_length=500)
-    
+
     def __str__(self):
         return "%s \"%s\"" % (super().__str__(), self.title)
 
@@ -25,7 +25,7 @@ class Push(FlowStep):
 
         if not (channel_data := flow_run.contact.get_channel_data(push_channel.content_type.model)):
             flow_run.log(FlowLog.INFO, "%s not sent: user doesn't have channel data" % self)
-        
+
         title = Template(self.title)
         body = Template(self.body)
         url = Template(self.url)
@@ -42,7 +42,7 @@ class Push(FlowStep):
             channel_data['fcm_tokens']
         )
         flow_run.log(FlowLog.INFO, "%s successful sent to %d of %d fcm tokens" % (self, sum(response.values()), len(response)))
-        
+
         self.run_next(flow_run)
 
     class Meta:

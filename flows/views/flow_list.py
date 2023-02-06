@@ -5,7 +5,7 @@ from django.db.models import Prefetch
 from flows.models import FlowStep
 
 class FlowList(FlowFilteredMixin, ListView):
-    
+
     def get_queryset(self):
         return super().get_queryset().prefetch_related(
             Prefetch('steps', queryset=FlowStep.objects.select_related(
@@ -21,4 +21,4 @@ class FlowList(FlowFilteredMixin, ListView):
         })
 
         return context_data
-    
+

@@ -1,4 +1,4 @@
-from uuid import uuid4 
+from uuid import uuid4
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
@@ -23,7 +23,7 @@ class Flow(models.Model):
     trigger = models.CharField(_('trigger'), max_length=150, db_index=True)
     user = models.ForeignKey('accounts.user', on_delete=models.PROTECT, verbose_name=_('user'), editable=False)
     preview_context = models.JSONField(_('preview context'), blank=True, default=default_preview_context, help_text=_('Data defined here will be used for generating previews in steps using context data.'))
-    
+
     def save(self, *args, **kwargs):
         steps = list(self.steps.all())
         self.pk = uuid4()
@@ -36,7 +36,7 @@ class Flow(models.Model):
             step.save(*args, **kwargs)
 
     def __str__(self):
-        return self.name        
+        return self.name
 
     class Meta:
         verbose_name = _('flow')

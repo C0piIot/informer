@@ -34,11 +34,11 @@ class EmailChannel(Channel):
         return get_connection(
             'django.core.mail.backends.smtp.EmailBackend',
             fail_silently=False,
-            host=self.host, 
-            port=self.port, 
-            username=self.username, 
-            password=self.password, 
-            use_tls=self.security == self.SECURITY_STARTTLS, 
+            host=self.host,
+            port=self.port,
+            username=self.username,
+            password=self.password,
+            use_tls=self.security == self.SECURITY_STARTTLS,
             use_ssl=self.security == self.SECURITY_TSL_SSL
         )
 

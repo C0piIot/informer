@@ -35,11 +35,11 @@ class PushChannel(Channel):
     def get_firebase(self):
         try:
             return firebase_admin.get_app(name=self.firebase_app_name())
-        except ValueError:    
+        except ValueError:
             return firebase_admin.initialize_app(firebase_admin.credentials.Certificate(self.firebase_credentials), name=self.firebase_app_name())
 
     def send_push(self, title, body, url, tokens):
-        
+
         response = messaging.send_multicast(
             messaging.MulticastMessage(
                 notification=messaging.Notification(
@@ -50,8 +50,8 @@ class PushChannel(Channel):
             app=self.get_firebase()
         )
 
-        return { tokens[i]: r.success for i, r in enumerate(response.responses) } 
-        
+        return { tokens[i]: r.success for i, r in enumerate(response.responses) }
+
 
     class Meta:
         verbose_name = _('push channel')

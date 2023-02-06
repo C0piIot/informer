@@ -17,12 +17,12 @@ class ContactSerializer(serializers.ModelSerializer):
 
     def get_url(self, obj):
         return reverse(
-            'contact-detail', 
+            'contact-detail',
             kwargs={'environment': self.context['environment'].slug, 'pk': obj.key },
             request=self.context['request']
         )
 
-    
+
     def validate_channel_data(self, value):
         if not value:
             return {}
@@ -36,10 +36,10 @@ class ContactSerializer(serializers.ModelSerializer):
                 channel_serializer = import_string(channel.get_typed_instance().CONTACT_SERIALIZER)(data=value[channel_type])
                 if not channel_serializer.is_valid():
                     errors[channel_type] = channel_serializer.errors
-        
+
         if errors:
             raise serializers.ValidationError(errors)
-        
+
         return value
 
 
@@ -62,7 +62,7 @@ class ContactSerializer(serializers.ModelSerializer):
 
 
 class ContactViewSet(
-    mixins.CreateModelMixin, 
+    mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     mixins.RetrieveModelMixin,
     ContextAwareViewSetMixin,
@@ -80,4 +80,4 @@ class ContactViewSet(
     def perform_destroy(self, instance):
         instance.delete() #TODO
 
-    
+

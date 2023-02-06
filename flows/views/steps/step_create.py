@@ -18,7 +18,7 @@ class StepCreate(FlowEditMixin, SuccessMessageMixin, CreateView):
 
     def get_form_class(self):
         return step_form_classes[self.type.model_class()]
-        
+
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
         try:

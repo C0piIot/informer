@@ -1,5 +1,5 @@
 from django.db import models
-from uuid import uuid4 
+from uuid import uuid4
 from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
 from .flow import Flow

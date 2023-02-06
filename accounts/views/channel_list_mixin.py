@@ -23,7 +23,7 @@ class ChannelListMixin(LoginRequiredMixin):
             },
             'new_channel_forms' : {
                 ContentType.objects.get_for_model(model) : import_string(model.CONFIG_FORM)(site=self.request.site)
-                for model in 
+                for model in
                     apps.get_app_config('accounts').get_models()
                         if issubclass(model, Channel) and model is not Channel
             }

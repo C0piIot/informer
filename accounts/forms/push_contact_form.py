@@ -22,7 +22,7 @@ apns_token_validation = re.compile("^[0-9a-fA-F]{1,500}$")
 class MultipleTokensField(forms.Field):
     widget = TokensWidget
     help_text = _('Enter one registration token per line')
-    
+
     def __init__(self, *args, **kwargs):
         self.token_validation = kwargs.pop('token_validation')
         super().__init__(*args, **kwargs)

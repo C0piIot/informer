@@ -20,7 +20,7 @@ class BaseExecutor:
         storage = import_string(settings.FLOW_RUN_STORAGE)
         environment = Environment.objects.get(pk=environment_pk)
         flow_run = storage.get_flow_run(
-            environment, 
+            environment,
             uuid.UUID(flow_run_pk_hex)
         )
         try:
@@ -29,12 +29,12 @@ class BaseExecutor:
             flow_run.log(FlowLog.ERROR, err)
         finally:
             storage.save_flow_run(environment, flow_run)
-        
+
     def base_run(environment_pk, flow_run_pk_hex):
         storage = import_string(settings.FLOW_RUN_STORAGE)
         environment = Environment.objects.get(pk=environment_pk)
         flow_run = storage.get_flow_run(
-            environment, 
+            environment,
             uuid.UUID(flow_run_pk_hex)
         )
         store_event(flow_run.environment, f"flow_start.{flow_run.flow_id}")
