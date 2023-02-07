@@ -5,97 +5,268 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('auth', '0012_alter_user_first_name_max_length'),
-        ('contenttypes', '0002_remove_content_type_name'),
-        ('sites', '0002_alter_domain_unique'),
+        ("auth", "0012_alter_user_first_name_max_length"),
+        ("contenttypes", "0002_remove_content_type_name"),
+        ("sites", "0002_alter_domain_unique"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Channel',
+            name="Channel",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('enabled', models.BooleanField(default=True, verbose_name='enabled')),
-                ('content_type', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, to='contenttypes.contenttype')),
-                ('site', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='channels', to='sites.site', verbose_name='site')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("enabled", models.BooleanField(default=True, verbose_name="enabled")),
+                (
+                    "content_type",
+                    models.ForeignKey(
+                        editable=False,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="contenttypes.contenttype",
+                    ),
+                ),
+                (
+                    "site",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="channels",
+                        to="sites.site",
+                        verbose_name="site",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'channel',
-                'verbose_name_plural': 'channels',
-                'ordering': ('site', 'content_type'),
-                'unique_together': {('site', 'content_type')},
+                "verbose_name": "channel",
+                "verbose_name_plural": "channels",
+                "ordering": ("site", "content_type"),
+                "unique_together": {("site", "content_type")},
             },
         ),
         migrations.CreateModel(
-            name='EmailChannel',
+            name="EmailChannel",
             fields=[
-                ('channel_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='accounts.channel')),
-                ('host', models.CharField(max_length=100, verbose_name='host')),
-                ('port', models.PositiveSmallIntegerField(verbose_name='port')),
-                ('username', models.CharField(max_length=150, verbose_name='username')),
-                ('password', models.CharField(max_length=150, verbose_name='password')),
-                ('security', models.CharField(choices=[('none', 'None'), ('ssl', 'TSL/SSL'), ('starttls', 'STARTTLS')], default='ssl', max_length=20, verbose_name='security')),
-                ('from_email', models.EmailField(help_text='Default from address for this channel', max_length=200, verbose_name='from email')),
+                (
+                    "channel_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="accounts.channel",
+                    ),
+                ),
+                ("host", models.CharField(max_length=100, verbose_name="host")),
+                ("port", models.PositiveSmallIntegerField(verbose_name="port")),
+                ("username", models.CharField(max_length=150, verbose_name="username")),
+                ("password", models.CharField(max_length=150, verbose_name="password")),
+                (
+                    "security",
+                    models.CharField(
+                        choices=[
+                            ("none", "None"),
+                            ("ssl", "TSL/SSL"),
+                            ("starttls", "STARTTLS"),
+                        ],
+                        default="ssl",
+                        max_length=20,
+                        verbose_name="security",
+                    ),
+                ),
+                (
+                    "from_email",
+                    models.EmailField(
+                        help_text="Default from address for this channel",
+                        max_length=200,
+                        verbose_name="from email",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'email channel',
-                'verbose_name_plural': 'email channels',
+                "verbose_name": "email channel",
+                "verbose_name_plural": "email channels",
             },
-            bases=('accounts.channel',),
+            bases=("accounts.channel",),
         ),
         migrations.CreateModel(
-            name='PushChannel',
+            name="PushChannel",
             fields=[
-                ('channel_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='accounts.channel')),
-                ('firebase_credentials', models.JSONField(default=dict, verbose_name='Firebase credentials')),
+                (
+                    "channel_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="accounts.channel",
+                    ),
+                ),
+                (
+                    "firebase_credentials",
+                    models.JSONField(default=dict, verbose_name="Firebase credentials"),
+                ),
             ],
             options={
-                'verbose_name': 'push channel',
-                'verbose_name_plural': 'push channels',
+                "verbose_name": "push channel",
+                "verbose_name_plural": "push channels",
             },
-            bases=('accounts.channel',),
+            bases=("accounts.channel",),
         ),
         migrations.CreateModel(
-            name='User',
+            name="User",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('password', models.CharField(max_length=128, verbose_name='password')),
-                ('last_login', models.DateTimeField(blank=True, null=True, verbose_name='last login')),
-                ('is_superuser', models.BooleanField(default=False, help_text='Designates that this user has all permissions without explicitly assigning them.', verbose_name='superuser status')),
-                ('first_name', models.CharField(blank=True, max_length=150, verbose_name='first name')),
-                ('last_name', models.CharField(blank=True, max_length=150, verbose_name='last name')),
-                ('is_staff', models.BooleanField(default=False, help_text='Designates whether the user can log into this admin site.', verbose_name='staff status')),
-                ('is_active', models.BooleanField(default=True, help_text='Designates whether this user should be treated as active. Unselect this instead of deleting accounts.', verbose_name='active')),
-                ('email', models.EmailField(max_length=254, unique=True, verbose_name='email address')),
-                ('date_joined', models.DateTimeField(auto_now_add=True, verbose_name='date joined')),
-                ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups')),
-                ('site', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='users', to='sites.site', verbose_name='site')),
-                ('user_permissions', models.ManyToManyField(blank=True, help_text='Specific permissions for this user.', related_name='user_set', related_query_name='user', to='auth.permission', verbose_name='user permissions')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("password", models.CharField(max_length=128, verbose_name="password")),
+                (
+                    "last_login",
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name="last login"
+                    ),
+                ),
+                (
+                    "is_superuser",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Designates that this user has all permissions without explicitly assigning them.",
+                        verbose_name="superuser status",
+                    ),
+                ),
+                (
+                    "first_name",
+                    models.CharField(
+                        blank=True, max_length=150, verbose_name="first name"
+                    ),
+                ),
+                (
+                    "last_name",
+                    models.CharField(
+                        blank=True, max_length=150, verbose_name="last name"
+                    ),
+                ),
+                (
+                    "is_staff",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Designates whether the user can log into this admin site.",
+                        verbose_name="staff status",
+                    ),
+                ),
+                (
+                    "is_active",
+                    models.BooleanField(
+                        default=True,
+                        help_text="Designates whether this user should be treated as active. Unselect this instead of deleting accounts.",
+                        verbose_name="active",
+                    ),
+                ),
+                (
+                    "email",
+                    models.EmailField(
+                        max_length=254, unique=True, verbose_name="email address"
+                    ),
+                ),
+                (
+                    "date_joined",
+                    models.DateTimeField(auto_now_add=True, verbose_name="date joined"),
+                ),
+                (
+                    "groups",
+                    models.ManyToManyField(
+                        blank=True,
+                        help_text="The groups this user belongs to. A user will get all permissions granted to each of their groups.",
+                        related_name="user_set",
+                        related_query_name="user",
+                        to="auth.group",
+                        verbose_name="groups",
+                    ),
+                ),
+                (
+                    "site",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="users",
+                        to="sites.site",
+                        verbose_name="site",
+                    ),
+                ),
+                (
+                    "user_permissions",
+                    models.ManyToManyField(
+                        blank=True,
+                        help_text="Specific permissions for this user.",
+                        related_name="user_set",
+                        related_query_name="user",
+                        to="auth.permission",
+                        verbose_name="user permissions",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'user',
-                'verbose_name_plural': 'users',
-                'abstract': False,
+                "verbose_name": "user",
+                "verbose_name_plural": "users",
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='Environment',
+            name="Environment",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50, verbose_name='name')),
-                ('slug', models.SlugField(editable=False, verbose_name='slug')),
-                ('private_key', models.CharField(max_length=40, unique=True, verbose_name='private key')),
-                ('public_key', models.CharField(max_length=40, unique=True, verbose_name='public key')),
-                ('site', models.ForeignKey(editable=False, on_delete=django.db.models.deletion.CASCADE, related_name='environments', to='sites.site', verbose_name='site')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50, verbose_name="name")),
+                ("slug", models.SlugField(editable=False, verbose_name="slug")),
+                (
+                    "private_key",
+                    models.CharField(
+                        max_length=40, unique=True, verbose_name="private key"
+                    ),
+                ),
+                (
+                    "public_key",
+                    models.CharField(
+                        max_length=40, unique=True, verbose_name="public key"
+                    ),
+                ),
+                (
+                    "site",
+                    models.ForeignKey(
+                        editable=False,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="environments",
+                        to="sites.site",
+                        verbose_name="site",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'environment',
-                'verbose_name_plural': 'environments',
-                'unique_together': {('site', 'name')},
+                "verbose_name": "environment",
+                "verbose_name_plural": "environments",
+                "unique_together": {("site", "name")},
             },
         ),
     ]

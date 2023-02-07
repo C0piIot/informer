@@ -4,37 +4,45 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('flows', '0001_initial'),
+        ("flows", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='email',
-            name='preview_context',
+            model_name="email",
+            name="preview_context",
         ),
         migrations.RemoveField(
-            model_name='push',
-            name='preview_context',
+            model_name="push",
+            name="preview_context",
         ),
         migrations.RemoveField(
-            model_name='webhook',
-            name='preview_context',
+            model_name="webhook",
+            name="preview_context",
         ),
         migrations.AddField(
-            model_name='flow',
-            name='preview_context',
-            field=models.JSONField(blank=True, default=dict, verbose_name='preview context'),
+            model_name="flow",
+            name="preview_context",
+            field=models.JSONField(
+                blank=True, default=dict, verbose_name="preview context"
+            ),
         ),
         migrations.AlterField(
-            model_name='group',
-            name='key',
-            field=models.SlugField(help_text='Context data from each flow will be available in an array with the name GROUP_{grouping key}', max_length=150, verbose_name='grouping key'),
+            model_name="group",
+            name="key",
+            field=models.SlugField(
+                help_text="Context data from each flow will be available in an array with the name GROUP_{grouping key}",
+                max_length=150,
+                verbose_name="grouping key",
+            ),
         ),
         migrations.AlterField(
-            model_name='group',
-            name='window',
-            field=models.DurationField(help_text='All flows for the same user will be merged withint the time window started with the first one', verbose_name='time window'),
+            model_name="group",
+            name="window",
+            field=models.DurationField(
+                help_text="All flows for the same user will be merged withint the time window started with the first one",
+                verbose_name="time window",
+            ),
         ),
     ]

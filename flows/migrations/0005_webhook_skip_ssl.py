@@ -4,15 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('flows', '0004_alter_push_url_alter_webhook_url'),
+        ("flows", "0004_alter_push_url_alter_webhook_url"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='webhook',
-            name='skip_ssl',
-            field=models.BooleanField(default=False, help_text='Allows to connect to insecure webhooks', verbose_name='Skip https certificate validation'),
+            model_name="webhook",
+            name="skip_ssl",
+            field=models.BooleanField(
+                default=False,
+                help_text="Allows to connect to insecure webhooks",
+                verbose_name="Skip https certificate validation",
+            ),
         ),
     ]

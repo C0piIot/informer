@@ -8,12 +8,8 @@ from .flow_edit_mixin import FlowEditMixin
 from flows.forms import FlowForm
 from django.utils.translation import gettext_lazy as _
 
-class FlowEdit(
-    FlowFilteredMixin,
-    FlowEditMixin,
-    SuccessMessageMixin,
-    UpdateView
-):
+
+class FlowEdit(FlowFilteredMixin, FlowEditMixin, SuccessMessageMixin, UpdateView):
     form_class = FlowForm
     success_message = _("%(name)s was updated successfully")
 
@@ -26,10 +22,15 @@ class FlowEdit(
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data.update({
-            'flow_form' : context_data['form'],
-        })
+        context_data.update(
+            {
+                "flow_form": context_data["form"],
+            }
+        )
         return context_data
 
     def get_success_url(self):
-        return reverse('flows:edit', kwargs={'id': self.object.id, 'environment': self.current_environment.slug })
+        return reverse(
+            "flows:edit",
+            kwargs={"id": self.object.id, "environment": self.current_environment.slug},
+        )

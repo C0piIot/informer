@@ -24,86 +24,92 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY', default='django-insecure-f71wevx&=04*+4@96a1ltskmaj2)%w^%$gl1@_)gyzi)50epas')
+SECRET_KEY = env(
+    "SECRET_KEY",
+    default="django-insecure-f71wevx&=04*+4@96a1ltskmaj2)%w^%$gl1@_)gyzi)50epas",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG', False)
+DEBUG = env.bool("DEBUG", False)
 
 DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK' :  lambda request: default_settings.DEBUG or request.GET.get('iddqd', False)
+    "SHOW_TOOLBAR_CALLBACK": lambda request: default_settings.DEBUG
+    or request.GET.get("iddqd", False)
 }
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost'])
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=["localhost"])
 
 SECURE_SSL_REDIRECT = False
 # Application definition
 
 INSTALLED_APPS = [
-    'informer.apps.InformerAdminConfig',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'django_bootstrap5',
-    'hijack',
-    'hijack.contrib.admin',
-    'rest_framework',
-    'django_dramatiq',
-    'accounts.apps.AccountsConfig',
-    'flows.apps.FlowsConfig',
-    'contacts.apps.ContactsConfig',
-    'inbox.apps.InboxConfig',
-    'stats.apps.StatsConfig'
+    "informer.apps.InformerAdminConfig",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.sites",
+    "django_bootstrap5",
+    "hijack",
+    "hijack.contrib.admin",
+    "rest_framework",
+    "django_dramatiq",
+    "accounts.apps.AccountsConfig",
+    "flows.apps.FlowsConfig",
+    "contacts.apps.ContactsConfig",
+    "inbox.apps.InboxConfig",
+    "stats.apps.StatsConfig",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.contrib.sites.middleware.CurrentSiteMiddleware',
-    'accounts.middleware.CheckSiteMiddleware',
-    'hijack.middleware.HijackUserMiddleware',
-    'rollbar.contrib.django.middleware.RollbarNotifierMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.contrib.sites.middleware.CurrentSiteMiddleware",
+    "accounts.middleware.CheckSiteMiddleware",
+    "hijack.middleware.HijackUserMiddleware",
+    "rollbar.contrib.django.middleware.RollbarNotifierMiddleware",
 ]
 
 if DEBUG:
-    INSTALLED_APPS.append('debug_toolbar')
-    MIDDLEWARE.insert(0, 'debug_toolbar.middleware.DebugToolbarMiddleware')
+    INSTALLED_APPS.append("debug_toolbar")
+    MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
-ROOT_URLCONF = 'informer.urls'
+ROOT_URLCONF = "informer.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [ 'informer/templates' ],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'informer.context_processors.rollbar_settings'
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": ["informer/templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "informer.context_processors.rollbar_settings",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'informer.wsgi.application'
+WSGI_APPLICATION = "informer.wsgi.application"
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = "accounts.User"
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='sqlite:///%s' % os.path.join(BASE_DIR, 'db.sqlite3'))
+    "default": env.db(
+        "DATABASE_URL", default="sqlite:///%s" % os.path.join(BASE_DIR, "db.sqlite3")
+    )
 }
 
 # Password validation
@@ -111,16 +117,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -128,9 +134,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -140,62 +146,62 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
 
-ROLLBAR_CLIENT_TOKEN = env('ROLLBAR_CLIENT_TOKEN', default='')
+ROLLBAR_CLIENT_TOKEN = env("ROLLBAR_CLIENT_TOKEN", default="")
 
 ROLLBAR = {
-    'access_token': env('ROLLBAR_TOKEN', default=''),
-    'environment': env('ROLLBAR_ENVIRONMENT', default='development'),
-    'root': BASE_DIR,
-    'code_version': '1.0',
-    'exception_level_filters': [
-        (Http404, 'ignored'),
-        (PermissionDenied, 'ignored'),
+    "access_token": env("ROLLBAR_TOKEN", default=""),
+    "environment": env("ROLLBAR_ENVIRONMENT", default="development"),
+    "root": BASE_DIR,
+    "code_version": "1.0",
+    "exception_level_filters": [
+        (Http404, "ignored"),
+        (PermissionDenied, "ignored"),
     ],
 }
 
 
 LOGGING = {
-    'version': 1,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
+    "version": 1,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
         },
-        'rollbar': {
-            'access_token': env('ROLLBAR_TOKEN', default=''),
-            'environment': 'development' if DEBUG else 'production',
-            'class': 'rollbar.logger.RollbarHandler'
+        "rollbar": {
+            "access_token": env("ROLLBAR_TOKEN", default=""),
+            "environment": "development" if DEBUG else "production",
+            "class": "rollbar.logger.RollbarHandler",
         },
     },
-    'loggers': {
-        '': {
-            'handlers': ['rollbar', 'console'],
-            'level': env('DJANGO_LOG_LEVEL', default='INFO'),
+    "loggers": {
+        "": {
+            "handlers": ["rollbar", "console"],
+            "level": env("DJANGO_LOG_LEVEL", default="INFO"),
         },
     },
 }
 
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'rollbar.contrib.django_rest_framework.post_exception_handler',
-    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.AcceptHeaderVersioning',
-    'DEFAULT_VERSION': 1,
-    'ALLOWED_VERSIONS': ('1',)
+    "EXCEPTION_HANDLER": "rollbar.contrib.django_rest_framework.post_exception_handler",
+    "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.AcceptHeaderVersioning",
+    "DEFAULT_VERSION": 1,
+    "ALLOWED_VERSIONS": ("1",),
 }
 
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'accounts:environment_list'
-LOGOUT_REDIRECT_URL = 'home'
+LOGIN_URL = "login"
+LOGIN_REDIRECT_URL = "accounts:environment_list"
+LOGOUT_REDIRECT_URL = "home"
 
 DRAMATIQ_BROKER = {
     "BROKER": "dramatiq.brokers.redis.RedisBroker",
@@ -209,7 +215,7 @@ DRAMATIQ_BROKER = {
         "dramatiq.middleware.Callbacks",
         "dramatiq.middleware.Retries",
         "django_dramatiq.middleware.DbConnectionsMiddleware",
-    ]
+    ],
 }
 
 DRAMATIQ_AUTODISCOVER_MODULES = ["executors.dramatiq_executor"]

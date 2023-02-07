@@ -8,9 +8,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class EnvironmentRemove(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
-
     model = Environment
-    success_url = reverse_lazy('accounts:environment_list')
+    success_url = reverse_lazy("accounts:environment_list")
     success_message = _("Environment was removed successfully")
 
     def get_queryset(self, **kwargs):

@@ -8,10 +8,11 @@ from accounts.forms import NewEnvironmentForm
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 class EnvironmentCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     success_message = _("Environment %(name)s was created successfully")
     form_class = NewEnvironmentForm
-    success_url = reverse_lazy('accounts:environment_list')
+    success_url = reverse_lazy("accounts:environment_list")
 
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(self.success_url)
@@ -24,4 +25,3 @@ class EnvironmentCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         kwargs = super().get_form_kwargs()
         kwargs.update(site=self.request.site)
         return kwargs
-

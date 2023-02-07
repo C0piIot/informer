@@ -4,15 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('contacts', '0003_alter_contact_public_key'),
+        ("contacts", "0003_alter_contact_public_key"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='contact',
-            name='key',
-            field=models.SlugField(help_text='Id must be unique to all contacts for this environment', max_length=100, verbose_name='key'),
+            model_name="contact",
+            name="key",
+            field=models.SlugField(
+                help_text="Id must be unique to all contacts for this environment",
+                max_length=100,
+                verbose_name="key",
+            ),
         ),
     ]

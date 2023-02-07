@@ -1,15 +1,14 @@
 from rest_framework import permissions
-from rest_framework.authentication import  get_authorization_header
+from rest_framework.authentication import get_authorization_header
+
 
 class HasEnvironmentPermission(permissions.BasePermission):
-
-    keyword = 'Bearer'
+    keyword = "Bearer"
 
     def has_permission(self, request, view):
-
         if request.user.is_authenticated:
             return request.user.site_id == request.site.pk
-        auth =  get_authorization_header(request).split()
+        auth = get_authorization_header(request).split()
 
         if not auth or len(auth) != 2:
             return False

@@ -7,17 +7,18 @@ from django.urls import reverse
 from django.contrib.messages.views import SuccessMessageMixin
 from contacts.models import Contact
 
+
 class ContactCreate(CurrentEnvironmentMixin, SuccessMessageMixin, CreateView):
     form_class = ContactForm
     model = Contact
     success_message = _("%(name)s was created successfully")
 
     def get_success_url(self):
-        return reverse('contacts:list', kwargs={'environment': self.current_environment.slug})
+        return reverse(
+            "contacts:list", kwargs={"environment": self.current_environment.slug}
+        )
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update({
-            'environment': self.current_environment
-        })
+        kwargs.update({"environment": self.current_environment})
         return kwargs

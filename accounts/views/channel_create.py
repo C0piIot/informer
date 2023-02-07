@@ -7,15 +7,18 @@ from django.utils.module_loading import import_string
 from django.http import Http404
 from .channel_list_mixin import ChannelListMixin
 
+
 class ChannelCreate(ChannelListMixin, SuccessMessageMixin, CreateView):
-    success_url = reverse_lazy('accounts:channel_list')
+    success_url = reverse_lazy("accounts:channel_list")
     success_message = _("Channel was created successfully")
     type = None
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
         try:
-            self.type = ContentType.objects.get_by_natural_key('accounts', self.kwargs['type'])
+            self.type = ContentType.objects.get_by_natural_key(
+                "accounts", self.kwargs["type"]
+            )
         except (ContentType.DoesNotExist, KeyError):
             raise Http404
 
@@ -29,5 +32,5 @@ class ChannelCreate(ChannelListMixin, SuccessMessageMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data['new_channel_forms'].update({ self.type : context_data['form'] })
+        context_data["new_channel_forms"].update({self.type: context_data["form"]})
         return context_data

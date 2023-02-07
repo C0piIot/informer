@@ -10,7 +10,7 @@ from .channel_list_mixin import ChannelListMixin
 
 
 class ChannelUpdate(ChannelListMixin, SuccessMessageMixin, UpdateView):
-    success_url = reverse_lazy('accounts:channel_list')
+    success_url = reverse_lazy("accounts:channel_list")
     success_message = _("Channel was updated successfully")
     model = Channel
     type = None
@@ -18,7 +18,9 @@ class ChannelUpdate(ChannelListMixin, SuccessMessageMixin, UpdateView):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
         try:
-            self.type = ContentType.objects.get_for_model(self.get_object().get_typed_instance())
+            self.type = ContentType.objects.get_for_model(
+                self.get_object().get_typed_instance()
+            )
         except (ContentType.DoesNotExist, KeyError):
             raise Http404
 
@@ -38,5 +40,5 @@ class ChannelUpdate(ChannelListMixin, SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data['channel_forms'].update({ self.type: context_data['form']})
+        context_data["channel_forms"].update({self.type: context_data["form"]})
         return context_data

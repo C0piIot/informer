@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.sites.models import Site
 
+
 class UserManager(BaseUserManager):
     def _create_user(self, email, first_name, site, password, **extra_fields):
         """
@@ -36,13 +37,14 @@ class UserManager(BaseUserManager):
 
 
 class User(DjangoUser):
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = [ 'first_name', 'site' ]
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["first_name", "site"]
 
     objects = UserManager()
 
     username = None
     email = models.EmailField(_("email address"), unique=True)
-    site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='users')
+    site = models.ForeignKey(
+        Site, verbose_name=_("site"), on_delete=models.CASCADE, related_name="users"
+    )
     date_joined = models.DateTimeField(_("date joined"), auto_now_add=True)

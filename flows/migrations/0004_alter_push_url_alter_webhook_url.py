@@ -4,20 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('flows', '0003_alter_flow_preview_context'),
+        ("flows", "0003_alter_flow_preview_context"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='push',
-            name='url',
-            field=models.CharField(max_length=500, verbose_name='url'),
+            model_name="push",
+            name="url",
+            field=models.CharField(max_length=500, verbose_name="url"),
         ),
         migrations.AlterField(
-            model_name='webhook',
-            name='url',
-            field=models.CharField(max_length=500, verbose_name='url'),
+            model_name="webhook",
+            name="url",
+            field=models.CharField(max_length=500, verbose_name="url"),
         ),
     ]

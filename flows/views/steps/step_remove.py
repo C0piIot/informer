@@ -22,7 +22,9 @@ class StepRemove(CurrentEnvironmentMixin, SuccessMessageMixin, DeleteView):
 
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
-        self.flow = Flow.objects.get(environments=self.current_environment, id=self.kwargs['id'])
+        self.flow = Flow.objects.get(
+            environments=self.current_environment, id=self.kwargs["id"]
+        )
 
     def form_valid(self, form):
         with transaction.atomic():
@@ -38,4 +40,7 @@ class StepRemove(CurrentEnvironmentMixin, SuccessMessageMixin, DeleteView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse('flows:edit', kwargs={'id': self.flow.id, 'environment': self.current_environment.slug })
+        return reverse(
+            "flows:edit",
+            kwargs={"id": self.flow.id, "environment": self.current_environment.slug},
+        )

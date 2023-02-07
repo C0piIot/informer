@@ -3,6 +3,7 @@ from accounts.models import Environment
 from accounts.forms import NewEnvironmentForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+
 class EnvironmentList(LoginRequiredMixin, ListView):
     model = Environment
 
@@ -11,5 +12,7 @@ class EnvironmentList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data.update(new_environment_form=NewEnvironmentForm(site=self.request.site))
+        context_data.update(
+            new_environment_form=NewEnvironmentForm(site=self.request.site)
+        )
         return context_data

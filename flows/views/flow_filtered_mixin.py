@@ -1,6 +1,7 @@
 from accounts.views import CurrentEnvironmentMixin
 from flows.models import Flow
 
+
 class FlowFilteredMixin(CurrentEnvironmentMixin):
     model = Flow
 
@@ -11,4 +12,4 @@ class FlowFilteredMixin(CurrentEnvironmentMixin):
         if not queryset:
             queryset = self.get_queryset()
 
-        return queryset.get(id=self.kwargs['id'])
+        return queryset.get(id=self.kwargs["id"])

@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('contacts', '0002_contact_public_key_alter_contact_contact_data_and_more'),
+        ("contacts", "0002_contact_public_key_alter_contact_contact_data_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='contact',
-            name='public_key',
-            field=models.CharField(max_length=40, verbose_name='public key'),
+            model_name="contact",
+            name="public_key",
+            field=models.CharField(max_length=40, verbose_name="public key"),
         ),
     ]

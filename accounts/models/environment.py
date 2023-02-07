@@ -7,15 +7,20 @@ from django.contrib.sites.models import Site
 
 
 class Environment(models.Model):
-
-    site = models.ForeignKey(Site, verbose_name=_('site'), on_delete=models.CASCADE, related_name='environments', editable=False)
-    name = models.CharField(_('name'), max_length=50)
-    slug = models.SlugField(_('slug'), editable=False)
-    private_key = models.CharField(_('private key'), max_length=40)
-    public_key = models.CharField(_('public key'), max_length=40)
+    site = models.ForeignKey(
+        Site,
+        verbose_name=_("site"),
+        on_delete=models.CASCADE,
+        related_name="environments",
+        editable=False,
+    )
+    name = models.CharField(_("name"), max_length=50)
+    slug = models.SlugField(_("slug"), editable=False)
+    private_key = models.CharField(_("private key"), max_length=40)
+    public_key = models.CharField(_("public key"), max_length=40)
 
     def get_absolute_url(self):
-        return reverse('stats:dashboard', kwargs={ 'environment': self.slug })
+        return reverse("stats:dashboard", kwargs={"environment": self.slug})
 
     def __str__(self):
         return self.name
@@ -29,6 +34,6 @@ class Environment(models.Model):
         super().save(**kwargs)
 
     class Meta:
-        unique_together = ('site', 'name')
-        verbose_name = _('environment')
-        verbose_name_plural = _('environments')
+        unique_together = ("site", "name")
+        verbose_name = _("environment")
+        verbose_name_plural = _("environments")

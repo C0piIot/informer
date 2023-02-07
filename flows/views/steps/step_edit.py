@@ -29,7 +29,9 @@ class StepEdit(FlowEditMixin, SuccessMessageMixin, UpdateView):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
         try:
-            self.type = ContentType.objects.get_for_model(self.get_object().get_typed_instance())
+            self.type = ContentType.objects.get_for_model(
+                self.get_object().get_typed_instance()
+            )
         except (ContentType.DoesNotExist, KeyError):
             raise Http404
 
@@ -45,8 +47,11 @@ class StepEdit(FlowEditMixin, SuccessMessageMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        context_data['step_forms'][self.object.order] = context_data['form']
+        context_data["step_forms"][self.object.order] = context_data["form"]
         return context_data
 
     def get_success_url(self):
-        return reverse('flows:edit', kwargs={'id': self.flow.id, 'environment': self.current_environment.slug })
+        return reverse(
+            "flows:edit",
+            kwargs={"id": self.flow.id, "environment": self.current_environment.slug},
+        )

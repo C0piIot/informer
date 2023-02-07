@@ -8,7 +8,7 @@ from accounts.models import Channel
 
 
 class ChannelRemove(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
-    success_url = reverse_lazy('accounts:channel_list')
+    success_url = reverse_lazy("accounts:channel_list")
     success_message = _("Channel was removed successfully")
     model = Channel
 
@@ -17,4 +17,3 @@ class ChannelRemove(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
 
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(self.success_url)
-

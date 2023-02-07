@@ -1,8 +1,11 @@
 from contacts.models import Contact
 
+
 class DefaultContactStorage:
     @classmethod
-    def get_contacts(cls, environment, cursor=None, amount=50, filter_key=None, filter_name=None):
+    def get_contacts(
+        cls, environment, cursor=None, amount=50, filter_key=None, filter_name=None
+    ):
         queryset = Contact.objects.filter(environment=environment)
         if filter_key:
             queryset = queryset.filter(key=filter_key)

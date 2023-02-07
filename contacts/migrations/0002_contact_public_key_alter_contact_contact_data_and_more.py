@@ -4,26 +4,36 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('contacts', '0001_initial'),
+        ("contacts", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='contact',
-            name='public_key',
-            field=models.CharField(default='abc', max_length=40, unique=True, verbose_name='public key'),
+            model_name="contact",
+            name="public_key",
+            field=models.CharField(
+                default="abc", max_length=40, unique=True, verbose_name="public key"
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='contact',
-            name='contact_data',
-            field=models.JSONField(blank=True, default=dict, help_text='Contact data will be available for use in flow templates', verbose_name='contact data'),
+            model_name="contact",
+            name="contact_data",
+            field=models.JSONField(
+                blank=True,
+                default=dict,
+                help_text="Contact data will be available for use in flow templates",
+                verbose_name="contact data",
+            ),
         ),
         migrations.AlterField(
-            model_name='contact',
-            name='key',
-            field=models.SlugField(help_text='Key must be unique to all your contacts', max_length=100, verbose_name='key'),
+            model_name="contact",
+            name="key",
+            field=models.SlugField(
+                help_text="Key must be unique to all your contacts",
+                max_length=100,
+                verbose_name="key",
+            ),
         ),
     ]

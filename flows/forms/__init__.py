@@ -8,11 +8,6 @@ from .webhook_form import WebhookForm
 from flows.models import *
 
 step_form_classes = {
-    form_class.Meta.model : form_class for form_class in [
-        DelayForm,
-        GroupForm,
-        EmailForm,
-        PushForm,
-        WebhookForm
-    ]
+    form_class.Meta.model: form_class
+    for form_class in [DelayForm, GroupForm, EmailForm, PushForm, WebhookForm]
 }
