@@ -22,6 +22,14 @@ class EnvironmentsTestCase(TransactionTestCase):
             self.assertTemplateUsed(response, "accounts/environment_list.html")
 
             self.assertRedirects(
+                self.client.get(
+                    reverse("accounts:environment_create"),
+                    HTTP_HOST="example.com",
+                ),
+                reverse("accounts:environment_list"),
+            )
+
+            self.assertRedirects(
                 self.client.post(
                     reverse("accounts:environment_create"),
                     {"name": "test_environment"},
@@ -41,11 +49,46 @@ class EnvironmentsTestCase(TransactionTestCase):
             environment = Environment.objects.first()
             self.assertEquals("test_environment", environment.name)
 
+            response = self.client.post(
+                reverse("accounts:environment_create"),
+                HTTP_HOST="example.com",
+                follow=True
+            )
+            self.assertRedirects(
+                response,
+                reverse("accounts:environment_list"),
+            )
+            self.assertContains(response, "Error creating environment")
+
             self.assertRedirects(
                 self.client.post(
                     reverse("accounts:environment_create"),
-                    {"name": "test_environment2", "source_environment": environment.pk},
+                    {"name": "another_environment", "source_environment": environment.pk},
                     HTTP_HOST="example.com",
                 ),
                 reverse("accounts:environment_list"),
             )
+
+            response = self.client.get(
+                reverse("accounts:environment_remove", kwargs={"slug": environment.slug}),
+                HTTP_HOST="example.com",
+                follow=True
+            )
+            self.assertRedirects(
+                response,
+                reverse("accounts:environment_list"),
+            )
+            self.assertContains(response, environment.name)
+
+            response = self.client.post(
+                reverse("accounts:environment_remove", kwargs={"slug": environment.slug}),
+                HTTP_HOST="example.com",
+                follow=True
+            )
+            
+            self.assertRedirects(
+                response,
+                reverse("accounts:environment_list"),
+            )
+
+            self.assertNotContains(response, environment.name)

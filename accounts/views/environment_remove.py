@@ -17,4 +17,4 @@ class EnvironmentRemove(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
         return super().get_queryset(**kwargs).filter(site=self.request.site)
 
     def get(self, request, *args, **kwargs):
-        return HttpResponseRedirect(self.get_success_url())
+        return HttpResponseRedirect(self.success_url)

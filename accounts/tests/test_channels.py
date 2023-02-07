@@ -11,12 +11,10 @@ class ChannelsTestCase(TransactionTestCase):
     fixtures = ["users.json", "environments.json"]
 
     def setUp(self):
-        pass
+        self.client.force_login(get_user_model().objects.first())
 
     def testChannelsCrud(self):
         with self.settings(ALLOWED_HOSTS=("example.com",)):
-            self.client.force_login(get_user_model().objects.first())
-
             response = self.client.get(
                 reverse("accounts:channel_list"), HTTP_HOST="example.com"
             )
@@ -118,6 +116,14 @@ class ChannelsTestCase(TransactionTestCase):
             )
 
             self.assertRedirects(
+                self.client.get(
+                    reverse("accounts:channel_remove", kwargs={"pk": push_channel.pk}),
+                    HTTP_HOST="example.com",
+                ),
+                reverse("accounts:channel_list"),
+            )
+
+            self.assertRedirects(
                 self.client.post(
                     reverse("accounts:channel_remove", kwargs={"pk": push_channel.pk}),
                     HTTP_HOST="example.com",
@@ -127,3 +133,21 @@ class ChannelsTestCase(TransactionTestCase):
 
             self.assertIsNone(EmailChannel.objects.first())
             self.assertIsNone(PushChannel.objects.first())
+
+    def testChannelCreateType(self):
+        with self.settings(ALLOWED_HOSTS=("example.com",)):
+            self.assertEquals(
+                self.client.get(
+                    reverse("accounts:channel_create", kwargs={"type": "invalidchannel"}),
+                    HTTP_HOST="example.com"
+                ).status_code,
+                404
+            )
+
+            self.assertEquals(
+                self.client.get(
+                    reverse("accounts:channel_create", kwargs={"type": "pushchannel"}),
+                    HTTP_HOST="example.com"
+                ).status_code,
+                200
+            )
