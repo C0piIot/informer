@@ -1,9 +1,10 @@
-from django.views.generic.list import ListView
-from accounts.models import Channel
+from django.apps import apps
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.contenttypes.models import ContentType
-from django.apps import apps
 from django.utils.module_loading import import_string
+from django.views.generic.list import ListView
+
+from accounts.models import Channel
 
 
 class ChannelListMixin(LoginRequiredMixin):

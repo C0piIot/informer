@@ -1,8 +1,10 @@
-from .views import *
-from django.urls import path, include
-from informer.api import router
+from django.urls import include, path
+
 from contacts.views import ContactList
 from inbox.views import InboxEntryList
+from informer.api import router
+
+from .views import *
 
 app_name = "inbox"
 

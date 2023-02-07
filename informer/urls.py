@@ -1,11 +1,13 @@
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.views import LoginView
-from django.urls import path, include
-from .api import router
+from django.urls import include, path
 from rest_framework.schemas import get_schema_view
-from .views import Home
+
 from accounts.forms import LoginForm
+
+from .api import router
+from .views import Home
 
 urlpatterns = [
     path("", Home.as_view(), name="home"),

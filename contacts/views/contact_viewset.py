@@ -1,12 +1,13 @@
+from django.conf import settings
+from django.utils.module_loading import import_string
+from django.utils.translation import gettext_lazy as _
+from rest_framework import mixins, serializers, status
+from rest_framework.reverse import reverse
 from rest_framework.viewsets import GenericViewSet
-from rest_framework import serializers, status, mixins
-from contacts.models import Contact
+
 from accounts.rest_permissions import HasEnvironmentPermission
 from accounts.views import ContextAwareViewSetMixin
-from django.utils.translation import gettext_lazy as _
-from django.utils.module_loading import import_string
-from django.conf import settings
-from rest_framework.reverse import reverse
+from contacts.models import Contact
 from contacts.rest_permissions import HasContactPermission
 
 contact_storage = import_string(settings.CONTACT_STORAGE)

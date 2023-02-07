@@ -1,12 +1,13 @@
-from django.views.generic.edit import UpdateView
-from contacts.forms import ContactForm
-from accounts.views import CurrentEnvironmentMixin
+from django.conf import settings
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
-from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 from django.utils.module_loading import import_string
-from django.contrib.messages.views import SuccessMessageMixin
-from django.conf import settings
+from django.utils.translation import gettext_lazy as _
+from django.views.generic.edit import UpdateView
+
+from accounts.views import CurrentEnvironmentMixin
+from contacts.forms import ContactForm
 from contacts.models import Contact
 
 

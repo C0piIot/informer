@@ -1,10 +1,11 @@
-from flows.views.flow_edit_mixin import FlowEditMixin
-from django.views.generic.edit import CreateView
-from django.contrib.messages.views import SuccessMessageMixin
-from flows.forms import TestForm
-from django.utils.translation import gettext_lazy as _
 from django.conf import settings
+from django.contrib.messages.views import SuccessMessageMixin
 from django.utils.module_loading import import_string
+from django.utils.translation import gettext_lazy as _
+from django.views.generic.edit import CreateView
+
+from flows.forms import TestForm
+from flows.views.flow_edit_mixin import FlowEditMixin
 
 
 class FlowTest(FlowEditMixin, SuccessMessageMixin, CreateView):

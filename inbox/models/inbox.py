@@ -1,12 +1,14 @@
-from django.db import models
-from flows.models import FlowLog
-from django.utils.translation import gettext_lazy as _
-from flows.models import FlowStep
-from .inbox_entry import InboxEntry
-from django.utils.module_loading import import_string
-from django.template import Template, Context
-from django.conf import settings
 import json
+
+from django.conf import settings
+from django.db import models
+from django.template import Context, Template
+from django.utils.module_loading import import_string
+from django.utils.translation import gettext_lazy as _
+
+from flows.models import FlowLog, FlowStep
+
+from .inbox_entry import InboxEntry
 
 
 class Inbox(FlowStep):

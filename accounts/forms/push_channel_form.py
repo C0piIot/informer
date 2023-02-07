@@ -1,7 +1,9 @@
 from django import forms
-from .channel_form import ChannelForm
-from accounts.models import PushChannel
 from django.utils.translation import gettext_lazy as _
+
+from accounts.models import PushChannel
+
+from .channel_form import ChannelForm
 
 
 class PushChannelForm(ChannelForm):

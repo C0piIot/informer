@@ -1,4 +1,5 @@
 from django.forms import ModelForm
+
 from inbox.models import Inbox
 
 

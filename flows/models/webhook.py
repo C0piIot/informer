@@ -1,11 +1,13 @@
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-from .flow_step import FlowStep
-from urllib.parse import urlparse
-from django.template import Template, Context
-from .flow_log import FlowLog
-from urllib import request
 import ssl
+from urllib import request
+from urllib.parse import urlparse
+
+from django.db import models
+from django.template import Context, Template
+from django.utils.translation import gettext_lazy as _
+
+from .flow_log import FlowLog
+from .flow_step import FlowStep
 
 
 class Webhook(FlowStep):

@@ -1,5 +1,6 @@
 -r requirements.txt
 coverage
 #pylint
-#black #formatter?
+black #formatter, añadir a pre-commit?
 #flake8
+isort[requirements_deprecated_finder,pipfile_deprecated_finder]

@@ -1,7 +1,8 @@
 from django import forms
-from accounts.models import Environment
-from django.utils.translation import gettext_lazy as _
 from django.db import transaction
+from django.utils.translation import gettext_lazy as _
+
+from accounts.models import Environment
 
 
 class NewEnvironmentForm(forms.ModelForm):

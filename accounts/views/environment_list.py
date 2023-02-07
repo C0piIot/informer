@@ -1,7 +1,8 @@
-from django.views.generic.list import ListView
-from accounts.models import Environment
-from accounts.forms import NewEnvironmentForm
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.list import ListView
+
+from accounts.forms import NewEnvironmentForm
+from accounts.models import Environment
 
 
 class EnvironmentList(LoginRequiredMixin, ListView):

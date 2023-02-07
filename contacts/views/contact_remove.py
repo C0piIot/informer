@@ -1,13 +1,14 @@
-from django.views.generic.edit import DeleteView
-from contacts.forms import ContactForm
-from accounts.views import CurrentEnvironmentMixin
-from django.http import HttpResponseRedirect
-from django.utils.translation import gettext_lazy as _
-from django.urls import reverse
-from django.contrib import messages
-from django.utils.module_loading import import_string
-from django.contrib.messages.views import SuccessMessageMixin
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.utils.module_loading import import_string
+from django.utils.translation import gettext_lazy as _
+from django.views.generic.edit import DeleteView
+
+from accounts.views import CurrentEnvironmentMixin
+from contacts.forms import ContactForm
 
 
 class ContactRemove(CurrentEnvironmentMixin, SuccessMessageMixin, DeleteView):

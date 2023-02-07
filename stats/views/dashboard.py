@@ -1,10 +1,12 @@
-from django.views.generic.base import TemplateView
-from accounts.views import CurrentEnvironmentMixin
-from django.utils.module_loading import import_string
-from stats.storages import BaseSeriesStorage
-from django.conf import settings
 from datetime import datetime, timedelta
 from math import ceil
+
+from django.conf import settings
+from django.utils.module_loading import import_string
+from django.views.generic.base import TemplateView
+
+from accounts.views import CurrentEnvironmentMixin
+from stats.storages import BaseSeriesStorage
 
 
 class Dashboard(CurrentEnvironmentMixin, TemplateView):

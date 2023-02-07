@@ -1,10 +1,11 @@
-from django.urls import reverse
-from django.views.generic.edit import CreateView
 from django.contrib import messages
-from accounts.views import CurrentEnvironmentMixin
 from django.http import HttpResponseRedirect
-from flows.forms import FlowForm
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.views.generic.edit import CreateView
+
+from accounts.views import CurrentEnvironmentMixin
+from flows.forms import FlowForm
 
 
 class FlowCreate(CurrentEnvironmentMixin, CreateView):

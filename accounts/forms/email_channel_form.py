@@ -1,7 +1,9 @@
 from django import forms
-from .channel_form import ChannelForm
-from accounts.models import EmailChannel
 from django.utils.translation import gettext_lazy as _
+
+from accounts.models import EmailChannel
+
+from .channel_form import ChannelForm
 
 
 class EmailChannelForm(ChannelForm):

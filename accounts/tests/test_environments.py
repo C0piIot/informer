@@ -1,6 +1,7 @@
-from django.test import TransactionTestCase
 from django.contrib.auth import get_user_model
+from django.test import TransactionTestCase
 from django.urls import reverse
+
 from accounts.models import Environment
 
 

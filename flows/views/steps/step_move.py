@@ -1,13 +1,14 @@
-from django.views.generic.base import View
-from django.views.generic.detail import SingleObjectMixin
-from accounts.views import CurrentEnvironmentMixin
-from flows.models import Flow, FlowStep
 from django.contrib import messages
 from django.db import transaction
-from django.shortcuts import get_object_or_404
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.views.generic.base import View
+from django.views.generic.detail import SingleObjectMixin
+
+from accounts.views import CurrentEnvironmentMixin
+from flows.models import Flow, FlowStep
 
 
 class StepMove(CurrentEnvironmentMixin, SingleObjectMixin, View):

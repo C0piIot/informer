@@ -1,8 +1,11 @@
-from .base_series_storage import BaseSeriesStorage
-from django.utils.module_loading import import_string
 from datetime import datetime
+
+import environ
+import redis
+from django.utils.module_loading import import_string
 from redis.exceptions import ResponseError
-import redis, environ
+
+from .base_series_storage import BaseSeriesStorage
 
 env = environ.Env()
 

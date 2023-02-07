@@ -1,14 +1,17 @@
-from django.db import models
+import logging
 from uuid import uuid4
+
+from django.conf import settings
+from django.contrib.sites.models import Site
+from django.db import models
+from django.urls import reverse
+from django.utils.module_loading import import_string
 from django.utils.translation import gettext_lazy as _
+
+from contacts.models import RelatedContactModel
+
 from .flow import Flow
 from .flow_log import FlowLog
-from django.utils.module_loading import import_string
-from django.conf import settings
-from django.urls import reverse
-from django.contrib.sites.models import Site
-from contacts.models import RelatedContactModel
-import logging
 
 logger = logging.getLogger()
 

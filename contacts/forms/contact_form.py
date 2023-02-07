@@ -1,10 +1,11 @@
 from django import forms
-from django.utils.translation import gettext_lazy as _
-from contacts.models import Contact
-from accounts.models import Channel
-from django.utils.module_loading import import_string
 from django.conf import settings
 from django.forms.models import modelform_factory
+from django.utils.module_loading import import_string
+from django.utils.translation import gettext_lazy as _
+
+from accounts.models import Channel
+from contacts.models import Contact
 
 
 class ContactForm(forms.ModelForm):

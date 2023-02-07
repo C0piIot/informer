@@ -1,9 +1,11 @@
+from django.urls import include, path
+
+from informer.api import router
+
+from .forms import *
+from .models import *
 from .views import *
 from .views.steps import *
-from .models import *
-from .forms import *
-from django.urls import path, include
-from informer.api import router
 
 app_name = "flows"
 

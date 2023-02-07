@@ -9,10 +9,11 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-import os, environ
+import os
 from pathlib import Path
-from django.conf import settings as default_settings
 
+import environ
+from django.conf import settings as default_settings
 
 env = environ.Env()
 
@@ -155,8 +156,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-from django.http import Http404
 from django.core.exceptions import PermissionDenied
+from django.http import Http404
 
 ROLLBAR_CLIENT_TOKEN = env("ROLLBAR_CLIENT_TOKEN", default="")
 

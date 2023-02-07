@@ -1,9 +1,10 @@
-from django.urls import reverse
-from django.views.generic.edit import DeleteView
-from django.http import HttpResponseRedirect
 from django.contrib import messages
-from .flow_filtered_mixin import FlowFilteredMixin
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
+from django.views.generic.edit import DeleteView
+
+from .flow_filtered_mixin import FlowFilteredMixin
 
 
 class FlowRemove(FlowFilteredMixin, DeleteView):

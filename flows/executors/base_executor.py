@@ -1,8 +1,10 @@
 import uuid
-from django.core import serializers
+
 from django.conf import settings
-from accounts.models import Environment
+from django.core import serializers
 from django.utils.module_loading import import_string
+
+from accounts.models import Environment
 from flows.models import FlowLog
 from stats.utils import store_event
 

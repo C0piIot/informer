@@ -1,12 +1,13 @@
-from accounts.views import CurrentEnvironmentMixin
-from django.views.generic.edit import DeleteView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.db import transaction
 from django.http import HttpResponseRedirect
-from flows.models import Flow, FlowStep
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
-from django.db import transaction
 from django.utils.translation import gettext_lazy as _
-from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic.edit import DeleteView
+
+from accounts.views import CurrentEnvironmentMixin
+from flows.models import Flow, FlowStep
 
 
 class StepRemove(CurrentEnvironmentMixin, SuccessMessageMixin, DeleteView):

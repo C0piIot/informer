@@ -1,11 +1,14 @@
-from django.db import models
 from uuid import uuid4
-from django.utils.translation import gettext_lazy as _
+
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.sites.models import Site
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+from stats.utils import store_event
+
 from .flow import Flow
 from .flow_log import FlowLog
-from django.contrib.sites.models import Site
-from stats.utils import store_event
 
 
 class FlowStep(models.Model):

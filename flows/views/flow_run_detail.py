@@ -1,9 +1,11 @@
-from django.views.generic.detail import DetailView
-from django.utils.module_loading import import_string
 from django.conf import settings
 from django.shortcuts import get_object_or_404
-from .flow_filtered_mixin import FlowFilteredMixin
+from django.utils.module_loading import import_string
+from django.views.generic.detail import DetailView
+
 from flows.models import Flow
+
+from .flow_filtered_mixin import FlowFilteredMixin
 
 
 class FlowRunDetail(FlowFilteredMixin, DetailView):

@@ -1,10 +1,9 @@
-from django.test import TestCase
-from accounts.forms.push_contact_form import (
-    TokensWidget,
-    MultipleTokensField,
-    fcm_token_validation,
-)
 from django.core.exceptions import ValidationError
+from django.test import TestCase
+
+from accounts.forms.push_contact_form import (MultipleTokensField,
+                                              TokensWidget,
+                                              fcm_token_validation)
 
 
 class PushContactFormTestCase(TestCase):

@@ -1,6 +1,8 @@
-from .views import *
-from django.urls import path, include
+from django.urls import include, path
+
 from informer.api import router
+
+from .views import *
 
 app_name = "contacts"
 

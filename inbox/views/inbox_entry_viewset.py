@@ -1,13 +1,15 @@
-from rest_framework.viewsets import GenericViewSet
-from rest_framework import serializers, status, mixins
-from inbox.models import InboxEntry
-from django.utils.module_loading import import_string
 from django.conf import settings
+from django.utils.module_loading import import_string
 from django.utils.translation import gettext_lazy as _
-from rest_framework import authentication, exceptions
-from accounts.views import ContextAwareViewSetMixin
-from rest_framework.authentication import BaseAuthentication, get_authorization_header
+from rest_framework import (authentication, exceptions, mixins, serializers,
+                            status)
+from rest_framework.authentication import (BaseAuthentication,
+                                           get_authorization_header)
 from rest_framework.response import Response
+from rest_framework.viewsets import GenericViewSet
+
+from accounts.views import ContextAwareViewSetMixin
+from inbox.models import InboxEntry
 
 inbox_storage = import_string(settings.INBOX_ENTRY_STORAGE)
 contact_storage = import_string(settings.CONTACT_STORAGE)

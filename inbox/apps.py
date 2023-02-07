@@ -17,7 +17,8 @@ class InboxConfig(AppConfig):
             if not hasattr(settings, name):
                 setattr(settings, name, value)
 
-        from .forms import InboxForm
         from flows.forms import step_form_classes
+
+        from .forms import InboxForm
 
         step_form_classes[InboxForm.Meta.model] = InboxForm

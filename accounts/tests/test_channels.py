@@ -1,8 +1,10 @@
-from django.test import TransactionTestCase
+from unittest.mock import MagicMock, patch
+
 from django.contrib.auth import get_user_model
+from django.test import TransactionTestCase
 from django.urls import reverse
+
 from accounts.models import EmailChannel, PushChannel
-from unittest.mock import patch, MagicMock
 
 
 class ChannelsTestCase(TransactionTestCase):

@@ -1,8 +1,10 @@
-from django.views.generic.list import ListView
-from .flow_filtered_mixin import FlowFilteredMixin
-from flows.forms import FlowForm
 from django.db.models import Prefetch
+from django.views.generic.list import ListView
+
+from flows.forms import FlowForm
 from flows.models import FlowStep
+
+from .flow_filtered_mixin import FlowFilteredMixin
 
 
 class FlowList(FlowFilteredMixin, ListView):

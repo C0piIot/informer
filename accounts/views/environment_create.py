@@ -1,12 +1,13 @@
-from django.views.generic.edit import CreateView
-from django.contrib.messages.views import SuccessMessageMixin
-from accounts.models import Environment
-from django.urls import reverse_lazy
 from django.contrib import messages
-from django.http import HttpResponseRedirect
-from accounts.forms import NewEnvironmentForm
-from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
+from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
+from django.views.generic.edit import CreateView
+
+from accounts.forms import NewEnvironmentForm
+from accounts.models import Environment
 
 
 class EnvironmentCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):

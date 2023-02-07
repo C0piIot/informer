@@ -1,8 +1,10 @@
-from django.test import TestCase
-from flows.models import Webhook, FlowRun, FlowLog
-from contacts.models import Contact
-from unittest.mock import patch, MagicMock
 import urllib
+from unittest.mock import MagicMock, patch
+
+from django.test import TestCase
+
+from contacts.models import Contact
+from flows.models import FlowLog, FlowRun, Webhook
 
 
 class WebhookTestCase(TestCase):

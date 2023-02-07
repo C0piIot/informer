@@ -1,10 +1,11 @@
-from django.urls import reverse_lazy
-from django.views.generic.edit import CreateView
-from django.contrib.messages.views import SuccessMessageMixin
-from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
-from django.utils.module_loading import import_string
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import Http404
+from django.urls import reverse_lazy
+from django.utils.module_loading import import_string
+from django.utils.translation import gettext_lazy as _
+from django.views.generic.edit import CreateView
+
 from .channel_list_mixin import ChannelListMixin
 
 

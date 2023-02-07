@@ -1,7 +1,8 @@
+from django.core.exceptions import ValidationError
+from django.core.mail import get_connection, send_mail
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.core.mail import get_connection, send_mail
-from django.core.exceptions import ValidationError
+
 from .channel import Channel
 
 

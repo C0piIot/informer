@@ -1,10 +1,11 @@
-from django.db import models
-from django.utils.translation import gettext_lazy as _
+import firebase_admin
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
-from .channel import Channel
-import firebase_admin
+from django.db import models
+from django.utils.translation import gettext_lazy as _
 from firebase_admin import messaging
+
+from .channel import Channel
 
 
 class PushChannel(Channel):

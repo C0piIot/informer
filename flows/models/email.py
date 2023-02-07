@@ -1,10 +1,12 @@
 from django.db import models
+from django.template import Context, Template
 from django.utils.translation import gettext_lazy as _
-from .flow_step import FlowStep
-from django.template import Template, Context
 from premailer import Premailer
-from .flow_log import FlowLog
+
 from accounts.models import EmailChannel
+
+from .flow_log import FlowLog
+from .flow_step import FlowStep
 
 
 class Email(FlowStep):

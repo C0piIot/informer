@@ -1,14 +1,15 @@
-from django.views.generic.detail import View
-from accounts.views import CurrentEnvironmentMixin
-from django.template import Template, Context
+import json
+
 from django.http import HttpResponse, HttpResponseBadRequest
-from premailer import Premailer
+from django.shortcuts import get_object_or_404
+from django.template import Context, Template, TemplateSyntaxError
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic.detail import View
+from premailer import Premailer
+
+from accounts.views import CurrentEnvironmentMixin
 from flows.models import Flow
-from django.shortcuts import get_object_or_404
-from django.template import TemplateSyntaxError
-import json
 
 
 @method_decorator(csrf_exempt, name="dispatch")

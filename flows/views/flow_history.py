@@ -1,7 +1,8 @@
+from django.db.models import Prefetch
 from django.views.generic.list import ListView
+
 from accounts.views import CurrentEnvironmentMixin
 from flows.models import Flow, FlowStep
-from django.db.models import Prefetch
 
 
 class FlowHistory(CurrentEnvironmentMixin, ListView):

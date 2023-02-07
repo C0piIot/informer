@@ -1,6 +1,7 @@
-from accounts.models import Environment
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
+
+from accounts.models import Environment
 
 
 class CurrentEnvironmentMixin(LoginRequiredMixin):

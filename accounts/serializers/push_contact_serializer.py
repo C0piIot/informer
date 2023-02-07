@@ -1,6 +1,7 @@
-from rest_framework import serializers
-from django.utils.translation import gettext_lazy as _
 import re
+
+from django.utils.translation import gettext_lazy as _
+from rest_framework import serializers
 
 
 class PushContactSerializer(serializers.Serializer):
