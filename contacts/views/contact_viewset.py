@@ -14,6 +14,10 @@ contact_storage = import_string(settings.CONTACT_STORAGE)
 
 
 class ContactSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Contact
+        fields = ["url", "key", "auth_key", "name", "contact_data", "channel_data"]
     url = serializers.SerializerMethodField()
 
     def get_url(self, obj):
@@ -58,10 +62,6 @@ class ContactSerializer(serializers.ModelSerializer):
             setattr(contact, attr, value)
         contact_storage.save_contact(self.context["environment"], contact)
         return contact
-
-    class Meta:
-        model = Contact
-        fields = ["url", "key", "auth_key", "name", "contact_data", "channel_data"]
 
 
 class ContactViewSet(

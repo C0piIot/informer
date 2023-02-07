@@ -9,6 +9,21 @@ from rest_framework.authtoken.models import Token
 
 
 class Contact(models.Model):
+
+    class Meta:
+        verbose_name = _("contact")
+        verbose_name_plural = _("contacts")
+        constraints = (
+            models.UniqueConstraint("environment", "key", name="key_environment"),
+        )
+        indexes = (
+            models.Index(fields=("environment", "index1")),
+            models.Index(fields=("environment", "index2")),
+            models.Index(fields=("environment", "index3")),
+            models.Index(fields=("environment", "index4")),
+            models.Index(fields=("environment", "index5")),
+            models.Index(fields=("environment", "index6")),
+        )
     key = models.SlugField(
         _("key"),
         max_length=100,
@@ -48,9 +63,6 @@ class Contact(models.Model):
     channel_data = models.JSONField(_("channel data"), default=dict)
     auth_key = models.CharField(_("auth key"), max_length=40)
 
-    def __str__(self):
-        return self.name
-
     def save(self, *args, **kwargs):
         self.site = self.environment.site
         if not self.auth_key:
@@ -63,23 +75,14 @@ class Contact(models.Model):
     def get_channel_data(self, channel_type):
         return self.channel_data.get(channel_type, {})
 
-    class Meta:
-        verbose_name = _("contact")
-        verbose_name_plural = _("contacts")
-        constraints = (
-            models.UniqueConstraint("environment", "key", name="key_environment"),
-        )
-        indexes = (
-            models.Index(fields=("environment", "index1")),
-            models.Index(fields=("environment", "index2")),
-            models.Index(fields=("environment", "index3")),
-            models.Index(fields=("environment", "index4")),
-            models.Index(fields=("environment", "index5")),
-            models.Index(fields=("environment", "index6")),
-        )
+    def __str__(self):
+        return self.name
 
 
 class RelatedContactModel(models.Model):
+
+    class Meta:
+        abstract = True
     _contact = None
     contact_key = models.CharField(_("contact key"), max_length=100)
     environment = models.ForeignKey(
@@ -111,6 +114,3 @@ class RelatedContactModel(models.Model):
         self.contact_key = new_contact.key
         self.environment = new_contact.environment
         self.site = new_contact.site
-
-    class Meta:
-        abstract = True

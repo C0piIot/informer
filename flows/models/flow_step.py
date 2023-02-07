@@ -12,6 +12,12 @@ from .flow_log import FlowLog
 
 
 class FlowStep(models.Model):
+
+    class Meta:
+        verbose_name = _("flow step")
+        verbose_name_plural = _("flow steps")
+        ordering = ("flow", "order")
+        unique_together = ("flow", "order")
     ICON = "⏭️"
     flow = models.ForeignKey(
         Flow,
@@ -81,9 +87,3 @@ class FlowStep(models.Model):
 
     def __str__(self):
         return "%s %s" % (self.ICON, self._meta.verbose_name.title())
-
-    class Meta:
-        verbose_name = _("flow step")
-        verbose_name_plural = _("flow steps")
-        ordering = ("flow", "order")
-        unique_together = ("flow", "order")

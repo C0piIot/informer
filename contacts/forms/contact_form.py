@@ -9,6 +9,21 @@ from contacts.models import Contact
 
 
 class ContactForm(forms.ModelForm):
+
+    class Meta:
+        model = Contact
+        fields = (
+            "name",
+            "key",
+            "auth_key",
+            "contact_data",
+            "index1",
+            "index2",
+            "index3",
+            "index4",
+            "index5",
+            "index6",
+        )
     active_channel_tab = None
     CHANNEL_PREFIX = "channel-"
     environment = None
@@ -60,18 +75,3 @@ class ContactForm(forms.ModelForm):
                 self.environment, contact
             )
         return contact
-
-    class Meta:
-        model = Contact
-        fields = (
-            "name",
-            "key",
-            "auth_key",
-            "contact_data",
-            "index1",
-            "index2",
-            "index3",
-            "index4",
-            "index5",
-            "index6",
-        )

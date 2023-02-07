@@ -7,6 +7,10 @@ from .flow_step import FlowStep
 
 
 class Group(FlowStep):
+
+    class Meta:
+        verbose_name = _("group")
+        verbose_name_plural = _("groupings")
     ICON = "⏬"
     DATA_KEY = "GROUP_%s"
     window = models.DurationField(
@@ -22,9 +26,6 @@ class Group(FlowStep):
             "Context data from each flow will be available in an array with the name GROUP_{grouping key}"
         ),
     )
-
-    def __str__(self):
-        return "%s by %s ⏲️ %s" % (super().__str__(), self.key, self.window)
 
     def step_run(self, flow_run):
         key = self.DATA_KEY % self.key
@@ -48,6 +49,5 @@ class Group(FlowStep):
         import_string(settings.FLOW_RUN_STORAGE).unset_group(flow_run, self.key)
         self.run_next(flow_run)
 
-    class Meta:
-        verbose_name = _("group")
-        verbose_name_plural = _("groupings")
+    def __str__(self):
+        return "%s by %s ⏲️ %s" % (super().__str__(), self.key, self.window)

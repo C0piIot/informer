@@ -7,6 +7,14 @@ from contacts.models import RelatedContactModel
 
 
 class InboxEntry(RelatedContactModel):
+
+    class Meta:
+        verbose_name = _("inbox entry")
+        verbose_name_plural = _("inbox entries")
+        indexes = (
+            models.Index(fields=("site", "environment", "contact_key", "-date")),
+        )
+        ordering = ("-date",)
     key = models.UUIDField(_("key"), default=uuid4, primary_key=True, editable=False)
     date = models.DateTimeField(_("date"), auto_now_add=True)
     title = models.CharField(_("title"), max_length=100)
@@ -23,11 +31,3 @@ class InboxEntry(RelatedContactModel):
 
     def __str__(self):
         return self.message
-
-    class Meta:
-        verbose_name = _("inbox entry")
-        verbose_name_plural = _("inbox entries")
-        indexes = (
-            models.Index(fields=("site", "environment", "contact_key", "-date")),
-        )
-        ordering = ("-date",)

@@ -11,6 +11,10 @@ from .flow_step import FlowStep
 
 
 class Webhook(FlowStep):
+
+    class Meta:
+        verbose_name = _("webook")
+        verbose_name_plural = _("webhooks")
     ICON = "🌐"
     CONTENT_TYPES = (
         "application/x-www-form-urlencoded",
@@ -39,9 +43,6 @@ class Webhook(FlowStep):
         default=False,
         help_text=_("Allows to connect to insecure webhooks"),
     )
-
-    def __str__(self):
-        return "%s %s %s" % (super().__str__(), self.method, urlparse(self.url).netloc)
 
     def step_run(self, flow_run):
         context = Context(flow_run.event_payload, autoescape=False)
@@ -75,6 +76,5 @@ class Webhook(FlowStep):
 
         self.run_next(flow_run)
 
-    class Meta:
-        verbose_name = _("webook")
-        verbose_name_plural = _("webhooks")
+    def __str__(self):
+        return "%s %s %s" % (super().__str__(), self.method, urlparse(self.url).netloc)

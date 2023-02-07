@@ -8,6 +8,13 @@ from flows.models import FlowRun
 
 
 class TestForm(ModelForm):
+
+    class Meta:
+        model = FlowRun
+        fields = (
+            "contact_key",
+            "event_payload",
+        )
     flow = None
     environment = None
 
@@ -39,10 +46,3 @@ class TestForm(ModelForm):
             )
             import_string(settings.FLOW_EXECUTOR).run(flow_run)
         return flow_run
-
-    class Meta:
-        model = FlowRun
-        fields = (
-            "contact_key",
-            "event_payload",
-        )

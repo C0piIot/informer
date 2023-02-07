@@ -9,6 +9,10 @@ from .channel import Channel
 
 
 class PushChannel(Channel):
+
+    class Meta:
+        verbose_name = _("push channel")
+        verbose_name_plural = _("push channels")
     ICON = "🔔"
     CONTACT_FORM = "accounts.forms.PushContactForm"
     CONTACT_SERIALIZER = "accounts.serializers.PushContactSerializer"
@@ -59,7 +63,3 @@ class PushChannel(Channel):
         )
 
         return {tokens[i]: r.success for i, r in enumerate(response.responses)}
-
-    class Meta:
-        verbose_name = _("push channel")
-        verbose_name_plural = _("push channels")

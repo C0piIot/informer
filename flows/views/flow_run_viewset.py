@@ -10,6 +10,10 @@ from flows.models import Flow, FlowRun
 
 
 class FlowTriggerSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = FlowRun
+        fields = ["event", "contact_key", "event_payload"]
     event = serializers.CharField(write_only=True)
 
     def validate(self, data):
@@ -45,10 +49,6 @@ class FlowTriggerSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instances):
         return {"flow_runs": [instance.id for instance in instances]}
-
-    class Meta:
-        model = FlowRun
-        fields = ["event", "contact_key", "event_payload"]
 
 
 class FlowRunViewSet(mixins.CreateModelMixin, ContextAwareViewSetMixin, GenericViewSet):

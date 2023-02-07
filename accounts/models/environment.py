@@ -7,6 +7,11 @@ from rest_framework.authtoken.models import Token
 
 
 class Environment(models.Model):
+
+    class Meta:
+        unique_together = ("site", "name")
+        verbose_name = _("environment")
+        verbose_name_plural = _("environments")
     site = models.ForeignKey(
         Site,
         verbose_name=_("site"),
@@ -22,9 +27,6 @@ class Environment(models.Model):
     def get_absolute_url(self):
         return reverse("stats:dashboard", kwargs={"environment": self.slug})
 
-    def __str__(self):
-        return self.name
-
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         if not self.private_key:
@@ -33,7 +35,5 @@ class Environment(models.Model):
             self.public_key = Token.generate_key()
         super().save(**kwargs)
 
-    class Meta:
-        unique_together = ("site", "name")
-        verbose_name = _("environment")
-        verbose_name_plural = _("environments")
+    def __str__(self):
+        return self.name

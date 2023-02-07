@@ -10,6 +10,10 @@ from .flow_step import FlowStep
 
 
 class Email(FlowStep):
+
+    class Meta:
+        verbose_name = _("send email")
+        verbose_name_plural = _("email sending")
     ICON = "✉️"
     subject = models.CharField(_("subject"), max_length=200)
     html_body = models.TextField(_("html body message"))
@@ -31,9 +35,6 @@ class Email(FlowStep):
         ),
     )
     premailer = Premailer()
-
-    def __str__(self):
-        return '%s "%s"' % (super().__str__(), self.subject)
 
     def step_run(self, flow_run):
         if not (email_channel := EmailChannel.objects.get(site=self.site)):
@@ -75,6 +76,5 @@ class Email(FlowStep):
 
         self.run_next(flow_run)
 
-    class Meta:
-        verbose_name = _("send email")
-        verbose_name_plural = _("email sending")
+    def __str__(self):
+        return '%s "%s"' % (super().__str__(), self.subject)

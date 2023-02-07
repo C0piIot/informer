@@ -17,6 +17,17 @@ logger = logging.getLogger()
 
 
 class FlowRun(RelatedContactModel):
+
+    class Meta:
+        verbose_name = _("flow run")
+        verbose_name_plural = _("flow runs")
+        ordering = ("-start",)
+        constraints = [
+            models.UniqueConstraint(
+                fields=("contact_key", "flow_revision", "group_key"),
+                name="unique group",
+            )
+        ]
     id = models.UUIDField(_("id"), primary_key=True, default=uuid4, editable=False)
     start = models.DateTimeField(_("start"), auto_now_add=True)
     flow_revision = models.ForeignKey(
@@ -45,20 +56,6 @@ class FlowRun(RelatedContactModel):
                 "flow_run_id": self.id,
             },
         )
-
-    class Meta:
-        verbose_name = _("flow run")
-        verbose_name_plural = _("flow runs")
-        ordering = ("-start",)
-        constraints = [
-            models.UniqueConstraint(
-                fields=("contact_key", "flow_revision", "group_key"),
-                name="unique group",
-            )
-        ]
-
-    def __str__(self):
-        return _("Flow run %s") % self.id
 
     def log(self, level, message, context={}):
         logger.log(getattr(logging, level), message)
@@ -117,3 +114,6 @@ class FlowRun(RelatedContactModel):
         import_string(settings.FLOW_EXECUTOR).schedule_wake_up(
             self, flow_step, time_delta
         )
+
+    def __str__(self):
+        return _("Flow run %s") % self.id

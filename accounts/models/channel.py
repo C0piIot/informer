@@ -5,6 +5,18 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Channel(models.Model):
+
+    class Meta:
+        ordering = (
+            "site",
+            "content_type",
+        )
+        verbose_name = _("channel")
+        verbose_name_plural = _("channels")
+        unique_together = (
+            "site",
+            "content_type",
+        )
     ICON = "🔊"
     CONTACT_FORM = None
     CONTACT_SERIALIZER = None
@@ -28,18 +40,6 @@ class Channel(models.Model):
             if content_type.model_class() != Channel:
                 self.content_type = content_type
         super().save(*args, **kwargs)
-
-    class Meta:
-        ordering = (
-            "site",
-            "content_type",
-        )
-        verbose_name = _("channel")
-        verbose_name_plural = _("channels")
-        unique_together = (
-            "site",
-            "content_type",
-        )
 
     def __str__(self):
         return "%s %s" % (self.get_typed_instance().ICON, self.content_type.name)

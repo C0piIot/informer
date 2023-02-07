@@ -6,6 +6,12 @@ from django.utils.translation import gettext_lazy as _
 
 
 class FlowLog(models.Model):
+
+    class Meta:
+        verbose_name = _("flow log")
+        verbose_name_plural = _("flow logs")
+        ordering = ("date",)
+        indexes = (models.Index(fields=("flow_run_id", "-date")),)
     DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
@@ -41,19 +47,6 @@ class FlowLog(models.Model):
     message = models.CharField(_("message"), max_length=400)
     context = models.JSONField(_("context"), default=dict)
 
-    def __str__(self):
-        return "%s %s %s" % (
-            self.date,
-            self.level,
-            self.message,
-        )
-
-    class Meta:
-        verbose_name = _("flow log")
-        verbose_name_plural = _("flow logs")
-        ordering = ("date",)
-        indexes = (models.Index(fields=("flow_run_id", "-date")),)
-
     @classmethod
     def save_flow_log(cls, log):
         log.site = log.environment.site
@@ -62,3 +55,10 @@ class FlowLog(models.Model):
     @classmethod
     def get_flow_logs(cls, site, flow_run_id):
         return cls.objects.filter(site=site, flow_run_id=flow_run_id)
+
+    def __str__(self):
+        return "%s %s %s" % (
+            self.date,
+            self.level,
+            self.message,
+        )

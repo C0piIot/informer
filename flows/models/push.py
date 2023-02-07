@@ -9,13 +9,14 @@ from .flow_step import FlowStep
 
 
 class Push(FlowStep):
+
+    class Meta:
+        verbose_name = _("send push")
+        verbose_name_plural = _("push sending")
     ICON = "🔔"
     title = models.CharField(_("title"), max_length=200)
     body = models.TextField(_("body"))
     url = models.CharField(_("url"), max_length=500)
-
-    def __str__(self):
-        return '%s "%s"' % (super().__str__(), self.title)
 
     def step_run(self, flow_run):
         if not (push_channel := PushChannel.objects.get(site=self.site)):
@@ -60,6 +61,5 @@ class Push(FlowStep):
 
         self.run_next(flow_run)
 
-    class Meta:
-        verbose_name = _("send push")
-        verbose_name_plural = _("push sending")
+    def __str__(self):
+        return '%s "%s"' % (super().__str__(), self.title)
