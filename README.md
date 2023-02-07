@@ -2,7 +2,7 @@
 
 Manage your application transactional messaging.
 
-![Build](https://github.com/callmewind/informer/actions/workflows/build.yml/badge.svg)
+[![Build](https://github.com/callmewind/informer/actions/workflows/build.yml/badge.svg)](https://github.com/callmewind/informer/actions/workflows/build.yml)
 [![codecov](https://codecov.io/github/callmewind/informer/branch/master/graph/badge.svg?token=CVLWDQAYY8)](https://codecov.io/github/callmewind/informer)
 
 
@@ -27,7 +27,7 @@ Track all the changes and revert to previous states with just a click.
 ##### Observability and metrics
 Keep track of all your communications. 
  - (TODO)Channel metrics
- - (TODO)Flow metrics
+ - Flow metrics (WIP)
  - (TODO)Account metrics
  - (TODO)Export registers
 
