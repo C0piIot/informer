@@ -1,0 +1,1 @@
+[{"model": "accounts.channel", "pk": 1, "fields": {"site": 1, "enabled": true, "content_type": ["accounts", "emailchannel"]}}, {"model": "accounts.channel", "pk": 2, "fields": {"site": 1, "enabled": true, "content_type": ["accounts", "pushchannel"]}}]
