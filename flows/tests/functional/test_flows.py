@@ -42,6 +42,29 @@ class FlowsTestCase(TransactionTestCase):
                 reverse("flows:edit", kwargs={'environment': self.environment.slug, 'id': flow.id }),
             )
 
+            response = self.client.post(
+                reverse("flows:edit", kwargs={'environment': self.environment.slug, 'id': flow.id}),
+                {
+                    "name": "example name updated",
+                    "trigger": "example_trigger",
+                    "preview_context" : "{\"foo\":\"bar\"}",
+                    "enabled" : "",
+            
+                },
+                HTTP_HOST="example.com",
+                follow=True
+            )
+
+            self.assertRedirects(
+                response,
+                reverse("flows:edit", kwargs={'environment': self.environment.slug, 'id': flow.id }),
+            )
+
+            self.assertContains(
+                response,
+                "example name updated"
+            )
+
             self.assertRedirects(
                 self.client.get(
                     reverse("flows:remove", kwargs={'environment': self.environment.slug,  'id': flow.id}),
@@ -157,3 +180,14 @@ class FlowsTestCase(TransactionTestCase):
                 ),
                 "Step was removed successfully"
             )
+
+            response = self.client.get(
+                reverse(
+                    "flows:history", 
+                    kwargs={'environment': self.environment.slug,  'id': flow.id},
+
+                ),
+                HTTP_HOST="example.com",
+            )
+
+            self.assertContains(response, "accordion-item", count=6)
