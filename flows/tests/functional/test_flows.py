@@ -3,7 +3,7 @@ from django.urls import reverse
 from accounts.models import Environment
 from flows.models import Flow
 
-class EnvironmentsTestCase(TransactionTestCase):
+class FlowsTestCase(TransactionTestCase):
     fixtures = ["users.json", "environments.json", "channels.json", "email_channels.json", "push_channels.json"]
 
     def setUp(self):
@@ -41,5 +41,19 @@ class EnvironmentsTestCase(TransactionTestCase):
                 reverse("flows:edit", kwargs={'environment': self.environment.slug, 'id': flow.id }),
             )
 
+            self.assertRedirects(
+                self.client.get(
+                    reverse("flows:remove", kwargs={'environment': self.environment.slug,  'id': flow.id}),
+                    HTTP_HOST="example.com",
+                    follow=True
+                ),
+                reverse("flows:list", kwargs={'environment': self.environment.slug})
+            )
+
+            response = self.client.post(
+                reverse("flows:remove", kwargs={'environment': self.environment.slug,  'id': flow.id}),
+                HTTP_HOST="example.com",
+                follow=True
+            )
             
 

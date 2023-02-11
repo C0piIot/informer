@@ -3,7 +3,7 @@ from django.urls import reverse
 from contacts.apps import ContactsConfig
 from accounts.models import Environment
 
-class EnvironmentsTestCase(TransactionTestCase):
+class ContactsTestCase(TransactionTestCase):
     fixtures = ["users.json", "environments.json", "channels.json", "email_channels.json", "push_channels.json"]
 
     def setUp(self):

@@ -8,7 +8,7 @@ from .flow_filtered_mixin import FlowFilteredMixin
 
 
 class FlowRemove(FlowFilteredMixin, DeleteView):
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(self.get_success_url())
 
     def form_valid(self, form):
