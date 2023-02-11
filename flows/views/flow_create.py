@@ -13,7 +13,7 @@ class FlowCreate(CurrentEnvironmentMixin, CreateView):
 
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(
-            reverse("flows:list", kwargs={"environment": self.current_environment})
+            reverse("flows:list", kwargs={"environment": self.current_environment.slug})
         )
 
     def form_valid(self, form):
@@ -30,7 +30,7 @@ class FlowCreate(CurrentEnvironmentMixin, CreateView):
     def form_invalid(self, form, **kwargs):
         messages.error(self.request, "Error creating flow")
         return HttpResponseRedirect(
-            reverse("flows:list", kwargs={"environment": self.current_environment})
+            reverse("flows:list", kwargs={"environment": self.current_environment.slug})
         )
 
     def get_success_url(self):
