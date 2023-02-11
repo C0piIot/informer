@@ -2,7 +2,7 @@ from django.test import TransactionTestCase
 from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
 from accounts.models import Environment
-from flows.models import Flow, Delay, Email, Group, Push, Webhook
+from flows.models import Flow, Delay, Group
 
 class FlowsTestCase(TransactionTestCase):
     fixtures = ["users.json", "environments.json", "channels.json", "email_channels.json", "push_channels.json"]
@@ -71,6 +71,16 @@ class FlowsTestCase(TransactionTestCase):
                 "This flow has no steps yet."
             )
 
+            self.client.get(
+                reverse(
+                    "flows:step_create", 
+                    kwargs={'environment': self.environment.slug,  'id': flow.id, 'content_type_id': ContentType.objects.get_for_model(Delay).pk },
+
+                ),
+                HTTP_HOST="example.com",
+                follow=True
+            )
+
             response = self.client.post(
                 reverse(
                     "flows:step_create", 
@@ -90,4 +100,60 @@ class FlowsTestCase(TransactionTestCase):
             self.assertContains(
                 response,
                 "Step was created successfully"
+            )
+
+            self.assertContains(
+                self.client.post(
+                    reverse(
+                        "flows:step_create", 
+                        kwargs={'environment': self.environment.slug,  'id': flow.id, 'content_type_id': ContentType.objects.get_for_model(Group).pk },
+
+                    ),
+                    { "key": "test_key", "window": 30 },
+                    HTTP_HOST="example.com",
+                    follow=True
+                ),
+                "Step was created successfully"
+            )
+
+            first_step = self.environment.flows.first().steps.first()
+            self.assertContains(
+                self.client.post(
+                    reverse(
+                        "flows:step_move", 
+                        kwargs={'environment': self.environment.slug,  'id': flow.id, 'pk': first_step.pk },
+                    ),
+                    HTTP_HOST="example.com",
+                    follow=True
+                ),
+                "Step moved succesfully"
+            )
+
+            last_step = self.environment.flows.first().steps.last()
+
+            self.assertContains(
+                self.client.post(
+                    reverse(
+                        "flows:step_move", 
+                        kwargs={'environment': self.environment.slug,  'id': flow.id, 'pk': last_step.pk },
+                    ),
+                    { "up": 1 },
+                    HTTP_HOST="example.com",
+                    follow=True
+                ),
+                "Step moved succesfully"
+            )
+
+            last_step = self.environment.flows.first().steps.last()
+
+            self.assertContains(
+                self.client.post(
+                    reverse(
+                        "flows:step_remove", 
+                        kwargs={'environment': self.environment.slug,  'id': flow.id, 'pk': last_step.pk },
+                    ),
+                    HTTP_HOST="example.com",
+                    follow=True
+                ),
+                "Step was removed successfully"
             )
