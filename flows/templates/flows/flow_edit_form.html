@@ -23,7 +23,7 @@
 </nav>
 {{ block.super }}
 <div class="container" data-preview-url="{% url 'flows:preview' current_environment.slug flow.id %}">
-	<h1>{% trans "Edit flow" %}</h1>
+    <h1>{% trans "Edit flow" %}</h1>
     {% if not flow.enabled %}
     <div class="alert alert-warning" role="alert">
       {% translate "Flow is disabled" %}
@@ -99,6 +99,10 @@
                             </a>
                         </div>
                         {% if not forloop.last %}<div class="mb-1 text-center">⬇️</div>{% endif %}
+                    {% empty %}
+                    <div class="alert alert-info" role="alert">
+                        {% translate "This flow has no steps yet. Use the 'New step' button to add the first one." %}
+                    </div>
                     {% endfor %}
                 </div>
             </div>
