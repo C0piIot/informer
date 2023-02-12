@@ -1,1 +1,0 @@
-[{"model": "accounts.emailchannel", "pk": 1, "fields": {"host": "smtp.example.com", "port": 465, "username": "example", "password": "example", "security": "ssl", "from_email": "no-reply@example.com"}}]

@@ -5,7 +5,7 @@ from accounts.models import Environment
 from flows.models import Flow, Delay, Group
 
 class FlowsTestCase(TransactionTestCase):
-    fixtures = ["users.json", "environments.json", "channels.json", "email_channels.json", "push_channels.json"]
+    fixtures = ["users.json", "environments.json", "channels.json"]
 
     def setUp(self):
         self.environment = Environment.objects.first()
