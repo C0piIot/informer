@@ -210,7 +210,7 @@ DRAMATIQ_BROKER = {
         "url": env.str("DRAMATIQ_REDIS_URL", default="redis://informer_redis"),
     },
     "MIDDLEWARE": [
-        "dramatiq.middleware.Prometheus",
+        #"dramatiq.middleware.Prometheus",
         "dramatiq.middleware.AgeLimit",
         "dramatiq.middleware.TimeLimit",
         "dramatiq.middleware.Callbacks",

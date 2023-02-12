@@ -1,4 +1,4 @@
-from django.test import TransactionTestCase
+from django_dramatiq.test import DramatiqTestCase
 from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
 from contacts.apps import ContactsConfig
@@ -7,7 +7,7 @@ from contacts.models import Contact
 from flows.models import Flow, FlowRun
 
 
-class FlowRunsTestCase(TransactionTestCase):
+class FlowRunsTestCase(DramatiqTestCase):
     fixtures = ["users.json", "environments.json", "channels.json"]
 
     def setUp(self):
