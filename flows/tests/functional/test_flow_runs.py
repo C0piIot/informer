@@ -67,5 +67,32 @@ class FlowRunsTestCase(TransactionTestCase):
                 "Flow test engaged"
             )
 
+    def testFlowRunList(self):
+        flow = Flow.objects.create(
+            name="test", 
+            trigger="test", 
+            preview_context={}, 
+            site=self.environment.site,
+            user=self.environment.site.users.first()
+        )
+        flow.environments.add(self.environment)
 
+        with self.settings(ALLOWED_HOSTS=("example.com",), CONTACT_STORAGE=ContactsConfig.DEFAULT_SETTINGS['CONTACT_STORAGE']):
+            self.assertContains(
+                self.client.get(
+                    reverse("flows:runs", kwargs={'environment': self.environment.slug, 'id': flow.id }),
+                    HTTP_HOST="example.com"
+                ),
+                "No flow runs found"
+            )
+
+            flow_run = FlowRun.objects.create(flow_revision=flow, environment=self.environment, contact_key=123)
+
+            self.assertContains(
+                self.client.get(
+                    reverse("flows:runs", kwargs={'environment': self.environment.slug, 'id': flow.id }),
+                    HTTP_HOST="example.com"
+                ),
+                str(flow_run.pk)
+            )
 
