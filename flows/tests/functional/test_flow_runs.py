@@ -16,7 +16,7 @@ class FlowRunsTestCase(TransactionTestCase):
         self.environment = Environment.objects.first()
         self.contact = Contact.objects.create(key=123, name="test", environment=self.environment)
         self.client.force_login(self.environment.site.users.first())
-        self.flow = = Flow.objects.create(
+        self.flow = Flow.objects.create(
             name="test", 
             trigger="test", 
             preview_context={}, 
@@ -89,5 +89,15 @@ class FlowRunsTestCase(TransactionTestCase):
             )
 
 
-    #def test_viewset(self):
-    #    with self.settings(ALLOWED_HOSTS=("example.com",), CONTACT_STORAGE=ContactsConfig.DEFAULT_SETTINGS['CONTACT_STORAGE']):
+    def test_viewset(self):
+        with self.settings(ALLOWED_HOSTS=("example.com",), CONTACT_STORAGE=ContactsConfig.DEFAULT_SETTINGS['CONTACT_STORAGE']):
+            response = self.client.post(
+                reverse("flowrun-list", kwargs={'environment': self.environment.slug }),
+                {
+                    "trigger" : self.flow.trigger,
+                    "contact_key": self.contact.key,
+                    "event_payload": "{}"
+                },
+                HTTP_HOST="example.com",
+                follow=True
+            )
