@@ -16,21 +16,21 @@ class FlowRunsTestCase(TransactionTestCase):
         self.environment = Environment.objects.first()
         self.contact = Contact.objects.create(key=123, name="test", environment=self.environment)
         self.client.force_login(self.environment.site.users.first())
-
-
-    def testFlowTest(self):
-        flow = Flow.objects.create(
+        self.flow = = Flow.objects.create(
             name="test", 
             trigger="test", 
             preview_context={}, 
             site=self.environment.site,
             user=self.environment.site.users.first()
         )
-        flow.environments.add(self.environment)
+        self.flow.environments.add(self.environment)
+
+
+    def testFlowTest(self):
         with self.settings(ALLOWED_HOSTS=("example.com",), CONTACT_STORAGE=ContactsConfig.DEFAULT_SETTINGS['CONTACT_STORAGE']):
             self.assertContains(
                 self.client.post(
-                    reverse("flows:test", kwargs={'environment': self.environment.slug, 'id': flow.id }),
+                    reverse("flows:test", kwargs={'environment': self.environment.slug, 'id': self.flow.id }),
                     {
                         "contact_key": "9999",
                         "event_payload": "{}"
@@ -44,7 +44,7 @@ class FlowRunsTestCase(TransactionTestCase):
             DramatiqExecutor.run = MagicMock()
 
             response = self.client.post(
-                reverse("flows:test", kwargs={'environment': self.environment.slug, 'id': flow.id }),
+                reverse("flows:test", kwargs={'environment': self.environment.slug, 'id': self.flow.id }),
                 {
                     "contact_key": self.contact.key,
                     "event_payload": "{}"
@@ -59,7 +59,7 @@ class FlowRunsTestCase(TransactionTestCase):
 
             self.assertRedirects(
                 response,
-                reverse('flows:run', kwargs={'environment': self.environment.slug, 'id': flow.id, 'flow_run_id': flow_run.id })
+                reverse('flows:run', kwargs={'environment': self.environment.slug, 'id': self.flow.id, 'flow_run_id': flow_run.id })
             )
 
             self.assertContains(
@@ -68,31 +68,26 @@ class FlowRunsTestCase(TransactionTestCase):
             )
 
     def testFlowRunList(self):
-        flow = Flow.objects.create(
-            name="test", 
-            trigger="test", 
-            preview_context={}, 
-            site=self.environment.site,
-            user=self.environment.site.users.first()
-        )
-        flow.environments.add(self.environment)
-
+        
         with self.settings(ALLOWED_HOSTS=("example.com",), CONTACT_STORAGE=ContactsConfig.DEFAULT_SETTINGS['CONTACT_STORAGE']):
             self.assertContains(
                 self.client.get(
-                    reverse("flows:runs", kwargs={'environment': self.environment.slug, 'id': flow.id }),
+                    reverse("flows:runs", kwargs={'environment': self.environment.slug, 'id': self.flow.id }),
                     HTTP_HOST="example.com"
                 ),
                 "No flow runs found"
             )
 
-            flow_run = FlowRun.objects.create(flow_revision=flow, environment=self.environment, contact_key=123)
+            flow_run = FlowRun.objects.create(flow_revision=self.flow, environment=self.environment, contact_key=123)
 
             self.assertContains(
                 self.client.get(
-                    reverse("flows:runs", kwargs={'environment': self.environment.slug, 'id': flow.id }),
+                    reverse("flows:runs", kwargs={'environment': self.environment.slug, 'id': self.flow.id }),
                     HTTP_HOST="example.com"
                 ),
                 str(flow_run.pk)
             )
 
+
+    #def test_viewset(self):
+    #    with self.settings(ALLOWED_HOSTS=("example.com",), CONTACT_STORAGE=ContactsConfig.DEFAULT_SETTINGS['CONTACT_STORAGE']):
