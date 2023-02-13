@@ -1,13 +1,15 @@
-from django_dramatiq.test import DramatiqTestCase
+from django.test import TransactionTestCase
+from unittest.mock import MagicMock
 from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
 from contacts.apps import ContactsConfig
 from accounts.models import Environment
 from contacts.models import Contact
 from flows.models import Flow, FlowRun
+from flows.executors import DramatiqExecutor
 
 
-class FlowRunsTestCase(DramatiqTestCase):
+class FlowRunsTestCase(TransactionTestCase):
     fixtures = ["users.json", "environments.json", "channels.json"]
 
     def setUp(self):
@@ -39,6 +41,8 @@ class FlowRunsTestCase(DramatiqTestCase):
                 "find contact with key 9999"
             )
 
+            DramatiqExecutor.run = MagicMock()
+
             response = self.client.post(
                 reverse("flows:test", kwargs={'environment': self.environment.slug, 'id': flow.id }),
                 {
@@ -50,6 +54,8 @@ class FlowRunsTestCase(DramatiqTestCase):
             )
 
             flow_run = FlowRun.objects.first()
+            DramatiqExecutor.run.assert_called_once()
+            DramatiqExecutor.run.assert_called_with(flow_run)
 
             self.assertRedirects(
                 response,
