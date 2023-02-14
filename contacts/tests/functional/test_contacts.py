@@ -90,4 +90,44 @@ class ContactsTestCase(TransactionTestCase):
             self.assertNotContains(response, 'example name updated')
             self.assertContains(response, 'Contact was removed successfully')
             self.assertContains(response, 'No contacts found')
-            
+    
+    def test_viewset(self):
+        with self.settings(ALLOWED_HOSTS=("example.com",), CONTACT_STORAGE=ContactsConfig.DEFAULT_SETTINGS['CONTACT_STORAGE']):
+            response = self.client.post(
+                reverse("contact-list", kwargs={'environment': self.environment.slug }),
+                {
+                    "key" : "123",
+                    "name" : "test",
+                    "auth_key" : "abc",
+                    "contact_data" : "{\"test\" : \"test\"}",
+                    "channel_data" : """ 
+                        { 
+                            \"emailchannel\": { \"email\" : \"test@example.com\"} , 
+                            \"pushchannel\" : { \"fcm_tokens\" : [\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\"] } 
+                        }
+                    """
+                },
+                HTTP_HOST="example.com"
+            )            
+            self.assertEqual(response.status_code, 201)
+
+            response = self.client.post(
+                reverse("contact-list", kwargs={'environment': self.environment.slug }),
+                {
+                    "key" : "123",
+                    "name" : "test",
+                    "auth_key" : "abc",
+                    "contact_data" : "{\"test\" : \"test\"}",
+                    "channel_data" : """ 
+                        { 
+                            \"emailchannel\": { \"email\" : \"test\"} , 
+                            \"pushchannel\" : { \"fcm_tokens\" : "non" } 
+                        }
+                    """
+                },
+                HTTP_HOST="example.com"
+            )            
+            self.assertEqual(response.status_code, 400)
+            self.assertContains(response, "Enter a valid email address")
+            self.assertContains(response, "fcm_tokens is expected to be a list")
+            print(response.content)
