@@ -127,6 +127,5 @@ class ContactsTestCase(TransactionTestCase):
                 },
                 HTTP_HOST="example.com"
             )            
-            self.assertEqual(response.status_code, 400)
-            self.assertContains(response, "Enter a valid email address")
-            self.assertContains(response, "fcm_tokens is expected to be a list")
+            self.assertContains(response, "Enter a valid email address", status_code=400)
+            self.assertContains(response, "fcm_tokens is expected to be a list", status_code=400)
