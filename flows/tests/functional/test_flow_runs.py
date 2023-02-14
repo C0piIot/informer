@@ -94,10 +94,21 @@ class FlowRunsTestCase(TransactionTestCase):
             response = self.client.post(
                 reverse("flowrun-list", kwargs={'environment': self.environment.slug }),
                 {
-                    "trigger" : self.flow.trigger,
+                    "event" : self.flow.trigger,
+                    "contact_key": "this-key-does-not-exist",
+                    "event_payload": "{}"
+                },
+                HTTP_HOST="example.com"
+            )
+            self.assertEqual(response.status_code, 400)
+
+            response = self.client.post(
+                reverse("flowrun-list", kwargs={'environment': self.environment.slug }),
+                {
+                    "event" : self.flow.trigger,
                     "contact_key": self.contact.key,
                     "event_payload": "{}"
                 },
-                HTTP_HOST="example.com",
-                follow=True
+                HTTP_HOST="example.com"
             )
+            self.assertEqual(response.status_code, 201)
