@@ -130,4 +130,3 @@ class ContactsTestCase(TransactionTestCase):
             self.assertEqual(response.status_code, 400)
             self.assertContains(response, "Enter a valid email address")
             self.assertContains(response, "fcm_tokens is expected to be a list")
-            print(response.content)
