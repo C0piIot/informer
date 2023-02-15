@@ -33,8 +33,9 @@ class Push(FlowStep):
             )
         ):
             flow_run.log(
-                FlowLog.INFO, "%s not sent: user doesn't have channel data" % self
+                FlowLog.INFO, "%s not sent: user doesn't have push channel data" % self
             )
+            return self.run_next()
 
         title = Template(self.title)
         body = Template(self.body)
@@ -55,8 +56,7 @@ class Push(FlowStep):
         )
         flow_run.log(
             FlowLog.INFO,
-            "%s successful sent to %d of %d fcm tokens"
-            % (self, sum(response.values()), len(response)),
+            f'{self} successful sent to {sum(response.values())} of {len(response)} fcm tokens'
         )
 
         self.run_next(flow_run)
