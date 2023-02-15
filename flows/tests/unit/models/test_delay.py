@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 from django.test import TestCase
 
 from contacts.models import Contact
-from flows.models import Delay, FlowLog, FlowRun
+from flows.models import Delay, FlowRun
 
 
 class DelayTestCase(TestCase):
