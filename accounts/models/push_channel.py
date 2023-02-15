@@ -61,5 +61,5 @@ class PushChannel(Channel):
             ),
             app=self.get_firebase(),
         )
-
+    
         return {tokens[i]: r.success for i, r in enumerate(response.responses)}
