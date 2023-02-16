@@ -4,7 +4,6 @@ Manage your application transactional messaging.
 
 [![Build](https://github.com/callmewind/informer/actions/workflows/build.yml/badge.svg)](https://github.com/callmewind/informer/actions/workflows/build.yml)
 [![codecov](https://codecov.io/github/callmewind/informer/branch/master/graph/badge.svg?token=CVLWDQAYY8)](https://codecov.io/github/callmewind/informer)
-[![Known Vulnerabilities](https://snyk.io/test/github/callmewind/informer/badge.svg)](https://snyk.io/test/github/callmewind/informer)
 
 ##### Flow oriented
 Create communication flows from events and change design and messages within the app
