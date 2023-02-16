@@ -38,11 +38,11 @@ class Email(FlowStep):
 
     def step_run(self, flow_run):
         if not (email_channel := EmailChannel.objects.get(site=self.site)):
-            flow_run.log(FlowLog.WARNING, "%s not sent: channel not configured")
+            flow_run.log(FlowLog.WARNING, f"{self} not sent: channel not configured")
             return self.run_next()
 
         if not email_channel.enabled:
-            flow_run.log(FlowLog.WARNING, "%s not sent: channel disabled")
+            flow_run.log(FlowLog.WARNING, f"{self} not sent: channel disabled")
             return self.run_next()
 
         if not (
@@ -51,7 +51,7 @@ class Email(FlowStep):
             )
         ):
             flow_run.log(
-                FlowLog.INFO, "%s not sent: user doesn't have email channel data" % self
+                FlowLog.INFO, f"{self} not sent: user doesn't have email channel data"
             )
             return self.run_next()
 
@@ -77,4 +77,4 @@ class Email(FlowStep):
         self.run_next(flow_run)
 
     def __str__(self):
-        return '%s "%s"' % (super().__str__(), self.subject)
+        return f'{super().__str__()} "{self.subject}"'
