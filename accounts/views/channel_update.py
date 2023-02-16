@@ -29,14 +29,12 @@ class ChannelUpdate(ChannelListMixin, SuccessMessageMixin, UpdateView):
     def get_queryset(self):
         return super().get_queryset().filter(site=self.request.site)
 
-    def get_object(self):
-        return super().get_object().get_typed_instance()
-
     def get_form_class(self):
         return import_string(self.type.model_class().CONFIG_FORM)
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
+        kwargs['instance'] = kwargs['instance'].get_typed_instance()
         kwargs.update(site=self.request.site)
         return kwargs
 
