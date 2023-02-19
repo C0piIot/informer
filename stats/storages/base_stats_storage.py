@@ -3,7 +3,7 @@ from datetime import timedelta
 from django.utils.translation import gettext_lazy as _
 
 
-class BaseSeriesStorage:
+class BaseStatsStorage:
     PERIOD_HOUR = "hour"
     PERIOD_DAY = "day"
     PERIOD_MONTH = "month"

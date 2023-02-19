@@ -10,8 +10,7 @@ from .base_series_storage import BaseSeriesStorage
 env = environ.Env()
 
 
-# https://redis.io/docs/stack/timeseries/
-class RedisTSSeriesStorage(BaseSeriesStorage):
+class RedisStatsStorage(BaseSeriesStorage):
     ONE_MINUTE_MSECS = 60000
     COMPACT_SUFFIX = {
         BaseSeriesStorage.PERIOD_HOUR: "_SUM_60000_60000",
@@ -24,7 +23,7 @@ class RedisTSSeriesStorage(BaseSeriesStorage):
     @classmethod
     def get_connection(cls):
         if not cls.client:
-            cls.client = redis.from_url(env.str("REDISTS_SERIES_URL"))
+            cls.client = redis.from_url(env.str("STATS_REDIS_URL"))
         return cls.client
 
     @classmethod
