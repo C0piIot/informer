@@ -11,11 +11,15 @@ env = environ.Env()
 
 
 class RedisStatsStorage(BaseSeriesStorage):
-    ONE_MINUTE_MSECS = 60000
-    COMPACT_SUFFIX = {
-        BaseSeriesStorage.PERIOD_HOUR: "_SUM_60000_60000",
-        BaseSeriesStorage.PERIOD_DAY: "_SUM_1800000_1800000",
-        BaseSeriesStorage.PERIOD_MONTH: "_SUM_86400000_86400000",
+    KEY_TIME_FORMAT = {
+        BaseSeriesStorage.PERIOD_HOUR: "%Y%m%d%H%M",
+        BaseSeriesStorage.PERIOD_DAY: "%Y%m%d%H",
+        BaseSeriesStorage.PERIOD_MONTH: "%Y%m%d"
+    }
+    EXPIRATION = {
+        BaseSeriesStorage.PERIOD_HOUR: timedelta(minutes=61).total_seconds(),
+        BaseSeriesStorage.PERIOD_DAY: timedelta(hours=25).total_seconds(),
+        BaseSeriesStorage.PERIOD_HOUR: timedelta(days=32).total_seconds(),
     }
 
     client = None
@@ -26,17 +30,22 @@ class RedisStatsStorage(BaseSeriesStorage):
             cls.client = redis.from_url(env.str("STATS_REDIS_URL"))
         return cls.client
 
-    @classmethod
-    def store_event(cls, environment, event):
-        cls.get_connection().ts().add(
-            f"ts.{environment.site.pk}.{environment.slug}.{event}",
-            "*",
-            1,
-            retention_msecs=cls.ONE_MINUTE_MSECS,
-        )
+    def get_key(cls, environment, event, period, date):
+        return f"count.{environment.site.pk}.{environment.slug}.{event}.{date.strftime(cls.KEY_TIME_FORMAT[period])}",
 
     @classmethod
-    def read_series(cls, environment, event, period):
+    def store_events(cls, environment, events):
+        pipeline = cls.get_connection().pipeline()
+        now = datetime.now()
+        for event in events:
+            for period, time_format in cls.KEY_TIME_FORMAT.items():
+                key = cls.get_key(cls, environment, event, period, )
+                pipeline.incr(key)
+                pipeline.expire(key, cls.EXPIRATION[period])
+        pipeline.execute()
+
+    @classmethod
+    def read_stats(cls, environment, event, period):
         try:
             return [
                 (datetime.fromtimestamp(timestamp / 1000), count)
