@@ -1,2 +1,2 @@
-from .base_series_storage import BaseSeriesStorage
-from .redists_series_storage import RedisTSSeriesStorage
+from .base_stats_storage import BaseStatsStorage
+from .redis_stats_storage import RedisStatsStorage
