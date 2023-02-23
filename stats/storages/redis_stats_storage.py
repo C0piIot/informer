@@ -31,7 +31,7 @@ class RedisStatsStorage(BaseStatsStorage):
         return cls.client
 
     def get_key(cls, environment, event, period, date):
-        return f"count.{environment.site.pk}.{environment.slug}.{event}.{date.strftime(cls.KEY_TIME_FORMAT[period])}",
+        return f'count.{environment.site.pk}.{environment.slug}.{event}.{date.strftime(cls.KEY_TIME_FORMAT[period])}'
 
     @classmethod
     def store_events(cls, environment, events):
