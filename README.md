@@ -1,4 +1,4 @@
-# informer
+# informer 📢
 
 Manage your application transactional messaging.
 
