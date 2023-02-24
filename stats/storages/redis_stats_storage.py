@@ -46,10 +46,10 @@ class RedisStatsStorage(BaseStatsStorage):
         now = datetime.now()
         date = now - BaseStatsStorage.PERIOD_DELTA[period]
         dates = []
-        while date < now:
+        while date <= now:
             dates.append(date)
             pipeline.get(cls.get_key(environment, event, period, date))
             date = date + BaseStatsStorage.PERIOD_STEP[period]
 
-        return [ (dates[i], value or 0) for i, value in enumerate(pipeline.execute()) ]
+        return [ (dates[i], int(value or 0)) for i, value in enumerate(pipeline.execute()) ]
 

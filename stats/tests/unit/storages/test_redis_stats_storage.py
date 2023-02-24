@@ -87,6 +87,7 @@ class RedisStatsStorageTestCase(TestCase):
                 call(f'count.{site_pk}.test.event.1983062422'),
                 call(f'count.{site_pk}.test.event.1983062423'),
                 call(f'count.{site_pk}.test.event.1983062500'),
+                call(f'count.{site_pk}.test.event.1983062501'),
             ])
 
             response_values = [value for date, value in response]

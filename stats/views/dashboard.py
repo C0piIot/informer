@@ -20,6 +20,14 @@ class Dashboard(CurrentEnvironmentMixin, TemplateView):
         context_data["periods"] = BaseStatsStorage.PERIODS
         context_data["flows"] = list(self.current_environment.flows.all())
         for flow in context_data["flows"]:
-            flow.stats = stats_storage.read_stats(self.current_environment, f"flow_start.{flow.id}", period)
-            print(flow.stats)
+            flow.stats = self.format_stats(
+                period,
+                stats_storage.read_stats(self.current_environment, f"flow_start.{flow.id}", period)
+            )
         return context_data
+
+
+    def format_stats(self, period, stats):
+        format = BaseStatsStorage.FORMAT[period]
+        max_value = max([value for date, value in stats]) or 1
+        return [(date.strftime(format), value, float(value)/max_value) for date, value in stats]

@@ -14,7 +14,7 @@ class BaseStatsStorage:
         (PERIOD_MONTH, _("month")),
     )
 
-    FORMAT = {PERIOD_HOUR: "%H:%M", PERIOD_DAY: "%H:%M", PERIOD_MONTH: "%d"}
+    FORMAT = {PERIOD_HOUR: "%H:%M", PERIOD_DAY: "%H:00", PERIOD_MONTH: "%d"}
 
     PERIOD_DELTA = {
         PERIOD_HOUR: timedelta(hours=1),

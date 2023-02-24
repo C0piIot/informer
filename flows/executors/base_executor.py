@@ -6,7 +6,7 @@ from django.utils.module_loading import import_string
 
 from accounts.models import Environment
 from flows.models import FlowLog
-from stats.utils import store_event
+from stats.utils import store_events
 
 
 class BaseExecutor:
@@ -33,7 +33,7 @@ class BaseExecutor:
         storage = import_string(settings.FLOW_RUN_STORAGE)
         environment = Environment.objects.get(pk=environment_pk)
         flow_run = storage.get_flow_run(environment, uuid.UUID(flow_run_pk_hex))
-        store_event(flow_run.environment, f"flow_start.{flow_run.flow_id}")
+        store_events(flow_run.environment, [f"flow_start.{flow_run.flow_id}"])
         try:
             if flow_step := flow_run.flow_revision.steps.first():
                 flow_step.run(flow_run)
