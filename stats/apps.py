@@ -5,7 +5,7 @@ class StatsConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "stats"
     DEFAULT_SETTINGS = {
-        "TIME_SERIES_STORAGE": "stats.storages.RedisTSSeriesStorage",
+        "STATS_STORAGE": "stats.storages.RedisStatsStorage",
     }
 
     def ready(self):

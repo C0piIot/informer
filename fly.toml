@@ -11,7 +11,7 @@ workers = "sh /app/fly/workers-entrypoint.sh"
 [env]
   ALLOWED_HOSTS = "informer.fly.dev,.dropdatabase.es"
   CACHE_URL = "filecache:////cache"
-  REDISTS_SERIES_URL = "redis://localhost"
+  STATS_REDIS_URL = "redis://default:6951c47f1d5d4d7d8a03a090ba5d73f7@fly-informer-redis.upstash.io"
   DRAMATIQ_REDIS_URL = "redis://default:6951c47f1d5d4d7d8a03a090ba5d73f7@fly-informer-redis.upstash.io"
   ROLLBAR_ENVIRONMENT = "fly"
   ROLLBAR_CLIENT_TOKEN = "882f4c50682347a8bf598e628144dcbf"

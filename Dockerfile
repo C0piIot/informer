@@ -19,7 +19,7 @@ RUN python manage.py collectstatic --no-input
 
 FROM dev AS trendier
 COPY requirements-trendier.txt /app
-RUN apt install -y python-dev build-essential &&\
+RUN apt-get install -y python-dev build-essential &&\
 	pip install --no-cache-dir -r requirements-trendier.txt &&\
 	apt-get autoremove -y --purge python-dev build-essential
 

@@ -5,7 +5,7 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from stats.utils import store_event
+from stats.utils import store_events
 
 from .flow import Flow
 from .flow_log import FlowLog
@@ -70,9 +70,9 @@ class FlowStep(models.Model):
     def run(self, flow_run):
         typed_instance = self.get_typed_instance()
         flow_run.log(FlowLog.INFO, f"Running flow step {typed_instance}")
-        store_event(
+        store_events(
             flow_run.environment,
-            f"flow_step.{flow_run.flow_id}.{self.content_type.model}",
+            [f"flow_step.{flow_run.flow_id}.{self.content_type.model}"]
         )
         return typed_instance.step_run(flow_run)
 

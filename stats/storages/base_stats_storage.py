@@ -3,7 +3,7 @@ from datetime import timedelta
 from django.utils.translation import gettext_lazy as _
 
 
-class BaseSeriesStorage:
+class BaseStatsStorage:
     PERIOD_HOUR = "hour"
     PERIOD_DAY = "day"
     PERIOD_MONTH = "month"
@@ -14,24 +14,24 @@ class BaseSeriesStorage:
         (PERIOD_MONTH, _("month")),
     )
 
-    FORMATS = {PERIOD_HOUR: "%H:%M", PERIOD_DAY: "%H:%M", PERIOD_MONTH: "%d"}
+    FORMAT = {PERIOD_HOUR: "%H:%M", PERIOD_DAY: "%H:00", PERIOD_MONTH: "%d"}
 
-    PERIOD_DELTAS = {
-        PERIOD_DAY: timedelta(days=1),
+    PERIOD_DELTA = {
         PERIOD_HOUR: timedelta(hours=1),
+        PERIOD_DAY: timedelta(days=1),
         PERIOD_MONTH: timedelta(days=30),
     }
 
-    PERIOD_STEPS = {
+    PERIOD_STEP = {
         PERIOD_HOUR: timedelta(minutes=1),
-        PERIOD_DAY: timedelta(minutes=30),
+        PERIOD_DAY: timedelta(hours=1),
         PERIOD_MONTH: timedelta(days=1),
     }
 
     @classmethod
-    def store_event(cls, environment, event):
+    def store_events(cls, environment, events):
         pass
 
     @classmethod
-    def read_series(cls, environment, event, period):
+    def read_stats(cls, environment, event, period):
         pass
