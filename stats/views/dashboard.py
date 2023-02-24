@@ -31,17 +31,17 @@ class Dashboard(CurrentEnvironmentMixin, TemplateView):
     def complete_series(self, period, series):
         if not series:
             return []
-        format = BaseStatsStorage.FORMATS[period]
+        format = BaseStatsStorage.FORMAT[period]
         max_val = max([c for d, c in series])
         data = {date.strftime(format): count for date, count in series}
         now = self.ceil_date(datetime.now(), BaseStatsStorage.PERIOD_DELTAS[period])
-        date = now - BaseStatsStorage.PERIOD_DELTAS[period]
+        date = now - BaseStatsStorage.PERIOD_DELTA[period]
         complete_series = list()
         while date < now:
             date_str = date.strftime(format)
             count = data.get(date_str, 0)
             complete_series.append((date_str, count, float(count) / max_val))
-            date += BaseStatsStorage.PERIOD_STEPS[period]
+            date += BaseStatsStorage.PERIOD_STEP[period]
         return complete_series
 
     def ceil_date(self, date, delta):

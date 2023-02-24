@@ -14,15 +14,15 @@ class BaseStatsStorage:
         (PERIOD_MONTH, _("month")),
     )
 
-    FORMATS = {PERIOD_HOUR: "%H:%M", PERIOD_DAY: "%H:%M", PERIOD_MONTH: "%d"}
+    FORMAT = {PERIOD_HOUR: "%H:%M", PERIOD_DAY: "%H:%M", PERIOD_MONTH: "%d"}
 
-    PERIOD_DELTAS = {
+    PERIOD_DELTA = {
         PERIOD_HOUR: timedelta(hours=1),
         PERIOD_DAY: timedelta(days=1),
         PERIOD_MONTH: timedelta(days=30),
     }
 
-    PERIOD_STEPS = {
+    PERIOD_STEP = {
         PERIOD_HOUR: timedelta(minutes=1),
         PERIOD_DAY: timedelta(hours=1),
         PERIOD_MONTH: timedelta(days=1),

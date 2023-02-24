@@ -16,11 +16,6 @@ class RedisStatsStorage(BaseStatsStorage):
         BaseStatsStorage.PERIOD_DAY: "%Y%m%d%H",
         BaseStatsStorage.PERIOD_MONTH: "%Y%m%d"
     }
-    EXPIRATION = {
-        BaseStatsStorage.PERIOD_HOUR: timedelta(minutes=61).total_seconds(),
-        BaseStatsStorage.PERIOD_DAY: timedelta(hours=25).total_seconds(),
-        BaseStatsStorage.PERIOD_MONTH: timedelta(days=32).total_seconds(),
-    }
 
     client = None
 
@@ -30,6 +25,7 @@ class RedisStatsStorage(BaseStatsStorage):
             cls.client = redis.from_url(env.str("STATS_REDIS_URL"))
         return cls.client
 
+    @classmethod
     def get_key(cls, environment, event, period, date):
         return f'count.{environment.site.pk}.{environment.slug}.{event}.{date.strftime(cls.KEY_TIME_FORMAT[period])}'
 
@@ -39,24 +35,21 @@ class RedisStatsStorage(BaseStatsStorage):
         now = datetime.now()
         for event in events:
             for period, time_format in cls.KEY_TIME_FORMAT.items():
-                key = cls.get_key(cls, environment, event, period, now)
+                key = cls.get_key(environment, event, period, now)
                 pipeline.incr(key)
-                pipeline.expire(key, cls.EXPIRATION[period])
+                pipeline.expire(key, int((BaseStatsStorage.PERIOD_DELTA[period] + BaseStatsStorage.PERIOD_STEP[period]).total_seconds()))
         pipeline.execute()
 
     @classmethod
     def read_stats(cls, environment, event, period):
-        try:
-            return [
-                (datetime.fromtimestamp(timestamp / 1000), count)
-                for timestamp, count in cls.get_connection()
-                .ts()
-                .range(
-                    f"ts.{environment.site.pk}.{environment.slug}.{event}{cls.COMPACT_SUFFIX[period]}",
-                    "-",
-                    "+",
-                    latest=True,
-                )
-            ]
-        except ResponseError:
-            return []
+        pipeline = cls.get_connection().pipeline()
+        now = datetime.now()
+        date = now - BaseStatsStorage.PERIOD_DELTA[period]
+        dates = []
+        while date < now:
+            dates.append(date)
+            pipeline.get(cls.get_key(environment, event, period, date))
+            date = date + BaseStatsStorage.PERIOD_STEP[period]
+
+        return [ (dates[i], value or 0) for i, value in enumerate(pipeline.execute()) ]
+

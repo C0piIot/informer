@@ -33,7 +33,5 @@ services:
     command: "python manage.py rundramatiq --reload"   
   
   informer_redis:
-    #image: redis:alpine
-    image: redisfab/redistimeseries:1.8.5-arm64v8-jammy
+    image: redis:alpine
     container_name: informer_redis
-    command: "redis-server --loadmodule /usr/lib/redis/modules/redistimeseries.so DUPLICATE_POLICY sum COMPACTION_POLICY sum:1M:1h:1M;sum:30M:24h:30M;sum:1d:30d:1d ENCODING compressed"
