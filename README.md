@@ -26,7 +26,15 @@ Track all the changes and revert to previous states with just a click.
 ##### Observability and metrics
 Keep track of all your communications. 
  - (TODO)Channel metrics
- - Flow metrics (WIP)
+ - Flow metrics
  - (TODO)Account metrics
  - (TODO)Export registers
 
+## Arquitecture
+This is a standard Django application with normal views, an api with DRF and background jobs.
+Key parts of the app are pluggable: 
+
+- Background task processor: currently the only adapter implementation uses [dramatiq](https://dramatiq.io/). Dramatiq itself supports redis, RabbitMQ and Amazon SQS (via a third party package)
+- Storage of running communicatino flows and its logs
+- Contact storage: currently standard django models
+- Stats storage: currently using redis
