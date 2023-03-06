@@ -13,7 +13,7 @@ from .flow_step import FlowStep
 class Webhook(FlowStep):
 
     class Meta:
-        verbose_name = _("webook")
+        verbose_name = _("webhook")
         verbose_name_plural = _("webhooks")
     ICON = "🌐"
     CONTENT_TYPES = (
@@ -77,4 +77,4 @@ class Webhook(FlowStep):
         self.run_next(flow_run)
 
     def __str__(self):
-        return "%s %s %s" % (super().__str__(), self.method, urlparse(self.url).netloc)
+        return f"{super().__str__()} {self.method} {urlparse(self.url).netloc}"

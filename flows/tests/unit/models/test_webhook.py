@@ -1,5 +1,6 @@
 import urllib
 from unittest.mock import MagicMock, patch
+from urllib.parse import urlparse
 
 from django.test import TestCase
 
@@ -34,3 +35,12 @@ class WebhookTestCase(TestCase):
         flow_run.log.assert_called_with(
             FlowLog.INFO, "Webhook POST http://example.com response: 200"
         )
+
+    def test_name(self):
+        webhook = Webhook(
+            url="http://example.com",
+            method="POST",
+            contenttype="application/json",
+            body='{ "a":"{{ testvar }}"}',
+        )
+        self.assertEqual(str(webhook), f'{Webhook.ICON} Webhook {webhook.method} {urlparse(webhook.url).netloc}')

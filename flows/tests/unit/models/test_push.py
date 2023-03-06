@@ -37,3 +37,7 @@ class PushTestCase(TestCase):
                     FlowLog.INFO, '🔔 Send Push "Title" successful sent to 0 of 0 fcm tokens'
                 )
             
+    def test_name(self):
+        push = Push(title="Title", body="Body", url="URL", site=self.environment.site)
+        self.assertEqual(str(push), f'{Push.ICON} Send Push "{push.title}"')
+
