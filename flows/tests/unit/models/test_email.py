@@ -32,3 +32,7 @@ class EmailTestCase(TestCase):
                 email.run_next.assert_called_with(self.flow_run)
                 mock_send_mail.assert_called_once()
                 
+
+    def test_name(self):
+        email = Email(subject="Subject", html_body="HTML Body", text_body="Text body", site=self.environment.site)
+        self.assertEqual(str(email), f'{Email.ICON} Send Email "{email.subject}"')

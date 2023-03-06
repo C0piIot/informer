@@ -2,6 +2,7 @@ from datetime import timedelta, time, datetime, date
 from unittest.mock import MagicMock, patch
 from django.utils import timezone
 from django.test import TestCase
+from django.core.exceptions import ValidationError
 
 from contacts.models import Contact
 from flows.models import DoNotDisturb, FlowRun
@@ -16,6 +17,8 @@ class DoNotDisturbTestCase(TestCase):
             mock_now.return_value = now
 
             doNotDisturb = DoNotDisturb(start=time(10, 0), end=time(12, 0))
+            self.assertEqual(str(doNotDisturb), f"{DoNotDisturb.ICON} Do Not Disturb {doNotDisturb.start}-{doNotDisturb.end}")
+
             doNotDisturb.run_next = MagicMock()
             flow_run.schedule_wake_up = MagicMock()
             doNotDisturb.step_run(flow_run)
@@ -28,3 +31,21 @@ class DoNotDisturbTestCase(TestCase):
             doNotDisturb.end = time(1,0)
             doNotDisturb.step_run(flow_run)
             flow_run.schedule_wake_up.assert_called_with(doNotDisturb, timedelta(hours=20))
+
+            doNotDisturb.step_wake_up(flow_run)
+            doNotDisturb.run_next.assert_called_with(flow_run)
+
+    def test_name(self):
+
+        doNotDisturb = DoNotDisturb(start=time(10, 0), end=time(12, 0))
+        self.assertEqual(str(doNotDisturb), f"{DoNotDisturb.ICON} Do Not Disturb {doNotDisturb.start}-{doNotDisturb.end}")
+
+
+
+    def test_clean(self):
+
+        doNotDisturb = DoNotDisturb(start=time(10, 0), end=time(10, 0))
+        with self.assertRaises(ValidationError):
+            doNotDisturb.clean()
+
+

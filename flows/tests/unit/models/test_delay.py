@@ -20,3 +20,7 @@ class DelayTestCase(TestCase):
         delay.run_next = MagicMock()
         delay.step_wake_up(flow_run)
         delay.run_next.assert_called_with(flow_run)
+
+    def test_name(self):
+        delay = Delay(time=timedelta(hours=10))
+        self.assertEqual(str(delay), f'{Delay.ICON} Delay {delay.time}')
