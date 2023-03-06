@@ -19,4 +19,4 @@ class Delay(FlowStep):
         self.run_next(flow_run)
 
     def __str__(self):
-        return "%s %s" % (super().__str__(), self.time)
+        return f"{super().__str__()} {self.time}"
