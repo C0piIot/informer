@@ -3,10 +3,11 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends git python3-lxml
 RUN pip install --upgrade pip
-COPY requirements.txt /app
-RUN apt-get install -y libxml2-dev libxslt-dev python-dev build-essential zlib1g-dev &&\
+COPY requirements.txt package.json yarn.lock /app
+RUN apt-get install -y libxml2-dev libxslt-dev python-dev build-essential zlib1g-dev yarnpkg &&\
 	pip install --no-cache-dir -r requirements.txt &&\
 	apt-get autoremove -y --purge libxml2-dev libxslt-dev python-dev build-essential
+RUN yarnpkg install
 
 FROM base AS dev
 COPY requirements-dev.txt /app
