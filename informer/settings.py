@@ -9,13 +9,13 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-from django.http import Http404
-from django.core.exceptions import PermissionDenied
 import os
 from pathlib import Path
 
 import environ
 from django.conf import settings as default_settings
+from django.core.exceptions import PermissionDenied
+from django.http import Http404
 
 env = environ.Env()
 
