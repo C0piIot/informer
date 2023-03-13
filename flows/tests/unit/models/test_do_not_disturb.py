@@ -48,5 +48,3 @@ class DoNotDisturbTestCase(TestCase):
         doNotDisturb = DoNotDisturb(start=time(10, 0), end=time(10, 0))
         with self.assertRaises(ValidationError):
             doNotDisturb.clean()
-
-

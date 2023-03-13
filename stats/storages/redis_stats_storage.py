@@ -52,4 +52,3 @@ class RedisStatsStorage(BaseStatsStorage):
             date = date + BaseStatsStorage.PERIOD_STEP[period]
 
         return [ (dates[i], int(value or 0)) for i, value in enumerate(pipeline.execute()) ]
-
