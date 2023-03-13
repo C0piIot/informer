@@ -1,7 +1,12 @@
 -r requirements.txt
 coverage
 pylint
+isort[requirements_deprecated_finder,pipfile_deprecated_finder]
+autoflake
+
+
 black #formatter, añadir a pre-commit?
+
 #flake8
-isort[requirements_deprecated_finder,pipfile_deprecated_finder] #precommit?
+
 ssort #precommit

@@ -1,8 +1,10 @@
+from django.contrib.contenttypes.models import ContentType
 from django.test import TransactionTestCase
 from django.urls import reverse
-from django.contrib.contenttypes.models import ContentType
+
 from accounts.models import Environment
-from flows.models import Flow, Delay, Group
+from flows.models import Delay, Flow, Group
+
 
 class FlowsTestCase(TransactionTestCase):
     fixtures = ["users.json", "environments.json", "channels.json"]

@@ -2,10 +2,11 @@ from unittest.mock import MagicMock, patch
 
 from django.test import TestCase
 
+from accounts.models import Environment
 from contacts.apps import ContactsConfig
 from contacts.models import Contact
-from accounts.models import Environment
-from flows.models import Email, FlowRun, FlowLog
+from flows.models import Email, FlowLog, FlowRun
+
 
 class EmailTestCase(TestCase):
     fixtures = ["users.json", "environments.json", "channels.json"]

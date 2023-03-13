@@ -1,12 +1,14 @@
-from django.test import TransactionTestCase
 from unittest.mock import MagicMock
-from django.urls import reverse
+
 from django.contrib.contenttypes.models import ContentType
-from contacts.apps import ContactsConfig
+from django.test import TransactionTestCase
+from django.urls import reverse
+
 from accounts.models import Environment
+from contacts.apps import ContactsConfig
 from contacts.models import Contact
-from flows.models import Flow, FlowRun
 from flows.executors import DramatiqExecutor
+from flows.models import Flow, FlowRun
 
 
 class FlowRunsTestCase(TransactionTestCase):

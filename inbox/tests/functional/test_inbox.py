@@ -1,7 +1,9 @@
 from django.test import TransactionTestCase
-from contacts.apps import ContactsConfig
 from django.urls import reverse
+
 from accounts.models import Environment
+from contacts.apps import ContactsConfig
+
 
 class InboxTestCase(TransactionTestCase):
     fixtures = ["users.json", "environments.json", "channels.json"]

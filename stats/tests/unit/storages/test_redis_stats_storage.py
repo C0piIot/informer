@@ -1,11 +1,12 @@
-from unittest.mock import Mock, call, patch
 from datetime import datetime
+from unittest.mock import Mock, call, patch
 
 from django.contrib.sites.models import Site
 from django.test import TestCase
 
 from accounts.models import Environment
-from stats.storages import RedisStatsStorage, BaseStatsStorage
+from stats.storages import BaseStatsStorage, RedisStatsStorage
+
 
 class RedisStatsStorageTestCase(TestCase):
 

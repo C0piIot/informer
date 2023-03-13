@@ -1,6 +1,8 @@
 from django.test import TransactionTestCase
 from django.urls import reverse
+
 from accounts.models import Environment
+
 
 class StatsTestCase(TransactionTestCase):
     fixtures = ["users.json", "environments.json", "channels.json"]

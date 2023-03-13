@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
+
 class HomeTestCase(TestCase):
 
     def testFlowTest(self):
