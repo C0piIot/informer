@@ -16,14 +16,16 @@ contact_storage = import_string(settings.CONTACT_STORAGE)
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
-        fields = ["url", "key", "auth_key", "name", "contact_data", "channel_data"]
+        fields = ["url", "key", "auth_key",
+                  "name", "contact_data", "channel_data"]
 
     url = serializers.SerializerMethodField()
 
     def get_url(self, obj):
         return reverse(
             "contact-detail",
-            kwargs={"environment": self.context["environment"].slug, "pk": obj.key},
+            kwargs={
+                "environment": self.context["environment"].slug, "pk": obj.key},
             request=self.context["request"],
         )
 
@@ -51,13 +53,15 @@ class ContactSerializer(serializers.ModelSerializer):
         return value
 
     def create(self, validated_data):
-        validated_data = {k: v for k, v in validated_data.items() if v is not None}
+        validated_data = {k: v for k,
+                          v in validated_data.items() if v is not None}
         contact = Contact(**validated_data)
         contact_storage.save_contact(self.context["environment"], contact)
         return contact
 
     def update(self, contact, validated_data):
-        validated_data = {k: v for k, v in validated_data.items() if v is not None}
+        validated_data = {k: v for k,
+                          v in validated_data.items() if v is not None}
         for attr, value in validated_data.items():
             setattr(contact, attr, value)
         contact_storage.save_contact(self.context["environment"], contact)

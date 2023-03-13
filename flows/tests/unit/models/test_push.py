@@ -42,5 +42,6 @@ class PushTestCase(TestCase):
             )
 
     def test_name(self):
-        push = Push(title="Title", body="Body", url="URL", site=self.environment.site)
+        push = Push(title="Title", body="Body",
+                    url="URL", site=self.environment.site)
         self.assertEqual(str(push), f'{Push.ICON} Send Push "{push.title}"')

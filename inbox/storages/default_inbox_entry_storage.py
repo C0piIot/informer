@@ -4,7 +4,8 @@ from inbox.models import InboxEntry
 class DefaultInboxEntryStorage:
     @classmethod
     def get_entries(cls, environment, contact, start_key=None, amount=50):
-        queryset = Inbox.objects.filter(environment=environment, contact=contact)
+        queryset = Inbox.objects.filter(
+            environment=environment, contact=contact)
         if start_key:
             queryset = queryset.filter(key__gt=start_key)
         return queryset[:amount]

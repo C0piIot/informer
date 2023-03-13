@@ -16,7 +16,8 @@ class PushContactFormTestCase(TestCase):
         tokens_widget = TokensWidget(attrs={"class": "mb-1"})
 
         self.assertIsNone(tokens_widget.format_value(None))
-        self.assertEquals("a\nb\nc", tokens_widget.format_value(["a", "b", "c"]))
+        self.assertEquals(
+            "a\nb\nc", tokens_widget.format_value(["a", "b", "c"]))
         self.assertEquals("abc", tokens_widget.format_value("abc"))
 
     def testMultipleTokensField(self):
@@ -25,7 +26,8 @@ class PushContactFormTestCase(TestCase):
         )
 
         valid_data = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-        self.assertEquals([valid_data], multiple_tokens_field.to_python(valid_data))
+        self.assertEquals(
+            [valid_data], multiple_tokens_field.to_python(valid_data))
 
         invalid_data = "AA"
         with self.assertRaises(ValidationError):

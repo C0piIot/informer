@@ -47,4 +47,5 @@ class EmailTestCase(TestCase):
             text_body="Text body",
             site=self.environment.site,
         )
-        self.assertEqual(str(email), f'{Email.ICON} Send Email "{email.subject}"')
+        self.assertEqual(
+            str(email), f'{Email.ICON} Send Email "{email.subject}"')

@@ -19,7 +19,8 @@ class FlowEditMixin(CurrentEnvironmentMixin):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        content_types = ContentType.objects.get_for_models(*step_form_classes.keys())
+        content_types = ContentType.objects.get_for_models(
+            *step_form_classes.keys())
         context_data.update(
             {
                 "flow": self.flow,

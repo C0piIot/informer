@@ -11,7 +11,8 @@ class Contact(models.Model):
         verbose_name = _("contact")
         verbose_name_plural = _("contacts")
         constraints = (
-            models.UniqueConstraint("environment", "key", name="key_environment"),
+            models.UniqueConstraint(
+                "environment", "key", name="key_environment"),
         )
         indexes = (
             models.Index(fields=("environment", "index1")),

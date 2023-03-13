@@ -18,7 +18,8 @@ class ContactsTestCase(TransactionTestCase):
             CONTACT_STORAGE=ContactsConfig.DEFAULT_SETTINGS["CONTACT_STORAGE"],
         ):
             response = self.client.get(
-                reverse("contacts:list", kwargs={"environment": self.environment.slug}),
+                reverse("contacts:list", kwargs={
+                        "environment": self.environment.slug}),
                 HTTP_HOST="example.com",
             )
 
@@ -44,7 +45,8 @@ class ContactsTestCase(TransactionTestCase):
 
             self.assertRedirects(
                 response,
-                reverse("contacts:list", kwargs={"environment": self.environment.slug}),
+                reverse("contacts:list", kwargs={
+                        "environment": self.environment.slug}),
             )
 
             self.assertNotContains(response, "No contacts found")
@@ -70,7 +72,8 @@ class ContactsTestCase(TransactionTestCase):
 
             self.assertRedirects(
                 response,
-                reverse("contacts:list", kwargs={"environment": self.environment.slug}),
+                reverse("contacts:list", kwargs={
+                        "environment": self.environment.slug}),
             )
 
             self.assertContains(response, "example name updated")
@@ -83,7 +86,8 @@ class ContactsTestCase(TransactionTestCase):
                     ),
                     HTTP_HOST="example.com",
                 ),
-                reverse("contacts:list", kwargs={"environment": self.environment.slug}),
+                reverse("contacts:list", kwargs={
+                        "environment": self.environment.slug}),
             )
 
             response = self.client.post(
@@ -97,7 +101,8 @@ class ContactsTestCase(TransactionTestCase):
 
             self.assertRedirects(
                 response,
-                reverse("contacts:list", kwargs={"environment": self.environment.slug}),
+                reverse("contacts:list", kwargs={
+                        "environment": self.environment.slug}),
             )
 
             self.assertNotContains(response, "example name updated")
@@ -110,7 +115,8 @@ class ContactsTestCase(TransactionTestCase):
             CONTACT_STORAGE=ContactsConfig.DEFAULT_SETTINGS["CONTACT_STORAGE"],
         ):
             response = self.client.post(
-                reverse("contact-list", kwargs={"environment": self.environment.slug}),
+                reverse("contact-list",
+                        kwargs={"environment": self.environment.slug}),
                 {
                     "key": "123",
                     "name": "test",
@@ -128,7 +134,8 @@ class ContactsTestCase(TransactionTestCase):
             self.assertEqual(response.status_code, 201)
 
             response = self.client.post(
-                reverse("contact-list", kwargs={"environment": self.environment.slug}),
+                reverse("contact-list",
+                        kwargs={"environment": self.environment.slug}),
                 {
                     "key": "123",
                     "name": "test",

@@ -55,7 +55,8 @@ class FlowRunsTestCase(TransactionTestCase):
             response = self.client.post(
                 reverse(
                     "flows:test",
-                    kwargs={"environment": self.environment.slug, "id": self.flow.id},
+                    kwargs={"environment": self.environment.slug,
+                            "id": self.flow.id},
                 ),
                 {"contact_key": self.contact.key, "event_payload": "{}"},
                 HTTP_HOST="example.com",
@@ -123,7 +124,8 @@ class FlowRunsTestCase(TransactionTestCase):
             CONTACT_STORAGE=ContactsConfig.DEFAULT_SETTINGS["CONTACT_STORAGE"],
         ):
             response = self.client.post(
-                reverse("flowrun-list", kwargs={"environment": self.environment.slug}),
+                reverse("flowrun-list",
+                        kwargs={"environment": self.environment.slug}),
                 {
                     "event": self.flow.trigger,
                     "contact_key": "this-key-does-not-exist",
@@ -134,7 +136,8 @@ class FlowRunsTestCase(TransactionTestCase):
             self.assertEqual(response.status_code, 400)
 
             response = self.client.post(
-                reverse("flowrun-list", kwargs={"environment": self.environment.slug}),
+                reverse("flowrun-list",
+                        kwargs={"environment": self.environment.slug}),
                 {
                     "event": self.flow.trigger,
                     "contact_key": self.contact.key,

@@ -32,7 +32,8 @@ class FlowsTestCase(TransactionTestCase):
                     ),
                     HTTP_HOST="example.com",
                 ),
-                reverse("flows:list", kwargs={"environment": self.environment.slug}),
+                reverse("flows:list", kwargs={
+                        "environment": self.environment.slug}),
             )
 
             self.assertContains(
@@ -47,7 +48,8 @@ class FlowsTestCase(TransactionTestCase):
             )
 
             response = self.client.post(
-                reverse("flows:create", kwargs={"environment": self.environment.slug}),
+                reverse("flows:create", kwargs={
+                        "environment": self.environment.slug}),
                 {
                     "name": "example name",
                     "trigger": "example_trigger",
@@ -97,12 +99,14 @@ class FlowsTestCase(TransactionTestCase):
                 self.client.get(
                     reverse(
                         "flows:remove",
-                        kwargs={"environment": self.environment.slug, "id": flow.id},
+                        kwargs={"environment": self.environment.slug,
+                                "id": flow.id},
                     ),
                     HTTP_HOST="example.com",
                     follow=True,
                 ),
-                reverse("flows:list", kwargs={"environment": self.environment.slug}),
+                reverse("flows:list", kwargs={
+                        "environment": self.environment.slug}),
             )
 
             response = self.client.post(
@@ -126,7 +130,8 @@ class FlowsTestCase(TransactionTestCase):
                 self.client.get(
                     reverse(
                         "flows:edit",
-                        kwargs={"environment": self.environment.slug, "id": flow.id},
+                        kwargs={"environment": self.environment.slug,
+                                "id": flow.id},
                     ),
                     HTTP_HOST="example.com",
                 ),

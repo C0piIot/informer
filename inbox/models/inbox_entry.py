@@ -11,11 +11,13 @@ class InboxEntry(RelatedContactModel):
         verbose_name = _("inbox entry")
         verbose_name_plural = _("inbox entries")
         indexes = (
-            models.Index(fields=("site", "environment", "contact_key", "-date")),
+            models.Index(fields=("site", "environment",
+                         "contact_key", "-date")),
         )
         ordering = ("-date",)
 
-    key = models.UUIDField(_("key"), default=uuid4, primary_key=True, editable=False)
+    key = models.UUIDField(_("key"), default=uuid4,
+                           primary_key=True, editable=False)
     date = models.DateTimeField(_("date"), auto_now_add=True)
     title = models.CharField(_("title"), max_length=100)
     message = models.TextField(_("message"))

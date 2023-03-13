@@ -4,6 +4,6 @@ pylint
 isort[requirements_deprecated_finder,pipfile_deprecated_finder]
 ssort
 autoflake
-black
-#autopep8
+#black
+autopep8
 #flake8
