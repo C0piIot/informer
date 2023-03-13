@@ -10,7 +10,8 @@ urlpatterns = [
         include(
             [
                 path("", EnvironmentList.as_view(), name="environment_list"),
-                path("create/", EnvironmentCreate.as_view(), name="environment_create"),
+                path("create/", EnvironmentCreate.as_view(),
+                     name="environment_create"),
                 path(
                     "<slug:slug>/remove/",
                     EnvironmentRemove.as_view(),

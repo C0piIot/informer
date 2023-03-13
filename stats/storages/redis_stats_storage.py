@@ -37,7 +37,8 @@ class RedisStatsStorage(BaseStatsStorage):
             for period, time_format in cls.KEY_TIME_FORMAT.items():
                 key = cls.get_key(environment, event, period, now)
                 pipeline.incr(key)
-                pipeline.expire(key, int((BaseStatsStorage.PERIOD_DELTA[period] + BaseStatsStorage.PERIOD_STEP[period]).total_seconds()))
+                pipeline.expire(key, int(
+                    (BaseStatsStorage.PERIOD_DELTA[period] + BaseStatsStorage.PERIOD_STEP[period]).total_seconds()))
         pipeline.execute()
 
     @classmethod
@@ -51,4 +52,4 @@ class RedisStatsStorage(BaseStatsStorage):
             pipeline.get(cls.get_key(environment, event, period, date))
             date = date + BaseStatsStorage.PERIOD_STEP[period]
 
-        return [ (dates[i], int(value or 0)) for i, value in enumerate(pipeline.execute()) ]
+        return [(dates[i], int(value or 0)) for i, value in enumerate(pipeline.execute())]

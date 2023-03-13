@@ -16,7 +16,8 @@ class InboxTestCase(TransactionTestCase):
         with self.settings(ALLOWED_HOSTS=("example.com",), CONTACT_STORAGE=ContactsConfig.DEFAULT_SETTINGS['CONTACT_STORAGE']):
             self.assertContains(
                 self.client.get(
-                    reverse("inbox:list", kwargs={'environment': self.environment.slug }),
+                    reverse("inbox:list", kwargs={
+                            'environment': self.environment.slug}),
                     HTTP_HOST="example.com"
                 ),
                 "Inbox"

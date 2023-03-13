@@ -63,14 +63,16 @@ class EnvironmentsTestCase(TransactionTestCase):
             self.assertRedirects(
                 self.client.post(
                     reverse("accounts:environment_create"),
-                    {"name": "another_environment", "source_environment": environment.pk},
+                    {"name": "another_environment",
+                        "source_environment": environment.pk},
                     HTTP_HOST="example.com",
                 ),
                 reverse("accounts:environment_list"),
             )
 
             response = self.client.get(
-                reverse("accounts:environment_remove", kwargs={"slug": environment.slug}),
+                reverse("accounts:environment_remove",
+                        kwargs={"slug": environment.slug}),
                 HTTP_HOST="example.com",
                 follow=True
             )
@@ -81,11 +83,12 @@ class EnvironmentsTestCase(TransactionTestCase):
             self.assertContains(response, environment.name)
 
             response = self.client.post(
-                reverse("accounts:environment_remove", kwargs={"slug": environment.slug}),
+                reverse("accounts:environment_remove",
+                        kwargs={"slug": environment.slug}),
                 HTTP_HOST="example.com",
                 follow=True
             )
-            
+
             self.assertRedirects(
                 response,
                 reverse("accounts:environment_list"),

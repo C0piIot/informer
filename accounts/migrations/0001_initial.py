@@ -26,7 +26,8 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("enabled", models.BooleanField(default=True, verbose_name="enabled")),
+                ("enabled", models.BooleanField(
+                    default=True, verbose_name="enabled")),
                 (
                     "content_type",
                     models.ForeignKey(
@@ -68,8 +69,10 @@ class Migration(migrations.Migration):
                 ),
                 ("host", models.CharField(max_length=100, verbose_name="host")),
                 ("port", models.PositiveSmallIntegerField(verbose_name="port")),
-                ("username", models.CharField(max_length=150, verbose_name="username")),
-                ("password", models.CharField(max_length=150, verbose_name="password")),
+                ("username", models.CharField(
+                    max_length=150, verbose_name="username")),
+                ("password", models.CharField(
+                    max_length=150, verbose_name="password")),
                 (
                     "security",
                     models.CharField(
@@ -114,7 +117,8 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "firebase_credentials",
-                    models.JSONField(default=dict, verbose_name="Firebase credentials"),
+                    models.JSONField(
+                        default=dict, verbose_name="Firebase credentials"),
                 ),
             ],
             options={
@@ -135,7 +139,8 @@ class Migration(migrations.Migration):
                         verbose_name="ID",
                     ),
                 ),
-                ("password", models.CharField(max_length=128, verbose_name="password")),
+                ("password", models.CharField(
+                    max_length=128, verbose_name="password")),
                 (
                     "last_login",
                     models.DateTimeField(
@@ -186,7 +191,8 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "date_joined",
-                    models.DateTimeField(auto_now_add=True, verbose_name="date joined"),
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="date joined"),
                 ),
                 (
                     "groups",

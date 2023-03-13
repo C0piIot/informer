@@ -14,7 +14,8 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError("The given email must be set")
         email = self.normalize_email(email)
-        user = User(email=email, first_name=first_name, site_id=site, **extra_fields)
+        user = User(email=email, first_name=first_name,
+                    site_id=site, **extra_fields)
         user.password = make_password(password)
         user.save(using=self._db)
         return user

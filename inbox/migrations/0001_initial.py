@@ -29,13 +29,15 @@ class Migration(migrations.Migration):
                         verbose_name="key",
                     ),
                 ),
-                ("date", models.DateTimeField(auto_now_add=True, verbose_name="date")),
+                ("date", models.DateTimeField(
+                    auto_now_add=True, verbose_name="date")),
                 ("title", models.CharField(max_length=100, verbose_name="title")),
                 ("message", models.TextField(verbose_name="message")),
                 ("url", models.URLField(blank=True, default="", verbose_name="url")),
                 (
                     "read",
-                    models.DateTimeField(blank=True, null=True, verbose_name="read"),
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name="read"),
                 ),
                 (
                     "entry_data",

@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+from django.http import Http404
+from django.core.exceptions import PermissionDenied
 import os
 from pathlib import Path
 
@@ -149,16 +151,13 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'node_modules') ]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'node_modules')]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
-from django.core.exceptions import PermissionDenied
-from django.http import Http404
 
 ROLLBAR_CLIENT_TOKEN = env("ROLLBAR_CLIENT_TOKEN", default="")
 

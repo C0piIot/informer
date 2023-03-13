@@ -24,7 +24,8 @@ class FlowLog(models.Model):
         (ERROR, _("error")),
     )
 
-    id = models.UUIDField(_("id"), default=uuid4, primary_key=True, editable=False)
+    id = models.UUIDField(_("id"), default=uuid4,
+                          primary_key=True, editable=False)
     site = models.ForeignKey(
         Site,
         verbose_name=_("site"),

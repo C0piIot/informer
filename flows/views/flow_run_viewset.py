@@ -42,7 +42,8 @@ class FlowTriggerSerializer(serializers.ModelSerializer):
                 event_payload=validated_data["event_payload"] or {},
             )
             flow_run.contact = validated_data["contact"]
-            flow_run_storage.save_flow_run(self.context["environment"], flow_run)
+            flow_run_storage.save_flow_run(
+                self.context["environment"], flow_run)
             flow_runs.append(flow_run)
             flow_run_executor.run(flow_run)
         return flow_runs

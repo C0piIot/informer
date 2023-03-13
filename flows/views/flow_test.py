@@ -14,7 +14,8 @@ class FlowTest(FlowEditMixin, SuccessMessageMixin, CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update({"flow": self.flow, "environment": self.current_environment})
+        kwargs.update(
+            {"flow": self.flow, "environment": self.current_environment})
         return kwargs
 
     def get_context_data(self, **kwargs):

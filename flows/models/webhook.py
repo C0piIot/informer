@@ -71,7 +71,8 @@ class Webhook(FlowStep):
         with request.urlopen(req, timeout=3, context=request_context) as response:
             flow_run.log(
                 FlowLog.INFO,
-                "Webhook %s %s response: %s" % (self.method, url, response.getcode()),
+                "Webhook %s %s response: %s" % (
+                    self.method, url, response.getcode()),
             )
 
         self.run_next(flow_run)

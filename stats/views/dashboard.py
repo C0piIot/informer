@@ -20,10 +20,10 @@ class Dashboard(CurrentEnvironmentMixin, TemplateView):
         for flow in context_data["flows"]:
             flow.stats = self.format_stats(
                 period,
-                stats_storage.read_stats(self.current_environment, f"flow_start.{flow.id}", period)
+                stats_storage.read_stats(
+                    self.current_environment, f"flow_start.{flow.id}", period)
             )
         return context_data
-
 
     def format_stats(self, period, stats):
         format = BaseStatsStorage.FORMAT[period]

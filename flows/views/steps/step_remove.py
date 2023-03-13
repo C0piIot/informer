@@ -43,5 +43,6 @@ class StepRemove(CurrentEnvironmentMixin, SuccessMessageMixin, DeleteView):
     def get_success_url(self):
         return reverse(
             "flows:edit",
-            kwargs={"id": self.flow.id, "environment": self.current_environment.slug},
+            kwargs={"id": self.flow.id,
+                    "environment": self.current_environment.slug},
         )

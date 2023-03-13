@@ -20,7 +20,8 @@ class Push(FlowStep):
 
     def step_run(self, flow_run):
         if not (push_channel := PushChannel.objects.get(site=self.site)):
-            flow_run.log(FlowLog.WARNING, f"{self} not sent: channel not configured")
+            flow_run.log(FlowLog.WARNING,
+                         f"{self} not sent: channel not configured")
             return self.run_next()
 
         if not push_channel.enabled:

@@ -13,7 +13,6 @@ class FlowsTestCase(TransactionTestCase):
         self.environment = Environment.objects.first()
         self.client.force_login(self.environment.site.users.first())
 
-
     def testFlowsCrud(self):
         with self.settings(ALLOWED_HOSTS=("example.com",)):
 
@@ -28,27 +27,29 @@ class FlowsTestCase(TransactionTestCase):
                 self.client.get(
                     reverse("flows:create", kwargs={'environment': self.environment.slug}), HTTP_HOST="example.com"
                 ),
-                reverse("flows:list", kwargs={'environment': self.environment.slug})
+                reverse("flows:list", kwargs={
+                        'environment': self.environment.slug})
             )
 
             self.assertContains(
                 self.client.post(
-                    reverse("flows:create", kwargs={'environment': self.environment.slug}),
+                    reverse("flows:create", kwargs={
+                            'environment': self.environment.slug}),
                     HTTP_HOST="example.com",
                     follow=True
                 ),
                 "Error creating flow"
             )
 
-
             response = self.client.post(
-                reverse("flows:create", kwargs={'environment': self.environment.slug}),
+                reverse("flows:create", kwargs={
+                        'environment': self.environment.slug}),
                 {
                     "name": "example name",
                     "trigger": "example_trigger",
-                    "preview_context" : "{\"foo\":\"bar\"}",
-                    "enabled" : "",
-            
+                    "preview_context": "{\"foo\":\"bar\"}",
+                    "enabled": "",
+
                 },
                 HTTP_HOST="example.com",
                 follow=True
@@ -58,17 +59,19 @@ class FlowsTestCase(TransactionTestCase):
 
             self.assertRedirects(
                 response,
-                reverse("flows:edit", kwargs={'environment': self.environment.slug, 'id': flow.id }),
+                reverse("flows:edit", kwargs={
+                        'environment': self.environment.slug, 'id': flow.id}),
             )
 
             response = self.client.post(
-                reverse("flows:edit", kwargs={'environment': self.environment.slug, 'id': flow.id}),
+                reverse("flows:edit", kwargs={
+                        'environment': self.environment.slug, 'id': flow.id}),
                 {
                     "name": "example name updated",
                     "trigger": "example_trigger",
-                    "preview_context" : "{\"foo\":\"bar\"}",
-                    "enabled" : "",
-            
+                    "preview_context": "{\"foo\":\"bar\"}",
+                    "enabled": "",
+
                 },
                 HTTP_HOST="example.com",
                 follow=True
@@ -76,7 +79,8 @@ class FlowsTestCase(TransactionTestCase):
 
             self.assertRedirects(
                 response,
-                reverse("flows:edit", kwargs={'environment': self.environment.slug, 'id': flow.id }),
+                reverse("flows:edit", kwargs={
+                        'environment': self.environment.slug, 'id': flow.id}),
             )
 
             self.assertContains(
@@ -86,28 +90,32 @@ class FlowsTestCase(TransactionTestCase):
 
             self.assertRedirects(
                 self.client.get(
-                    reverse("flows:remove", kwargs={'environment': self.environment.slug,  'id': flow.id}),
+                    reverse("flows:remove", kwargs={
+                            'environment': self.environment.slug,  'id': flow.id}),
                     HTTP_HOST="example.com",
                     follow=True
                 ),
-                reverse("flows:list", kwargs={'environment': self.environment.slug})
+                reverse("flows:list", kwargs={
+                        'environment': self.environment.slug})
             )
 
             response = self.client.post(
-                reverse("flows:remove", kwargs={'environment': self.environment.slug,  'id': flow.id}),
+                reverse("flows:remove", kwargs={
+                        'environment': self.environment.slug,  'id': flow.id}),
                 HTTP_HOST="example.com",
-    
+
             )
-            
 
     def testFlowStepsCrud(self):
 
-        flow = Flow.objects.create(name="test flow", trigger="test", site=self.environment.site, user=self.environment.site.users.first())
+        flow = Flow.objects.create(name="test flow", trigger="test",
+                                   site=self.environment.site, user=self.environment.site.users.first())
         flow.environments.add(self.environment)
         with self.settings(ALLOWED_HOSTS=("example.com",)):
             self.assertContains(
                 self.client.get(
-                    reverse("flows:edit", kwargs={'environment': self.environment.slug,  'id': flow.id}),
+                    reverse("flows:edit", kwargs={
+                            'environment': self.environment.slug,  'id': flow.id}),
                     HTTP_HOST="example.com"
                 ),
                 "This flow has no steps yet."
@@ -115,8 +123,9 @@ class FlowsTestCase(TransactionTestCase):
 
             self.client.get(
                 reverse(
-                    "flows:step_create", 
-                    kwargs={'environment': self.environment.slug,  'id': flow.id, 'content_type_id': ContentType.objects.get_for_model(Delay).pk },
+                    "flows:step_create",
+                    kwargs={'environment': self.environment.slug,  'id': flow.id,
+                            'content_type_id': ContentType.objects.get_for_model(Delay).pk},
 
                 ),
                 HTTP_HOST="example.com",
@@ -125,18 +134,20 @@ class FlowsTestCase(TransactionTestCase):
 
             response = self.client.post(
                 reverse(
-                    "flows:step_create", 
-                    kwargs={'environment': self.environment.slug,  'id': flow.id, 'content_type_id': ContentType.objects.get_for_model(Delay).pk },
+                    "flows:step_create",
+                    kwargs={'environment': self.environment.slug,  'id': flow.id,
+                            'content_type_id': ContentType.objects.get_for_model(Delay).pk},
 
                 ),
-                { "time": 30 },
+                {"time": 30},
                 HTTP_HOST="example.com",
                 follow=True
             )
 
             self.assertRedirects(
                 response,
-                reverse("flows:edit", kwargs={'environment': self.environment.slug, 'id': flow.id }),
+                reverse("flows:edit", kwargs={
+                        'environment': self.environment.slug, 'id': flow.id}),
             )
 
             self.assertContains(
@@ -147,11 +158,12 @@ class FlowsTestCase(TransactionTestCase):
             self.assertContains(
                 self.client.post(
                     reverse(
-                        "flows:step_create", 
-                        kwargs={'environment': self.environment.slug,  'id': flow.id, 'content_type_id': ContentType.objects.get_for_model(Group).pk },
+                        "flows:step_create",
+                        kwargs={'environment': self.environment.slug,  'id': flow.id,
+                                'content_type_id': ContentType.objects.get_for_model(Group).pk},
 
                     ),
-                    { "key": "test_key", "window": 30 },
+                    {"key": "test_key", "window": 30},
                     HTTP_HOST="example.com",
                     follow=True
                 ),
@@ -162,8 +174,9 @@ class FlowsTestCase(TransactionTestCase):
             self.assertContains(
                 self.client.post(
                     reverse(
-                        "flows:step_move", 
-                        kwargs={'environment': self.environment.slug,  'id': flow.id, 'pk': first_step.pk },
+                        "flows:step_move",
+                        kwargs={'environment': self.environment.slug,
+                                'id': flow.id, 'pk': first_step.pk},
                     ),
                     HTTP_HOST="example.com",
                     follow=True
@@ -176,10 +189,11 @@ class FlowsTestCase(TransactionTestCase):
             self.assertContains(
                 self.client.post(
                     reverse(
-                        "flows:step_move", 
-                        kwargs={'environment': self.environment.slug,  'id': flow.id, 'pk': last_step.pk },
+                        "flows:step_move",
+                        kwargs={'environment': self.environment.slug,
+                                'id': flow.id, 'pk': last_step.pk},
                     ),
-                    { "up": 1 },
+                    {"up": 1},
                     HTTP_HOST="example.com",
                     follow=True
                 ),
@@ -191,8 +205,9 @@ class FlowsTestCase(TransactionTestCase):
             self.assertContains(
                 self.client.post(
                     reverse(
-                        "flows:step_remove", 
-                        kwargs={'environment': self.environment.slug,  'id': flow.id, 'pk': last_step.pk },
+                        "flows:step_remove",
+                        kwargs={'environment': self.environment.slug,
+                                'id': flow.id, 'pk': last_step.pk},
                     ),
                     HTTP_HOST="example.com",
                     follow=True
@@ -202,7 +217,7 @@ class FlowsTestCase(TransactionTestCase):
 
             response = self.client.get(
                 reverse(
-                    "flows:history", 
+                    "flows:history",
                     kwargs={'environment': self.environment.slug,  'id': flow.id},
 
                 ),

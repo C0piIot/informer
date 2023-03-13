@@ -17,7 +17,8 @@ class PushChannel(Channel):
     CONTACT_FORM = "accounts.forms.PushContactForm"
     CONTACT_SERIALIZER = "accounts.serializers.PushContactSerializer"
     CONFIG_FORM = "accounts.forms.PushChannelForm"
-    firebase_credentials = models.JSONField(_("Firebase credentials"), default=dict)
+    firebase_credentials = models.JSONField(
+        _("Firebase credentials"), default=dict)
 
     def firebase_app_name(self):
         return "firebase-app-%d" % self.site.pk
@@ -49,7 +50,8 @@ class PushChannel(Channel):
             return firebase_admin.get_app(name=self.firebase_app_name())
         except ValueError:
             return firebase_admin.initialize_app(
-                firebase_admin.credentials.Certificate(self.firebase_credentials),
+                firebase_admin.credentials.Certificate(
+                    self.firebase_credentials),
                 name=self.firebase_app_name(),
             )
 
@@ -61,5 +63,5 @@ class PushChannel(Channel):
             ),
             app=self.get_firebase(),
         )
-    
+
         return {tokens[i]: r.success for i, r in enumerate(response.responses)}

@@ -15,7 +15,8 @@ class StatsTestCase(TransactionTestCase):
         with self.settings(ALLOWED_HOSTS=("example.com",)):
             self.assertContains(
                 self.client.get(
-                    reverse("stats:dashboard", kwargs={'environment': self.environment.slug }),
+                    reverse("stats:dashboard", kwargs={
+                            'environment': self.environment.slug}),
                     HTTP_HOST="example.com"
                 ),
                 "Dashboard"

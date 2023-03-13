@@ -26,9 +26,10 @@ class RedisStatsStorageTestCase(TestCase):
 
             mock_datetime.now.return_value = datetime(1983, 6, 25, 1, 15, 30)
 
-            RedisStatsStorage.store_events(self.environment, ["event1", "event2"])
+            RedisStatsStorage.store_events(
+                self.environment, ["event1", "event2"])
             RedisStatsStorage.client.pipeline.assert_called_once()
-            
+
             site_pk = self.environment.site_id
             self.pipeline.incr.assert_has_calls([
                 call(f'count.{site_pk}.test.event1.198306250115'),
@@ -41,10 +42,12 @@ class RedisStatsStorageTestCase(TestCase):
             self.pipeline.expire.assert_has_calls([
                 call(f'count.{site_pk}.test.event1.198306250115', 61 * 60),
                 call(f'count.{site_pk}.test.event1.1983062501', 25 * 60 * 60),
-                call(f'count.{site_pk}.test.event1.19830625', 31 * 24 * 60 * 60),
+                call(f'count.{site_pk}.test.event1.19830625',
+                     31 * 24 * 60 * 60),
                 call(f'count.{site_pk}.test.event2.198306250115', 61 * 60),
                 call(f'count.{site_pk}.test.event2.1983062501', 25 * 60 * 60),
-                call(f'count.{site_pk}.test.event2.19830625', 31 * 24 * 60 * 60),
+                call(f'count.{site_pk}.test.event2.19830625',
+                     31 * 24 * 60 * 60),
             ])
 
     def test_read_stas(self):
@@ -52,18 +55,19 @@ class RedisStatsStorageTestCase(TestCase):
         with patch('stats.storages.redis_stats_storage.datetime') as mock_datetime:
             mock_datetime.now.return_value = datetime(1983, 6, 25, 1, 15, 30)
 
-            self.pipeline.execute.return_value = [ #It should return 24 values!
+            self.pipeline.execute.return_value = [  # It should return 24 values!
                 1, '', '', 5, '', None,
                 5, 4, 3, '', '', '',
                 1, 1, 1, 1, 1, 1,
                 10, 100, 9, '', '', 66
             ]
 
-            response = RedisStatsStorage.read_stats(self.environment, 'event', BaseStatsStorage.PERIOD_DAY)
+            response = RedisStatsStorage.read_stats(
+                self.environment, 'event', BaseStatsStorage.PERIOD_DAY)
 
             site_pk = self.environment.site_id
 
-            self.pipeline.get.assert_has_calls([ #24 calls
+            self.pipeline.get.assert_has_calls([  # 24 calls
                 call(f'count.{site_pk}.test.event.1983062401'),
                 call(f'count.{site_pk}.test.event.1983062402'),
                 call(f'count.{site_pk}.test.event.1983062403'),
@@ -99,6 +103,3 @@ class RedisStatsStorageTestCase(TestCase):
                 1, 1, 1, 1, 1, 1,
                 10, 100, 9, 0, 0, 66
             ])
-
-
-        
