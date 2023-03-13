@@ -1,4 +1,3 @@
-import uuid
 
 import dramatiq
 from django.conf import settings

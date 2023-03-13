@@ -1,4 +1,3 @@
-from uuid import uuid4
 
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site

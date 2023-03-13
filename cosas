@@ -1,0 +1,27 @@
+pylint --rcfile /app/pylintrc /app
+
+
+
+
+black #formatter, añadir a pre-commit?
+#flake8
+isort[requirements_deprecated_finder,pipfile_deprecated_finder] #precommit?
+ssort #precommit
+
+
+autoflake -r --in-place --remove-unused-variables
+
+
+
+
+
+
+
+
+-r requirements.txt
+coverage
+pylint
+black #formatter, añadir a pre-commit?
+#flake8
+isort[requirements_deprecated_finder,pipfile_deprecated_finder] #precommit?
+ssort #precommit

@@ -1,5 +1,4 @@
-from datetime import timedelta
-from unittest.mock import MagicMock, patch, PropertyMock
+from unittest.mock import MagicMock, patch
 
 from django.test import TestCase
 

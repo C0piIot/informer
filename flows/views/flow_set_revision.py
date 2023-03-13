@@ -1,4 +1,3 @@
-import uuid
 
 from django.contrib import messages
 from django.db import transaction
