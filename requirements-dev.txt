@@ -4,10 +4,6 @@ pylint
 isort[requirements_deprecated_finder,pipfile_deprecated_finder]
 ssort
 autoflake
-
-
-black #formatter, añadir a pre-commit?
-
+black
+#autopep8
 #flake8
-
- #precommit

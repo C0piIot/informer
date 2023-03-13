@@ -19,13 +19,11 @@ urlpatterns = [
         include(
             [
                 path("history", FlowHistory.as_view(), name="history"),
-                path("history/<uuid:revision>/",
-                     FlowHistory.as_view(), name="history"),
+                path("history/<uuid:revision>/", FlowHistory.as_view(), name="history"),
                 path("edit/", FlowEdit.as_view(), name="edit"),
                 path("test/", FlowTest.as_view(), name="test"),
                 path("remove/", FlowRemove.as_view(), name="remove"),
-                path("set_revision/", FlowSetRevision.as_view(),
-                     name="set_revision"),
+                path("set_revision/", FlowSetRevision.as_view(), name="set_revision"),
                 path("preview/", Preview.as_view(), name="preview"),
                 path(
                     "<int:pk>/",
@@ -33,8 +31,7 @@ urlpatterns = [
                         [
                             path("", StepEdit.as_view(), name="step_edit"),
                             path("move/", StepMove.as_view(), name="step_move"),
-                            path("remove/", StepRemove.as_view(),
-                                 name="step_remove"),
+                            path("remove/", StepRemove.as_view(), name="step_remove"),
                         ]
                     ),
                 ),

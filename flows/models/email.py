@@ -10,10 +10,10 @@ from .flow_step import FlowStep
 
 
 class Email(FlowStep):
-
     class Meta:
         verbose_name = _("send email")
         verbose_name_plural = _("email sending")
+
     ICON = "✉️"
     subject = models.CharField(_("subject"), max_length=200)
     html_body = models.TextField(_("html body message"))
@@ -38,8 +38,7 @@ class Email(FlowStep):
 
     def step_run(self, flow_run):
         if not (email_channel := EmailChannel.objects.get(site=self.site)):
-            flow_run.log(FlowLog.WARNING,
-                         f"{self} not sent: channel not configured")
+            flow_run.log(FlowLog.WARNING, f"{self} not sent: channel not configured")
             return self.run_next()
 
         if not email_channel.enabled:

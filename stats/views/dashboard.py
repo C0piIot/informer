@@ -1,4 +1,3 @@
-
 from django.conf import settings
 from django.utils.module_loading import import_string
 from django.views.generic.base import TemplateView
@@ -21,11 +20,15 @@ class Dashboard(CurrentEnvironmentMixin, TemplateView):
             flow.stats = self.format_stats(
                 period,
                 stats_storage.read_stats(
-                    self.current_environment, f"flow_start.{flow.id}", period)
+                    self.current_environment, f"flow_start.{flow.id}", period
+                ),
             )
         return context_data
 
     def format_stats(self, period, stats):
         format = BaseStatsStorage.FORMAT[period]
         max_value = max([value for date, value in stats]) or 1
-        return [(date.strftime(format), value, float(value)/max_value) for date, value in stats]
+        return [
+            (date.strftime(format), value, float(value) / max_value)
+            for date, value in stats
+        ]

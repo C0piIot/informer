@@ -12,10 +12,10 @@ from .inbox_entry import InboxEntry
 
 
 class Inbox(FlowStep):
-
     class Meta:
         verbose_name = _("send to inbox")
         verbose_name_plural = _("sending to inbox")
+
     ICON = "📥"
     title = models.CharField(_("title"), max_length=100)
     message = models.TextField(_("message"))
@@ -47,8 +47,7 @@ class Inbox(FlowStep):
             entry_data=json.loads(entry_data.render(text_context)),
         )
         import_string(settings.INBOX_ENTRY_STORAGE).save_entry(inbox_entry)
-        flow_run.log(FlowLog.INFO, "Inbox entry %s created" %
-                     str(inbox_entry.key))
+        flow_run.log(FlowLog.INFO, "Inbox entry %s created" % str(inbox_entry.key))
         self.run_next(flow_run)
 
     def __str__(self):

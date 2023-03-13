@@ -32,8 +32,7 @@ class FlowHistory(CurrentEnvironmentMixin, ListView):
             {
                 "highlight": self.kwargs.get(
                     "revision",
-                    self.object_list.filter(
-                        environments=self.current_environment)
+                    self.object_list.filter(environments=self.current_environment)
                     .first()
                     .pk,
                 )

@@ -5,10 +5,10 @@ from .flow_step import FlowStep
 
 
 class Delay(FlowStep):
-
     class Meta:
         verbose_name = _("delay")
         verbose_name_plural = _("delays")
+
     ICON = "⏲️"
     time = models.DurationField(_("time"))
 

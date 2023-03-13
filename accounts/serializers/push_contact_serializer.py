@@ -10,8 +10,7 @@ class PushContactSerializer(serializers.Serializer):
 
     def validate_fcm_tokens(self, value):
         if type(value) != list:
-            raise serializers.ValidationError(
-                _("fcm_tokens is expected to be a list"))
+            raise serializers.ValidationError(_("fcm_tokens is expected to be a list"))
 
         for token in value:
             if not self.fcm_token_validation.match(token):

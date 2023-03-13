@@ -1,4 +1,3 @@
-
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.db import models
@@ -11,12 +10,12 @@ from .flow_log import FlowLog
 
 
 class FlowStep(models.Model):
-
     class Meta:
         verbose_name = _("flow step")
         verbose_name_plural = _("flow steps")
         ordering = ("flow", "order")
         unique_together = ("flow", "order")
+
     ICON = "⏭️"
     flow = models.ForeignKey(
         Flow,
@@ -71,7 +70,7 @@ class FlowStep(models.Model):
         flow_run.log(FlowLog.INFO, f"Running flow step {typed_instance}")
         store_events(
             flow_run.environment,
-            [f"flow_step.{flow_run.flow_id}.{self.content_type.model}"]
+            [f"flow_step.{flow_run.flow_id}.{self.content_type.model}"],
         )
         return typed_instance.step_run(flow_run)
 

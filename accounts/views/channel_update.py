@@ -34,7 +34,7 @@ class ChannelUpdate(ChannelListMixin, SuccessMessageMixin, UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['instance'] = kwargs['instance'].get_typed_instance()
+        kwargs["instance"] = kwargs["instance"].get_typed_instance()
         kwargs.update(site=self.request.site)
         return kwargs
 

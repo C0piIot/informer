@@ -43,5 +43,7 @@ class WebhookTestCase(TestCase):
             contenttype="application/json",
             body='{ "a":"{{ testvar }}"}',
         )
-        self.assertEqual(str(
-            webhook), f'{Webhook.ICON} Webhook {webhook.method} {urlparse(webhook.url).netloc}')
+        self.assertEqual(
+            str(webhook),
+            f"{Webhook.ICON} Webhook {webhook.method} {urlparse(webhook.url).netloc}",
+        )

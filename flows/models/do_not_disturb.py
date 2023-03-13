@@ -9,20 +9,22 @@ from .flow_step import FlowStep
 
 
 class DoNotDisturb(FlowStep):
-
     class Meta:
         verbose_name = _("do not disturb")
         verbose_name_plural = _("do not disturb")
+
     ICON = "🤫"
     start = models.TimeField(_("start"))
     end = models.TimeField(_("end"))
 
     def step_run(self, flow_run):
         now = timezone.now()
-        start = timezone.make_aware(datetime.combine(
-            date.today(), self.start), is_dst=False)
-        end = timezone.make_aware(datetime.combine(
-            date.today(), self.end), is_dst=False)
+        start = timezone.make_aware(
+            datetime.combine(date.today(), self.start), is_dst=False
+        )
+        end = timezone.make_aware(
+            datetime.combine(date.today(), self.end), is_dst=False
+        )
         if end < start:
             end += timedelta(days=1)
 

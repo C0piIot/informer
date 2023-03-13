@@ -17,20 +17,22 @@ class PushTestCase(TestCase):
             key=123,
             name="test",
             environment=self.environment,
-            channel_data={
-                'pushchannel': {'fcm_tokens': ['fcm_token']}
-            }
+            channel_data={"pushchannel": {"fcm_tokens": ["fcm_token"]}},
         )
         self.flow_run = FlowRun(
-            environment=self.environment, contact_key=self.contact.key)
+            environment=self.environment, contact_key=self.contact.key
+        )
 
-    @patch('accounts.models.push_channel.firebase_admin')
-    @patch('accounts.models.push_channel.messaging.send_multicast')
+    @patch("accounts.models.push_channel.firebase_admin")
+    @patch("accounts.models.push_channel.messaging.send_multicast")
     def test_step_run(self, mock_firebase_admin, mock_send_multicast):
-        with self.settings(CONTACT_STORAGE=ContactsConfig.DEFAULT_SETTINGS['CONTACT_STORAGE']):
+        with self.settings(
+            CONTACT_STORAGE=ContactsConfig.DEFAULT_SETTINGS["CONTACT_STORAGE"]
+        ):
             self.flow_run.log = MagicMock()
-            push = Push(title="Title", body="Body",
-                        url="URL", site=self.environment.site)
+            push = Push(
+                title="Title", body="Body", url="URL", site=self.environment.site
+            )
             push.run_next = MagicMock()
             push.step_run(self.flow_run)
             push.run_next.assert_called_with(self.flow_run)
@@ -40,6 +42,5 @@ class PushTestCase(TestCase):
             )
 
     def test_name(self):
-        push = Push(title="Title", body="Body",
-                    url="URL", site=self.environment.site)
+        push = Push(title="Title", body="Body", url="URL", site=self.environment.site)
         self.assertEqual(str(push), f'{Push.ICON} Send Push "{push.title}"')

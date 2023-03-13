@@ -4,7 +4,6 @@ from flows.models import Email
 
 
 class EmailForm(ModelForm):
-
     class Meta:
         model = Email
         fields = (

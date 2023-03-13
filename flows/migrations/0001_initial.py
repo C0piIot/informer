@@ -37,11 +37,9 @@ class Migration(migrations.Migration):
                         verbose_name="revision",
                     ),
                 ),
-                ("date", models.DateTimeField(
-                    auto_now_add=True, verbose_name="date")),
+                ("date", models.DateTimeField(auto_now_add=True, verbose_name="date")),
                 ("name", models.CharField(max_length=150, verbose_name="name")),
-                ("enabled", models.BooleanField(
-                    default=True, verbose_name="enabled")),
+                ("enabled", models.BooleanField(default=True, verbose_name="enabled")),
                 (
                     "trigger",
                     models.CharField(
@@ -337,14 +335,12 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "start",
-                    models.DateTimeField(
-                        auto_now_add=True, verbose_name="start"),
+                    models.DateTimeField(auto_now_add=True, verbose_name="start"),
                 ),
                 ("flow_id", models.UUIDField(editable=False, verbose_name="id")),
                 (
                     "contact_key",
-                    models.CharField(
-                        max_length=100, verbose_name="contact key"),
+                    models.CharField(max_length=100, verbose_name="contact key"),
                 ),
                 (
                     "event_payload",
@@ -352,8 +348,7 @@ class Migration(migrations.Migration):
                         blank=True, default=dict, verbose_name="event payload"
                     ),
                 ),
-                ("flow_data", models.JSONField(
-                    default=dict, verbose_name="flow data")),
+                ("flow_data", models.JSONField(default=dict, verbose_name="flow data")),
                 (
                     "group_key",
                     models.CharField(
@@ -413,8 +408,7 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("flow_run_id", models.UUIDField(verbose_name="flow_run_id")),
-                ("date", models.DateTimeField(
-                    auto_now_add=True, verbose_name="date")),
+                ("date", models.DateTimeField(auto_now_add=True, verbose_name="date")),
                 (
                     "level",
                     models.CharField(

@@ -87,8 +87,7 @@ class Migration(migrations.Migration):
                 ),
                 (
                     "channel_data",
-                    models.JSONField(
-                        default=dict, verbose_name="channel data"),
+                    models.JSONField(default=dict, verbose_name="channel data"),
                 ),
                 (
                     "environment",
