@@ -7,10 +7,10 @@ from .flow_step import FlowStep
 
 
 class Group(FlowStep):
-
     class Meta:
         verbose_name = _("group")
         verbose_name_plural = _("groupings")
+
     ICON = "⏬"
     DATA_KEY = "GROUP_%s"
     window = models.DurationField(
@@ -46,7 +46,8 @@ class Group(FlowStep):
             )
 
     def step_wake_up(self, flow_run):
-        import_string(settings.FLOW_RUN_STORAGE).unset_group(flow_run, self.key)
+        import_string(settings.FLOW_RUN_STORAGE).unset_group(
+            flow_run, self.key)
         self.run_next(flow_run)
 
     def __str__(self):

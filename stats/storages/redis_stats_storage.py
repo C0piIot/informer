@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 
 import environ
 import redis
@@ -14,7 +14,7 @@ class RedisStatsStorage(BaseStatsStorage):
     KEY_TIME_FORMAT = {
         BaseStatsStorage.PERIOD_HOUR: "%Y%m%d%H%M",
         BaseStatsStorage.PERIOD_DAY: "%Y%m%d%H",
-        BaseStatsStorage.PERIOD_MONTH: "%Y%m%d"
+        BaseStatsStorage.PERIOD_MONTH: "%Y%m%d",
     }
 
     client = None
@@ -27,7 +27,7 @@ class RedisStatsStorage(BaseStatsStorage):
 
     @classmethod
     def get_key(cls, environment, event, period, date):
-        return f'count.{environment.site.pk}.{environment.slug}.{event}.{date.strftime(cls.KEY_TIME_FORMAT[period])}'
+        return f"count.{environment.site.pk}.{environment.slug}.{event}.{date.strftime(cls.KEY_TIME_FORMAT[period])}"
 
     @classmethod
     def store_events(cls, environment, events):
@@ -37,7 +37,15 @@ class RedisStatsStorage(BaseStatsStorage):
             for period, time_format in cls.KEY_TIME_FORMAT.items():
                 key = cls.get_key(environment, event, period, now)
                 pipeline.incr(key)
-                pipeline.expire(key, int((BaseStatsStorage.PERIOD_DELTA[period] + BaseStatsStorage.PERIOD_STEP[period]).total_seconds()))
+                pipeline.expire(
+                    key,
+                    int(
+                        (
+                            BaseStatsStorage.PERIOD_DELTA[period]
+                            + BaseStatsStorage.PERIOD_STEP[period]
+                        ).total_seconds()
+                    ),
+                )
         pipeline.execute()
 
     @classmethod
@@ -51,5 +59,6 @@ class RedisStatsStorage(BaseStatsStorage):
             pipeline.get(cls.get_key(environment, event, period, date))
             date = date + BaseStatsStorage.PERIOD_STEP[period]
 
-        return [ (dates[i], int(value or 0)) for i, value in enumerate(pipeline.execute()) ]
-
+        return [
+            (dates[i], int(value or 0)) for i, value in enumerate(pipeline.execute())
+        ]

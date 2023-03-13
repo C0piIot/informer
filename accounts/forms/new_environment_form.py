@@ -6,10 +6,10 @@ from accounts.models import Environment
 
 
 class NewEnvironmentForm(forms.ModelForm):
-
     class Meta:
         model = Environment
         fields = ["name"]
+
     source_environment = forms.ModelChoiceField(
         queryset=Environment.objects.all(),
         required=False,

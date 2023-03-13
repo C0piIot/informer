@@ -23,4 +23,4 @@ class DelayTestCase(TestCase):
 
     def test_name(self):
         delay = Delay(time=timedelta(hours=10))
-        self.assertEqual(str(delay), f'{Delay.ICON} Delay {delay.time}')
+        self.assertEqual(str(delay), f"{Delay.ICON} Delay {delay.time}")

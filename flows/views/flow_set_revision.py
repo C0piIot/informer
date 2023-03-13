@@ -1,5 +1,3 @@
-import uuid
-
 from django.contrib import messages
 from django.db import transaction
 from django.http import HttpResponseRedirect
@@ -33,6 +31,7 @@ class FlowSetRevision(FlowFilteredMixin, SingleObjectMixin, View):
         return HttpResponseRedirect(
             reverse(
                 "flows:history",
-                kwargs={"id": flow.id, "environment": self.current_environment.slug},
+                kwargs={"id": flow.id,
+                        "environment": self.current_environment.slug},
             )
         )

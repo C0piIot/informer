@@ -7,10 +7,10 @@ from .channel import Channel
 
 
 class EmailChannel(Channel):
-
     class Meta:
         verbose_name = _("email channel")
         verbose_name_plural = _("email channels")
+
     ICON = "✉️"
     CONTACT_FORM = "accounts.forms.EmailContactForm"
     CONTACT_SERIALIZER = "accounts.serializers.EmailContactSerializer"

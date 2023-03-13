@@ -11,12 +11,12 @@ def default_preview_context():
 
 
 class Flow(models.Model):
-
     class Meta:
         verbose_name = _("flow")
         verbose_name_plural = _("communication flows")
         ordering = ("id", "-date")
         unique_together = ("id", "date")
+
     id = models.UUIDField(_("id"), default=uuid4, editable=False)
     revision = models.UUIDField(
         _("revision"), primary_key=True, default=uuid4, editable=False

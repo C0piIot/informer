@@ -6,12 +6,12 @@ from django.utils.translation import gettext_lazy as _
 
 
 class FlowLog(models.Model):
-
     class Meta:
         verbose_name = _("flow log")
         verbose_name_plural = _("flow logs")
         ordering = ("date",)
         indexes = (models.Index(fields=("flow_run_id", "-date")),)
+
     DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
@@ -24,7 +24,8 @@ class FlowLog(models.Model):
         (ERROR, _("error")),
     )
 
-    id = models.UUIDField(_("id"), default=uuid4, primary_key=True, editable=False)
+    id = models.UUIDField(_("id"), default=uuid4,
+                          primary_key=True, editable=False)
     site = models.ForeignKey(
         Site,
         verbose_name=_("site"),

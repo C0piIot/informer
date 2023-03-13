@@ -34,7 +34,7 @@ class StepEdit(FlowEditMixin, SuccessMessageMixin, UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs['instance'] = kwargs['instance'].get_typed_instance()
+        kwargs["instance"] = kwargs["instance"].get_typed_instance()
         return kwargs
 
     def form_valid(self, form, **kwargs):
@@ -55,5 +55,6 @@ class StepEdit(FlowEditMixin, SuccessMessageMixin, UpdateView):
     def get_success_url(self):
         return reverse(
             "flows:edit",
-            kwargs={"id": self.flow.id, "environment": self.current_environment.slug},
+            kwargs={"id": self.flow.id,
+                    "environment": self.current_environment.slug},
         )

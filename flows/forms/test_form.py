@@ -8,13 +8,13 @@ from flows.models import FlowRun
 
 
 class TestForm(ModelForm):
-
     class Meta:
         model = FlowRun
         fields = (
             "contact_key",
             "event_payload",
         )
+
     flow = None
     environment = None
 

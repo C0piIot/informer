@@ -1,5 +1,3 @@
-from unittest.mock import MagicMock, patch
-
 from django.contrib.auth import get_user_model
 from django.test import TransactionTestCase
 from django.urls import reverse
@@ -27,7 +25,8 @@ class ChannelsTestCase(TransactionTestCase):
 
             self.assertRedirects(
                 self.client.post(
-                    reverse("accounts:channel_create", kwargs={"type": "emailchannel"}),
+                    reverse("accounts:channel_create",
+                            kwargs={"type": "emailchannel"}),
                     {
                         "host": "example.com",
                         "port": "465",
@@ -45,7 +44,8 @@ class ChannelsTestCase(TransactionTestCase):
             PushChannel.get_firebase = lambda x: True
             self.assertRedirects(
                 self.client.post(
-                    reverse("accounts:channel_create", kwargs={"type": "pushchannel"}),
+                    reverse("accounts:channel_create",
+                            kwargs={"type": "pushchannel"}),
                     {
                         "firebase_credentials": '{"credentials":"yes please"}',
                         "enabled": True,
@@ -62,12 +62,14 @@ class ChannelsTestCase(TransactionTestCase):
             self.assertNotContains(response, 'href="#form-add-emailchannel"')
             self.assertNotContains(response, 'href="#form-add-pushchannel"')
 
-            email_channel = EmailChannel.objects.get(site__domain="example.com")
+            email_channel = EmailChannel.objects.get(
+                site__domain="example.com")
             push_channel = PushChannel.objects.get(site__domain="example.com")
 
             self.assertRedirects(
                 self.client.post(
-                    reverse("accounts:channel_update", kwargs={"pk": email_channel.pk}),
+                    reverse("accounts:channel_update",
+                            kwargs={"pk": email_channel.pk}),
                     {
                         "host": "example.com",
                         "port": "465",
@@ -82,11 +84,13 @@ class ChannelsTestCase(TransactionTestCase):
                 reverse("accounts:channel_list"),
             )
 
-            self.assertEquals("password-updated", EmailChannel.objects.first().password)
+            self.assertEquals("password-updated",
+                              EmailChannel.objects.first().password)
 
             self.assertRedirects(
                 self.client.post(
-                    reverse("accounts:channel_update", kwargs={"pk": push_channel.pk}),
+                    reverse("accounts:channel_update",
+                            kwargs={"pk": push_channel.pk}),
                     {
                         "firebase_credentials": '{"credentials":"updated-credentials"}',
                         "enabled": True,
@@ -98,7 +102,8 @@ class ChannelsTestCase(TransactionTestCase):
 
             self.assertEquals(
                 "updated-credentials",
-                PushChannel.objects.first().firebase_credentials["credentials"],
+                PushChannel.objects.first(
+                ).firebase_credentials["credentials"],
             )
 
             response = self.client.get(
@@ -109,7 +114,8 @@ class ChannelsTestCase(TransactionTestCase):
 
             self.assertRedirects(
                 self.client.post(
-                    reverse("accounts:channel_remove", kwargs={"pk": email_channel.pk}),
+                    reverse("accounts:channel_remove",
+                            kwargs={"pk": email_channel.pk}),
                     HTTP_HOST="example.com",
                 ),
                 reverse("accounts:channel_list"),
@@ -117,7 +123,8 @@ class ChannelsTestCase(TransactionTestCase):
 
             self.assertRedirects(
                 self.client.get(
-                    reverse("accounts:channel_remove", kwargs={"pk": push_channel.pk}),
+                    reverse("accounts:channel_remove",
+                            kwargs={"pk": push_channel.pk}),
                     HTTP_HOST="example.com",
                 ),
                 reverse("accounts:channel_list"),
@@ -125,7 +132,8 @@ class ChannelsTestCase(TransactionTestCase):
 
             self.assertRedirects(
                 self.client.post(
-                    reverse("accounts:channel_remove", kwargs={"pk": push_channel.pk}),
+                    reverse("accounts:channel_remove",
+                            kwargs={"pk": push_channel.pk}),
                     HTTP_HOST="example.com",
                 ),
                 reverse("accounts:channel_list"),
@@ -138,16 +146,19 @@ class ChannelsTestCase(TransactionTestCase):
         with self.settings(ALLOWED_HOSTS=("example.com",)):
             self.assertEquals(
                 self.client.get(
-                    reverse("accounts:channel_create", kwargs={"type": "invalidchannel"}),
-                    HTTP_HOST="example.com"
+                    reverse(
+                        "accounts:channel_create", kwargs={"type": "invalidchannel"}
+                    ),
+                    HTTP_HOST="example.com",
                 ).status_code,
-                404
+                404,
             )
 
             self.assertEquals(
                 self.client.get(
-                    reverse("accounts:channel_create", kwargs={"type": "pushchannel"}),
-                    HTTP_HOST="example.com"
+                    reverse("accounts:channel_create",
+                            kwargs={"type": "pushchannel"}),
+                    HTTP_HOST="example.com",
                 ).status_code,
-                200
+                200,
             )

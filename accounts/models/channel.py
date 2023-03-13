@@ -5,7 +5,6 @@ from django.utils.translation import gettext_lazy as _
 
 
 class Channel(models.Model):
-
     class Meta:
         ordering = (
             "site",
@@ -17,6 +16,7 @@ class Channel(models.Model):
             "site",
             "content_type",
         )
+
     ICON = "🔊"
     CONTACT_FORM = None
     CONTACT_SERIALIZER = None

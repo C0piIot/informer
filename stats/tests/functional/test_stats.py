@@ -1,6 +1,8 @@
 from django.test import TransactionTestCase
 from django.urls import reverse
+
 from accounts.models import Environment
+
 
 class StatsTestCase(TransactionTestCase):
     fixtures = ["users.json", "environments.json", "channels.json"]
@@ -13,8 +15,10 @@ class StatsTestCase(TransactionTestCase):
         with self.settings(ALLOWED_HOSTS=("example.com",)):
             self.assertContains(
                 self.client.get(
-                    reverse("stats:dashboard", kwargs={'environment': self.environment.slug }),
-                    HTTP_HOST="example.com"
+                    reverse(
+                        "stats:dashboard", kwargs={"environment": self.environment.slug}
+                    ),
+                    HTTP_HOST="example.com",
                 ),
-                "Dashboard"
+                "Dashboard",
             )

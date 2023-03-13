@@ -3,5 +3,6 @@ db.sqlite3
 dump.rdb
 db.sqlite3-journal
 /static/
+/node_modules/
 .coverage
 docker-compose.override.yaml

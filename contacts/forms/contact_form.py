@@ -9,7 +9,6 @@ from contacts.models import Contact
 
 
 class ContactForm(forms.ModelForm):
-
     class Meta:
         model = Contact
         fields = (
@@ -24,6 +23,7 @@ class ContactForm(forms.ModelForm):
             "index5",
             "index6",
         )
+
     active_channel_tab = None
     CHANNEL_PREFIX = "channel-"
     environment = None
@@ -49,7 +49,8 @@ class ContactForm(forms.ModelForm):
                 prefix="%s%d" % (self.CHANNEL_PREFIX, channel.pk),
                 data=kwargs.get("data"),
                 files=kwargs.get("files"),
-                initial=self.instance.get_channel_data(channel.content_type.model)
+                initial=self.instance.get_channel_data(
+                    channel.content_type.model)
                 if self.instance
                 else {},
             )
@@ -69,7 +70,8 @@ class ContactForm(forms.ModelForm):
         contact.channel_data = {}
         for channel in self.cleaned_data["channels"]:
             form = self.channel_forms[channel]
-            contact.set_channel_data(channel.content_type.model, form.cleaned_data)
+            contact.set_channel_data(
+                channel.content_type.model, form.cleaned_data)
         if commit:
             import_string(settings.CONTACT_STORAGE).save_contact(
                 self.environment, contact

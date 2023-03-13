@@ -1,5 +1,3 @@
-import json
-
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from django.template import Context, Template, TemplateSyntaxError

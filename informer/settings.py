@@ -14,6 +14,8 @@ from pathlib import Path
 
 import environ
 from django.conf import settings as default_settings
+from django.core.exceptions import PermissionDenied
+from django.http import Http404
 
 env = environ.Env()
 
@@ -149,15 +151,13 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "node_modules")]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
-from django.core.exceptions import PermissionDenied
-from django.http import Http404
 
 ROLLBAR_CLIENT_TOKEN = env("ROLLBAR_CLIENT_TOKEN", default="")
 

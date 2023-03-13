@@ -34,5 +34,6 @@ class FlowEdit(FlowFilteredMixin, FlowEditMixin, SuccessMessageMixin, UpdateView
     def get_success_url(self):
         return reverse(
             "flows:edit",
-            kwargs={"id": self.object.id, "environment": self.current_environment.slug},
+            kwargs={"id": self.object.id,
+                    "environment": self.current_environment.slug},
         )

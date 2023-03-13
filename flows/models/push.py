@@ -9,10 +9,10 @@ from .flow_step import FlowStep
 
 
 class Push(FlowStep):
-
     class Meta:
         verbose_name = _("send push")
         verbose_name_plural = _("push sending")
+
     ICON = "🔔"
     title = models.CharField(_("title"), max_length=200)
     body = models.TextField(_("body"))
@@ -20,7 +20,8 @@ class Push(FlowStep):
 
     def step_run(self, flow_run):
         if not (push_channel := PushChannel.objects.get(site=self.site)):
-            flow_run.log(FlowLog.WARNING, f"{self} not sent: channel not configured")
+            flow_run.log(FlowLog.WARNING,
+                         f"{self} not sent: channel not configured")
             return self.run_next()
 
         if not push_channel.enabled:
@@ -56,7 +57,7 @@ class Push(FlowStep):
         )
         flow_run.log(
             FlowLog.INFO,
-            f'{self} successful sent to {sum(response.values())} of {len(response)} fcm tokens'
+            f"{self} successful sent to {sum(response.values())} of {len(response)} fcm tokens",
         )
 
         self.run_next(flow_run)

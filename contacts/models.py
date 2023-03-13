@@ -1,5 +1,3 @@
-from uuid import uuid4
-
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.db import models
@@ -9,12 +7,12 @@ from rest_framework.authtoken.models import Token
 
 
 class Contact(models.Model):
-
     class Meta:
         verbose_name = _("contact")
         verbose_name_plural = _("contacts")
         constraints = (
-            models.UniqueConstraint("environment", "key", name="key_environment"),
+            models.UniqueConstraint(
+                "environment", "key", name="key_environment"),
         )
         indexes = (
             models.Index(fields=("environment", "index1")),
@@ -24,6 +22,7 @@ class Contact(models.Model):
             models.Index(fields=("environment", "index5")),
             models.Index(fields=("environment", "index6")),
         )
+
     key = models.SlugField(
         _("key"),
         max_length=100,
@@ -80,9 +79,9 @@ class Contact(models.Model):
 
 
 class RelatedContactModel(models.Model):
-
     class Meta:
         abstract = True
+
     _contact = None
     contact_key = models.CharField(_("contact key"), max_length=100)
     environment = models.ForeignKey(

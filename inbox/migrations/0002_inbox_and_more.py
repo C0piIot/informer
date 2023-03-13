@@ -30,7 +30,8 @@ class Migration(migrations.Migration):
                 ("url", models.URLField(blank=True, default="", verbose_name="url")),
                 (
                     "image",
-                    models.URLField(blank=True, default="", verbose_name="image"),
+                    models.URLField(blank=True, default="",
+                                    verbose_name="image"),
                 ),
                 (
                     "entry_data",
@@ -73,7 +74,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="inboxentry",
             name="image",
-            field=models.URLField(blank=True, default="", verbose_name="image"),
+            field=models.URLField(blank=True, default="",
+                                  verbose_name="image"),
         ),
         migrations.AddIndex(
             model_name="inboxentry",

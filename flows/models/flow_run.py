@@ -17,7 +17,6 @@ logger = logging.getLogger()
 
 
 class FlowRun(RelatedContactModel):
-
     class Meta:
         verbose_name = _("flow run")
         verbose_name_plural = _("flow runs")
@@ -28,13 +27,16 @@ class FlowRun(RelatedContactModel):
                 name="unique group",
             )
         ]
-    id = models.UUIDField(_("id"), primary_key=True, default=uuid4, editable=False)
+
+    id = models.UUIDField(_("id"), primary_key=True,
+                          default=uuid4, editable=False)
     start = models.DateTimeField(_("start"), auto_now_add=True)
     flow_revision = models.ForeignKey(
         Flow, on_delete=models.PROTECT, verbose_name=_("flow"), editable=False
     )
     flow_id = models.UUIDField(_("id"), editable=False)
-    event_payload = models.JSONField(_("event payload"), default=dict, blank=True)
+    event_payload = models.JSONField(
+        _("event payload"), default=dict, blank=True)
     flow_data = models.JSONField(_("flow data"), default=dict)
     group_key = models.CharField(
         _("group_key"), max_length=200, blank=True, editable=False

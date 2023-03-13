@@ -16,7 +16,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="contact",
             name="auth_key",
-            field=models.CharField(default=1, max_length=40, verbose_name="auth key"),
+            field=models.CharField(
+                default=1, max_length=40, verbose_name="auth key"),
             preserve_default=False,
         ),
     ]

@@ -7,11 +7,11 @@ from rest_framework.authtoken.models import Token
 
 
 class Environment(models.Model):
-
     class Meta:
         unique_together = ("site", "name")
         verbose_name = _("environment")
         verbose_name_plural = _("environments")
+
     site = models.ForeignKey(
         Site,
         verbose_name=_("site"),

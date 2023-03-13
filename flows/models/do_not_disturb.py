@@ -1,26 +1,30 @@
-from django.db import models
-from django.utils.translation import gettext_lazy as _
-from django.core.exceptions import ValidationError
-from django.utils import timezone
-from datetime import time, date, datetime, timedelta
+from datetime import date, datetime, timedelta
 
+from django.core.exceptions import ValidationError
+from django.db import models
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from .flow_step import FlowStep
 
 
 class DoNotDisturb(FlowStep):
-
     class Meta:
         verbose_name = _("do not disturb")
         verbose_name_plural = _("do not disturb")
+
     ICON = "🤫"
     start = models.TimeField(_("start"))
     end = models.TimeField(_("end"))
 
     def step_run(self, flow_run):
         now = timezone.now()
-        start = timezone.make_aware(datetime.combine(date.today(), self.start), is_dst=False)
-        end = timezone.make_aware(datetime.combine(date.today(), self.end), is_dst=False)
+        start = timezone.make_aware(
+            datetime.combine(date.today(), self.start), is_dst=False
+        )
+        end = timezone.make_aware(
+            datetime.combine(date.today(), self.end), is_dst=False
+        )
         if end < start:
             end += timedelta(days=1)
 

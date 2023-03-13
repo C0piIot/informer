@@ -4,7 +4,6 @@ from flows.models import Email
 
 
 class EmailForm(ModelForm):
-
     class Meta:
         model = Email
         fields = (
@@ -14,6 +13,7 @@ class EmailForm(ModelForm):
             "autogenerate_text",
             "from_email",
         )
+
     def __init__(self, *args, **kwargs):
         super(EmailForm, self).__init__(*args, **kwargs)
         if (
