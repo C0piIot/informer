@@ -1,7 +1,9 @@
+"""Storing inbox entries"""
 from inbox.models import InboxEntry
 
 
 class DefaultInboxEntryStorage:
+    """This storage uses standard django models"""
     @classmethod
     def get_entries(cls, environment, contact, start_key=None, amount=50):
         queryset = Inbox.objects.filter(
