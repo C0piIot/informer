@@ -1,3 +1,4 @@
+"""Inbox functional testing."""
 from django.test import TransactionTestCase
 from django.urls import reverse
 
@@ -6,6 +7,7 @@ from contacts.apps import ContactsConfig
 
 
 class InboxTestCase(TransactionTestCase):
+    "Inbox list test case"
     fixtures = ["users.json", "environments.json", "channels.json"]
 
     def setUp(self):
@@ -20,7 +22,9 @@ class InboxTestCase(TransactionTestCase):
             self.assertContains(
                 self.client.get(
                     reverse(
-                        "inbox:list", kwargs={"environment": self.environment.slug}
+                        "inbox:list", kwargs={
+                            "environment": self.environment.slug
+                        }
                     ),
                     HTTP_HOST="example.com",
                 ),
