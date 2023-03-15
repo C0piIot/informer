@@ -1,6 +1,7 @@
 from django.urls import include, path
 
-from .views import *
+from .views import (ChannelCreate, ChannelList, ChannelRemove, ChannelUpdate,
+                    EnvironmentCreate, EnvironmentList, EnvironmentRemove)
 
 app_name = "accounts"
 

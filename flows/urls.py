@@ -2,10 +2,10 @@ from django.urls import include, path
 
 from informer.api import router
 
-from .forms import *
-from .models import *
-from .views import *
-from .views.steps import *
+from .views import (FlowCreate, FlowEdit, FlowHistory, FlowList, FlowRemove,
+                    FlowRunDetail, FlowRunList, FlowRunViewSet,
+                    FlowSetRevision, FlowTest, Preview)
+from .views.steps import StepCreate, StepEdit, StepMove, StepRemove
 
 app_name = "flows"
 
