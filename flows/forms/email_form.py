@@ -15,7 +15,7 @@ class EmailForm(ModelForm):
         )
 
     def __init__(self, *args, **kwargs):
-        super(EmailForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         if (
             self.data.get("autogenerate_text")
             if "data" in kwargs
