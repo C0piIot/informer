@@ -1,6 +1,5 @@
 from django import forms
 from django.conf import settings
-from django.forms.models import modelform_factory
 from django.utils.module_loading import import_string
 from django.utils.translation import gettext_lazy as _
 

@@ -1,5 +1,6 @@
 """Storing inbox entries"""
-from inbox.models import InboxEntry
+from contacts.models import Contact
+from inbox.models import Inbox
 
 
 class DefaultInboxEntryStorage:
@@ -15,7 +16,7 @@ class DefaultInboxEntryStorage:
     @classmethod
     def get_entry(cls, environment, contact, key):
         return Contact.objects.filter(
-            environment=environment, contact=contacts, key=key
+            environment=environment, contact=contact, key=key
         ).first()
 
     @classmethod

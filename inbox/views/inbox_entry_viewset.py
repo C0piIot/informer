@@ -1,10 +1,9 @@
+""" Rest viewset for InboxEntry"""
 from django.conf import settings
 from django.utils.module_loading import import_string
 from django.utils.translation import gettext_lazy as _
-from rest_framework import (authentication, exceptions, mixins, serializers,
-                            status)
-from rest_framework.authentication import (BaseAuthentication,
-                                           get_authorization_header)
+from rest_framework import exceptions, mixins, serializers
+from rest_framework.authentication import get_authorization_header
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
@@ -16,6 +15,7 @@ contact_storage = import_string(settings.CONTACT_STORAGE)
 
 
 class InboxEntrySerializer(serializers.ModelSerializer):
+    """InboxEntry model serialization"""
     class Meta:
         model = InboxEntry
         fields = [
@@ -37,6 +37,11 @@ class InboxEntryViewSet(
     ContextAwareViewSetMixin,
     GenericViewSet,
 ):
+    """
+        This ViewSet allows to retrieve InboxEntry list and InboxEntry
+        detail for Inbox entries of an authenticated contact via its 
+        private key
+    """
     queryset = InboxEntry.objects.none()
     serializer_class = InboxEntrySerializer
 
@@ -84,7 +89,7 @@ class InboxEntryViewSet(
 
     def get_object(self):
         inbox_entry = inbox_storage.get_entry(
-            self.current_environment, contact, self.kwargs["pk"]
+            self.current_environment, self.contact, self.kwargs["pk"]
         )
         self.check_object_permissions(self.request, inbox_entry)
         return inbox_entry

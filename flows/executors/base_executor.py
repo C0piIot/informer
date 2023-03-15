@@ -1,7 +1,6 @@
 import uuid
 
 from django.conf import settings
-from django.core import serializers
 from django.utils.module_loading import import_string
 
 from accounts.models import Environment

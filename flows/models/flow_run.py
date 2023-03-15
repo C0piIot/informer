@@ -2,7 +2,6 @@ import logging
 from uuid import uuid4
 
 from django.conf import settings
-from django.contrib.sites.models import Site
 from django.db import models
 from django.urls import reverse
 from django.utils.module_loading import import_string

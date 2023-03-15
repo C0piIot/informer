@@ -7,7 +7,6 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import CreateView
 
 from accounts.forms import NewEnvironmentForm
-from accounts.models import Environment
 
 
 class EnvironmentCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):

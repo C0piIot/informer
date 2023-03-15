@@ -5,7 +5,6 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.utils import timezone
 
-from contacts.models import Contact
 from flows.models import DoNotDisturb, FlowRun
 
 

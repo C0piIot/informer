@@ -1,6 +1,5 @@
 from unittest.mock import MagicMock
 
-from django.contrib.contenttypes.models import ContentType
 from django.test import TransactionTestCase
 from django.urls import reverse
 

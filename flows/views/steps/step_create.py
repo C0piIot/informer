@@ -1,14 +1,12 @@
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db import transaction
-from django.http import Http404, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.http import Http404
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import CreateView
 
 from flows.forms import step_form_classes
-from flows.models import Flow
 from flows.views.flow_edit_mixin import FlowEditMixin
 
 

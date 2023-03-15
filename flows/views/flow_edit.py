@@ -5,7 +5,6 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import UpdateView
 
 from flows.forms import FlowForm
-from flows.models import FlowStep
 
 from .flow_edit_mixin import FlowEditMixin
 from .flow_filtered_mixin import FlowFilteredMixin
