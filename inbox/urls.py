@@ -4,7 +4,7 @@ from contacts.views import ContactList
 from inbox.views import InboxEntryList
 from informer.api import router
 
-from .views import ContactList, InboxEntryList, InboxEntryViewSet
+from .views import InboxEntryList, InboxEntryViewSet
 
 app_name = "inbox"
 
