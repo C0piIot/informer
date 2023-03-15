@@ -76,7 +76,8 @@ class FlowRun(RelatedContactModel):
         )
 
     @classmethod
-    def get_flow_runs(cls, environment, flow, start_key=None, amount=50, **filters):
+    def get_flow_runs(
+            cls, environment, flow, start_key=None, amount=50, **filters):
         queryset = cls.objects.filter(environment=environment, flow_id=flow.id)
         if start_key is not None:
             queryset = queryset.filter(key__gt=start_key)

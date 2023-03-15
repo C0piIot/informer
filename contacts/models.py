@@ -102,9 +102,9 @@ class RelatedContactModel(models.Model):
     @property
     def contact(self):
         if self._contact is None:
-            self._contact = import_string(settings.CONTACT_STORAGE).get_contact(
-                self.environment, self.contact_key
-            )
+            self._contact = import_string(
+                settings.CONTACT_STORAGE).get_contact(
+                self.environment, self.contact_key)
         return self._contact
 
     @contact.setter

@@ -28,20 +28,14 @@ class ContactsTestCase(TransactionTestCase):
             response = self.client.post(
                 reverse(
                     "contacts:contact_create",
-                    kwargs={"environment": self.environment.slug},
-                ),
-                {
-                    "name": "example name",
-                    "key": 123,
-                    "auth_key": "abc",
-                    "channels": [1, 2],
-                    "contact_data": '{"foo":"bar"}',
-                    "channel-1-email": "abc@example.com",
-                    "channel-2-fcm_tokens": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                },
-                HTTP_HOST="example.com",
-                follow=True,
-            )
+                    kwargs={"environment": self.environment.slug},),
+                {"name": "example name", "key": 123, "auth_key": "abc",
+                 "channels": [1, 2],
+                 "contact_data": '{"foo":"bar"}',
+                 "channel-1-email": "abc@example.com",
+                 "channel-2-fcm_tokens":
+                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", },
+                HTTP_HOST="example.com", follow=True,)
 
             self.assertRedirects(
                 response,
@@ -55,20 +49,15 @@ class ContactsTestCase(TransactionTestCase):
             response = self.client.post(
                 reverse(
                     "contacts:contact_update",
-                    kwargs={"environment": self.environment.slug, "key": 123},
-                ),
-                {
-                    "name": "example name updated",
-                    "key": 123,
-                    "auth_key": "abc",
-                    "channels": [1, 2],
-                    "contact_data": '{"foo":"bar"}',
-                    "channel-1-email": "abc@example.com",
-                    "channel-2-fcm_tokens": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                },
-                HTTP_HOST="example.com",
-                follow=True,
-            )
+                    kwargs={"environment": self.environment.slug,
+                            "key": 123},),
+                {"name": "example name updated", "key": 123, "auth_key": "abc",
+                 "channels": [1, 2],
+                 "contact_data": '{"foo":"bar"}',
+                 "channel-1-email": "abc@example.com",
+                 "channel-2-fcm_tokens":
+                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", },
+                HTTP_HOST="example.com", follow=True,)
 
             self.assertRedirects(
                 response,
@@ -154,5 +143,5 @@ class ContactsTestCase(TransactionTestCase):
                 response, "Enter a valid email address", status_code=400
             )
             self.assertContains(
-                response, "fcm_tokens is expected to be a list", status_code=400
-            )
+                response, "fcm_tokens is expected to be a list",
+                status_code=400)

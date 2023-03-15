@@ -35,13 +35,8 @@ class PushChannel(Channel):
                 try:
                     self.get_firebase()
                 except ValueError as err:
-                    raise ValidationError(
-                        {
-                            "firebase_credentials": _(
-                                f"The firebase credentials data doen't seems to be correct: {err}"
-                            )
-                        }
-                    )
+                    raise ValidationError({"firebase_credentials": _(
+                        f"The firebase credentials data doen't seems to be correct: {err}")})
 
     def get_firebase(self):
         try:

@@ -100,8 +100,8 @@ class FlowRunsTestCase(TransactionTestCase):
             )
 
             flow_run = FlowRun.objects.create(
-                flow_revision=self.flow, environment=self.environment, contact_key=123
-            )
+                flow_revision=self.flow, environment=self.environment,
+                contact_key=123)
 
             self.assertContains(
                 self.client.get(

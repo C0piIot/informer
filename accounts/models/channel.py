@@ -22,8 +22,8 @@ class Channel(models.Model):
     CONTACT_SERIALIZER = None
     CONFIG_FORM = None
     site = models.ForeignKey(
-        Site, verbose_name=_("site"), on_delete=models.CASCADE, related_name="channels"
-    )
+        Site, verbose_name=_("site"),
+        on_delete=models.CASCADE, related_name="channels")
     enabled = models.BooleanField(_("enabled"), default=True)
     content_type = models.ForeignKey(
         ContentType, on_delete=models.CASCADE, editable=False

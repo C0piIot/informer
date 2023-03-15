@@ -19,8 +19,8 @@ class ContactRemove(CurrentEnvironmentMixin, SuccessMessageMixin, DeleteView):
 
     def get_success_url(self):
         return reverse(
-            "contacts:list", kwargs={"environment": self.current_environment.slug}
-        )
+            "contacts:list",
+            kwargs={"environment": self.current_environment.slug})
 
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(self.get_success_url())

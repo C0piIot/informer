@@ -35,8 +35,8 @@ class Webhook(FlowStep):
         _("method"), max_length=6, choices=((m, m) for m in METHODS)
     )
     contenttype = models.CharField(
-        _("Content type"), max_length=50, choices=((e, e) for e in CONTENT_TYPES)
-    )
+        _("Content type"),
+        max_length=50, choices=((e, e) for e in CONTENT_TYPES))
     body = models.TextField(_("body"), blank=True)
     skip_ssl = models.BooleanField(
         _("Skip https certificate validation"),

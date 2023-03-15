@@ -27,9 +27,9 @@ class EmailChannel(Channel):
     port = models.PositiveSmallIntegerField(_("port"))
     username = models.CharField(_("username"), max_length=150)
     password = models.CharField(_("password"), max_length=150)
-    security = models.CharField(
-        _("security"), max_length=20, choices=SECURITY_CHOICES, default=SECURITY_TSL_SSL
-    )
+    security = models.CharField(_("security"),
+                                max_length=20, choices=SECURITY_CHOICES,
+                                default=SECURITY_TSL_SSL)
     from_email = models.EmailField(
         _("from email"),
         max_length=200,

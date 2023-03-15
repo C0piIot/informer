@@ -15,8 +15,8 @@ class ContactCreate(CurrentEnvironmentMixin, SuccessMessageMixin, CreateView):
 
     def get_success_url(self):
         return reverse(
-            "contacts:list", kwargs={"environment": self.current_environment.slug}
-        )
+            "contacts:list",
+            kwargs={"environment": self.current_environment.slug})
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

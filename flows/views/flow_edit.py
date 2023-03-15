@@ -10,7 +10,8 @@ from .flow_edit_mixin import FlowEditMixin
 from .flow_filtered_mixin import FlowFilteredMixin
 
 
-class FlowEdit(FlowFilteredMixin, FlowEditMixin, SuccessMessageMixin, UpdateView):
+class FlowEdit(
+        FlowFilteredMixin, FlowEditMixin, SuccessMessageMixin, UpdateView):
     form_class = FlowForm
     success_message = _("%(name)s was updated successfully")
 

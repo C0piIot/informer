@@ -34,8 +34,8 @@ class Push(FlowStep):
             )
         ):
             flow_run.log(
-                FlowLog.INFO, f"{self} not sent: user doesn't have push channel data"
-            )
+                FlowLog.INFO,
+                f"{self} not sent: user doesn't have push channel data")
             return self.run_next()
 
         title = Template(self.title)

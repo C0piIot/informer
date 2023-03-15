@@ -18,34 +18,28 @@ class FlowsTestCase(TransactionTestCase):
             self.assertContains(
                 self.client.get(
                     reverse(
-                        "flows:list", kwargs={"environment": self.environment.slug}
-                    ),
-                    HTTP_HOST="example.com",
-                ),
-                "No flows found",
-            )
+                        "flows:list",
+                        kwargs={"environment": self.environment.slug}),
+                    HTTP_HOST="example.com",),
+                "No flows found",)
 
             self.assertRedirects(
                 self.client.get(
                     reverse(
-                        "flows:create", kwargs={"environment": self.environment.slug}
-                    ),
-                    HTTP_HOST="example.com",
-                ),
-                reverse("flows:list", kwargs={
-                        "environment": self.environment.slug}),
-            )
+                        "flows:create",
+                        kwargs={"environment": self.environment.slug}),
+                    HTTP_HOST="example.com",),
+                reverse(
+                    "flows:list",
+                    kwargs={"environment": self.environment.slug}),)
 
             self.assertContains(
                 self.client.post(
                     reverse(
-                        "flows:create", kwargs={"environment": self.environment.slug}
-                    ),
-                    HTTP_HOST="example.com",
-                    follow=True,
-                ),
-                "Error creating flow",
-            )
+                        "flows:create",
+                        kwargs={"environment": self.environment.slug}),
+                    HTTP_HOST="example.com", follow=True,),
+                "Error creating flow",)
 
             response = self.client.post(
                 reverse("flows:create", kwargs={

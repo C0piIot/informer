@@ -19,8 +19,8 @@ class FlowSetRevision(FlowFilteredMixin, SingleObjectMixin, View):
         revision = None
         with transaction.atomic():
             revision = get_object_or_404(
-                Flow.objects.filter(id=flow.id), pk=request.POST.get("revision", None)
-            )
+                Flow.objects.filter(id=flow.id),
+                pk=request.POST.get("revision", None))
             environment = get_object_or_404(
                 Environment.objects.filter(site=self.request.site),
                 pk=request.POST.get("environment", None),

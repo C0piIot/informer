@@ -40,8 +40,8 @@ class MultipleTokensField(forms.Field):
 
 class PushContactForm(forms.Form):
     fcm_tokens = MultipleTokensField(
-        label=_("FCM Tokens"), required=False, token_validation=fcm_token_validation
-    )
+        label=_("FCM Tokens"),
+        required=False, token_validation=fcm_token_validation)
     apns_tokens = MultipleTokensField(
-        label=_("APNS Tokens"), required=False, token_validation=apns_token_validation
-    )
+        label=_("APNS Tokens"),
+        required=False, token_validation=apns_token_validation)

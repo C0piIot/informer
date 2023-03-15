@@ -147,12 +147,9 @@ class ChannelsTestCase(TransactionTestCase):
             self.assertEquals(
                 self.client.get(
                     reverse(
-                        "accounts:channel_create", kwargs={"type": "invalidchannel"}
-                    ),
-                    HTTP_HOST="example.com",
-                ).status_code,
-                404,
-            )
+                        "accounts:channel_create",
+                        kwargs={"type": "invalidchannel"}),
+                    HTTP_HOST="example.com",).status_code, 404,)
 
             self.assertEquals(
                 self.client.get(

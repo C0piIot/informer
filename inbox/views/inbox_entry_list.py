@@ -14,7 +14,8 @@ class InboxEntryList(CurrentEnvironmentMixin, DetailView):
     template_name = "inbox/inbox_entry_list.html"
 
     def get_object(self):
-        return contact_storage.get_contact(self.current_environment, self.kwargs["key"])
+        return contact_storage.get_contact(
+            self.current_environment, self.kwargs["key"])
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)

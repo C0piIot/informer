@@ -51,7 +51,8 @@ class FlowTriggerSerializer(serializers.ModelSerializer):
         return {"flow_runs": [instance.id for instance in instances]}
 
 
-class FlowRunViewSet(mixins.CreateModelMixin, ContextAwareViewSetMixin, GenericViewSet):
+class FlowRunViewSet(
+        mixins.CreateModelMixin, ContextAwareViewSetMixin, GenericViewSet):
     serializer_class = FlowTriggerSerializer
     queryset = FlowRun.objects.none()
     permission_classes = [HasEnvironmentPermission]

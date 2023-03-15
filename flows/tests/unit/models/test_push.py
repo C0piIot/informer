@@ -31,15 +31,15 @@ class PushTestCase(TestCase):
         ):
             self.flow_run.log = MagicMock()
             push = Push(
-                title="Title", body="Body", url="URL", site=self.environment.site
-            )
+                title="Title", body="Body", url="URL",
+                site=self.environment.site)
             push.run_next = MagicMock()
             push.step_run(self.flow_run)
             push.run_next.assert_called_with(self.flow_run)
             mock_firebase_admin.assert_called_once()
             self.flow_run.log.assert_called_with(
-                FlowLog.INFO, '🔔 Send Push "Title" successful sent to 0 of 0 fcm tokens'
-            )
+                FlowLog.INFO,
+                '🔔 Send Push "Title" successful sent to 0 of 0 fcm tokens')
 
     def test_name(self):
         push = Push(title="Title", body="Body",

@@ -52,8 +52,8 @@ class Email(FlowStep):
             )
         ):
             flow_run.log(
-                FlowLog.INFO, f"{self} not sent: user doesn't have email channel data"
-            )
+                FlowLog.INFO,
+                f"{self} not sent: user doesn't have email channel data")
             return self.run_next()
 
         subject = Template(self.subject)
