@@ -20,8 +20,8 @@ class ChannelCreate(ChannelListMixin, SuccessMessageMixin, CreateView):
             self.type = ContentType.objects.get_by_natural_key(
                 "accounts", self.kwargs["type"]
             )
-        except (ContentType.DoesNotExist, KeyError):
-            raise Http404
+        except (ContentType.DoesNotExist, KeyError) as exc:
+            raise Http404 from exc
 
     def get_form_class(self):
         return import_string(self.type.model_class().CONFIG_FORM)

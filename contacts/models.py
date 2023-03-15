@@ -75,7 +75,7 @@ class Contact(models.Model):
         return self.channel_data.get(channel_type, {})
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class RelatedContactModel(models.Model):

@@ -31,12 +31,12 @@ class ContactSerializer(serializers.ModelSerializer):
     def validate_channel_data(self, value):
         if not value:
             return {}
-        if type(value) != dict:
+        if not isinstance(value, dict):
             raise serializers.ValidationError(
                 _("Channel data is expected to be a dict")
             )
 
-        errors = dict()
+        errors = {}
         for channel in self.context["environment"].site.channels.all():
             channel_type = channel.content_type.model
             if channel_type in value:
@@ -58,13 +58,13 @@ class ContactSerializer(serializers.ModelSerializer):
         contact_storage.save_contact(self.context["environment"], contact)
         return contact
 
-    def update(self, contact, validated_data):
+    def update(self, instance, validated_data):
         validated_data = {k: v for k,
                           v in validated_data.items() if v is not None}
         for attr, value in validated_data.items():
-            setattr(contact, attr, value)
-        contact_storage.save_contact(self.context["environment"], contact)
-        return contact
+            setattr(instance, attr, value)
+        contact_storage.save_contact(self.context["environment"], instance)
+        return instance
 
 
 class ContactViewSet(

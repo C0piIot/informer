@@ -17,7 +17,7 @@ class EnvironmentCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(self.success_url)
 
-    def form_invalid(self, form, **kwargs):
+    def form_invalid(self, form):
         messages.error(self.request, _("Error creating environment"))
         return HttpResponseRedirect(self.success_url)
 

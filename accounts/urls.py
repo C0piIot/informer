@@ -1,3 +1,4 @@
+"""Path definition for accounts app"""
 from django.urls import include, path
 
 from .views import (ChannelCreate, ChannelList, ChannelRemove, ChannelUpdate,

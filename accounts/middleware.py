@@ -1,3 +1,4 @@
+""" This middleware ensures an user is in the correct account """
 from django.http import HttpResponseRedirect
 
 

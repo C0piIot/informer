@@ -9,7 +9,7 @@ class PushContactSerializer(serializers.Serializer):
     fcm_tokens = serializers.JSONField()
 
     def validate_fcm_tokens(self, value):
-        if type(value) != list:
+        if not isinstance(value, list):
             raise serializers.ValidationError(
                 _("fcm_tokens is expected to be a list"))
 

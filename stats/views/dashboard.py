@@ -26,9 +26,9 @@ class Dashboard(CurrentEnvironmentMixin, TemplateView):
         return context_data
 
     def format_stats(self, period, stats):
-        format = BaseStatsStorage.FORMAT[period]
+        period_format = BaseStatsStorage.FORMAT[period]
         max_value = max([value for date, value in stats]) or 1
         return [
-            (date.strftime(format), value, float(value) / max_value)
+            (date.strftime(period_format), value, float(value) / max_value)
             for date, value in stats
         ]

@@ -45,7 +45,7 @@ class ContactForm(forms.ModelForm):
             )
         self.channel_forms = {
             channel: import_string(channel.get_typed_instance().CONTACT_FORM)(
-                prefix="%s%d" % (self.CHANNEL_PREFIX, channel.pk),
+                prefix=f"{self.CHANNEL_PREFIX}{channel.pk}",
                 data=kwargs.get("data"),
                 files=kwargs.get("files"),
                 initial=self.instance.get_channel_data(

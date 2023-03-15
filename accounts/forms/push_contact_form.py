@@ -15,7 +15,7 @@ class TokensWidget(forms.Textarea):
     def format_value(self, value):
         if value is None:
             return None
-        return "\n".join(value) if type(value) == list else value
+        return "\n".join(value) if isinstance(value, list) else value
 
 
 fcm_token_validation = re.compile("^[0-9A-Za-z_:-]{100,500}$")
