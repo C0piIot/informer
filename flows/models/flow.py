@@ -61,4 +61,4 @@ class Flow(models.Model):
             step.save(*args, **kwargs)
 
     def __str__(self):
-        return self.name
+        return str(self.name)

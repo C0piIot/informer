@@ -21,7 +21,7 @@ class ChannelListMixin(LoginRequiredMixin):
                 "channel_forms": {
                     channel.content_type: import_string(channel.CONFIG_FORM)(
                         instance=channel,
-                        auto_id="id_%%s_%d" % channel.pk,
+                        auto_id=f"id_%s_{channel.pk}",
                         site=self.request.site,
                     )
                     for channel in channels

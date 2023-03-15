@@ -42,4 +42,4 @@ class Channel(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return "%s %s" % (self.get_typed_instance().ICON, self.content_type.name)
+        return f"{self.get_typed_instance().ICON} {self.content_type.name}"

@@ -20,7 +20,7 @@ class PushChannel(Channel):
         _("Firebase credentials"), default=dict)
 
     def firebase_app_name(self):
-        return "firebase-app-%d" % self.site.pk
+        return f"firebase-app-{self.site.pk}" 
 
     def clean_fields(self, exclude=None):
         super().clean_fields(exclude=exclude)
@@ -38,8 +38,7 @@ class PushChannel(Channel):
                     raise ValidationError(
                         {
                             "firebase_credentials": _(
-                                "The firebase credentials data doen't seems to be correct: %s"
-                                % err
+                                f"The firebase credentials data doen't seems to be correct: {err}"
                             )
                         }
                     )
