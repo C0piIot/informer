@@ -20,7 +20,7 @@ class PushChannel(Channel):
         _("Firebase credentials"), default=dict)
 
     def firebase_app_name(self):
-        return f"firebase-app-{self.site.pk}" 
+        return f"firebase-app-{self.site.pk}"
 
     def clean_fields(self, exclude=None):
         super().clean_fields(exclude=exclude)

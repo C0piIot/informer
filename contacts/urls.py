@@ -2,7 +2,8 @@ from django.urls import path
 
 from informer.api import router
 
-from .views import ContactCreate, ContactList, ContactRemove, ContactUpdate, ContactViewSet
+from .views import (ContactCreate, ContactList, ContactRemove, ContactUpdate,
+                    ContactViewSet)
 
 app_name = "contacts"
 
