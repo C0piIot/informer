@@ -162,3 +162,19 @@ class ContactsTestCase(TransactionTestCase):
             self.assertContains(
                 response, "fcm_tokens is expected to be a list",
                 status_code=400)
+
+            response = self.client.get(
+                reverse("contact-detail",
+                        kwargs={"environment": self.environment.slug, 'pk': '123'}),
+                HTTP_HOST="example.com",
+            )
+            self.assertContains(
+                response, "abc", status_code=200
+            )
+
+            response = self.client.delete(
+                reverse("contact-detail",
+                        kwargs={"environment": self.environment.slug, 'pk': '123'}),
+                HTTP_HOST="example.com",
+            )
+            self.assertEqual(response.status_code, 204)

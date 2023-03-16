@@ -9,9 +9,6 @@ from accounts.views import ContextAwareViewSetMixin
 from contacts.models import Contact
 from contacts.rest_permissions import HasContactPermission
 
-contact_storage = import_string(settings.CONTACT_STORAGE)
-
-
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
@@ -55,7 +52,8 @@ class ContactSerializer(serializers.ModelSerializer):
         validated_data = {k: v for k,
                           v in validated_data.items() if v is not None}
         contact = Contact(**validated_data)
-        contact_storage.save_contact(self.context["environment"], contact)
+        import_string(settings.CONTACT_STORAGE).save_contact(
+            self.context["environment"], contact)
         return contact
 
     def update(self, instance, validated_data):
@@ -63,7 +61,8 @@ class ContactSerializer(serializers.ModelSerializer):
                           v in validated_data.items() if v is not None}
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
-        contact_storage.save_contact(self.context["environment"], instance)
+        import_string(settings.CONTACT_STORAGE).save_contact(
+            self.context["environment"], instance)
         return instance
 
 
@@ -71,6 +70,7 @@ class ContactViewSet(
     mixins.CreateModelMixin,
     mixins.UpdateModelMixin,
     mixins.RetrieveModelMixin,
+    mixins.DestroyModelMixin,
     ContextAwareViewSetMixin,
     GenericViewSet,
 ):
@@ -79,7 +79,7 @@ class ContactViewSet(
     queryset = Contact.objects.none()
 
     def get_object(self):
-        contact = contact_storage.get_contact(
+        contact = import_string(settings.CONTACT_STORAGE).get_contact(
             self.current_environment, self.kwargs["pk"]
         )
         self.check_object_permissions(self.request, contact)
