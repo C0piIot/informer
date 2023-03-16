@@ -38,7 +38,7 @@ class FlowEditMixin(CurrentEnvironmentMixin):
                 "step_forms": {
                     step.order: step_form_classes[type(step.get_typed_instance())](
                         instance=step.get_typed_instance(),
-                        auto_id="id_%%s_%d" % step.pk,
+                        auto_id=f"id_%s_{step.pk}",
                     )
                     for step in self.flow.steps.all()
                 },

@@ -51,12 +51,19 @@ class ContactsTestCase(TransactionTestCase):
                     "contacts:contact_update",
                     kwargs={"environment": self.environment.slug,
                             "key": 123},),
-                {"name": "example name updated", "key": 123, "auth_key": "abc",
-                 "channels": [1, 2],
-                 "contact_data": '{"foo":"bar"}',
-                 "channel-1-email": "abc@example.com",
-                 "channel-2-fcm_tokens":
-                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", },
+                {
+                    "name": "example name updated",
+                    "key": 123, 
+                    "auth_key": "abc",
+                    "channels": [1, 2],
+                    "contact_data": '{"foo":"bar"}',
+                    "channel-1-email": "abc@example.com",
+                    "channel-2-fcm_tokens":
+                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"\
+                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"\
+                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"\
+                        "aaaaaaaaaaaaaaaaa", 
+                 },
                 HTTP_HOST="example.com", follow=True,)
 
             self.assertRedirects(
@@ -71,7 +78,10 @@ class ContactsTestCase(TransactionTestCase):
                 self.client.get(
                     reverse(
                         "contacts:contact_remove",
-                        kwargs={"environment": self.environment.slug, "key": 123},
+                        kwargs={
+                            "environment": self.environment.slug, 
+                            "key": 123
+                        },
                     ),
                     HTTP_HOST="example.com",
                 ),

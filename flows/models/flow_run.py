@@ -58,7 +58,7 @@ class FlowRun(RelatedContactModel):
             },
         )
 
-    def log(self, level, message, context={}):
+    def log(self, level, message, context=dict()):
         logger.log(getattr(logging, level), message)
         import_string(settings.FLOW_LOG_STORAGE).save_flow_log(
             FlowLog(
@@ -84,8 +84,8 @@ class FlowRun(RelatedContactModel):
         return queryset[:amount]
 
     @classmethod
-    def get_flow_run(cls, environment, id):
-        return cls.objects.get(environment=environment, id=id)
+    def get_flow_run(cls, environment, flow_run_id):
+        return cls.objects.get(environment=environment, id=flow_run_id)
 
     @classmethod
     def save_flow_run(cls, environment, model):

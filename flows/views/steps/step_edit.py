@@ -28,8 +28,8 @@ class StepEdit(FlowEditMixin, SuccessMessageMixin, UpdateView):
             self.type = ContentType.objects.get_for_model(
                 self.get_object().get_typed_instance()
             )
-        except (ContentType.DoesNotExist, KeyError):
-            raise Http404
+        except (ContentType.DoesNotExist, KeyError) as exc:
+            raise Http404 from exc
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

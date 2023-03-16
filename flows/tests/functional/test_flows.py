@@ -60,14 +60,20 @@ class FlowsTestCase(TransactionTestCase):
                 response,
                 reverse(
                     "flows:edit",
-                    kwargs={"environment": self.environment.slug, "id": flow.id},
+                    kwargs={
+                        "environment": self.environment.slug,
+                        "id": flow.id
+                    },
                 ),
             )
 
             response = self.client.post(
                 reverse(
                     "flows:edit",
-                    kwargs={"environment": self.environment.slug, "id": flow.id},
+                    kwargs={
+                        "environment": self.environment.slug,
+                        "id": flow.id
+                    },
                 ),
                 {
                     "name": "example name updated",
@@ -83,7 +89,10 @@ class FlowsTestCase(TransactionTestCase):
                 response,
                 reverse(
                     "flows:edit",
-                    kwargs={"environment": self.environment.slug, "id": flow.id},
+                    kwargs={
+                        "environment": self.environment.slug,
+                        "id": flow.id
+                    },
                 ),
             )
 
@@ -93,8 +102,10 @@ class FlowsTestCase(TransactionTestCase):
                 self.client.get(
                     reverse(
                         "flows:remove",
-                        kwargs={"environment": self.environment.slug,
-                                "id": flow.id},
+                        kwargs={
+                            "environment": self.environment.slug,
+                            "id": flow.id
+                        },
                     ),
                     HTTP_HOST="example.com",
                     follow=True,
@@ -106,7 +117,10 @@ class FlowsTestCase(TransactionTestCase):
             response = self.client.post(
                 reverse(
                     "flows:remove",
-                    kwargs={"environment": self.environment.slug, "id": flow.id},
+                    kwargs={
+                        "environment": self.environment.slug,
+                        "id": flow.id
+                    },
                 ),
                 HTTP_HOST="example.com",
             )
@@ -138,7 +152,9 @@ class FlowsTestCase(TransactionTestCase):
                     kwargs={
                         "environment": self.environment.slug,
                         "id": flow.id,
-                        "content_type_id": ContentType.objects.get_for_model(Delay).pk,
+                        "content_type_id": ContentType.objects.get_for_model(
+                            Delay
+                        ).pk,
                     },
                 ),
                 HTTP_HOST="example.com",
@@ -151,7 +167,9 @@ class FlowsTestCase(TransactionTestCase):
                     kwargs={
                         "environment": self.environment.slug,
                         "id": flow.id,
-                        "content_type_id": ContentType.objects.get_for_model(Delay).pk,
+                        "content_type_id": ContentType.objects.get_for_model(
+                            Delay
+                        ).pk,
                     },
                 ),
                 {"time": 30},
@@ -163,7 +181,10 @@ class FlowsTestCase(TransactionTestCase):
                 response,
                 reverse(
                     "flows:edit",
-                    kwargs={"environment": self.environment.slug, "id": flow.id},
+                    kwargs={
+                        "environment": self.environment.slug,
+                        "id": flow.id
+                    },
                 ),
             )
 
@@ -245,7 +266,10 @@ class FlowsTestCase(TransactionTestCase):
             response = self.client.get(
                 reverse(
                     "flows:history",
-                    kwargs={"environment": self.environment.slug, "id": flow.id},
+                    kwargs={
+                        "environment": self.environment.slug,
+                        "id": flow.id
+                    },
                 ),
                 HTTP_HOST="example.com",
             )

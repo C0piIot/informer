@@ -45,7 +45,7 @@ class EnvironmentsTestCase(TransactionTestCase):
                 'data-bs-target="#delete', count=1,)
 
             environment = Environment.objects.first()
-            self.assertEquals("test_environment", environment.name)
+            self.assertEqual("test_environment", environment.name)
 
             response = self.client.post(
                 reverse("accounts:environment_create"),

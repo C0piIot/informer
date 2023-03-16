@@ -18,40 +18,40 @@ class DoNotDisturbTestCase(TestCase):
             )
             mock_now.return_value = now
 
-            doNotDisturb = DoNotDisturb(start=time(10, 0), end=time(12, 0))
+            do_not_disturb = DoNotDisturb(start=time(10, 0), end=time(12, 0))
             self.assertEqual(
-                str(doNotDisturb),
-                f"{DoNotDisturb.ICON} Do Not Disturb {doNotDisturb.start}-{doNotDisturb.end}",
+                str(do_not_disturb),
+                f"{DoNotDisturb.ICON} Do Not Disturb {do_not_disturb.start}-{do_not_disturb.end}",
             )
 
-            doNotDisturb.run_next = MagicMock()
+            do_not_disturb.run_next = MagicMock()
             flow_run.schedule_wake_up = MagicMock()
-            doNotDisturb.step_run(flow_run)
-            doNotDisturb.run_next.assert_called_with(flow_run)
+            do_not_disturb.step_run(flow_run)
+            do_not_disturb.run_next.assert_called_with(flow_run)
 
-            doNotDisturb.start = time(3, 0)
-            doNotDisturb.step_run(flow_run)
+            do_not_disturb.start = time(3, 0)
+            do_not_disturb.step_run(flow_run)
             flow_run.schedule_wake_up.assert_called_with(
-                doNotDisturb, timedelta(hours=7)
+                do_not_disturb, timedelta(hours=7)
             )
 
-            doNotDisturb.end = time(1, 0)
-            doNotDisturb.step_run(flow_run)
+            do_not_disturb.end = time(1, 0)
+            do_not_disturb.step_run(flow_run)
             flow_run.schedule_wake_up.assert_called_with(
-                doNotDisturb, timedelta(hours=20)
+                do_not_disturb, timedelta(hours=20)
             )
 
-            doNotDisturb.step_wake_up(flow_run)
-            doNotDisturb.run_next.assert_called_with(flow_run)
+            do_not_disturb.step_wake_up(flow_run)
+            do_not_disturb.run_next.assert_called_with(flow_run)
 
     def test_name(self):
-        doNotDisturb = DoNotDisturb(start=time(10, 0), end=time(12, 0))
+        do_not_disturb = DoNotDisturb(start=time(10, 0), end=time(12, 0))
         self.assertEqual(
-            str(doNotDisturb),
-            f"{DoNotDisturb.ICON} Do Not Disturb {doNotDisturb.start}-{doNotDisturb.end}",
+            str(do_not_disturb),
+            f"{do_not_disturb.ICON} Do Not Disturb {do_not_disturb.start}-{do_not_disturb.end}",
         )
 
     def test_clean(self):
-        doNotDisturb = DoNotDisturb(start=time(10, 0), end=time(10, 0))
+        do_not_disturb = DoNotDisturb(start=time(10, 0), end=time(10, 0))
         with self.assertRaises(ValidationError):
-            doNotDisturb.clean()
+            do_not_disturb.clean()

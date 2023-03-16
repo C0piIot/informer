@@ -1,4 +1,7 @@
-"""Inbox flow step for adding messages to a user inbox. Every inbox message is an InboxEntry."""
+"""
+    Inbox flow step for adding messages to a user inbox.
+    Every inbox message is an InboxEntry.
+"""
 import json
 from uuid import uuid4
 
@@ -79,9 +82,9 @@ class Inbox(FlowStep):
             entry_data=json.loads(entry_data.render(text_context)),
         )
         import_string(settings.INBOX_ENTRY_STORAGE).save_entry(inbox_entry)
-        flow_run.log(FlowLog.INFO, "Inbox entry %s created" %
-                     str(inbox_entry.key))
+        flow_run.log(FlowLog.INFO,
+                     f"Inbox entry {str(inbox_entry.key)} created")
         self.run_next(flow_run)
 
     def __str__(self):
-        return '%s "%s"' % (super().__str__(), self.title)
+        return f'{super().__str__()} "{self.title}"'
