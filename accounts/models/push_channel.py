@@ -1,5 +1,4 @@
 import firebase_admin
-from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import gettext_lazy as _
@@ -21,7 +20,7 @@ class PushChannel(Channel):
         _("Firebase credentials"), default=dict)
 
     def firebase_app_name(self):
-        return "firebase-app-%d" % self.site.pk
+        return f"firebase-app-{self.site.pk}"
 
     def clean_fields(self, exclude=None):
         super().clean_fields(exclude=exclude)
@@ -36,14 +35,9 @@ class PushChannel(Channel):
                 try:
                     self.get_firebase()
                 except ValueError as err:
-                    raise ValidationError(
-                        {
-                            "firebase_credentials": _(
-                                "The firebase credentials data doen't seems to be correct: %s"
-                                % err
-                            )
-                        }
-                    )
+                    raise ValidationError({"firebase_credentials": _(
+                        f"The firebase credentials data doen't seems to be correct: {err}"
+                    )}) from err
 
     def get_firebase(self):
         try:

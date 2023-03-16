@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.module_loading import import_string
 from django.utils.translation import gettext_lazy as _
@@ -23,8 +22,8 @@ class ContactUpdate(CurrentEnvironmentMixin, SuccessMessageMixin, UpdateView):
 
     def get_success_url(self):
         return reverse(
-            "contacts:list", kwargs={"environment": self.current_environment.slug}
-        )
+            "contacts:list",
+            kwargs={"environment": self.current_environment.slug})
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

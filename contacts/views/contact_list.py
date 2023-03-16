@@ -31,7 +31,6 @@ class ContactList(CurrentEnvironmentMixin, TemplateView):
         if cursor:
             query = self.request.GET.copy()
             query["cursor"] = cursor
-            context_data["next_url"] = "%s?%s" % (
-                self.request.path, query.urlencode())
+            context_data["next_url"] = f"{self.request.path}?{query.urlencode()}"
 
         return context_data

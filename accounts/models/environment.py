@@ -36,4 +36,4 @@ class Environment(models.Model):
         super().save(**kwargs)
 
     def __str__(self):
-        return self.name
+        return str(self.name)

@@ -1,8 +1,13 @@
+"""DRF rest permissions related to user accounts"""
 from rest_framework import permissions
 from rest_framework.authentication import get_authorization_header
 
 
 class HasEnvironmentPermission(permissions.BasePermission):
+    """
+    This permission combines with CurrentEnvironmentMixin to check 
+    if user's account
+    """
     keyword = "Bearer"
 
     def has_permission(self, request, view):

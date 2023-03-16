@@ -6,6 +6,7 @@ class EmailContactForm(forms.Form):
     email = forms.EmailField(
         label=_("Email"),
         help_text=_(
-            "Flow steps using the channel email will deliver emails to this address"
+            "Flow steps using the channel email will deliver "
+            "emails to this address"
         ),
     )

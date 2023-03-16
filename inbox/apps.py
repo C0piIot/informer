@@ -1,9 +1,9 @@
+""" Inbox app configuration """
 from django.apps import AppConfig
-
-#
 
 
 class InboxConfig(AppConfig):
+    """ Inbox app configuration class """
     default_auto_field = "django.db.models.BigAutoField"
     name = "inbox"
     DEFAULT_SETTINGS = {

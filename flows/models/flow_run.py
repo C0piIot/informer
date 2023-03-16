@@ -2,7 +2,6 @@ import logging
 from uuid import uuid4
 
 from django.conf import settings
-from django.contrib.sites.models import Site
 from django.db import models
 from django.urls import reverse
 from django.utils.module_loading import import_string
@@ -59,7 +58,7 @@ class FlowRun(RelatedContactModel):
             },
         )
 
-    def log(self, level, message, context={}):
+    def log(self, level, message, context=None):
         logger.log(getattr(logging, level), message)
         import_string(settings.FLOW_LOG_STORAGE).save_flow_log(
             FlowLog(
@@ -67,7 +66,7 @@ class FlowRun(RelatedContactModel):
                 flow_run_id=self.id,
                 level=level,
                 message=message,
-                context=context,
+                context=context or {},
             )
         )
 
@@ -77,15 +76,16 @@ class FlowRun(RelatedContactModel):
         )
 
     @classmethod
-    def get_flow_runs(cls, environment, flow, start_key=None, amount=50, **filters):
+    def get_flow_runs(
+            cls, environment, flow, start_key=None, amount=50, **filters):
         queryset = cls.objects.filter(environment=environment, flow_id=flow.id)
         if start_key is not None:
             queryset = queryset.filter(key__gt=start_key)
         return queryset[:amount]
 
     @classmethod
-    def get_flow_run(cls, environment, id):
-        return cls.objects.get(environment=environment, id=id)
+    def get_flow_run(cls, environment, flow_run_id):
+        return cls.objects.get(environment=environment, id=flow_run_id)
 
     @classmethod
     def save_flow_run(cls, environment, model):

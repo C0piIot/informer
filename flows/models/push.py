@@ -22,11 +22,11 @@ class Push(FlowStep):
         if not (push_channel := PushChannel.objects.get(site=self.site)):
             flow_run.log(FlowLog.WARNING,
                          f"{self} not sent: channel not configured")
-            return self.run_next()
+            return self.run_next(flow_run)
 
         if not push_channel.enabled:
             flow_run.log(FlowLog.WARNING, f"{self} not sent: channel disabled")
-            return self.run_next()
+            return self.run_next(flow_run)
 
         if not (
             channel_data := flow_run.contact.get_channel_data(
@@ -34,9 +34,9 @@ class Push(FlowStep):
             )
         ):
             flow_run.log(
-                FlowLog.INFO, f"{self} not sent: user doesn't have push channel data"
-            )
-            return self.run_next()
+                FlowLog.INFO,
+                f"{self} not sent: user doesn't have push channel data")
+            return self.run_next(flow_run)
 
         title = Template(self.title)
         body = Template(self.body)

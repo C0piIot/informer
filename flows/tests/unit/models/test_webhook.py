@@ -2,8 +2,10 @@ import urllib
 from unittest.mock import MagicMock, patch
 from urllib.parse import urlparse
 
+from django.contrib.sites.models import Site
 from django.test import TestCase
 
+from accounts.models import Environment
 from contacts.models import Contact
 from flows.models import FlowLog, FlowRun, Webhook
 
@@ -11,7 +13,12 @@ from flows.models import FlowLog, FlowRun, Webhook
 class WebhookTestCase(TestCase):
     def test_step_run(self):
         flow_run = FlowRun()
-        flow_run._contact = Contact(key="test-key", name="test-name")
+        flow_run.contact = Contact(
+            key="test-key",
+            name="test-name",
+            environment=Environment(),
+            site=Site()
+        )
         flow_run.log = MagicMock()
 
         webhook = Webhook(

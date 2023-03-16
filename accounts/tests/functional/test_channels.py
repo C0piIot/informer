@@ -84,8 +84,8 @@ class ChannelsTestCase(TransactionTestCase):
                 reverse("accounts:channel_list"),
             )
 
-            self.assertEquals("password-updated",
-                              EmailChannel.objects.first().password)
+            self.assertEqual("password-updated",
+                             EmailChannel.objects.first().password)
 
             self.assertRedirects(
                 self.client.post(
@@ -100,7 +100,7 @@ class ChannelsTestCase(TransactionTestCase):
                 reverse("accounts:channel_list"),
             )
 
-            self.assertEquals(
+            self.assertEqual(
                 "updated-credentials",
                 PushChannel.objects.first(
                 ).firebase_credentials["credentials"],
@@ -144,17 +144,14 @@ class ChannelsTestCase(TransactionTestCase):
 
     def testChannelCreateType(self):
         with self.settings(ALLOWED_HOSTS=("example.com",)):
-            self.assertEquals(
+            self.assertEqual(
                 self.client.get(
                     reverse(
-                        "accounts:channel_create", kwargs={"type": "invalidchannel"}
-                    ),
-                    HTTP_HOST="example.com",
-                ).status_code,
-                404,
-            )
+                        "accounts:channel_create",
+                        kwargs={"type": "invalidchannel"}),
+                    HTTP_HOST="example.com",).status_code, 404,)
 
-            self.assertEquals(
+            self.assertEqual(
                 self.client.get(
                     reverse("accounts:channel_create",
                             kwargs={"type": "pushchannel"}),

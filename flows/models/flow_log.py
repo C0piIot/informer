@@ -58,8 +58,4 @@ class FlowLog(models.Model):
         return cls.objects.filter(site=site, flow_run_id=flow_run_id)
 
     def __str__(self):
-        return "%s %s %s" % (
-            self.date,
-            self.level,
-            self.message,
-        )
+        return f"{self.date} {self.level} {self.message}"

@@ -28,8 +28,7 @@ class ContactsTestCase(TransactionTestCase):
             response = self.client.post(
                 reverse(
                     "contacts:contact_create",
-                    kwargs={"environment": self.environment.slug},
-                ),
+                    kwargs={"environment": self.environment.slug},),
                 {
                     "name": "example name",
                     "key": 123,
@@ -37,11 +36,13 @@ class ContactsTestCase(TransactionTestCase):
                     "channels": [1, 2],
                     "contact_data": '{"foo":"bar"}',
                     "channel-1-email": "abc@example.com",
-                    "channel-2-fcm_tokens": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "channel-2-fcm_tokens":
+                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                        "aaaaaaaaaaaaaaaaa",
                 },
-                HTTP_HOST="example.com",
-                follow=True,
-            )
+                HTTP_HOST="example.com", follow=True,)
 
             self.assertRedirects(
                 response,
@@ -55,8 +56,8 @@ class ContactsTestCase(TransactionTestCase):
             response = self.client.post(
                 reverse(
                     "contacts:contact_update",
-                    kwargs={"environment": self.environment.slug, "key": 123},
-                ),
+                    kwargs={"environment": self.environment.slug,
+                            "key": 123},),
                 {
                     "name": "example name updated",
                     "key": 123,
@@ -64,11 +65,13 @@ class ContactsTestCase(TransactionTestCase):
                     "channels": [1, 2],
                     "contact_data": '{"foo":"bar"}',
                     "channel-1-email": "abc@example.com",
-                    "channel-2-fcm_tokens": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "channel-2-fcm_tokens":
+                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                        "aaaaaaaaaaaaaaaaa",
                 },
-                HTTP_HOST="example.com",
-                follow=True,
-            )
+                HTTP_HOST="example.com", follow=True,)
 
             self.assertRedirects(
                 response,
@@ -82,7 +85,10 @@ class ContactsTestCase(TransactionTestCase):
                 self.client.get(
                     reverse(
                         "contacts:contact_remove",
-                        kwargs={"environment": self.environment.slug, "key": 123},
+                        kwargs={
+                            "environment": self.environment.slug,
+                            "key": 123
+                        },
                     ),
                     HTTP_HOST="example.com",
                 ),
@@ -154,5 +160,21 @@ class ContactsTestCase(TransactionTestCase):
                 response, "Enter a valid email address", status_code=400
             )
             self.assertContains(
-                response, "fcm_tokens is expected to be a list", status_code=400
+                response, "fcm_tokens is expected to be a list",
+                status_code=400)
+
+            response = self.client.get(
+                reverse("contact-detail",
+                        kwargs={"environment": self.environment.slug, 'pk': '123'}),
+                HTTP_HOST="example.com",
             )
+            self.assertContains(
+                response, "abc", status_code=200
+            )
+
+            response = self.client.delete(
+                reverse("contact-detail",
+                        kwargs={"environment": self.environment.slug, 'pk': '123'}),
+                HTTP_HOST="example.com",
+            )
+            self.assertEqual(response.status_code, 204)

@@ -16,9 +16,7 @@ class StatsTestCase(TransactionTestCase):
             self.assertContains(
                 self.client.get(
                     reverse(
-                        "stats:dashboard", kwargs={"environment": self.environment.slug}
-                    ),
-                    HTTP_HOST="example.com",
-                ),
-                "Dashboard",
-            )
+                        "stats:dashboard",
+                        kwargs={"environment": self.environment.slug}),
+                    HTTP_HOST="example.com",),
+                "Dashboard",)

@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.utils.module_loading import import_string
-from rest_framework import mixins, serializers, status
-from rest_framework.response import Response
+from rest_framework import mixins, serializers
 from rest_framework.viewsets import GenericViewSet
 
 from accounts.rest_permissions import HasEnvironmentPermission
@@ -16,16 +15,16 @@ class FlowTriggerSerializer(serializers.ModelSerializer):
 
     event = serializers.CharField(write_only=True)
 
-    def validate(self, data):
-        data["contact"] = import_string(settings.CONTACT_STORAGE).get_contact(
-            self.context["environment"], data["contact_key"]
+    def validate(self, attrs):
+        attrs["contact"] = import_string(settings.CONTACT_STORAGE).get_contact(
+            self.context["environment"], attrs["contact_key"]
         )
-        if not data["contact"]:
+        if not attrs["contact"]:
             raise serializers.ValidationError(
                 {"contact_key": "There is no contact with the supplied key"},
                 code="invalid_key",
             )
-        return data
+        return attrs
 
     def create(self, validated_data):
         flow_runs = []
@@ -48,11 +47,12 @@ class FlowTriggerSerializer(serializers.ModelSerializer):
             flow_run_executor.run(flow_run)
         return flow_runs
 
-    def to_representation(self, instances):
-        return {"flow_runs": [instance.id for instance in instances]}
+    def to_representation(self, instance):
+        return {"flow_runs": [obj.id for obj in instance]}
 
 
-class FlowRunViewSet(mixins.CreateModelMixin, ContextAwareViewSetMixin, GenericViewSet):
+class FlowRunViewSet(
+        mixins.CreateModelMixin, ContextAwareViewSetMixin, GenericViewSet):
     serializer_class = FlowTriggerSerializer
     queryset = FlowRun.objects.none()
     permission_classes = [HasEnvironmentPermission]

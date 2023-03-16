@@ -15,7 +15,7 @@ class TokensWidget(forms.Textarea):
     def format_value(self, value):
         if value is None:
             return None
-        return "\n".join(value) if type(value) == list else value
+        return "\n".join(value) if isinstance(value, list) else value
 
 
 fcm_token_validation = re.compile("^[0-9A-Za-z_:-]{100,500}$")
@@ -40,8 +40,8 @@ class MultipleTokensField(forms.Field):
 
 class PushContactForm(forms.Form):
     fcm_tokens = MultipleTokensField(
-        label=_("FCM Tokens"), required=False, token_validation=fcm_token_validation
-    )
+        label=_("FCM Tokens"),
+        required=False, token_validation=fcm_token_validation)
     apns_tokens = MultipleTokensField(
-        label=_("APNS Tokens"), required=False, token_validation=apns_token_validation
-    )
+        label=_("APNS Tokens"),
+        required=False, token_validation=apns_token_validation)

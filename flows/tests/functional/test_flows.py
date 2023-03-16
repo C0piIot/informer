@@ -1,3 +1,4 @@
+""" Flows functional tests """
 from django.contrib.contenttypes.models import ContentType
 from django.test import TransactionTestCase
 from django.urls import reverse
@@ -7,6 +8,7 @@ from flows.models import Delay, Flow, Group
 
 
 class FlowsTestCase(TransactionTestCase):
+    """ Flows functional tests """
     fixtures = ["users.json", "environments.json", "channels.json"]
 
     def setUp(self):
@@ -18,34 +20,28 @@ class FlowsTestCase(TransactionTestCase):
             self.assertContains(
                 self.client.get(
                     reverse(
-                        "flows:list", kwargs={"environment": self.environment.slug}
-                    ),
-                    HTTP_HOST="example.com",
-                ),
-                "No flows found",
-            )
+                        "flows:list",
+                        kwargs={"environment": self.environment.slug}),
+                    HTTP_HOST="example.com",),
+                "No flows found",)
 
             self.assertRedirects(
                 self.client.get(
                     reverse(
-                        "flows:create", kwargs={"environment": self.environment.slug}
-                    ),
-                    HTTP_HOST="example.com",
-                ),
-                reverse("flows:list", kwargs={
-                        "environment": self.environment.slug}),
-            )
+                        "flows:create",
+                        kwargs={"environment": self.environment.slug}),
+                    HTTP_HOST="example.com",),
+                reverse(
+                    "flows:list",
+                    kwargs={"environment": self.environment.slug}),)
 
             self.assertContains(
                 self.client.post(
                     reverse(
-                        "flows:create", kwargs={"environment": self.environment.slug}
-                    ),
-                    HTTP_HOST="example.com",
-                    follow=True,
-                ),
-                "Error creating flow",
-            )
+                        "flows:create",
+                        kwargs={"environment": self.environment.slug}),
+                    HTTP_HOST="example.com", follow=True,),
+                "Error creating flow",)
 
             response = self.client.post(
                 reverse("flows:create", kwargs={
@@ -66,14 +62,20 @@ class FlowsTestCase(TransactionTestCase):
                 response,
                 reverse(
                     "flows:edit",
-                    kwargs={"environment": self.environment.slug, "id": flow.id},
+                    kwargs={
+                        "environment": self.environment.slug,
+                        "id": flow.id
+                    },
                 ),
             )
 
             response = self.client.post(
                 reverse(
                     "flows:edit",
-                    kwargs={"environment": self.environment.slug, "id": flow.id},
+                    kwargs={
+                        "environment": self.environment.slug,
+                        "id": flow.id
+                    },
                 ),
                 {
                     "name": "example name updated",
@@ -89,7 +91,10 @@ class FlowsTestCase(TransactionTestCase):
                 response,
                 reverse(
                     "flows:edit",
-                    kwargs={"environment": self.environment.slug, "id": flow.id},
+                    kwargs={
+                        "environment": self.environment.slug,
+                        "id": flow.id
+                    },
                 ),
             )
 
@@ -99,8 +104,10 @@ class FlowsTestCase(TransactionTestCase):
                 self.client.get(
                     reverse(
                         "flows:remove",
-                        kwargs={"environment": self.environment.slug,
-                                "id": flow.id},
+                        kwargs={
+                            "environment": self.environment.slug,
+                            "id": flow.id
+                        },
                     ),
                     HTTP_HOST="example.com",
                     follow=True,
@@ -112,7 +119,10 @@ class FlowsTestCase(TransactionTestCase):
             response = self.client.post(
                 reverse(
                     "flows:remove",
-                    kwargs={"environment": self.environment.slug, "id": flow.id},
+                    kwargs={
+                        "environment": self.environment.slug,
+                        "id": flow.id
+                    },
                 ),
                 HTTP_HOST="example.com",
             )
@@ -144,7 +154,9 @@ class FlowsTestCase(TransactionTestCase):
                     kwargs={
                         "environment": self.environment.slug,
                         "id": flow.id,
-                        "content_type_id": ContentType.objects.get_for_model(Delay).pk,
+                        "content_type_id": ContentType.objects.get_for_model(
+                            Delay
+                        ).pk,
                     },
                 ),
                 HTTP_HOST="example.com",
@@ -157,7 +169,9 @@ class FlowsTestCase(TransactionTestCase):
                     kwargs={
                         "environment": self.environment.slug,
                         "id": flow.id,
-                        "content_type_id": ContentType.objects.get_for_model(Delay).pk,
+                        "content_type_id": ContentType.objects.get_for_model(
+                            Delay
+                        ).pk,
                     },
                 ),
                 {"time": 30},
@@ -169,7 +183,10 @@ class FlowsTestCase(TransactionTestCase):
                 response,
                 reverse(
                     "flows:edit",
-                    kwargs={"environment": self.environment.slug, "id": flow.id},
+                    kwargs={
+                        "environment": self.environment.slug,
+                        "id": flow.id
+                    },
                 ),
             )
 
@@ -182,9 +199,10 @@ class FlowsTestCase(TransactionTestCase):
                         kwargs={
                             "environment": self.environment.slug,
                             "id": flow.id,
-                            "content_type_id": ContentType.objects.get_for_model(
-                                Group
-                            ).pk,
+                            "content_type_id":
+                                ContentType.objects.get_for_model(
+                                    Group
+                                ).pk,
                         },
                     ),
                     {"key": "test_key", "window": 30},
@@ -251,7 +269,10 @@ class FlowsTestCase(TransactionTestCase):
             response = self.client.get(
                 reverse(
                     "flows:history",
-                    kwargs={"environment": self.environment.slug, "id": flow.id},
+                    kwargs={
+                        "environment": self.environment.slug,
+                        "id": flow.id
+                    },
                 ),
                 HTTP_HOST="example.com",
             )

@@ -54,10 +54,12 @@ class FlowStep(models.Model):
         super().save(*args, **kwargs)
 
     def next_step(self):
-        return FlowStep.objects.filter(flow=self.flow, order__gt=self.order).first()
+        return FlowStep.objects.filter(
+            flow=self.flow, order__gt=self.order).first()
 
     def prev_step(self):
-        return FlowStep.objects.filter(flow=self.flow, order__lt=self.order).last()
+        return FlowStep.objects.filter(
+            flow=self.flow, order__lt=self.order).last()
 
     def run_next(self, flow_run):
         if next_step := self.next_step():

@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -8,7 +7,6 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import DeleteView
 
 from accounts.views import CurrentEnvironmentMixin
-from contacts.forms import ContactForm
 
 
 class ContactRemove(CurrentEnvironmentMixin, SuccessMessageMixin, DeleteView):
@@ -21,8 +19,8 @@ class ContactRemove(CurrentEnvironmentMixin, SuccessMessageMixin, DeleteView):
 
     def get_success_url(self):
         return reverse(
-            "contacts:list", kwargs={"environment": self.current_environment.slug}
-        )
+            "contacts:list",
+            kwargs={"environment": self.current_environment.slug})
 
     def get(self, request, *args, **kwargs):
         return HttpResponseRedirect(self.get_success_url())

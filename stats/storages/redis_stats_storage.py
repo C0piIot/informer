@@ -2,8 +2,6 @@ from datetime import datetime
 
 import environ
 import redis
-from django.utils.module_loading import import_string
-from redis.exceptions import ResponseError
 
 from .base_stats_storage import BaseStatsStorage
 

@@ -35,8 +35,8 @@ class Webhook(FlowStep):
         _("method"), max_length=6, choices=((m, m) for m in METHODS)
     )
     contenttype = models.CharField(
-        _("Content type"), max_length=50, choices=((e, e) for e in CONTENT_TYPES)
-    )
+        _("Content type"),
+        max_length=50, choices=((e, e) for e in CONTENT_TYPES))
     body = models.TextField(_("body"), blank=True)
     skip_ssl = models.BooleanField(
         _("Skip https certificate validation"),
@@ -68,11 +68,15 @@ class Webhook(FlowStep):
             data=body.encode("utf-8"),
         )
 
-        with request.urlopen(req, timeout=3, context=request_context) as response:
+        with request.urlopen(
+            req,
+            timeout=3,
+            context=request_context
+        ) as response:
+
             flow_run.log(
                 FlowLog.INFO,
-                "Webhook %s %s response: %s" % (
-                    self.method, url, response.getcode()),
+                f"Webhook {self.method} {url} response: {response.getcode()}"
             )
 
         self.run_next(flow_run)

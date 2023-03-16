@@ -1,6 +1,6 @@
-from django.urls import include, path
+from django.urls import path
 
-from .views import *
+from .views import Dashboard
 
 app_name = "stats"
 

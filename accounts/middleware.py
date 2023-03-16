@@ -1,3 +1,4 @@
+""" This middleware ensures an user is in the correct account """
 from django.http import HttpResponseRedirect
 
 
@@ -8,6 +9,6 @@ class CheckSiteMiddleware:
     def __call__(self, request):
         if request.user.is_authenticated:
             if request.user.site_id != request.site.pk:
-                return HttpResponseRedirect("//%s" % request.user.site.domain)
+                return HttpResponseRedirect(f"//{request.user.site.domain}")
 
         return self.get_response(request)

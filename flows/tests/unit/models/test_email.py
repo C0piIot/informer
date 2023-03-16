@@ -5,7 +5,7 @@ from django.test import TestCase
 from accounts.models import Environment
 from contacts.apps import ContactsConfig
 from contacts.models import Contact
-from flows.models import Email, FlowLog, FlowRun
+from flows.models import Email, FlowRun
 
 
 class EmailTestCase(TestCase):
