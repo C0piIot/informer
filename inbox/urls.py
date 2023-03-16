@@ -1,10 +1,13 @@
+""" Url routes for inbox app """
+
 from django.urls import path
 
 from contacts.views import ContactList
 from inbox.views import InboxEntryList
 from informer.api import router
 
-from .views import InboxEntryList, InboxEntryViewSet
+from .views import InboxEntryList
+from .viewsets import InboxEntryViewSet
 
 app_name = "inbox"
 

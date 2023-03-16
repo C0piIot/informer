@@ -58,7 +58,7 @@ class FlowRun(RelatedContactModel):
             },
         )
 
-    def log(self, level, message, context=dict()):
+    def log(self, level, message, context=None):
         logger.log(getattr(logging, level), message)
         import_string(settings.FLOW_LOG_STORAGE).save_flow_log(
             FlowLog(
@@ -66,7 +66,7 @@ class FlowRun(RelatedContactModel):
                 flow_run_id=self.id,
                 level=level,
                 message=message,
-                context=context,
+                context=context or {},
             )
         )
 

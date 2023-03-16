@@ -29,7 +29,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env(
     "SECRET_KEY",
-    default="django-insecure-f71wevx&=04*+4@96a1ltskmaj2)%w^%$gl1@_)gyzi)50epas",
+    default="django-insecure-f71wevx&=04*+4@96"
+    "a1ltskmaj2)%w^%$gl1@_)gyzi)50epas",
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -118,12 +119,14 @@ DATABASES = {
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME":
-        "django.contrib.auth.password_validation.UserAttributeSimilarityValidator", },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", },
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator", },
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator", },]
+    {"NAME": "django.contrib.auth.password_validation."
+        "UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation."
+        "MinimumLengthValidator", },
+    {"NAME": "django.contrib.auth.password_validation."
+        "CommonPasswordValidator", },
+    {"NAME": "django.contrib.auth.password_validation."
+        "NumericPasswordValidator", },]
 
 
 # Internationalization
@@ -186,8 +189,10 @@ LOGGING = {
 }
 
 REST_FRAMEWORK = {
-    "EXCEPTION_HANDLER": "rollbar.contrib.django_rest_framework.post_exception_handler",
-    "DEFAULT_VERSIONING_CLASS": "rest_framework.versioning.AcceptHeaderVersioning",
+    "EXCEPTION_HANDLER":
+        "rollbar.contrib.django_rest_framework.post_exception_handler",
+    "DEFAULT_VERSIONING_CLASS":
+        "rest_framework.versioning.AcceptHeaderVersioning",
     "DEFAULT_VERSION": 1,
     "ALLOWED_VERSIONS": ("1",),
 }
@@ -199,7 +204,8 @@ LOGOUT_REDIRECT_URL = "home"
 DRAMATIQ_BROKER = {
     "BROKER": "dramatiq.brokers.redis.RedisBroker",
     "OPTIONS": {
-        "url": env.str("DRAMATIQ_REDIS_URL", default="redis://informer_redis"),
+        "url":
+            env.str("DRAMATIQ_REDIS_URL", default="redis://informer_redis"),
     },
     "MIDDLEWARE": [
         "dramatiq.middleware.Prometheus",

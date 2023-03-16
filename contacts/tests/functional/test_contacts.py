@@ -29,12 +29,19 @@ class ContactsTestCase(TransactionTestCase):
                 reverse(
                     "contacts:contact_create",
                     kwargs={"environment": self.environment.slug},),
-                {"name": "example name", "key": 123, "auth_key": "abc",
-                 "channels": [1, 2],
-                 "contact_data": '{"foo":"bar"}',
-                 "channel-1-email": "abc@example.com",
-                 "channel-2-fcm_tokens":
-                 "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", },
+                {
+                    "name": "example name",
+                    "key": 123,
+                    "auth_key": "abc",
+                    "channels": [1, 2],
+                    "contact_data": '{"foo":"bar"}',
+                    "channel-1-email": "abc@example.com",
+                    "channel-2-fcm_tokens":
+                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                        "aaaaaaaaaaaaaaaaa",
+                },
                 HTTP_HOST="example.com", follow=True,)
 
             self.assertRedirects(
@@ -53,17 +60,17 @@ class ContactsTestCase(TransactionTestCase):
                             "key": 123},),
                 {
                     "name": "example name updated",
-                    "key": 123, 
+                    "key": 123,
                     "auth_key": "abc",
                     "channels": [1, 2],
                     "contact_data": '{"foo":"bar"}',
                     "channel-1-email": "abc@example.com",
                     "channel-2-fcm_tokens":
-                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"\
-                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"\
-                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"\
-                        "aaaaaaaaaaaaaaaaa", 
-                 },
+                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                        "aaaaaaaaaaaaaaaaa",
+                },
                 HTTP_HOST="example.com", follow=True,)
 
             self.assertRedirects(
@@ -79,7 +86,7 @@ class ContactsTestCase(TransactionTestCase):
                     reverse(
                         "contacts:contact_remove",
                         kwargs={
-                            "environment": self.environment.slug, 
+                            "environment": self.environment.slug,
                             "key": 123
                         },
                     ),

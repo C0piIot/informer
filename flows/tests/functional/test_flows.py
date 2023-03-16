@@ -1,3 +1,4 @@
+""" Flows functional tests """
 from django.contrib.contenttypes.models import ContentType
 from django.test import TransactionTestCase
 from django.urls import reverse
@@ -7,6 +8,7 @@ from flows.models import Delay, Flow, Group
 
 
 class FlowsTestCase(TransactionTestCase):
+    """ Flows functional tests """
     fixtures = ["users.json", "environments.json", "channels.json"]
 
     def setUp(self):
@@ -197,9 +199,10 @@ class FlowsTestCase(TransactionTestCase):
                         kwargs={
                             "environment": self.environment.slug,
                             "id": flow.id,
-                            "content_type_id": ContentType.objects.get_for_model(
-                                Group
-                            ).pk,
+                            "content_type_id":
+                                ContentType.objects.get_for_model(
+                                    Group
+                                ).pk,
                         },
                     ),
                     {"key": "test_key", "window": 30},
