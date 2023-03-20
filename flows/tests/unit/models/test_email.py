@@ -1,3 +1,4 @@
+"""Email step tests"""
 from unittest.mock import MagicMock, patch
 
 from django.test import TestCase
@@ -9,6 +10,8 @@ from flows.models import Email, FlowRun
 
 
 class EmailTestCase(TestCase):
+    """Email flow step testcase"""
+
     fixtures = ["users.json", "environments.json", "channels.json"]
 
     def setUp(self):

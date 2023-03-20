@@ -9,6 +9,7 @@ from accounts.views import ContextAwareViewSetMixin
 from contacts.models import Contact
 from contacts.rest_permissions import HasContactPermission
 
+
 class ContactSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact

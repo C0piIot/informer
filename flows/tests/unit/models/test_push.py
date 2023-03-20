@@ -1,3 +1,4 @@
+""" Push step tests """
 from unittest.mock import MagicMock, patch
 
 from django.test import TestCase
@@ -9,6 +10,7 @@ from flows.models import FlowLog, FlowRun, Push
 
 
 class PushTestCase(TestCase):
+    """ Push step testcase """
     fixtures = ["users.json", "environments.json", "channels.json"]
 
     def setUp(self):
@@ -25,7 +27,7 @@ class PushTestCase(TestCase):
 
     @patch("accounts.models.push_channel.firebase_admin")
     @patch("accounts.models.push_channel.messaging.send_multicast")
-    def test_step_run(self, mock_firebase_admin, _mock_send_multicast):
+    def test_step_run(self, mock_firebase_admin, mock_send_multicast):
         with self.settings(
             CONTACT_STORAGE=ContactsConfig.DEFAULT_SETTINGS["CONTACT_STORAGE"]
         ):

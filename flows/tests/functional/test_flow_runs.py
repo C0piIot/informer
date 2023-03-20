@@ -1,3 +1,5 @@
+""" Flow runs functional tests """
+
 from unittest.mock import MagicMock
 
 from django.test import TransactionTestCase
@@ -11,6 +13,8 @@ from flows.models import Flow, FlowRun
 
 
 class FlowRunsTestCase(TransactionTestCase):
+    """Flow run test case for views and viewsets"""
+
     fixtures = ["users.json", "environments.json", "channels.json"]
 
     def setUp(self):
