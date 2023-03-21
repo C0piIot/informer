@@ -1,8 +1,7 @@
-from datetime import datetime
-import redis
-import environ
-from datetime import timedelta
+from datetime import datetime, timedelta
 
+import environ
+import redis
 from django.utils.translation import gettext_lazy as _
 
 

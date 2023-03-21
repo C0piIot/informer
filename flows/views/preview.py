@@ -18,7 +18,7 @@ class Preview(CurrentEnvironmentMixin, View):
     RENDER_MODES = [RENDER_MODE_HTML, RENDER_MODE_PLAIN, RENDER_MODE_EMAIL]
     premailer = Premailer()
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         flow = get_object_or_404(
             Flow, environments=self.current_environment, id=self.kwargs["id"]
         )

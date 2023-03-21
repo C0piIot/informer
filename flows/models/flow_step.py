@@ -86,4 +86,4 @@ class FlowStep(models.Model):
             raise
 
     def __str__(self):
-        return "%s %s" % (self.ICON, self._meta.verbose_name.title())
+        return f"{self.ICON} {self._meta.verbose_name.title()}"

@@ -16,14 +16,16 @@ class Group(FlowStep):
     window = models.DurationField(
         _("time window"),
         help_text=_(
-            "All flows for the same user will be merged withint the time window started with the first one"
+            "All flows for the same user will be merged "
+            "withint the time window started with the first one"
         ),
     )
     key = models.SlugField(
         _("grouping key"),
         max_length=150,
         help_text=_(
-            "Context data from each flow will be available in an array with the name GROUP_{grouping key}"
+            "Context data from each flow will be available "
+            "in an array with the name GROUP_{grouping key}"
         ),
     )
 
@@ -51,4 +53,4 @@ class Group(FlowStep):
         self.run_next(flow_run)
 
     def __str__(self):
-        return "%s by %s ⏲️ %s" % (super().__str__(), self.key, self.window)
+        return f"{super().__str__()} by {self.key} ⏲️ {self.window}"

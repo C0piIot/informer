@@ -41,14 +41,18 @@ class RedisStatsStorageTestCase(TestCase):
             )
             self.pipeline.expire.assert_has_calls(
                 [
-                    call(f"count.{site_pk}.test.event1.198306250115", 61 * 60),
+                    call(f"count.{site_pk}.test.event1.198306250115",
+                        61 * 60),
                     call(
-                        f"count.{site_pk}.test.event1.1983062501", 25 * 60 * 60),
+                        f"count.{site_pk}.test.event1.1983062501", 
+                        25 * 60 * 60),
                     call(f"count.{site_pk}.test.event1.19830625",
                          31 * 24 * 60 * 60),
-                    call(f"count.{site_pk}.test.event2.198306250115", 61 * 60),
+                    call(f"count.{site_pk}.test.event2.198306250115", 
+                        61 * 60),
                     call(
-                        f"count.{site_pk}.test.event2.1983062501", 25 * 60 * 60),
+                        f"count.{site_pk}.test.event2.1983062501",
+                        25 * 60 * 60),
                     call(f"count.{site_pk}.test.event2.19830625",
                          31 * 24 * 60 * 60),
                 ]
@@ -56,7 +60,8 @@ class RedisStatsStorageTestCase(TestCase):
 
     def test_read_stas(self):
         with patch("stats.storages.datetime") as mock_datetime:
-            mock_datetime.now.return_value = datetime(1983, 6, 25, 1, 15, 30)
+            mock_datetime.now.return_value = datetime(
+                1983, 6, 25, 1, 15, 30)
 
             self.pipeline.execute.return_value = [  # It should return 24 values!
                 1,

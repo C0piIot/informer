@@ -45,7 +45,8 @@ class Flow(models.Model):
         blank=True,
         default=default_preview_context,
         help_text=_(
-            "Data defined here will be used for generating previews in steps using context data."
+            "Data defined here will be used for generating "
+            "previews in steps using context data."
         ),
     )
 
