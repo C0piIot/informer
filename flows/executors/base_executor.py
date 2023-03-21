@@ -24,7 +24,7 @@ class BaseExecutor:
             environment, uuid.UUID(flow_run_pk_hex))
         try:
             flow_run.flow_revision.steps.get(pk=flow_step_pk).wake_up(flow_run)
-        except Exception as err:
+        except Exception as err:  # pylint: disable=broad-except
             flow_run.log(FlowLog.ERROR, err)
         finally:
             storage.save_flow_run(environment, flow_run)
@@ -40,7 +40,7 @@ class BaseExecutor:
                 flow_step.run(flow_run)
             else:
                 flow_run.log(FlowLog.WARNING, "No steps in current flow")
-        except Exception as err:
+        except Exception as err:  # pylint: disable=broad-except
             flow_run.log(FlowLog.ERROR, err)
         finally:
             storage.save_flow_run(environment, flow_run)
