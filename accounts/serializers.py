@@ -16,3 +16,7 @@ class PushContactSerializer(serializers.Serializer):
         for token in value:
             if not self.fcm_token_validation.match(token):
                 raise serializers.ValidationError(_("Invalid fcm tokens"))
+
+
+class EmailContactSerializer(serializers.Serializer):
+    email = serializers.EmailField()

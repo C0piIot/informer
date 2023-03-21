@@ -1,12 +1,4 @@
 from django.contrib import messages
-from django.views.generic.edit import DeleteView
-from accounts.models import Environment
-from django.views.generic.list import ListView
-from accounts.forms import NewEnvironmentForm
-from django.views.generic.edit import CreateView
-from django.http import HttpResponseRedirect
-from django.views.generic.edit import UpdateView
-from django.http import Http404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.messages.views import SuccessMessageMixin
@@ -15,9 +7,11 @@ from django.urls import reverse_lazy
 from django.utils.module_loading import import_string
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.list import ListView
 
-from accounts.models import Channel
+from accounts.forms import NewEnvironmentForm
+from accounts.models import Channel, Environment
 
 from .mixins import ChannelListMixin
 
