@@ -3,8 +3,8 @@ from django.utils.module_loading import import_string
 from rest_framework import mixins, serializers
 from rest_framework.viewsets import GenericViewSet
 
+from accounts.mixins import ContextAwareViewSetMixin
 from accounts.rest_permissions import HasEnvironmentPermission
-from accounts.views import ContextAwareViewSetMixin
 from flows.models import Flow, FlowRun
 
 

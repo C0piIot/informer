@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from accounts.views import CurrentEnvironmentMixin
+from accounts.mixins import CurrentEnvironmentMixin
 from contacts.forms import ContactForm, ContactSearchForm
 from contacts.models import Contact
 

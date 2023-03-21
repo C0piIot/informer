@@ -3,7 +3,7 @@ from django.conf import settings
 from django.utils.module_loading import import_string
 from django.views.generic.detail import DetailView
 
-from accounts.views import CurrentEnvironmentMixin
+from accounts.mixins import CurrentEnvironmentMixin
 from contacts.models import Contact
 
 inbox_storage = import_string(settings.INBOX_ENTRY_STORAGE)

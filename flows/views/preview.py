@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import View
 from premailer import Premailer
 
-from accounts.views import CurrentEnvironmentMixin
+from accounts.mixins import CurrentEnvironmentMixin
 from flows.models import Flow
 
 

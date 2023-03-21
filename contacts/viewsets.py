@@ -5,7 +5,7 @@ from rest_framework import mixins, serializers
 from rest_framework.reverse import reverse
 from rest_framework.viewsets import GenericViewSet
 
-from accounts.views import ContextAwareViewSetMixin
+from accounts.mixins import ContextAwareViewSetMixin
 from contacts.models import Contact
 from contacts.rest_permissions import HasContactPermission
 

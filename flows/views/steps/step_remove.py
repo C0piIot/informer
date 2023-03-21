@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import DeleteView
 
-from accounts.views import CurrentEnvironmentMixin
+from accounts.mixins import CurrentEnvironmentMixin
 from flows.models import Flow, FlowStep
 
 

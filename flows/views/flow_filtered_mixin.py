@@ -1,4 +1,4 @@
-from accounts.views import CurrentEnvironmentMixin
+from accounts.mixins import CurrentEnvironmentMixin
 from flows.models import Flow
 
 
