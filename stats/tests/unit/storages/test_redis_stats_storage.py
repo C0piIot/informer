@@ -21,7 +21,7 @@ class RedisStatsStorageTestCase(TestCase):
         RedisStatsStorage.client.pipeline.return_value = self.pipeline
 
     def test_store_events(self):
-        with patch("stats.storages.redis_stats_storage.datetime") as mock_datetime:
+        with patch("stats.storages.datetime") as mock_datetime:
             mock_datetime.now.return_value = datetime(1983, 6, 25, 1, 15, 30)
 
             RedisStatsStorage.store_events(
@@ -55,7 +55,7 @@ class RedisStatsStorageTestCase(TestCase):
             )
 
     def test_read_stas(self):
-        with patch("stats.storages.redis_stats_storage.datetime") as mock_datetime:
+        with patch("stats.storages.datetime") as mock_datetime:
             mock_datetime.now.return_value = datetime(1983, 6, 25, 1, 15, 30)
 
             self.pipeline.execute.return_value = [  # It should return 24 values!

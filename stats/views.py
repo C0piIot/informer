@@ -3,7 +3,8 @@ from django.utils.module_loading import import_string
 from django.views.generic.base import TemplateView
 
 from accounts.mixins import CurrentEnvironmentMixin
-from stats.storages import BaseStatsStorage
+
+from .storages import BaseStatsStorage
 
 
 class Dashboard(CurrentEnvironmentMixin, TemplateView):
