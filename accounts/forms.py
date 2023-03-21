@@ -1,12 +1,12 @@
 import re
-from django.core.exceptions import ValidationError
-from accounts.models import PushChannel
-from accounts.models import Environment
-from django.db import transaction
-from django.contrib.auth.forms import AuthenticationForm
-from django.utils.translation import gettext_lazy as _
-from accounts.models import EmailChannel
+
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
+from django.core.exceptions import ValidationError
+from django.db import transaction
+from django.utils.translation import gettext_lazy as _
+
+from accounts.models import EmailChannel, Environment, PushChannel
 
 
 class ChannelForm(forms.ModelForm):

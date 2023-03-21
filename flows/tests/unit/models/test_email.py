@@ -26,7 +26,7 @@ class EmailTestCase(TestCase):
             environment=self.environment, contact_key=self.contact.key
         )
 
-    @patch("accounts.models.email_channel.send_mail")
+    @patch("accounts.models.send_mail")
     def test_step_run(self, mock_send_mail):
         with self.settings(
             CONTACT_STORAGE=ContactsConfig.DEFAULT_SETTINGS["CONTACT_STORAGE"]
