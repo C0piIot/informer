@@ -42,14 +42,14 @@ class RedisStatsStorageTestCase(TestCase):
             self.pipeline.expire.assert_has_calls(
                 [
                     call(f"count.{site_pk}.test.event1.198306250115",
-                        61 * 60),
+                         61 * 60),
                     call(
-                        f"count.{site_pk}.test.event1.1983062501", 
+                        f"count.{site_pk}.test.event1.1983062501",
                         25 * 60 * 60),
                     call(f"count.{site_pk}.test.event1.19830625",
                          31 * 24 * 60 * 60),
-                    call(f"count.{site_pk}.test.event2.198306250115", 
-                        61 * 60),
+                    call(f"count.{site_pk}.test.event2.198306250115",
+                         61 * 60),
                     call(
                         f"count.{site_pk}.test.event2.1983062501",
                         25 * 60 * 60),

@@ -52,5 +52,6 @@ class WebhookTestCase(TestCase):
         )
         self.assertEqual(
             str(webhook),
-            f"{Webhook.ICON} Webhook {webhook.method} {urlparse(webhook.url).netloc}",
+            f"{Webhook.ICON} Webhook {webhook.method} "
+            f"{urlparse(webhook.url).netloc}",
         )
