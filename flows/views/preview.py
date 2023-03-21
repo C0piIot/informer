@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import View
 from premailer import Premailer
 
-from accounts.views import CurrentEnvironmentMixin
+from accounts.mixins import CurrentEnvironmentMixin
 from flows.models import Flow
 
 
@@ -18,7 +18,7 @@ class Preview(CurrentEnvironmentMixin, View):
     RENDER_MODES = [RENDER_MODE_HTML, RENDER_MODE_PLAIN, RENDER_MODE_EMAIL]
     premailer = Premailer()
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         flow = get_object_or_404(
             Flow, environments=self.current_environment, id=self.kwargs["id"]
         )

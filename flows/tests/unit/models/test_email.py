@@ -1,3 +1,4 @@
+"""Email step tests"""
 from unittest.mock import MagicMock, patch
 
 from django.test import TestCase
@@ -9,6 +10,8 @@ from flows.models import Email, FlowRun
 
 
 class EmailTestCase(TestCase):
+    """Email flow step testcase"""
+
     fixtures = ["users.json", "environments.json", "channels.json"]
 
     def setUp(self):
@@ -23,7 +26,7 @@ class EmailTestCase(TestCase):
             environment=self.environment, contact_key=self.contact.key
         )
 
-    @patch("accounts.models.email_channel.send_mail")
+    @patch("accounts.models.send_mail")
     def test_step_run(self, mock_send_mail):
         with self.settings(
             CONTACT_STORAGE=ContactsConfig.DEFAULT_SETTINGS["CONTACT_STORAGE"]

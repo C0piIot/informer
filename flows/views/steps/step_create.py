@@ -22,8 +22,8 @@ class StepCreate(FlowEditMixin, SuccessMessageMixin, CreateView):
         try:
             self.type = ContentType.objects.get_for_id(
                 self.kwargs["content_type_id"])
-        except ContentType.DoesNotExist:
-            raise Http404
+        except ContentType.DoesNotExist as exc:
+            raise Http404 from exc
 
     def form_valid(self, form, **kwargs):
         with transaction.atomic():

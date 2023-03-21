@@ -7,7 +7,7 @@ from rest_framework.authentication import get_authorization_header
 from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
-from accounts.views import ContextAwareViewSetMixin
+from accounts.mixins import ContextAwareViewSetMixin
 from inbox.models import InboxEntry
 
 from .serializers import InboxEntrySerializer

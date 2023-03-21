@@ -2,7 +2,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.shortcuts import get_object_or_404
 from rest_framework.reverse import reverse
 
-from accounts.views import CurrentEnvironmentMixin
+from accounts.mixins import CurrentEnvironmentMixin
 from flows.forms import FlowForm, TestForm, step_form_classes
 from flows.models import Flow
 

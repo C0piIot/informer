@@ -164,17 +164,19 @@ class ContactsTestCase(TransactionTestCase):
                 status_code=400)
 
             response = self.client.get(
-                reverse("contact-detail",
-                        kwargs={"environment": self.environment.slug, 'pk': '123'}),
-                HTTP_HOST="example.com",
-            )
+                reverse(
+                    "contact-detail",
+                    kwargs={"environment": self.environment.slug,
+                            'pk': '123'}),
+                HTTP_HOST="example.com",)
             self.assertContains(
                 response, "abc", status_code=200
             )
 
             response = self.client.delete(
-                reverse("contact-detail",
-                        kwargs={"environment": self.environment.slug, 'pk': '123'}),
-                HTTP_HOST="example.com",
-            )
+                reverse(
+                    "contact-detail",
+                    kwargs={"environment": self.environment.slug,
+                            'pk': '123'}),
+                HTTP_HOST="example.com",)
             self.assertEqual(response.status_code, 204)

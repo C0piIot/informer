@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views.generic.edit import DeleteView
 
-from accounts.views import CurrentEnvironmentMixin
+from accounts.mixins import CurrentEnvironmentMixin
 from flows.models import Flow, FlowStep
 
 
@@ -36,7 +36,7 @@ class StepRemove(CurrentEnvironmentMixin, SuccessMessageMixin, DeleteView):
             self.flow.steps.filter(order=self.object.order).delete()
             return super().form_valid(form)
 
-    def form_invalid(self, form, **kwargs):
+    def form_invalid(self, form):
         messages.error(self.request, _("Error deleting step"))
         return HttpResponseRedirect(self.get_success_url())
 

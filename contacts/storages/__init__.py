@@ -1,1 +1,0 @@
-from .default_contact_storage import DefaultContactStorage

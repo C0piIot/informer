@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import View
 from django.views.generic.detail import SingleObjectMixin
 
-from accounts.views import CurrentEnvironmentMixin
+from accounts.mixins import CurrentEnvironmentMixin
 from flows.models import Flow, FlowStep
 
 

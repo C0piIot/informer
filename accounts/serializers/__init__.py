@@ -1,2 +1,0 @@
-from .email_contact_serializer import EmailContactSerializer
-from .push_contact_serializer import PushContactSerializer

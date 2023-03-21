@@ -7,6 +7,11 @@ from accounts.models import Channel
 from contacts.models import Contact
 
 
+class ContactSearchForm(forms.Form):
+    filter_key = forms.CharField(label=_("Key"), required=False)
+    filter_name = forms.CharField(label=_("Name"), required=False)
+
+
 class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact

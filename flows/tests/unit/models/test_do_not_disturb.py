@@ -1,3 +1,4 @@
+""" Do not disturb unit tests """
 from datetime import date, datetime, time, timedelta
 from unittest.mock import MagicMock, patch
 
@@ -9,6 +10,8 @@ from flows.models import DoNotDisturb, FlowRun
 
 
 class DoNotDisturbTestCase(TestCase):
+    """ Do not disturb step test case """
+
     def test_step_run(self):
         flow_run = FlowRun()
 
@@ -21,7 +24,8 @@ class DoNotDisturbTestCase(TestCase):
             do_not_disturb = DoNotDisturb(start=time(10, 0), end=time(12, 0))
             self.assertEqual(
                 str(do_not_disturb),
-                f"{DoNotDisturb.ICON} Do Not Disturb {do_not_disturb.start}-{do_not_disturb.end}",
+                f"{DoNotDisturb.ICON} Do Not Disturb "
+                f"{do_not_disturb.start}-{do_not_disturb.end}",
             )
 
             do_not_disturb.run_next = MagicMock()
@@ -48,7 +52,8 @@ class DoNotDisturbTestCase(TestCase):
         do_not_disturb = DoNotDisturb(start=time(10, 0), end=time(12, 0))
         self.assertEqual(
             str(do_not_disturb),
-            f"{do_not_disturb.ICON} Do Not Disturb {do_not_disturb.start}-{do_not_disturb.end}",
+            f"{do_not_disturb.ICON} Do Not Disturb "
+            f"{do_not_disturb.start}-{do_not_disturb.end}"
         )
 
     def test_clean(self):
