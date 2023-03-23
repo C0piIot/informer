@@ -2,14 +2,14 @@
 {% load i18n django_bootstrap5 %}
 
 {% block header-content %}
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
       <a class="navbar-brand" href="{% url 'home' %}">☎️ Informer</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{% translate 'Toggle navigation' %}">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <a class="ms-auto btn btn-secondary" href="{% url 'login' %}">{% translate "Sign in" %}</a>
+        <a class="ms-auto btn btn-primary" href="{% url 'login' %}">{% translate "Sign in" %}</a>
       </div>
     </div>
 </nav>
