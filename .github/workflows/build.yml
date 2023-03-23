@@ -56,7 +56,7 @@ jobs:
     - name: Rollbar deploy
       uses: rollbar/github-deploy-action@2.1.1
       with:
-        environment: 'production'
+        environment: 'fly'
         version: ${{ github.sha }}
       env:
         ROLLBAR_USERNAME: ${{ github.actor }}
