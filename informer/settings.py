@@ -164,7 +164,7 @@ ROLLBAR = {
     "access_token": env("ROLLBAR_TOKEN", default=""),
     "environment": env("ROLLBAR_ENVIRONMENT", default="development"),
     "root": BASE_DIR,
-    "code_version": BUILD_VERSION,
+    "code_version": GIT_REV,
     "exception_level_filters": [
         (Http404, "ignored"),
         (PermissionDenied, "ignored"),
@@ -181,6 +181,7 @@ LOGGING = {
         "rollbar": {
             "access_token": env("ROLLBAR_TOKEN", default=""),
             "environment": env("ROLLBAR_ENVIRONMENT", default="development"),
+            "code_version": GIT_REV,
             "class": "rollbar.logger.RollbarHandler",
         },
     },
