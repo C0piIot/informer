@@ -19,7 +19,7 @@ from django.http import Http404
 
 env = environ.Env()
 
-APP_VERSION = env.str('APP_VERSION', default='dev')
+BUILD_VERSION = env.str('BUILD_VERSION', default='dev')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -100,7 +100,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "informer.context_processors.rollbar_settings",
-                "informer.context_processors.app_version",
+                "informer.context_processors.build_version",
             ],
         },
     },
@@ -163,7 +163,7 @@ ROLLBAR = {
     "access_token": env("ROLLBAR_TOKEN", default=""),
     "environment": env("ROLLBAR_ENVIRONMENT", default="development"),
     "root": BASE_DIR,
-    "code_version": APP_VERSION,
+    "code_version": BUILD_VERSION,
     "exception_level_filters": [
         (Http404, "ignored"),
         (PermissionDenied, "ignored"),

@@ -9,7 +9,7 @@ RUN apt-get install -y libxml2-dev libxslt-dev python-dev build-essential zlib1g
 	apt-get autoremove -y --purge libxml2-dev libxslt-dev python-dev build-essential
 RUN yarnpkg install
 ARG BUILD_VERSION=dev
-ENV APP_VERSION=$BUILD_VERSION
+ENV BUILD_VERSION=$BUILD_VERSION
 
 
 FROM base AS dev

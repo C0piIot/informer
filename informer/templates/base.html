@@ -7,14 +7,14 @@
     <link href="{% static 'bootswatch/dist/sandstone/bootstrap.min.css' %}" rel="stylesheet" crossorigin="anonymous">
     <script>
       var _rollbarConfig = {
-          accessToken: "{{ ROLLBAR_CLIENT_TOKEN }}",
+          accessToken: "{{ ROLLBAR_CLIENT_TOKEN|escapejs }}",
           captureUncaught: true,
           captureUnhandledRejections: true,
           payload: {
-              environment: "{{ ROLLBAR_ENVIRONMENT }}",
+              environment: "{{ ROLLBAR_ENVIRONMENT|escapejs }}",
               client: {
                   javascript: {
-                      code_version: '1.0.0',
+                      code_version: "{{ BUILD_VERSION|escapejs }}",
                   }
               }
           }
@@ -162,7 +162,7 @@
     {% endif %}
     {% block footer %}
     <footer class="bg-dark py-3 mt-auto">
-      <div class="container text-light text-end">{{ APP_VERSION }}</div>
+      <div class="container text-light text-end">Build {{ BUILD_VERSION }}</div>
     </footer>
     {% endblock footer %}
     {% endblock body-content %}
