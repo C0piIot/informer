@@ -10,6 +10,8 @@ RUN apt-get install -y libxml2-dev libxslt-dev python-dev build-essential zlib1g
 RUN yarnpkg install
 ARG BUILD_VERSION=dev
 ENV BUILD_VERSION=$BUILD_VERSION
+ARG GIT_REV=HEAD
+ENV GIT_REV=$GIT_REV
 
 
 FROM base AS dev

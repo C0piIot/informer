@@ -52,7 +52,7 @@ jobs:
     steps: 
     - uses: actions/checkout@v3
     - uses: superfly/flyctl-actions/setup-flyctl@master
-    - run: flyctl deploy --remote-only --build-arg BUILD_VERSION=$(date +'%Y%m%d%H%M%S').${{ github.ref_name }}.$(git rev-parse --short HEAD)
+    - run: flyctl deploy --remote-only --build-arg BUILD_VERSION=$(date +'%Y%m%d%H%M%S').${{ github.ref_name }}.$(git rev-parse --short HEAD) --build-arg GIT_REV=${{ github.sha }}
     - name: Rollbar deploy
       uses: rollbar/github-deploy-action@2.1.1
       with:
