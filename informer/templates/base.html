@@ -14,7 +14,7 @@
               environment: "{{ ROLLBAR_ENVIRONMENT|escapejs }}",
               client: {
                   javascript: {
-                      code_version: "{{ BUILD_VERSION|escapejs }}",
+                      code_version: "{{ ROLLBAR_CODE_VERSION|escapejs }}",
                   }
               }
           }
