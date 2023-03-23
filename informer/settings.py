@@ -98,6 +98,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "informer.context_processors.rollbar_settings",
+                "informer.context_processors.app_version",
             ],
         },
     },
@@ -229,3 +230,5 @@ if env.str("INBOX_ENTRY_STORAGE", default=False):
 
 if env.str("STATS_STORAGE", default=False):
     STATS_STORAGE = env.str("STATS_STORAGE")
+
+APP_VERSION = env.str('APP_VERSION')

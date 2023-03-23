@@ -160,9 +160,11 @@
       </div>
     </div>
     {% endif %}
+    {% block footer %}
     <footer class="bg-dark py-3 mt-auto">
-
+      <div class="container text-light text-end">{{ APP_VERSION }}</div>
     </footer>
+    {% endblock footer %}
     {% endblock body-content %}
   </body>
 </html>
