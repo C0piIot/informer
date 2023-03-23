@@ -180,7 +180,7 @@ LOGGING = {
         },
         "rollbar": {
             "access_token": env("ROLLBAR_TOKEN", default=""),
-            "environment": "development" if DEBUG else "production",
+            "environment": env("ROLLBAR_ENVIRONMENT", default="development"),
             "class": "rollbar.logger.RollbarHandler",
         },
     },
