@@ -19,6 +19,8 @@ from django.http import Http404
 
 env = environ.Env()
 
+APP_VERSION = env.str('APP_VERSION', default='dev')
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -161,7 +163,7 @@ ROLLBAR = {
     "access_token": env("ROLLBAR_TOKEN", default=""),
     "environment": env("ROLLBAR_ENVIRONMENT", default="development"),
     "root": BASE_DIR,
-    "code_version": "1.0",
+    "code_version": APP_VERSION,
     "exception_level_filters": [
         (Http404, "ignored"),
         (PermissionDenied, "ignored"),
@@ -230,5 +232,3 @@ if env.str("INBOX_ENTRY_STORAGE", default=False):
 
 if env.str("STATS_STORAGE", default=False):
     STATS_STORAGE = env.str("STATS_STORAGE")
-
-APP_VERSION = env.str('APP_VERSION')
