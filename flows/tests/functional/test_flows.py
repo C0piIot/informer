@@ -278,3 +278,59 @@ class FlowsTestCase(TransactionTestCase):
             )
 
             self.assertContains(response, "accordion-item", count=6)
+
+    def test_preview(self):
+        flow = Flow.objects.create(
+            name="test flow",
+            trigger="test",
+            site=self.environment.site,
+            user=self.environment.site.users.first(),
+            preview_context={"name": "<h1>name</h1>", "color": "red"}
+        )
+        flow.environments.add(self.environment)
+        with self.settings(ALLOWED_HOSTS=("example.com",)):        
+            response = self.client.post(
+                    reverse(
+                        "flows:preview",
+                        kwargs={
+                            "environment": self.environment.slug,
+                            "id": flow.id
+                        },
+                    ),
+                    { "mode": "plain", "message": "Hola {{ name }}"},
+                    HTTP_HOST="example.com"
+                )
+            self.assertEqual(response.content.decode(), "Hola <h1>name</h1>")
+
+            response = self.client.post(
+                    reverse(
+                        "flows:preview",
+                        kwargs={
+                            "environment": self.environment.slug,
+                            "id": flow.id
+                        },
+                    ),
+                    { "mode": "html", "message": "Hola {{ name }}"},
+                    HTTP_HOST="example.com"
+                )
+            self.assertEqual(response.content.decode(), "Hola &lt;h1&gt;name&lt;/h1&gt;")
+
+
+            response = self.client.post(
+                    reverse(
+                        "flows:preview",
+                        kwargs={
+                            "environment": self.environment.slug,
+                            "id": flow.id
+                        },
+                    ),
+                    { 
+                        "mode": "email", 
+                        "message": "<style>h1{ color:red }</style><h1>Color is {{ color }}</h1>"
+                    },
+                    HTTP_HOST="example.com"
+                )
+            self.assertContains(
+                response, 
+                '<h1 style="color:red">Color is red</h1>'
+            )
