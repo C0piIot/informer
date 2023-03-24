@@ -47,6 +47,34 @@ class EnvironmentsTestCase(TransactionTestCase):
             environment = Environment.objects.first()
             self.assertEqual("test_environment", environment.name)
 
+
+            response = self.client.post(
+                reverse("accounts:environment_create"),
+                {"name": "test_environment"},
+                HTTP_HOST="example.com",
+                follow=True,
+            )
+            self.assertRedirects(
+                response,
+                reverse("accounts:environment_list"),
+            )
+            self.assertContains(response, "Name is already in use")
+
+
+            response = self.client.post(
+                reverse("accounts:environment_create"),
+                {"name": "test_enviroñment"},
+                HTTP_HOST="example.com",
+                follow=True,
+            )
+            self.assertRedirects(
+                response,
+                reverse("accounts:environment_list"),
+            )
+            self.assertContains(response, "There is another environment with a conflicting name")
+
+
+
             response = self.client.post(
                 reverse("accounts:environment_create"),
                 HTTP_HOST="example.com",
