@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
+from django.utils.safestring import mark_safe
 
 from accounts.forms import NewEnvironmentForm
 from accounts.models import Channel, Environment
@@ -103,7 +104,7 @@ class EnvironmentCreate(LoginRequiredMixin, SuccessMessageMixin, CreateView):
         return HttpResponseRedirect(self.success_url)
 
     def form_invalid(self, form):
-        messages.error(self.request, _("Error creating environment"))
+        messages.error(self.request, mark_safe(_(f"Error creating environment {form.errors}")))
         return HttpResponseRedirect(self.success_url)
 
     def get_form_kwargs(self):
