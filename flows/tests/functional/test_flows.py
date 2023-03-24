@@ -316,7 +316,7 @@ class FlowsTestCase(TransactionTestCase):
             self.assertEqual(response.content.decode(), "Hola &lt;h1&gt;name&lt;/h1&gt;")
 
 
-            response = self.client.post(
+            self.assertContains(self.client.post(
                     reverse(
                         "flows:preview",
                         kwargs={
@@ -329,8 +329,20 @@ class FlowsTestCase(TransactionTestCase):
                         "message": "<style>h1{ color:red }</style><h1>Color is {{ color }}</h1>"
                     },
                     HTTP_HOST="example.com"
-                )
-            self.assertContains(
-                response, 
+                ),
                 '<h1 style="color:red">Color is red</h1>'
             )
+
+            self.assertEqual(self.client.post(
+                    reverse(
+                        "flows:preview",
+                        kwargs={
+                            "environment": self.environment.slug,
+                            "id": flow.id
+                        },
+                    ),
+                    { 
+                        "message": "{% bad template %}"
+                    },
+                    HTTP_HOST="example.com"
+                ).status_code, 400)
