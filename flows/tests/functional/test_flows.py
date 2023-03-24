@@ -341,7 +341,8 @@ class FlowsTestCase(TransactionTestCase):
                             "id": flow.id
                         },
                     ),
-                    { 
+                    {
+                        "mode": "foo"
                         "message": "{% bad template %}"
                     },
                     HTTP_HOST="example.com"
