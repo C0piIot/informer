@@ -1,6 +1,7 @@
 version: '3.7'
 
 x-informer-django: &informer-django
+  init: true
   environment:
     - "DEBUG=True"
     - "EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend"

@@ -12,5 +12,5 @@ def rollbar_settings(request):
 
 def build_version(request):
     return {
-        "BUILD_VERSION" : settings.BUILD_VERSION
+        "BUILD_VERSION": settings.BUILD_VERSION
     }

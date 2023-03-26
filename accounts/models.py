@@ -139,18 +139,18 @@ class Environment(models.Model):
             self.private_key = Token.generate_key()
         if not self.public_key:
             self.public_key = Token.generate_key()
-        
+
         if not self.pk:
-            if Environment.objects.filter(name=self.name, site=self.site).exists():
+            if Environment.objects.filter(
+                    name=self.name, site=self.site).exists():
                 raise ValidationError({"name": _(
                     "Name is already in use"
                 )})
-            if Environment.objects.filter(slug=self.slug, site=self.site).exists():
+            if Environment.objects.filter(
+                    slug=self.slug, site=self.site).exists():
                 raise ValidationError({"name": _(
                     "There is another environment with a conflicting name"
                 )})
-
-
 
     def __str__(self):
         return str(self.name)

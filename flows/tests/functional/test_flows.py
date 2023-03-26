@@ -288,62 +288,63 @@ class FlowsTestCase(TransactionTestCase):
             preview_context={"name": "<h1>name</h1>", "color": "red"}
         )
         flow.environments.add(self.environment)
-        with self.settings(ALLOWED_HOSTS=("example.com",)):        
+        with self.settings(ALLOWED_HOSTS=("example.com",)):
             response = self.client.post(
-                    reverse(
-                        "flows:preview",
-                        kwargs={
-                            "environment": self.environment.slug,
-                            "id": flow.id
-                        },
-                    ),
-                    { "mode": "plain", "message": "Hola {{ name }}"},
-                    HTTP_HOST="example.com"
-                )
+                reverse(
+                    "flows:preview",
+                    kwargs={
+                        "environment": self.environment.slug,
+                        "id": flow.id
+                    },
+                ),
+                {"mode": "plain", "message": "Hola {{ name }}"},
+                HTTP_HOST="example.com"
+            )
             self.assertEqual(response.content.decode(), "Hola <h1>name</h1>")
 
             response = self.client.post(
-                    reverse(
-                        "flows:preview",
-                        kwargs={
-                            "environment": self.environment.slug,
-                            "id": flow.id
-                        },
-                    ),
-                    { "mode": "html", "message": "Hola {{ name }}"},
-                    HTTP_HOST="example.com"
-                )
-            self.assertEqual(response.content.decode(), "Hola &lt;h1&gt;name&lt;/h1&gt;")
-
+                reverse(
+                    "flows:preview",
+                    kwargs={
+                        "environment": self.environment.slug,
+                        "id": flow.id
+                    },
+                ),
+                {"mode": "html", "message": "Hola {{ name }}"},
+                HTTP_HOST="example.com"
+            )
+            self.assertEqual(
+                response.content.decode(),
+                "Hola &lt;h1&gt;name&lt;/h1&gt;")
 
             self.assertContains(self.client.post(
-                    reverse(
-                        "flows:preview",
-                        kwargs={
-                            "environment": self.environment.slug,
-                            "id": flow.id
-                        },
-                    ),
-                    { 
-                        "mode": "email", 
-                        "message": "<style>h1{ color:red }</style><h1>Color is {{ color }}</h1>"
+                reverse(
+                    "flows:preview",
+                    kwargs={
+                        "environment": self.environment.slug,
+                        "id": flow.id
                     },
-                    HTTP_HOST="example.com"
                 ),
+                {
+                    "mode": "email",
+                    "message": "<style>h1{ color:red }</style><h1>Color is {{ color }}</h1>"
+                },
+                HTTP_HOST="example.com"
+            ),
                 '<h1 style="color:red">Color is red</h1>'
             )
 
             self.assertEqual(self.client.post(
-                    reverse(
-                        "flows:preview",
-                        kwargs={
-                            "environment": self.environment.slug,
-                            "id": flow.id
-                        },
-                    ),
-                    {
-                        "mode": "foo",
-                        "message": "{% bad template %}"
+                reverse(
+                    "flows:preview",
+                    kwargs={
+                        "environment": self.environment.slug,
+                        "id": flow.id
                     },
-                    HTTP_HOST="example.com"
-                ).status_code, 400)
+                ),
+                {
+                    "mode": "foo",
+                    "message": "{% bad template %}"
+                },
+                HTTP_HOST="example.com"
+            ).status_code, 400)

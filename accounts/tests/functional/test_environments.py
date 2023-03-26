@@ -47,7 +47,6 @@ class EnvironmentsTestCase(TransactionTestCase):
             environment = Environment.objects.first()
             self.assertEqual("test_environment", environment.name)
 
-
             response = self.client.post(
                 reverse("accounts:environment_create"),
                 {"name": "test_environment"},
@@ -60,7 +59,6 @@ class EnvironmentsTestCase(TransactionTestCase):
             )
             self.assertContains(response, "Name is already in use")
 
-
             response = self.client.post(
                 reverse("accounts:environment_create"),
                 {"name": "test_enviroñment"},
@@ -71,9 +69,9 @@ class EnvironmentsTestCase(TransactionTestCase):
                 response,
                 reverse("accounts:environment_list"),
             )
-            self.assertContains(response, "There is another environment with a conflicting name")
-
-
+            self.assertContains(
+                response,
+                "There is another environment with a conflicting name")
 
             response = self.client.post(
                 reverse("accounts:environment_create"),
