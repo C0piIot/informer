@@ -19,8 +19,8 @@ from django.http import Http404
 
 env = environ.Env()
 
-BUILD_VERSION = env.str('BUILD_VERSION', default='dev')
-GIT_REV = env.str('GIT_REV', default='HEAD')
+BUILD_VERSION = env.str("BUILD_VERSION", default="dev")
+GIT_REV = env.str("GIT_REV", default="HEAD")
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

@@ -39,7 +39,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="environmentSelector" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <a class="nav-link dropdown-toggle{% if request.resolver_match.url_name == 'environment_list' or current_environment %} active{% endif %}" href="#" id="environmentSelector" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     {{ current_environment|default:_("Environments") }}
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="environmentSelector">
@@ -60,6 +60,16 @@
                     </li>
                   </ul>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link{% if request.resolver_match.url_name == 'channel_list' %} active{% endif %}" aria-current="page" href="{% url 'accounts:channel_list' %}">
+                    {% trans "Channels" %}
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" aria-current="page" href="#users">
+                    {% trans "Users" %}
+                  </a>
+                </li>
               </ul>
               <ul class="navbar-nav mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
@@ -67,21 +77,6 @@
                     {{ user.first_name }}
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="environmentSelector">
-                    <li>
-                      <a class="dropdown-item" href="{% url 'accounts:channel_list' %}">
-                        {% trans "Channels" %}
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="{% url 'accounts:environment_list' %}">
-                        {% trans "Environments" %}
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        {% trans "Users" %}
-                      </a>
-                    </li>
                     <li>
                       <a class="dropdown-item" href="#">
                         {% trans "Billing" %}
@@ -93,29 +88,6 @@
                         <button type="submit" class="dropdown-item">{% trans "Logout" %}</button>
                         {% csrf_token %}
                       </form>
-                    </li>
-                  </ul>
-                </li>
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="help" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    {% translate 'Help' %}
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="environmentSelector">
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        {% trans "Contextual help" %}
-                      </a>
-                    </li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        {% trans "FAQs" %}
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        {% trans "Get support" %}
-                      </a>
                     </li>
                   </ul>
                 </li>
