@@ -3,3 +3,4 @@ fly.toml
 *.sqlite3
 node_modules/
 /static/
+.github/
