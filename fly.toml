@@ -15,6 +15,7 @@ workers = "sh /app/fly/workers-entrypoint.sh"
   DRAMATIQ_REDIS_URL = "redis://default:6951c47f1d5d4d7d8a03a090ba5d73f7@fly-informer-redis.upstash.io"
   ROLLBAR_ENVIRONMENT = "fly"
   ROLLBAR_CLIENT_TOKEN = "882f4c50682347a8bf598e628144dcbf"
+  NEW_RELIC_APP_NAME = "informer"
   DEBUG = 0
 
 [build]
