@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
-from django.template import Context, Template, TemplateSyntaxError
+from django.template import Context, Template
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import View
@@ -36,5 +36,5 @@ class Preview(CurrentEnvironmentMixin, View):
             if render_mode == self.RENDER_MODE_EMAIL and response:
                 response = self.premailer.transform(response)
             return HttpResponse(response)
-        except TemplateSyntaxError as e:
+        except Exception as e:
             return HttpResponseBadRequest(str(e))
