@@ -72,7 +72,7 @@
         </div>
         <div class="col-md-5">
             <div class="row">
-                <div class="mt-4 px-5">
+                <div class="mt-4 px-5" hx-boost="true">
                     {% for form in step_forms.values %}
                         <div class="card mb-1">
                             <form class="card-header d-flex align-items-center" method="post" action="{% url 'flows:step_move' current_environment.slug flow.id form.instance.pk %}">
