@@ -34,7 +34,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="text-end mb-2">
-                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <div class="btn-group" role="group" aria-label="{% translate 'Flow edit actions' %}">
                             <button type="button" class="btn btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#form-edit-flow" aria-expanded="{{ form.errors|yesno:'true,false' }}">
                                 {% translate "Edit" %}
                             </button>
@@ -123,9 +123,13 @@
         {% bootstrap_form test_form %}
         <details class="mb-3">
             <summary>
-                <label class="form-label" for="id_curl_example">{% translate "View curl example" %}</label>
+                {% translate "View curl example" %}
             </summary>
-            <textarea readonly cols="40" rows="10" class="form-control" placeholder="Curl example" id="id_curl_example" data-url-endpoint="{{ url_endpoint }}" data-event="{{ flow.trigger }}" data-private-key="{{ current_environment.private_key }}" target="_blank"></textarea>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" id="id_curl_example" data-url-endpoint="{{ url_endpoint }}" data-event="{{ flow.trigger }}" data-private-key="{{ current_environment.private_key }}" readonly>
+              <button class="btn btn-outline-secondary" type="button" id="curl-example-copy">{% translate 'Copy' %}</button>
+            </div>
+            
         </details>
         <div class="text-end">
             <button type="reset" class="btn btn-secondary" data-bs-dismiss="offcanvas">
