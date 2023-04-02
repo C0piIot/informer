@@ -2,7 +2,12 @@
 {% bootstrap_field form.url %}
 <p class="mb-2">{% translate "Url preview" %}</p>
 <output class="w-100 border rounded mb-3 p-2" for="{{ form.url.id_for_label }}">
-  <pre class="mb-0 d-inline-block align-middle" data-preview-from="url" data-preview-mode="plain"></pre>&nbsp;
+  <pre class="mb-0 d-inline-block align-middle"
+    hx-post="{% url 'flows:preview' current_environment.slug flow.id %}" 
+    hx-trigger="keyup delay:500ms from:#{{ form.url.id_for_label }}, load from:document, change from:#{{ form.url.id_for_label }}, reset delay:1ms from:#form-{% if form.instance.pk %}edit-{{ form.instance.pk }}{% else %}add-{{ type }}{% endif %}"
+    hx-vals='js:{"message": document.getElementById("{{ form.url.id_for_label }}").value, "mode": "plain" }'
+    hx-params="message, mode">
+  </pre>&nbsp;
 </output>
 <div class="row">
   <div class="col-lg-6">{% bootstrap_field form.method %}</div>
@@ -12,7 +17,11 @@
   <div class="col-lg-6 d-flex flex-column">
     <p class="mb-2">{% translate "Body preview" %}</p>
     <output class="w-100 border rounded mb-3 flex-grow-1 d-flex align-items-stretch p-1" for="{{ form.body.id_for_label }}">
-      <pre class="w-100 mb-0" data-preview-from="body" data-preview-mode="plain"></pre>
+      <pre class="w-100 mb-0" 
+        hx-post="{% url 'flows:preview' current_environment.slug flow.id %}" 
+        hx-trigger="keyup delay:500ms from:#{{ form.body.id_for_label }}, load from:document, change from:#{{ form.body.id_for_label }}, reset delay:1ms from:#form-{% if form.instance.pk %}edit-{{ form.instance.pk }}{% else %}add-{{ type }}{% endif %}"
+        hx-vals='js:{"message": document.getElementById("{{ form.body.id_for_label }}").value, "mode": "plain" }'
+        hx-params="message, mode"></pre>
     </output>
   </div>
 </div>
