@@ -3,9 +3,6 @@ django-bootstrap5
 django-environ
 rollbar
 djangorestframework
-markdown
-uritemplate
-pyyaml
 dramatiq[redis, watch]
 django-dramatiq
 premailer
