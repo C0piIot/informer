@@ -2,12 +2,18 @@ from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth.views import LoginView
 from django.urls import include, path
+from django.utils.translation import gettext_lazy as _
 from rest_framework.schemas import get_schema_view
 
 from accounts.forms import LoginForm
 
 from .api import router
 from .views import Home
+
+
+admin.site.site_header = _('Informer Admin')
+admin.site.site_title = _('Informer')
+admin.site.index_title = _('Informer administration')
 
 urlpatterns = [
     path("", Home.as_view(), name="home"),
