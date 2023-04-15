@@ -2,9 +2,11 @@
 
 {% bootstrap_field form.subject %}
 <p class="mb-2">{% translate "Subject preview" %}</p>
-<output class="w-100 border rounded mb-3 p-2" for="{{ form.subject.id_for_label }}">
-  <pre class="mb-0 d-inline-block align-middle" data-preview-from="subject" data-preview-mode="plain"></pre>&nbsp;
-</output>
+<output class="w-100 border rounded mb-3 p-2" for="{{ form.subject.id_for_label }}"
+  hx-post="{% url 'flows:preview' current_environment.slug flow.id %}" 
+  hx-trigger="keyup delay:500ms from:#{{ form.subject.id_for_label }}, load from:document, change from:#{{ form.subject.id_for_label }}, reset from:#form-{% if form.instance.pk %}edit-{{ form.instance.pk }}{% else %}add-{{ type }}{% endif %}"
+  hx-vals='js:{"message": document.getElementById("{{ form.subject.id_for_label }}").value, "mode": "plain" }'
+  hx-params="message, mode" style="white-space: pre;"></output>
 <ul class="nav nav-tabs" id="tabs-{{ form.instance.pk|default:'new' }}" role="tablist">
   <li class="nav-item" role="presentation">
     <button class="nav-link active" id="tab-html-{{ form.instance.pk|default:'new' }}" data-bs-toggle="tab" data-bs-target="#html-{{ form.instance.pk|default:'new' }}" type="button" role="tab" aria-controls="html-{{ form.instance.pk|default:'new' }}" aria-selected="true">{% translate "HTML" %}</button>
