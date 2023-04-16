@@ -4,7 +4,7 @@
 <p class="mb-2">{% translate "Subject preview" %}</p>
 <output class="w-100 border rounded mb-3 p-2" for="{{ form.subject.id_for_label }}"
   hx-post="{% url 'flows:preview' current_environment.slug flow.id %}" 
-  hx-trigger="keyup delay:500ms from:#{{ form.subject.id_for_label }}, load from:document, change from:#{{ form.subject.id_for_label }}, reset from:#form-{% if form.instance.pk %}edit-{{ form.instance.pk }}{% else %}add-{{ type }}{% endif %}"
+  hx-trigger="keyup delay:500ms from:#{{ form.subject.id_for_label }}, load from:document, change from:#{{ form.subject.id_for_label }}, reset delay:1ms from:#form-{% if form.instance.pk %}edit-{{ form.instance.pk }}{% else %}add-{{ type }}{% endif %}"
   hx-vals='js:{"message": document.getElementById("{{ form.subject.id_for_label }}").value, "mode": "plain" }'
   hx-params="message, mode" style="white-space: pre;"></output>
 <ul class="nav nav-tabs" id="tabs-{{ form.instance.pk|default:'new' }}" role="tablist">
