@@ -5,7 +5,6 @@
 
 {% block head-content %}
 {{ block.super }}
-<script type="module" src="{% static 'flows/preview.js' %}"></script>
 <script type="module" src="{% static 'flows/email.js' %}"></script>
 <script type="module" src="{% static 'flows/test.js' %}"></script>
 {% endblock head-content %}
@@ -34,7 +33,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="text-end mb-2">
-                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                        <div class="btn-group" role="group" aria-label="{% translate 'Flow edit actions' %}">
                             <button type="button" class="btn btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#form-edit-flow" aria-expanded="{{ form.errors|yesno:'true,false' }}">
                                 {% translate "Edit" %}
                             </button>
@@ -72,7 +71,7 @@
         </div>
         <div class="col-md-5">
             <div class="row">
-                <div class="mt-4 px-5">
+                <div class="mt-4 px-5" hx-boost="true">
                     {% for form in step_forms.values %}
                         <div class="card mb-1">
                             <form class="card-header d-flex align-items-center" method="post" action="{% url 'flows:step_move' current_environment.slug flow.id form.instance.pk %}">
@@ -112,7 +111,7 @@
 {% endblock main-content %}
 {% block body-content %}
 {{ block.super }}
-<form class="offcanvas offcanvas-end{{ test_form.errors|yesno:' show,' }} test" 
+<form class="offcanvas offcanvas-end{{ test_form.errors|yesno:' show,' }} test" data-bs-backdrop="static"
     tabindex="-1" aria-labelledby="form-test-flow-title" method="post" id="form-test-flow"
     action="{% url 'flows:test' current_environment.slug flow.id %}">
     <div class="offcanvas-header">
@@ -123,9 +122,13 @@
         {% bootstrap_form test_form %}
         <details class="mb-3">
             <summary>
-                <label class="form-label" for="id_curl_example">{% translate "View curl example" %}</label>
+                {% translate "View curl example" %}
             </summary>
-            <textarea readonly cols="40" rows="10" class="form-control" placeholder="Curl example" id="id_curl_example" data-url-endpoint="{{ url_endpoint }}" data-event="{{ flow.trigger }}" data-private-key="{{ current_environment.private_key }}" target="_blank"></textarea>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" id="id_curl_example" data-url-endpoint="{{ url_endpoint }}" data-event="{{ flow.trigger }}" data-private-key="{{ current_environment.private_key }}" readonly>
+              <button class="btn btn-outline-secondary" type="button" id="curl-example-copy">{% translate 'Copy' %}</button>
+            </div>
+            
         </details>
         <div class="text-end">
             <button type="reset" class="btn btn-secondary" data-bs-dismiss="offcanvas">
@@ -136,7 +139,7 @@
     </div>
     {% csrf_token %}
 </form>
-<form class="offcanvas offcanvas-end{{ flow_form.errors|yesno:' show,' }}" 
+<form class="offcanvas offcanvas-end{{ flow_form.errors|yesno:' show,' }}" data-bs-backdrop="static"
     tabindex="-1" aria-labelledby="form-edit-flow-title" method="post" id="form-edit-flow"
     action="{% url 'flows:edit' current_environment.slug flow.id %}">
     <div class="offcanvas-header">
@@ -156,7 +159,7 @@
 </form>
 {% for content_type, form in new_step_forms.items %}
 {% with type=content_type.model %}
-<form class="offcanvas offcanvas-end w-75{{ form.errors|yesno:' show,' }} {{ type }}" 
+<form class="offcanvas offcanvas-end w-75{{ form.errors|yesno:' show,' }} {{ type }}" data-bs-backdrop="static"
     tabindex="-1" aria-labelledby="form-add-{{ type }}-title" method="post" id="form-add-{{ type }}"
     action="{% url 'flows:step_create' current_environment.slug flow.id content_type.pk %}">
     <div class="offcanvas-header">
@@ -178,7 +181,7 @@
 {% endfor %}
 
 {% for form in step_forms.values %}
-<form class="offcanvas offcanvas-end w-75{{ form.errors|yesno:' show,' }} {{ form.instance.content_type.model }}"
+<form class="offcanvas offcanvas-end w-75{{ form.errors|yesno:' show,' }} {{ form.instance.content_type.model }}" data-bs-backdrop="static"
     method="post" id="form-edit-{{ form.instance.pk }}" tabindex="-1" aria-labelledby="form-edit-{{ form.instance.pk }}-title" 
     action="{% url 'flows:step_edit' current_environment.slug flow.id form.instance.pk %}">
     <div class="offcanvas-header">

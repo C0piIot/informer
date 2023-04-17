@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from django.template import Context, Template
 from django.utils.decorators import method_decorator
+from django.utils.html import escape
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import View
 from premailer import Premailer
@@ -26,6 +27,8 @@ class Preview(CurrentEnvironmentMixin, View):
         render_mode = request.POST.get("mode", self.RENDER_MODE_HTML)
         if render_mode not in self.RENDER_MODES:
             render_mode = self.RENDER_MODE_HTML
+        if render_mode == self.RENDER_MODE_PLAIN:
+            message = escape(message)
         try:
             response = Template(message).render(
                 Context(
