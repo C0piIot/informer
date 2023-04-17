@@ -10,7 +10,6 @@ from accounts.forms import LoginForm
 from .api import router
 from .views import Home
 
-
 admin.site.site_header = _('Informer Admin')
 admin.site.site_title = _('Informer')
 admin.site.index_title = _('Informer administration')

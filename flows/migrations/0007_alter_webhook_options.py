@@ -12,6 +12,5 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='webhook',
-            options={'verbose_name': 'webhook', 'verbose_name_plural': 'webhooks'},
-        ),
-    ]
+            options={'verbose_name': 'webhook',
+                     'verbose_name_plural': 'webhooks'},),]
