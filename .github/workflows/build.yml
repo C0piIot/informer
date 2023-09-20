@@ -20,7 +20,7 @@ jobs:
         python-version: [3.11]
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
@@ -50,7 +50,7 @@ jobs:
     needs: test
     if: github.ref == 'refs/heads/master'
     steps: 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - uses: superfly/flyctl-actions/setup-flyctl@master
     - run: flyctl deploy --remote-only --build-arg BUILD_VERSION=$(date +'%Y%m%d%H%M%S').${{ github.ref_name }}.$(git rev-parse --short HEAD) --build-arg GIT_REV=${{ github.sha }}
     - name: Rollbar deploy
