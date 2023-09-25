@@ -12,7 +12,7 @@ bootswatch@^5.3.1:
   resolved "https://registry.yarnpkg.com/bootswatch/-/bootswatch-5.3.1.tgz#7eb1e8c39b9c049d4d4617e1ba222561758e1e8b"
   integrity sha512-WRO3SmPjyST5D+mAnhZ75bUn46/jAxlff8Z//PcrYW1KN5bHTl7c50cd7XUa9Hr7IwuffQB3U9xEdnVPmUfCSA==
 
-htmx.org@^1.9.5:
-  version "1.9.5"
-  resolved "https://registry.yarnpkg.com/htmx.org/-/htmx.org-1.9.5.tgz#043a934c50e9945538480679e572ed1f31dbd655"
-  integrity sha512-YUMH1/zOe+75bZnSbtkqwK8wAoTJcgvwVA2W6CXoODBtsg2F9HJIPzM3vzosevrilpV6jLAR6nKapKypBs7v2A==
+htmx.org@^1.9.6:
+  version "1.9.6"
+  resolved "https://registry.yarnpkg.com/htmx.org/-/htmx.org-1.9.6.tgz#ed8f1f62e28699be21cbf97a161329c93595635d"
+  integrity sha512-4Zebo9nzg8u2ZHuIJmvB/nQS6kIMLIoEfhTg/oRwyCIJhL5MLA/jPU1EPEBtGOmG4ZG0k05Vpd3sab2+zfvteQ==
