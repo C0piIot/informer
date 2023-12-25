@@ -17,7 +17,7 @@ class DoNotDisturbTestCase(TestCase):
 
         with patch("flows.models.do_not_disturb.timezone.now") as mock_now:
             now = timezone.make_aware(
-                datetime.combine(date.today(), time(5, 0)), is_dst=False
+                datetime.combine(date.today(), time(5, 0))
             )
             mock_now.return_value = now
 
