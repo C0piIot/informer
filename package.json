@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "bootstrap": "^5.3.5",
+    "bootstrap": "^5.3.6",
     "bootswatch": "^5.3.5",
     "htmx.org": "^2.0.4"
   }
